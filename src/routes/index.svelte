@@ -1,3 +1,7 @@
+<script context="module">
+	export const prerender = true;
+</script>
+
 <script lang="ts">
 	import Shell from '$lib/Shell.svelte';
 	import MainMenu from '$lib/Menu/MainMenu.svelte';
