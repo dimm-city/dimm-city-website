@@ -60,11 +60,11 @@
 		max-width: 100vw;
 		aspect-ratio: 16 / 9;
 		margin-top: calc((100vh - 100% / 16 * 9) / 2 - 5vh);
+		overflow-x: hidden;
 	}
 	.content-wrapper.full-size {
 		aspect-ratio: unset;
 		margin-top: 1em;
-		height: 87vh;
 	}
 	.content-wrapper .iframe-wrapper {
 		display: block;
@@ -80,6 +80,10 @@
 			max-width: 90vw;
 			aspect-ratio: 3/4;
 			margin: 1em auto 0;
+		}
+
+		.content-wrapper.full-size {
+			max-height: 87vh;
 		}
 	}
 
