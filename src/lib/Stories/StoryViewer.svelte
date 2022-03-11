@@ -1,17 +1,22 @@
 <script lang="ts">
 	import { showMenu } from '$lib/ShellStore';
+	import { onMount } from 'svelte';
+
 	export let story = '';
 	export function selectStory(story) {
-		loadStory(story);	
+		loadStory(story);
 	}
 
+	onMount(async () => {
+		if (window !== undefined) window['exitStory'] = exitStory;
+	});
 	function loadStory(story) {
 		if (!story) story = 'none';
 		frames[0].location = `/stories/${story}.html`;
 	}
 
 	function exitStory() {
-        $showMenu = true;
+		$showMenu = true;
 	}
 
 	function storyLoaded() {
@@ -20,8 +25,6 @@
 			$showMenu = false;
 		}
 	}
-
-	window['exitStory'] = exitStory;
 </script>
 
 <iframe title="story" id="story" src={story} on:load={storyLoaded} />
