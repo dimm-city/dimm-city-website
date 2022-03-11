@@ -1,0 +1,33 @@
+@media all and (max-width: 768px), (max-aspect-ratio: 0.74) {
+    :root {
+        --divider-gap: 3em;
+    }
+    .top-panel{
+        height: calc(85vh - var(--divider-gap));
+    }
+
+    .accordion-divider,
+    .acordion-divider-decoration {
+        height: calc(10vh - var(--divider-gap));
+        min-height: 3vh;
+    }
+    .bottom-panel {
+        height: 94vh;
+    }
+    .bottom .bottom-panel {
+        top: 5vh;
+        transform: translateY(1vh);
+    }
+}
+
+@media (max-width: 750px) {
+    .acordion-divider-decoration {
+        --aug-border-all: 0.25vh;
+    }
+    .bottom .acordion-divider-decoration {
+        --aug-border-bottom: 0.25vh;
+    }
+    .vertical-acordion {
+        width: 99vw;
+    }
+}

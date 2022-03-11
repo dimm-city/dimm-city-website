@@ -1,2 +1,9 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script lang="ts">
+	import Shell from '$lib/Shell.svelte';
+	import MainMenu from '$lib/Menu/MainMenu.svelte';
+</script>
+
+<Shell title="Home">
+	<div>&nbsp;</div>
+	<MainMenu slot="menu" />
+</Shell>
