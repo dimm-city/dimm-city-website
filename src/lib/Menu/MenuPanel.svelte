@@ -54,13 +54,25 @@
 		transition: all 300ms ease-in-out;
 	}
 	.menu-container {
+		opacity: 0;
 		height: 100%;
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 		grid-template-rows: max(4vh, 30px) 1fr;
 		filter: drop-shadow(0 0 2vh var(--pink));
-	}
+        animation: slideUp 380ms 10ms both ease-in-out;
+    }
 
+    @keyframes slideUp {
+        0% {
+            opacity: 0;
+            transform: translateY(200vh);
+        }
+        100% {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
 	.left-header,
 	.right-header {
 		cursor: pointer;

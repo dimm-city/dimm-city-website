@@ -5,6 +5,7 @@
 	import { showMenu } from './ShellStore';
 
 	import '../styles/main.css';
+	import '../styles/main.mobile.css';
 	export let title;
 	export let fullsize = true;
 </script>
