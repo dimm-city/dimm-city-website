@@ -2,6 +2,10 @@
     :root {
         --divider-gap: 3em;
     }
+     .vertical-acordion{
+        overflow: hidden;
+
+    }
     .top-panel{
         height: calc(85vh - var(--divider-gap));
     }
@@ -27,6 +31,10 @@
     .bottom .acordion-divider-decoration {
         --aug-border-bottom: 0.25vh;
     }
+    .bottom .accordion-divider .global-toolbar button.btn-menu {
+        transform: translate(0, 15%) rotateZ(180deg);
+    }
+    
     .vertical-acordion {
         width: 99vw;
     }

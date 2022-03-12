@@ -91,7 +91,7 @@
 		}
 
 		.content-wrapper.full-size {
-			height: 87vh;
+			height: 80vh;
 		}
 	}
 

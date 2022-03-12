@@ -26,6 +26,7 @@
 @media (max-width: 768px) {
 	.menu {
 		margin: 0;
+       
 	}
 	.menu-items {
 		grid-template-columns: repeat(1, 1fr);
@@ -35,6 +36,7 @@
 @media (max-width: 480px) {
 	.menu {
 		margin: 0;
+        margin-bottom: 10em;
 	}
 	.menu-items {
 		grid-template-columns: repeat(1, 1fr);
