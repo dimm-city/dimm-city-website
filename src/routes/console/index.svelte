@@ -8,7 +8,7 @@
 	import { showMenu } from '$lib/ShellStore';
 </script>
 
-<Shell title="Help">
+<Shell title="Console">
 	<div>Connection</div>
 	<MainMenu slot="menu" />
 </Shell>

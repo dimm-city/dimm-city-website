@@ -25,7 +25,7 @@
 		bottom: 0;
 		left: 0;
 		right: 0;
-		--ds: drop-shadow(0 0 2vh var(--pink));
+		--ds: drop-shadow(0 0 0.3rem var(--pink));
 		filter: var(--ds) var(--ds);
 		pointer-events: none;
 	}
@@ -37,7 +37,7 @@
 		right: 0;
 		pointer-events: none;
 		--aug-border: initial;
-		--aug-border-all: 0.5vh;
+		--aug-border-all: 0.2rem;
 		--aug-border-bg: var(--blue);
 	}
 	.augmented-content-decoration,
@@ -74,8 +74,7 @@
 		
 	}
 
-	.content-wrapper .iframe-wrapper {
-		padding: 3rem;
+	.content-wrapper .iframe-wrapper {		
 		height: 100%;
 		filter: drop-shadow(0 0 2vh var(--pink));
 		background: rgb(17 17 17 / 0.75);

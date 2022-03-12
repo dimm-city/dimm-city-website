@@ -4,13 +4,14 @@
 	import MenuItem from '$lib/Menu/MenuItem.svelte';
 	import { showMenu } from '$lib/ShellStore';
 	import { getStories } from '$lib/Stories/Store';
+	import ContentPane from '$lib/ContentPane.svelte';
 	$showMenu = true;
 
 	const loadStories = getStories();
 </script>
 
 <Shell title="History">
-	<div class="container">
+	<ContentPane>
 		<Menu>
 			{#await loadStories}
 				<span>Loading</span>
@@ -20,7 +21,7 @@
 				{/each}
 			{/await}
 		</Menu>
-	</div>
+	</ContentPane>
 	<Menu slot="menu">
 		{#await loadStories}
 			<span>Loading</span>
@@ -31,5 +32,3 @@
 		{/await}
 	</Menu>
 </Shell>
-
-

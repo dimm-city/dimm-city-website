@@ -1,8 +1,9 @@
 <script>
 	import MainMenu from './MainMenu.svelte';
 	export let header = '[missing]';
+	export let showMainMenuButton = true;
 	let showMainMenu = false;
-	const toggleMenu = () => (showMainMenu = !showMainMenu);
+	const toggleMenu = () => showMainMenuButton && (showMainMenu = !showMainMenu);
 </script>
 
 <div class="menu-container">
@@ -10,12 +11,11 @@
 		{header}
 	</div>
 	<div class="right-header" class:active={showMainMenu} data-augmented-ui="tr-clip r-clip" on:click={toggleMenu}>
-		<i class="bi bi-bezier2" />
+		{#if showMainMenuButton}
+			<i class="bi bi-bezier2" />
+		{/if}
 	</div>
-	<div
-		class="main-panel {showMainMenu ? 'main' : 'page'}"
-		data-augmented-ui="tl-2-clip-x tr-2-clip-x"
-	>
+	<div class="main-panel {showMainMenu ? 'main' : 'page'}" data-augmented-ui="tl-2-clip-x tr-2-clip-x">
 		<div class="page-menu">
 			<slot><MainMenu /></slot>
 		</div>
@@ -60,19 +60,19 @@
 		grid-template-columns: 1fr 1fr;
 		grid-template-rows: max(4vh, 30px) 1fr;
 		filter: drop-shadow(0 0 2vh var(--pink));
-        animation: slideUp 380ms 10ms both ease-in-out;
-    }
+		animation: slideUp 380ms 10ms both ease-in-out;
+	}
 
-    @keyframes slideUp {
-        0% {
-            opacity: 0;
-            transform: translateY(200vh);
-        }
-        100% {
-            transform: translateY(0);
-            opacity: 1;
-        }
-    }
+	@keyframes slideUp {
+		0% {
+			opacity: 0;
+			transform: translateY(200vh);
+		}
+		100% {
+			transform: translateY(0);
+			opacity: 1;
+		}
+	}
 	.left-header,
 	.right-header {
 		cursor: pointer;
@@ -105,14 +105,14 @@
 		text-align: center;
 	}
 
-    .right-header .bi::before{
-        transform: rotate(0deg);
-        transition: transform 300ms ease-in;
-    }
-    .right-header.active .bi::before{
-        transform: rotate(180deg);
-        transition: transform 300ms ease-in;
-    }
+	.right-header .bi::before {
+		transform: rotate(0deg);
+		transition: transform 300ms ease-in;
+	}
+	.right-header.active .bi::before {
+		transform: rotate(180deg);
+		transition: transform 300ms ease-in;
+	}
 	.main-panel {
 		padding: 3em 1em 0;
 		grid-area: 1 / 1 / 3 / 3;
@@ -133,7 +133,6 @@
 		background: rgb(17 17 17 / 0.75);
 	}
 
-   
 	@media (max-width: 576px) {
 		.left-header,
 		.right-header {
