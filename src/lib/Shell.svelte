@@ -8,6 +8,7 @@
 	import '../styles/main.mobile.css';
 	export let title;
 	export let fullsize = true;
+	export let showMenuButton = true;
 </script>
 
 <svelte:head>
@@ -31,7 +32,13 @@
 			aria-hidden="true"
 			data-augmented-ui="tl-clip l-clip t-clip-x b-clip-x tr-clip r-clip bl-clip br-clip"
 		/>
-		<button on:click={() => ($showMenu = !$showMenu)} data-augmented-ui="all-triangle-up border" />
+		<div class="global-toolbar">
+			<a href="/connection" data-augmented-ui="all-hex border"><i class="bi bi-key" /></a>
+			{#if showMenuButton}
+				<button on:click={() => ($showMenu = !$showMenu)} data-augmented-ui="all-triangle-up border" class="btn-menu" />
+			{/if}
+			<a href="/help" data-augmented-ui="all-hex border"><i class="bi bi-question-lg" /></a>
+		</div>
 	</div>
 	<div class="bottom-panel">
 		<MenuPanel header={title}>

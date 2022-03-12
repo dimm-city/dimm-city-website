@@ -32,11 +32,4 @@
 	</Menu>
 </Shell>
 
-<style>
-	.container {
-		padding: 3rem;
-		height: 100%;
-		filter: drop-shadow(0 0 2vh var(--pink));
-		background: rgb(17 17 17 / 0.75);
-	}
-</style>
+

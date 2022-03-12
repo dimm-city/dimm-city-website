@@ -56,7 +56,7 @@
 
 	.content-wrapper {
 		position: relative;
-		max-height: 87vh;
+		height: 87vh;
 		max-width: 100vw;
 		aspect-ratio: 16 / 9;
 		margin-top: calc((100vh - 100% / 16 * 9) / 2 - 5vh);
@@ -71,6 +71,15 @@
 		width: 100%;
 		height: 100%;
 		overflow: hidden;
+		
+	}
+
+	.content-wrapper .iframe-wrapper {
+		padding: 3rem;
+		height: 100%;
+		filter: drop-shadow(0 0 2vh var(--pink));
+		background: rgb(17 17 17 / 0.75);
+		color: var(--light);
 	}
 
 	@media all and (max-width: 768px), (max-aspect-ratio: 0.74) {
@@ -83,7 +92,7 @@
 		}
 
 		.content-wrapper.full-size {
-			max-height: 87vh;
+			height: 87vh;
 		}
 	}
 
