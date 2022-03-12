@@ -20,7 +20,7 @@
 	<slot name="head" />
 </svelte:head>
 
-<div class="vertical-acordion" class:bottom={$showMenu} class:top={!$showMenu}>
+<div class="vertical-acordion {title.toLowerCase()}" class:bottom={$showMenu} class:top={!$showMenu}>
 	<div class="top-panel">
 		<slot><ContentPane fullsize={true}>404</ContentPane></slot>
 	</div>

@@ -4,8 +4,6 @@
 </script>
 
 <Menu>
-	<MenuItem icon="bi bi-world" title="Home" url="/">Console home page</MenuItem>
-	<MenuItem icon="bi bi-journals" title="History" url="/history">History of Dimm City</MenuItem>
-	<MenuItem icon="bi bi-people" title="Sporos" url="/">Explore the Sporos that have been located</MenuItem>
-	<MenuItem icon="bi bi-journals" title="Archives" url="/history" />
+	<MenuItem icon="bi bi-journals" title="History" url="/history" description="History of Dimm City" />
+	<MenuItem icon="bi bi-people" title="Citizens" url="/" description="Explore the Sporos that have been located" />
 </Menu>

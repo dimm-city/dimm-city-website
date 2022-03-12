@@ -28,6 +28,7 @@
 <style>
 	.main-panel div {
 		width: 100%;
+		padding-top: 1rem;
 	}
 	.main-panel.page .page-menu {
 		transform: translateY(0);
@@ -42,8 +43,16 @@
 	.page-menu {
 		overflow-y: auto;
 		overflow-x: hidden;
+
+		scrollbar-color: var(--third-accent) var(--secondary-accent);
+		scrollbar-width: thin;
 	}
 
+	.page-menu::-webkit-scrollbar,
+	.main-menu::-webkit-scrollbar {
+		width: 0;
+		display: none;
+	}
 	.main-panel.main .main-menu {
 		transform: translateY(0);
 		transition: all 300ms ease-in-out;
@@ -57,6 +66,7 @@
 		opacity: 0;
 		height: 100%;
 		display: grid;
+		gap: 0.2rem;
 		grid-template-columns: 1fr 1fr;
 		grid-template-rows: max(4vh, 30px) 1fr;
 		filter: drop-shadow(0 0 2vh var(--pink));
