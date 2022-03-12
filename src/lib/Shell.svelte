@@ -3,7 +3,7 @@
 	import ContentPane from './ContentPane.svelte';
 	import MainMenu from './Menu/MainMenu.svelte';
 	import { showMenu } from './ShellStore';
-
+	import { connected } from './ChainStore';
 	import '../styles/main.css';
 	import '../styles/main.mobile.css';
 	export let title;
@@ -31,7 +31,9 @@
 			data-augmented-ui="tl-clip l-clip t-clip-x b-clip-x tr-clip r-clip bl-clip br-clip"
 		/>
 		<div class="global-toolbar">
-			<a href="/console" data-augmented-ui="all-hex border"><i class="bi bi-terminal-dash" /></a>
+			<a href="/console" data-augmented-ui="all-hex border"
+				><i class="bi" class:bi-terminal-dash={!$connected} class:bi-terminal-fill={$connected} /></a
+			>
 			{#if showMenuButton}
 				<button on:click={() => ($showMenu = !$showMenu)} data-augmented-ui="all-triangle-up border" class="btn-menu" />
 			{/if}

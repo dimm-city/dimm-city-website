@@ -5,7 +5,8 @@
 <script lang="ts">
 	import Shell from '$lib/Shell.svelte';
 	import Menu from '$lib/Menu/Menu.svelte';
-	import { showMenu, isConnected } from '$lib/ShellStore';
+	import { showMenu } from '$lib/ShellStore';
+	import { connect, connected, disconnect, address, network } from '$lib/ChainStore';
 	import MenuItem from '$lib/Menu/MenuItem.svelte';
 </script>
 
@@ -13,10 +14,15 @@
 	<div>Connection</div>
 
 	<Menu slot="menu">
-		{#if $isConnected}
-			<MenuItem>Wallet</MenuItem>
+		{#if $connected}
+			<MenuItem>
+				<div>Wallet: {$address}</div>
+				<div>Network: {$network.name}</div>
+
+			</MenuItem>
+			<MenuItem on:click={disconnect}>Disconnect</MenuItem>
 		{:else}
-			<MenuItem>Connect</MenuItem>
+			<MenuItem on:click={connect}>Connect</MenuItem>
 		{/if}
 	</Menu>
 </Shell>
