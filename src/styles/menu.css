@@ -12,12 +12,14 @@
 	display: grid;
 	gap: 1em;
 	max-width: 100%;
-	--menu-col: 2;
-	grid-template-columns: repeat(var(--menu-col), 1fr);
+	grid-template-columns: repeat(2, 1fr);
 	list-style: none;
 	overflow-y: visible;
 	scrollbar-width: none;
-	
+}
+
+.menu-items.col-1 {
+	grid-template-columns: repeat(1, 1fr);
 }
 .menu-items::--webkit-scrollbar {
 	scrollbar-color: var(--third-accent) var(--secondary-accent);
@@ -27,7 +29,6 @@
 .menu-items > * {
 	max-width: 90vw;
 	overflow-x: hidden;
-
 }
 
 @media (max-width: 768px) {

@@ -5,7 +5,7 @@
 	export let description = '';
 </script>
 
-<a href={url} on:click>
+<a href={url} on:click class="fade-zoom-in">
 	<div class="menu-item" data-augmented-ui>
 		<slot>
 			<p><i class={icon} />{title}</p>
@@ -13,20 +13,3 @@
 		</slot>
 	</div>
 </a>
-
-<style>
-	a {
-		animation: slideUp 300ms both ease-in;
-	}
-
-	@keyframes slideUp {
-		0% {
-			opacity: 0;
-			transform: translateY(200vh);
-		}
-		100% {
-			transform: translateY(0);
-			opacity: 1;
-		}
-	}
-</style>

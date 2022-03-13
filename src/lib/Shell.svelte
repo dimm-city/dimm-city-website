@@ -36,12 +36,12 @@
 </svelte:head>
 
 <div class="vertical-acordion {title.toLowerCase()}" class:bottom={$showMenu} class:top={!$showMenu}>
-	<div class="top-panel">
+	<div class="top-panel slide-in-down">
 		<slot><ContentPane fullsize={true}>404</ContentPane></slot>
 	</div>
 	<div class="accordion-divider">
 		<div
-			class="acordion-divider-decoration"
+			class="acordion-divider-decoration fade-in"
 			aria-hidden="true"
 			data-augmented-ui="tl-clip l-clip t-clip-x b-clip-x tr-clip r-clip bl-clip br-clip"
 		/>
