@@ -17,16 +17,22 @@
 	list-style: none;
 	overflow-y: visible;
 	scrollbar-width: none;
+	
 }
 .menu-items::--webkit-scrollbar {
 	scrollbar-color: var(--third-accent) var(--secondary-accent);
 	scrollbar-width: thin;
 }
 
+.menu-items > * {
+	max-width: 90vw;
+	overflow-x: hidden;
+
+}
+
 @media (max-width: 768px) {
 	.menu {
 		margin: 0;
-       
 	}
 	.menu-items {
 		grid-template-columns: repeat(1, 1fr);
@@ -36,7 +42,7 @@
 @media (max-width: 480px) {
 	.menu {
 		margin: 0;
-        margin-bottom: 10em;
+		margin-bottom: 10em;
 	}
 	.menu-items {
 		grid-template-columns: repeat(1, 1fr);
@@ -47,7 +53,7 @@
 .menu-item {
 	height: 8em;
 	cursor: pointer;
-	padding: 1em;
+	padding: 1rem;
 	min-height: 20%;
 	font-size: 2.5vh;
 	color: white;

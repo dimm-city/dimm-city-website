@@ -3,12 +3,27 @@
 	import ContentPane from './ContentPane.svelte';
 	import MainMenu from './Menu/MainMenu.svelte';
 	import { showMenu } from './ShellStore';
-	import { connected } from './ChainStore';
+	import { connect, connected, disconnect } from './ChainStore';
 	import '../styles/main.css';
 	import '../styles/main.mobile.css';
+	import '../styles/animations.css';
+	import 'animate.css';
+	import { onMount } from 'svelte';
+	import { fade } from 'svelte/transition';
 	export let title;
 	export let showMenuButton = true;
 	export let showMainMenuButton = true;
+	onMount(async () => {
+		// if(window.ethereum && window.ethereum.isConnected()){
+		// 	connect();
+		// }
+		// window.ethereum.on('connect', (connectInfo) => {
+		// 	connect();
+		// });
+		// window.ethereum.on('disconnect', (error) => {
+		// 	disconnect();
+		// });
+	});
 </script>
 
 <svelte:head>
@@ -31,13 +46,17 @@
 			data-augmented-ui="tl-clip l-clip t-clip-x b-clip-x tr-clip r-clip bl-clip br-clip"
 		/>
 		<div class="global-toolbar">
-			<a href="/console" data-augmented-ui="all-hex border"
-				><i class="bi" class:bi-terminal-dash={!$connected} class:bi-terminal-fill={$connected} /></a
-			>
+			<a href="/console" data-augmented-ui="all-hex border">
+				{#if $connected}
+					<i class="bi bi-window-dock fade-in" />
+				{:else}
+					<i class="bi bi-window-dash fade-in" />
+				{/if}
+			</a>
 			{#if showMenuButton}
 				<button on:click={() => ($showMenu = !$showMenu)} data-augmented-ui="all-triangle-up border" class="btn-menu" />
 			{/if}
-			<a href="/help" data-augmented-ui="all-hex border"><i class="bi bi-question-lg" /></a>
+			<a href="/help" data-augmented-ui="all-hex border"><i class="bi bi-question-lg fade-in" /></a>
 		</div>
 	</div>
 	<div class="bottom-panel">

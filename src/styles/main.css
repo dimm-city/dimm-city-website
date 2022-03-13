@@ -1,8 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Tomorrow:400,700&display=swap');
 @import url('../../node_modules/augmented-ui/augmented-ui.min.css');
+@import url('../../node_modules/animate.css/animate.min.css');
 @import url('./variables.css');
 @import url('./controls.css');
 @import url('./menu.css');
+@import url('./animations.css');
 * {
 	margin: 0;
 	padding: 0;
@@ -135,6 +137,7 @@ a {
 
 .top-panel {
 	transition: margin-top var(--easing);
+	overflow-y: hidden;
 }
 .bottom .top-panel {
 	margin-top: -100vh;

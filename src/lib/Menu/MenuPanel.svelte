@@ -6,7 +6,8 @@
 	const toggleMenu = () => showMainMenuButton && (showMainMenu = !showMainMenu);
 </script>
 
-<div class="menu-container">
+<div class="menu-container slide-in-up">
+	<div class="menu-toolbar" />
 	<div class="left-header" data-augmented-ui="tl-clip l-clip">
 		{header}
 	</div>
@@ -70,19 +71,14 @@
 		grid-template-columns: 1fr 1fr;
 		grid-template-rows: max(4vh, 30px) 1fr;
 		filter: drop-shadow(0 0 2vh var(--pink));
-		animation: slideUp 380ms 10ms both ease-in-out;
+		animation: fadeInUpBig 380ms 10ms both ease-in-out;
 	}
 
-	@keyframes slideUp {
-		0% {
-			opacity: 0;
-			transform: translateY(200vh);
-		}
-		100% {
-			transform: translateY(0);
-			opacity: 1;
-		}
-	}
+	.menu-toolbar {
+		position: absolute;
+		left: 50%;
+		top: 1em;
+	}	
 	.left-header,
 	.right-header {
 		cursor: pointer;

@@ -7,20 +7,22 @@
 
     }
     .top-panel{
-        height: calc(85vh - var(--divider-gap));
+        /* height: calc(85vh - var(--divider-gap)); */
+        height: 80vh;
     }
 
-    .accordion-divider,
+    /* .accordion-divider,
     .acordion-divider-decoration {
         height: calc(10vh - var(--divider-gap));
         min-height: 3vh;
-    }
+    } */
     .bottom-panel {
         height: 94vh;
+        max-width: 98vw;
     }
     .bottom .bottom-panel {
-        top: 5vh;
-        transform: translateY(1vh);
+        top: 0vh;
+        transform: translateY(10vh);
     }
 }
 

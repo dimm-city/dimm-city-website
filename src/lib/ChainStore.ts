@@ -1,32 +1,35 @@
 import { Web3Provider, type Network } from '@ethersproject/providers';
-import { BigNumber, ethers } from 'ethers';
+import { type Signer } from 'ethers';
 // import { ContractContext } from "../contracts/DimmCityV1Base";
 // import { config } from "../configuration/config";
 import abiJson from '../contracts/DimmCityV1Base.json';
-import Web3Modal, { type ChainData } from 'web3modal';
-import { derived, writable, type Readable, type Writable } from 'svelte/store';
+import Web3Modal from 'web3modal';
+import { derived, get, writable, type Writable } from 'svelte/store';
 
 declare let window: any;
-
+// interface Window {
+// 	ethereum?: import('ethers').providers.Web3Provider;
+//   }
 let _provider: Web3Provider;
-let _signer: ethers.Signer;
+let _signer: Signer;
 let _network: Network;
+let _selectedAddress: string;
 
-export const signer: Writable<ethers.Signer> = writable(_signer, null);
+export const signer: Writable<Signer> = writable(_signer, null);
 export const address = writable();
 export const provider = writable();
 export const connected = writable(false);
 export const network: Writable<Network> = writable();
 
 //let contract: ContractContext;
-let packCost: BigNumber;
+//let packCost: BigNumber;
 //let connected = false;
-let signerAddress: string;
+
 let contractConfig;
 
-export const getSignerAddress = () => signerAddress;
+export const getSignerAddress = () => _selectedAddress;
 
-export function disconnect() {
+export function disconnect() {	
 	connected.set(false);
 }
 export async function connect() {
@@ -41,15 +44,18 @@ export async function connect() {
 	});
 
 	const instance = await web3Modal.connect();
-	_provider = new ethers.providers.Web3Provider(instance);
+	_provider = new Web3Provider(instance);
+	provider.set(_provider);
 
-	
+	window.ethereum.on('chainChanged', (_chainId) => {
+		console.log(_chainId);
+		window.location.reload();
+	});
+	await updateDetails();
 
-	_signer = _provider.getSigner();
-	signerAddress = await _signer.getAddress();
-	_network = await _provider.getNetwork();
+	connected.set(true);
 
-	console.log('provider', _provider, _network);// contractConfig = config.releases.s1r1.networks.find(
+	//console.log('provider', _provider, _network); // contractConfig = config.releases.s1r1.networks.find(
 	//   (n) => n.chainId === network.chainId
 	// );
 
@@ -61,10 +67,6 @@ export async function connect() {
 
 	// packCost = await contract.getPackCost();
 
-	// __provider.on('accountschanged', (accounts) => {
-	// 	console.log('on provider', accounts);
-	// });
-
 	// //if (__provider.on) {
 	// // TODO handle disconnect/connect events
 	// __provider.on('accountsChanged', (accounts) => {
@@ -75,11 +77,15 @@ export async function connect() {
 	// // __provider.on('chainChanged', chainChangedHandler)
 	// // __provider.on('disconnect', disconnectHandler)
 	// //}
+}
 
-	provider.set(_provider);
+export async function updateDetails() {
+	_signer = _provider.getSigner();
+	_selectedAddress = await _signer.getAddress();
+	_network = await _provider.getNetwork();
+
 	signer.set(_signer);
-	connected.set(true);
-	address.set(signerAddress);
+	address.set(_selectedAddress);
 	network.set(_network);
 }
 
