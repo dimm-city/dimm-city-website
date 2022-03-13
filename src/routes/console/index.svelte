@@ -70,7 +70,7 @@
 </script>
 
 <Shell title="Console">
-	<ContentPane>
+	<ContentPane padding={0}>
 		<div class="content-container">
 			{#if $loggedIn}
 				{#if selectedSporo.id > 0}
@@ -79,13 +79,15 @@
 					</div>
 				{:else}
 					<div class="fade-in">
-						<h4>Your Sporos</h4>
+						<h2>Your Sporos</h2>
 						{#await loadingTask}
 							<span>Locating sporos...</span>
 						{:then}
 							<ul>
 								{#each $myCollection as sporo}
-									<li data-augmented-ui class="small-menu-item" on:click={() => (selectedSporo = sporo)}>{sporo.name}</li>
+									<li data-augmented-ui class="small-menu-item" on:click={() => (selectedSporo = sporo)}>
+										{sporo.name}
+									</li>
 								{/each}
 							</ul>
 						{/await}
@@ -113,16 +115,14 @@
 					{/await}
 				</div>
 			</MenuItem>
-			<MenuItem>
-				<div on:click={viewSporos}>
-					<strong>Your Sporos</strong>
-					<div>
-						{#await $contract.balanceOf($signerAddress)}
-							<span>Locating sporos...</span>
-						{:then count}
-							{count}
-						{/await}
-					</div>
+			<MenuItem on:click={viewSporos}>
+				<strong>Your Sporos</strong>
+				<div>
+					{#await $contract.balanceOf($signerAddress)}
+						<span>Locating sporos...</span>
+					{:then count}
+						{count}
+					{/await}
 				</div>
 			</MenuItem>
 		{:else}
@@ -132,9 +132,14 @@
 </Shell>
 
 <style>
+	.content-container {
+		padding: 1rem;
+	}
+	h2 {
+		text-align: center;
+	}
 	.toolbar {
 		display: flex;
-
 		justify-content: space-between;
 	}
 </style>

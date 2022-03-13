@@ -8,6 +8,7 @@
 	import '../styles/animations.css';
 	import 'animate.css';
 	import { onMount } from 'svelte';
+import { config } from './config';
 	export let title;
 	export let showMenuButton = true;
 	export let showMainMenuButton = true;
@@ -46,6 +47,7 @@
 			aria-hidden="true"
 			data-augmented-ui="tl-clip l-clip t-clip-x b-clip-x tr-clip r-clip bl-clip br-clip"
 		/>
+		<div class="version"><small>v {config.version}</small></div>
 		<div class="global-toolbar">
 			<a href="/console" data-augmented-ui="all-hex border">
 				{#if $loggedIn}
@@ -56,8 +58,10 @@
 			</a>
 			{#if showMenuButton}
 				<button on:click={() => ($showMenu = !$showMenu)} data-augmented-ui="all-triangle-up border" class="btn-menu" />
+				
 			{/if}
 			<a href="/help" data-augmented-ui="all-hex border"><i class="bi bi-question-lg fade-in" /></a>
+			
 		</div>
 	</div>
 	<div class="bottom-panel">

@@ -26,12 +26,11 @@ a {
 	text-decoration: none;
 	color: var(--text-color);
 	transition: all var(--transition-in-time) ease;
-	
 }
-a:hover, a:active{
+a:hover,
+a:active {
 	text-shadow: 1px 1px var(--secondary-accent);
 	transition: all var(--transition-in-time) ease;
-	
 }
 
 *::-webkit-scrollbar {
@@ -39,7 +38,7 @@ a:hover, a:active{
 }
 
 *::-webkit-scrollbar-track {
-	background: transparent; /* var(--third-accent); /* color of the tracking area */	
+	background: transparent; /* var(--third-accent); /* color of the tracking area */
 }
 
 *::-webkit-scrollbar-thumb {
@@ -143,6 +142,22 @@ a:hover, a:active{
 	transform: translate(0, 100%) rotateZ(180deg);
 }
 
+.version {
+	color: var(--third-accent);
+	position: absolute;
+	bottom: 0em;
+	padding-right: 1rem;
+	width: 100%;
+	display: flex;
+	justify-content: end;
+	transition: all var(--transition-in-time);
+	font-size: 0.75rem;
+}
+
+.bottom .version {
+	bottom: 0.3em;
+	padding-right: 1.2rem;
+}
 .global-toolbar i {
 	margin: 0;
 	font-size: 1.5rem;
@@ -168,7 +183,7 @@ a:hover, a:active{
 
 .top-panel {
 	transition: margin-top var(--easing);
-	overflow-y: hidden;
+	overflow: hidden;
 }
 .bottom .top-panel {
 	margin-top: -100vh;
