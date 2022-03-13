@@ -1,15 +1,14 @@
 import { Web3Provider, type Network } from '@ethersproject/providers';
-import { type Signer } from 'ethers';
-// import { ContractContext } from "../contracts/DimmCityV1Base";
-// import { config } from "../configuration/config";
-import abiJson from '../contracts/DimmCityV1Base.json';
+import { BigNumber, Contract, type Signer } from 'ethers';
+
 import Web3Modal from 'web3modal';
 import { derived, get, writable, type Writable } from 'svelte/store';
+import type { ContractContext } from 'src/contracts/DimmCityV1Base';
+import { config } from './config';
+import abiJson from '../contracts/DimmCityV1Base.json';
 
 declare let window: any;
-// interface Window {
-// 	ethereum?: import('ethers').providers.Web3Provider;
-//   }
+
 let _provider: Web3Provider;
 let _signer: Signer;
 let _network: Network;
@@ -21,15 +20,13 @@ export const provider = writable();
 export const connected = writable(false);
 export const network: Writable<Network> = writable();
 
-//let contract: ContractContext;
-//let packCost: BigNumber;
-//let connected = false;
-
-let contractConfig;
+let packCost: BigNumber;
+let contractConfig; // = config.releases.s1r1.networks.find((n) => n.chainId === get(network).chainId);
+let contract; // = new ethers.Contract(contractConfig.address, abiJson.abi, get(signer)) as unknown as ContractContext;
 
 export const getSignerAddress = () => _selectedAddress;
 
-export function disconnect() {	
+export function disconnect() {
 	connected.set(false);
 }
 export async function connect() {
@@ -59,14 +56,6 @@ export async function connect() {
 	//   (n) => n.chainId === network.chainId
 	// );
 
-	// contract = new ethers.Contract(
-	//   contractConfig.address,
-	//   abiJson.abi,
-	//   signer
-	// ) as unknown as ContractContext;
-
-	// packCost = await contract.getPackCost();
-
 	// //if (__provider.on) {
 	// // TODO handle disconnect/connect events
 	// __provider.on('accountsChanged', (accounts) => {
@@ -87,56 +76,55 @@ export async function updateDetails() {
 	signer.set(_signer);
 	address.set(_selectedAddress);
 	network.set(_network);
+
+	contractConfig = config.releases.s1r1.networks.find((n) => n.chainId === _network.chainId);
+
+	contract = new Contract(contractConfig.address, abiJson.abi, _signer) as unknown as ContractContext;
 }
 
-// export async function getDetails() {
-//   if (!connected) await connect();
-//   const phase = await contract.ReleasePhase();
-//   const cost = await contract.getPackCost();
-//   console.log(phase, cost.toString());
-// }
+export async function getDetails() {
+	if (!get(connected)) await connect();
+	const phase = await contract.ReleasePhase();
+	const cost = await contract.getPackCost();
+	console.log(phase, cost.toString());
+}
 
-// export const getNumberSporos = async () =>
-//   (await contract.balanceOf(signerAddress)).toNumber();
+export const getNumberSporos = async () => (await contract.balanceOf(getSignerAddress())).toNumber();
 
-// export async function buyPack(numberToMint: Number) {
-//   if (!connected) await connect();
-//   let value = packCost.mul(BigNumber.from(numberToMint));
-//   await contract.buyPack(
-//     await signer.getAddress(),
-//     BigNumber.from(numberToMint),
-//     true,
-//     { value: value }
-//   );
+export async function buyPack(numberToMint: number) {
+	if (!get(connected)) await connect();
+	const _signer = get(signer);
+	const value = packCost.mul(BigNumber.from(numberToMint));
+	await contract.buyPack(await _signer.getAddress(), BigNumber.from(numberToMint), true, { value: value });
 
-//   let balance = await signer.getBalance();
+	const balance = await _signer.getBalance();
 
-//   console.log(balance.toString());
-// }
+	console.log(balance.toString());
+}
 
-// export async function getSporos(): Promise<Array<object>> {
-//   const number = (await contract.balanceOf(signerAddress)).toNumber();
+export async function getSporos(): Promise<Array<object>> {
+	const number = (await contract.balanceOf(getSignerAddress())).toNumber();
 
-//   const tasks = new Array<Promise<any>>();
-//   for (let index = 0; index < number; index++) {
-//     const sporo = await contract.tokenOfOwnerByIndex(signerAddress, index);
-//     const tokenId = sporo.toNumber();
-//     tasks.push(downloadSporo(tokenId));
-//   }
+	const tasks = new Array<Promise<any>>();
+	for (let index = 0; index < number; index++) {
+		const sporo = await contract.tokenOfOwnerByIndex(getSignerAddress(), index);
+		const tokenId = sporo.toNumber();
+		tasks.push(downloadSporo(tokenId));
+	}
 
-//   return Promise.all(tasks);
-// }
+	return Promise.all(tasks);
+}
 
-// async function downloadSporo(tokenId: Number): Promise<object> {
-//   let json = {};
-//   try {
-//     const response = await fetch(`${contractConfig.metadataBaseUri}/${tokenId}`);
+async function downloadSporo(tokenId: number): Promise<object> {
+	let json = {};
+	try {
+		const response = await fetch(`${contractConfig.metadataBaseUri}/${tokenId}`);
 
-//     if (response.ok) {
-//       json = await response.json();
-//     }
-//   } catch (error) {
-//     console.error(error);
-//   }
-//   return json;
-// }
+		if (response.ok) {
+			json = await response.json();
+		}
+	} catch (error) {
+		console.error(error);
+	}
+	return json;
+}
