@@ -1,8 +1,9 @@
 <script>
 	export let fullsize = true;
+	export let padding = 3;
 </script>
 
-<div class="content-wrapper" class:full-size={fullsize}>
+<div class="content-wrapper padding-{padding}" class:full-size={fullsize}>
 	<div
 		class="iframe-wrapper"
 		data-augmented-ui="bl-clip-inset br-clip-inset tl-2-clip-xy tr-2-clip-xy l-rect r-rect t-clip"
@@ -68,17 +69,32 @@
 	}
 	.content-wrapper .iframe-wrapper {
 		display: block;
-		width: 100%;
-		height: 100%;
+		width: 99%;
+		height: 99%;
+		margin: auto;
 		overflow: hidden;
-		
-	}
-
-	.content-wrapper .iframe-wrapper {		
 		height: 100%;
 		filter: drop-shadow(0 0 2vh var(--pink));
 		background: rgb(17 17 17 / 0.75);
 		color: var(--light);
+		overflow-y: auto;
+
+		scrollbar-color: var(--third-accent) var(--secondary-accent);
+		scrollbar-width: thin;
+
+	}
+
+	.iframe-wrapper::-webkit-scrollbar
+	{
+		color: var(--secondary-accent);
+		/* width: 100px; */
+		
+	}
+	.content-wrapper.padding-0 .iframe-wrapper{
+		padding: 0;
+	}
+	.content-wrapper.padding-3 .iframe-wrapper{
+		padding: 1rem 3em;
 	}
 
 	@media all and (max-width: 768px), (max-aspect-ratio: 0.74) {

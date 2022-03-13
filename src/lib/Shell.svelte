@@ -2,14 +2,12 @@
 	import MenuPanel from './Menu/MenuPanel.svelte';
 	import ContentPane from './ContentPane.svelte';
 	import MainMenu from './Menu/MainMenu.svelte';
-	import { showMenu } from './ShellStore';
-	import { connect, connected, disconnect } from './ChainStore';
+	import { showMenu, loggedIn } from './ShellStore';
 	import '../styles/main.css';
 	import '../styles/main.mobile.css';
 	import '../styles/animations.css';
 	import 'animate.css';
 	import { onMount } from 'svelte';
-	import { fade } from 'svelte/transition';
 	export let title;
 	export let showMenuButton = true;
 	export let showMainMenuButton = true;
@@ -38,6 +36,9 @@
 <div class="vertical-acordion {title.toLowerCase()}" class:bottom={$showMenu} class:top={!$showMenu}>
 	<div class="top-panel slide-in-down">
 		<slot><ContentPane fullsize={true}>404</ContentPane></slot>
+		<div class="content-toolbar-container">
+			<slot name="content-toolbar"></slot>
+		</div>
 	</div>
 	<div class="accordion-divider">
 		<div
@@ -47,7 +48,7 @@
 		/>
 		<div class="global-toolbar">
 			<a href="/console" data-augmented-ui="all-hex border">
-				{#if $connected}
+				{#if $loggedIn}
 					<i class="bi bi-window-dock fade-in" />
 				{:else}
 					<i class="bi bi-window-dash fade-in" />

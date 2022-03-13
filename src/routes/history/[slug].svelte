@@ -11,8 +11,8 @@
 	$showMenu = false;
 </script>
 
-<Shell title="Stories">
-	<ContentPane>
+<Shell title="History">
+	<ContentPane padding={0}>
 		<StoryViewer story={defaultStory} bind:this={viewer} />
 	</ContentPane>
 	<StoryMenu slot="menu" {viewer} />

@@ -6,13 +6,13 @@
 @import url('./menu.css');
 @import url('./animations.css');
 * {
-	margin: 0;
-	padding: 0;
 	box-sizing: border-box;
 }
 
 html,
 body {
+	margin: 0;
+	padding: 0;
 	min-height: 100%;
 	overflow: hidden;
 	font-family: var(--main-font-family);
@@ -24,6 +24,28 @@ html {
 }
 a {
 	text-decoration: none;
+	color: var(--text-color);
+	transition: all var(--transition-in-time) ease;
+	
+}
+a:hover, a:active{
+	text-shadow: 1px 1px var(--secondary-accent);
+	transition: all var(--transition-in-time) ease;
+	
+}
+
+*::-webkit-scrollbar {
+	width: 0.3rem; /* width of the entire scrollbar */
+}
+
+*::-webkit-scrollbar-track {
+	background: transparent; /* var(--third-accent); /* color of the tracking area */	
+}
+
+*::-webkit-scrollbar-thumb {
+	background-color: var(--primary-accent); /* color of the scroll thumb */
+	border-radius: 0.1rem; /* roundness of the scroll thumb */
+	border: 1px solid var(--fourth-accent); /* creates padding around scroll thumb */
 }
 
 .vertical-acordion {
@@ -125,6 +147,15 @@ a {
 	margin: 0;
 	font-size: 1.5rem;
 	color: var(--light);
+}
+
+.content-toolbar-container {
+	/* background: var(--menu-inlay-bg-color); */
+	width: 100%;
+	position: absolute;
+	padding: 0 1rem;
+	margin-bottom: -2rem;
+	top: 3rem;
 }
 
 .accordion-divider {
