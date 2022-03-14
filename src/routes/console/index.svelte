@@ -138,4 +138,8 @@
 	h2 {
 		text-align: center;
 	}
+	.small-menu-item{
+		display: flex;
+		justify-content: space-between;
+	}
 </style>
