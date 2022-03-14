@@ -1,6 +1,6 @@
 export const getCharacterBySlugQuery = `
-  query getCharacterBySlug($slug: String!) {
-    character(slug: $slug) {      
+  query getCharacterBySlug($tokenId: String!) {
+    characters(filters: { tokenId: { eq: $tokenId } }) {      
       data {
         id
         attributes {

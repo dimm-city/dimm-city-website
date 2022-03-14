@@ -110,30 +110,30 @@ export async function buyPack(numberToMint: number) {
 	console.log(balance.toString());
 }
 
-export async function getSporos(): Promise<Array<object>> {
-	const address = get(signerAddress);
-	const number = (await _contract.balanceOf(address)).toNumber();
+// export async function getSporos(): Promise<Array<object>> {
+// 	const address = get(signerAddress);
+// 	const number = (await _contract.balanceOf(address)).toNumber();
 
-	const tasks = new Array<Promise<any>>();
-	for (let index = 0; index < number; index++) {
-		const sporo = await _contract.tokenOfOwnerByIndex(address, index);
-		const tokenId = sporo.toNumber();
-		tasks.push(downloadSporo(tokenId));
-	}
+// 	const tasks = new Array<Promise<any>>();
+// 	for (let index = 0; index < number; index++) {
+// 		const sporo = await _contract.tokenOfOwnerByIndex(address, index);
+// 		const tokenId = sporo.toNumber();
+// 		tasks.push(downloadSporo(tokenId));
+// 	}
 
-	return Promise.all(tasks);
-}
+// 	return Promise.all(tasks);
+// }
 
-async function downloadSporo(tokenId: number): Promise<object> {
-	let json = {};
-	try {
-		const response = await fetch(`${get(contractConfig).metadataBaseUri}/${tokenId}`);
+// async function downloadSporo(tokenId: number): Promise<object> {
+// 	let json = {};
+// 	try {
+// 		const response = await fetch(`${get(contractConfig).metadataBaseUri}/${tokenId}`);
 
-		if (response.ok) {
-			json = await response.json();
-		}
-	} catch (error) {
-		console.error(error);
-	}
-	return json;
-}
+// 		if (response.ok) {
+// 			json = await response.json();
+// 		}
+// 	} catch (error) {
+// 		console.error(error);
+// 	}
+// 	return json;
+// }

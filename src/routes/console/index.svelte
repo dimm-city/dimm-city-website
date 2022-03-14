@@ -20,6 +20,8 @@
 
 	let loadingTask: Promise<void>;
 	let selectedSporo = {} as any;
+
+	$: tokenId = `${selectedSporo.release}-${selectedSporo.edition}`;
 	$showMenu = true;
 	//$: contractConfig = config.releases.s1r1.networks.find((n) => n.chainId === $chainId);
 	$: network = $connected ? $provider.getNetwork() : ({} as any);
@@ -43,7 +45,7 @@
 		for (let index = 0; index < number; index++) {
 			const sporo = await $contract.tokenOfOwnerByIndex(address, index);
 			const tokenId = sporo.toNumber();
-			tasks.push(downloadSporo(tokenId));
+			tasks.push(await downloadSporo(tokenId));
 		}
 
 		return Promise.all(tasks).then((sporos) => ($myCollection = sporos));
@@ -73,9 +75,9 @@
 	<ContentPane padding={0}>
 		<div class="content-container">
 			{#if $loggedIn}
-				{#if selectedSporo.id > 0}
+				{#if selectedSporo.edition > 0}
 					<div class="fade-in">
-						<Character character={selectedSporo} />
+						<Character {tokenId} />
 					</div>
 				{:else}
 					<div class="fade-in">
@@ -86,7 +88,7 @@
 							<ul>
 								{#each $myCollection as sporo}
 									<li data-augmented-ui class="small-menu-item" on:click={() => (selectedSporo = sporo)}>
-										{sporo.name}
+										{sporo.name} <small> {sporo.release}-{sporo.edition}</small>
 									</li>
 								{/each}
 							</ul>
@@ -97,7 +99,7 @@
 		</div>
 	</ContentPane>
 	<div slot="content-toolbar">
-		{#if selectedSporo.id > 0}
+		{#if selectedSporo.edition > 0}
 			<Button on:click={() => (selectedSporo = {})}>edit</Button>
 			<Button on:click={() => (selectedSporo = {})}>back</Button>
 		{/if}

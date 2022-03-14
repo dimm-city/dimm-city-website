@@ -11,3 +11,5 @@ export const loggedIn = derived(
 );
 
 export const myCollection = writable([]);
+
+export const characters = writable([]);
