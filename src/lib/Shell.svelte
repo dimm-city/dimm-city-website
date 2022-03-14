@@ -8,7 +8,7 @@
 	import '../styles/animations.css';
 	import 'animate.css';
 	import { onMount } from 'svelte';
-import { config } from './config';
+	import { config } from './config';
 	export let title;
 	export let showMenuButton = true;
 	export let showMainMenuButton = true;
@@ -38,7 +38,9 @@ import { config } from './config';
 	<div class="top-panel slide-in-down">
 		<slot><ContentPane fullsize={true}>404</ContentPane></slot>
 		<div class="content-toolbar-container">
-			<slot name="content-toolbar"></slot>
+			<div class="toolbar fade-in">
+				<slot name="content-toolbar" />
+			</div>
 		</div>
 	</div>
 	<div class="accordion-divider">
@@ -58,10 +60,8 @@ import { config } from './config';
 			</a>
 			{#if showMenuButton}
 				<button on:click={() => ($showMenu = !$showMenu)} data-augmented-ui="all-triangle-up border" class="btn-menu" />
-				
 			{/if}
 			<a href="/help" data-augmented-ui="all-hex border"><i class="bi bi-question-lg fade-in" /></a>
-			
 		</div>
 	</div>
 	<div class="bottom-panel">

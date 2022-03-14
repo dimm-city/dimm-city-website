@@ -98,10 +98,8 @@
 	</ContentPane>
 	<div slot="content-toolbar">
 		{#if selectedSporo.id > 0}
-			<div class="toolbar fade-in">
-				<Button on:click={() => (selectedSporo = {})}>back</Button>
-				<Button on:click={() => (selectedSporo = {})}>edit</Button>
-			</div>
+			<Button on:click={() => (selectedSporo = {})}>edit</Button>
+			<Button on:click={() => (selectedSporo = {})}>back</Button>
 		{/if}
 	</div>
 	<Menu slot="menu" columns={$loggedIn ? '2' : '1'}>
@@ -137,9 +135,5 @@
 	}
 	h2 {
 		text-align: center;
-	}
-	.toolbar {
-		display: flex;
-		justify-content: space-between;
 	}
 </style>

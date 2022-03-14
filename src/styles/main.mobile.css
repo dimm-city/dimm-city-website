@@ -7,7 +7,7 @@
 	}
 	.top-panel {
 		/* height: calc(85vh - var(--divider-gap)); */
-		height: 80vh;
+		height: 90vh;
 	}
 
 	/* .accordion-divider,
@@ -43,9 +43,12 @@
 		width: 100vw;		
 		padding: 0;
 		margin-bottom: 0rem;
-		top: 0rem;
-        background-color: var(--menu-inlay-bg-color-hover);
+		top: 80vh;
+        background-color: #000000ad;
 	}
+    .content-toolbar-container > .toolbar > div {
+        justify-content: space-around;
+    }
 
     .content-toolbar-container .aug-button {
         margin: 0.5rem 1rem;
