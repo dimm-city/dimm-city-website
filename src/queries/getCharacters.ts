@@ -4,6 +4,7 @@ query {
      data{
        id
        attributes{
+         tokenId
          name
          race {
             data {

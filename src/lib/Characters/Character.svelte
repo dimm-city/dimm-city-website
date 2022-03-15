@@ -1,16 +1,23 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { getCharacterQuery } from '../../queries/getCharacter';
 	import { getCharacterBySlugQuery } from '../../queries/getCharacterBySlug';
 	import { config } from '$lib/config';
-	import './characters.css';
-	import { characters, myCollection } from '$lib/ShellStore';
+	import { characters, myCollection, showMenu } from '$lib/ShellStore';
+	import { set_attributes } from 'svelte/internal';
 	export let tokenId; // `dcs1r1-${id}`;
 	let character;
 
-	$: if (!tokenId || tokenId.length < 1) {
-		character = {};
+	$: {
+		console.log('updated');
+		
+		if (!tokenId || tokenId.length < 1) {
+			character = {};
+		} else {
+			query = loadCharacter();
+			$showMenu = false;
+		}
 	}
+
 	let query = new Promise(() => {});
 
 	function loadCharacter() {
@@ -44,10 +51,12 @@
 
 					if (character != null) {
 						character.metadata = sporo;
-						character.thumbnail_uri = sporo.thumbnail_uri;
+						if (sporo && sporo.thumbnail_uri) character.thumbnail_uri = sporo.thumbnail_uri;
+						else if (character.mainImage && character.mainImage.data) {
+							character.thumbnail_uri = `https://dimm-city-data.azurewebsites.net${character.mainImage.data.attributes.url}`;
+						}
 					} else {
 						console.log('no character for sporo', sporo);
-
 						character = Object.assign({}, sporo);
 					}
 					$characters.push(character);
@@ -80,7 +89,7 @@
 		{#if character != null}
 			<div class="parent">
 				<div class="container">
-					<div>Name:{character.name}</div>
+					<div>Name:<span>{character.name}</span></div>
 					<div class="stats">
 						<h4>HP: <span class="points-block">{character.hp || 10}</span></h4>
 						<h4>AP: <span class="points-block">{character.ap || 10}</span></h4>
@@ -96,15 +105,11 @@
 						<div>Vibe: {character.vibe || ''}</div>
 						<!-- <div>Accessories: {character.height}</div> -->
 					</div>
-					<div>
+					<div class="roles">
 						Role(s):
-						<ul>
-							{#if character.roles}
-								{#each character.roles.data as role}
-									<li>{role.attributes.name}</li>
-								{/each}
-							{/if}
-						</ul>
+						{#if character.roles && character.roles.data}
+							<span>{character.roles.data.map((r) => r.attributes.name).join(', ')}</span>
+						{/if}
 					</div>
 					<div>
 						Race: {#if character.race}
@@ -166,6 +171,99 @@
 </div>
 
 <style>
+	ul {
+		list-style: none;
+		padding: 0;
+	}
+
+	.title-container {
+		display: flex;
+		justify-content: center;
+		padding-bottom: 1rem;
+	}
+	.title-container div {
+		display: block;
+		text-align: center;
+	}
+	.title-container h1,
+	.title-container h5 {
+		display: block;
+	}
+
+	.container {
+		display: grid;
+		grid-template-columns: 1.2fr minmax(180px 0.7fr) 1.1fr;
+		grid-template-rows: 0.1fr 0.2fr minmax(250px, 0.2fr) minmax(100px, 0.9fr) 0.9fr;
+		gap: 0px 1em;
+		grid-auto-flow: row;
+		align-content: start;
+		grid-template-areas:
+			'. . image'
+			'. details image'
+			'. details image'
+			'. . .'
+			'. abilities abilities';
+		width: 100%;
+		height: 100%;
+	}
+
+	.container > .image {
+		grid-area: image;
+		height: max-content;
+		display: flex;
+		justify-content: center;
+	}
+
+	.details {
+		grid-area: details;
+		width: 100%;
+	}
+
+	.details > div {
+		padding-bottom: 0.25rem;
+	}
+
+	.stats {
+		display: flex;
+		justify-content: space-between;
+	}
+	.stats > h4 {
+		display: inline;
+		font-size: 1.5rem;
+	}
+	.stats > h4:first-of-type {
+		padding-right: 0.5rem;
+	}
+
+	.stats .points-block {
+		/* border: black solid 0.2rem; */
+		font-size: 1.5rem;
+		padding: 0.1rem;
+	}
+
+	.abilities {
+		grid-area: abilities;
+	}
+
+	.container > div {
+		padding: 0.5rem;
+		border-top: 1px solid #dfdfdf;
+	}
+
+	img {
+		max-height: 400px;
+		max-width: 300px;
+	}
+
+	@media screen and (max-width: 700px) {
+		.container {
+			display: block;
+		}
+		.container > .image {
+			display: none;
+		}
+	}
+
 	.character-container {
 		overflow-y: auto;
 	}

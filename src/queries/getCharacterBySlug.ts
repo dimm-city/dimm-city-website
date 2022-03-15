@@ -6,6 +6,8 @@ export const getCharacterBySlugQuery = `
         attributes {
           tokenId
           name
+          hp
+          ap
           age
           height
           weight
