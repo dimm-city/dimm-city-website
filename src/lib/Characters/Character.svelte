@@ -82,7 +82,7 @@
 		<div class="title-container">
 			<div>
 				<h1>Dimm City</h1>
-				<h5>Character Sheet</h5>
+				<h5>Citizen Dossier</h5>
 			</div>
 		</div>
 
