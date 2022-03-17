@@ -115,8 +115,11 @@ importScripts(baseUrl + "/stories/dimm-city.js")
 
 
 
-</script><tw-passagedata pid="1" name="Start" tags="pan-right" position="581,57" size="200,100">&lt;&lt;masteraudio stop&gt;&gt;
+</script><tw-passagedata pid="1" name="Start" tags="pan-right" position="579,59" size="200,100">&lt;&lt;masteraudio stop&gt;&gt;
 &lt;&lt;background &quot;prologue/index.mp4&quot; &quot;prologue/index.png&quot;&gt;&gt;
+&lt;&lt;cachevideo &quot;prologue/scene-1.mp4&quot; &quot;prologue/scene-1.png&quot;&gt;&gt;
+&lt;&lt;cacheaudio &quot;scene-1&quot; &quot;prologue/scene-1.mp3&quot;&gt;&gt;
+&lt;&lt;cacheaudio &quot;crickets&quot; &quot;prologue/crickets.mp3&quot;&gt;&gt;
 &lt;&lt;text-container&gt;&gt;
 &lt;h1&gt;Prologue - Scene 1&lt;/h1&gt;
 &lt;&lt;type 100ms start 1s keep&gt;&gt;Connection established&lt;&lt;/type&gt;&gt;
@@ -125,8 +128,9 @@ importScripts(baseUrl + "/stories/dimm-city.js")
 &lt;a onclick=&quot;window.parent.exitStory()&quot;&gt;close&lt;/a&gt;
 [[continue|scene-1]]
 &lt;&lt;/toolbar&gt;&gt;
-&lt;&lt;audio type2 fadeout time 163 volume 0.2&gt;&gt;</tw-passagedata><tw-passagedata pid="2" name="scene-1" tags="scene-1 pan-right" position="992,159" size="200,200">&lt;&lt;background &quot;prologue/scene-1.mp4&quot;&gt;&gt;
+&lt;audio type2 fadeout time 163 volume 0.2</tw-passagedata><tw-passagedata pid="2" name="scene-1" tags="scene-1 pan-right" position="992,159" size="200,200">&lt;&lt;background &quot;prologue/scene-1.mp4&quot;&gt;&gt;
 &lt;&lt;cachevideo &quot;prologue/scene-2.mp4&quot; &quot;intro/scene-2.png&quot;&gt;&gt;
+&lt;&lt;cacheaudio &quot;scene-2&quot; &quot;prologue/scene-2.mp3&quot;&gt;&gt;
 &lt;&lt;audio crickets play loop volume 0.25&gt;&gt;
 &lt;&lt;text-container&gt;&gt;
  Perched on the edge of once revered crater, the rickety building looks almost timeless. Not well cared for, but somehow not completely overtaken by the forest that has filled in the sunken earth.
@@ -137,20 +141,13 @@ importScripts(baseUrl + "/stories/dimm-city.js")
 [[continue|scene-2]]
 &lt;&lt;/toolbar&gt;&gt;
 </tw-passagedata><tw-passagedata pid="3" name="StoryInit" tags="" position="76,47" size="200,200">&lt;&lt;cacheaudio &quot;main-theme&quot; &quot;prologue/theme.mp3&quot;&gt;&gt;
-&lt;&lt;cacheaudio &quot;crickets&quot; &quot;prologue/crickets.mp3&quot;&gt;&gt;
-&lt;&lt;cacheaudio &quot;wind&quot; &quot;prologue/wind.mp3&quot;&gt;&gt;
 &lt;&lt;cacheaudio &quot;type2&quot; &quot;prologue/type2.mp3&quot;&gt;&gt;
-&lt;&lt;cacheaudio &quot;type3&quot; &quot;prologue/type2.mp3&quot;&gt;&gt;
 &lt;&lt;masteraudio stop&gt;&gt;
 &lt;&lt;createaudiogroup &quot;:theme&quot;&gt;&gt;
 	&lt;&lt;track &quot;main-theme&quot; &gt;&gt;
 &lt;&lt;/createaudiogroup&gt;&gt;
-&lt;&lt;cacheaudio &quot;scene-1&quot; &quot;prologue/scene-1.mp3&quot;&gt;&gt;
 &lt;&lt;waitforaudio&gt;&gt;
 &lt;&lt;masteraudio muteonhide&gt;&gt;
-&lt;&lt;cacheaudio &quot;scene-2&quot; &quot;prologue/scene-2.mp3&quot;&gt;&gt;
-&lt;&lt;cacheaudio &quot;scene-3&quot; &quot;prologue/scene-3.mp3&quot;&gt;&gt;
-&lt;&lt;cacheaudio &quot;scene-4&quot; &quot;prologue/scene-4.mp3&quot;&gt;&gt;
 </tw-passagedata><tw-passagedata pid="4" name="scene-2" tags="no-text zoom-in" position="860,420" size="100,100">&lt;&lt;background &quot;prologue/scene-2.mp4&quot; &gt;&gt;
 &lt;&lt;text-container&gt;&gt;
 Looking down upon the small structure, a light slowly spills from the single window into the forest.
@@ -161,8 +158,12 @@ This evening, it is hard to tell if the crater is being illuminated by the windo
 &lt;&lt;back &quot;back&quot;&gt;&gt;
 [[exit|Start]]
 [[continue|scene-3]]
-&lt;&lt;/toolbar&gt;&gt;</tw-passagedata><tw-passagedata pid="5" name="scene-3" tags="zoom-in dark bottom" position="637,439" size="100,100">&lt;&lt;background &quot;prologue/scene-3.mp4&quot;&gt;&gt;
+&lt;&lt;/toolbar&gt;&gt;
+
+&lt;&lt;cacheaudio &quot;scene-3&quot; &quot;prologue/scene-3.mp3&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="5" name="scene-3" tags="zoom-in dark bottom" position="638,441" size="100,100">&lt;&lt;background &quot;prologue/scene-3.mp4&quot;&gt;&gt;
 &lt;&lt;audio type2 play loop volume 0.4&gt;&gt;
+&lt;&lt;cacheaudio &quot;wind&quot; &quot;prologue/wind.mp3&quot;&gt;&gt;
+&lt;&lt;cacheaudio &quot;scene-4&quot; &quot;prologue/scene-4.mp3&quot;&gt;&gt;
 &lt;&lt;text-container&gt;&gt;
 A thin phantom of a man sits at a dimly lit desk. He slowly types on a keyboard, reads the screen, and begins typing again. 
 
@@ -175,7 +176,7 @@ This time he types with a vigor not seen in this little shack long before any of
 &lt;&lt;/toolbar&gt;&gt;</tw-passagedata><tw-passagedata pid="6" name="scene-4" tags="pan-left" position="350,427" size="100,100">&lt;&lt;background &quot;prologue/scene-4.mp4&quot;&gt;&gt;
 &lt;&lt;audio crickets fadein volume 0.25 loop&gt;&gt;
 &lt;&lt;audio wind play volume 0.8 loop&gt;&gt;
-&lt;&lt;audio type3 play loop volume 0.2&gt;&gt;
+&lt;&lt;audio type2 play loop volume 0.2&gt;&gt;
 &lt;&lt;text-container&gt;&gt;
 Outside the crater begins to glow and pulse with energy. It seems to almost dance with the tap of the keys coming from inside... 
 &lt;&lt;/text-container&gt;&gt;
