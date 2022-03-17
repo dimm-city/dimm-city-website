@@ -51,17 +51,19 @@
 		/>
 		<div class="version"><small>v {config.version}</small></div>
 		<div class="global-toolbar">
-			<a href="/console" data-augmented-ui="all-hex border">
+			<span></span>
+			<!-- <a href="/console" data-augmented-ui="all-hex border">
 				{#if $loggedIn}
 					<i class="bi bi-window-dock fade-in" />
 				{:else}
 					<i class="bi bi-window-dash fade-in" />
 				{/if}
-			</a>
+			</a> -->
 			{#if showMenuButton}
 				<button on:click={() => ($showMenu = !$showMenu)} data-augmented-ui="all-triangle-up border" class="btn-menu" />
 			{/if}
-			<a href="/help" data-augmented-ui="all-hex border"><i class="bi bi-question-lg fade-in" /></a>
+			<!-- <a href="/help" data-augmented-ui="all-hex border"><i class="bi bi-question-lg fade-in" /></a> -->
+			<span></span>
 		</div>
 	</div>
 	<div class="bottom-panel">
