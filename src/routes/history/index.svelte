@@ -4,39 +4,31 @@
 	import MenuItem from '$lib/Menu/MenuItem.svelte';
 	import { showMenu } from '$lib/ShellStore';
 	import { getStories } from '$lib/Stories/Store';
+	import ContentPane from '$lib/ContentPane.svelte';
 	$showMenu = true;
 
 	const loadStories = getStories();
 </script>
 
 <Shell title="History">
-	<div class="container">
+	<ContentPane>
 		<Menu>
 			{#await loadStories}
 				<span>Loading</span>
 			{:then stories}
 				{#each stories as story}
-					<MenuItem icon={story.icon} title={story.title} url="/history/{story.slug}">{story.description}</MenuItem>
+					<MenuItem icon={story.icon} title={story.title} url="/history/{story.slug}" description={story.description} />
 				{/each}
 			{/await}
 		</Menu>
-	</div>
+	</ContentPane>
 	<Menu slot="menu">
 		{#await loadStories}
 			<span>Loading</span>
 		{:then stories}
 			{#each stories as story}
-				<MenuItem icon={story.icon} title={story.title} url="/history/{story.slug}">{story.description}</MenuItem>
+				<MenuItem icon={story.icon} title={story.title} url="/history/{story.slug}" description={story.description} />
 			{/each}
 		{/await}
 	</Menu>
 </Shell>
-
-<style>
-	.container {
-		padding: 3rem;
-		height: 100%;
-		filter: drop-shadow(0 0 2vh var(--pink));
-		background: rgb(17 17 17 / 0.75);
-	}
-</style>

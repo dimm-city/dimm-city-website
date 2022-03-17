@@ -4,13 +4,16 @@
 	import StoryMenu from '$lib/Stories/StoryMenu.svelte';
 	import { page } from '$app/stores';
 	import { showMenu } from '$lib/ShellStore';
+	import ContentPane from '$lib/ContentPane.svelte';
 
 	const defaultStory = `/stories/${$page.params.slug || 'none'}.html`;
 	let viewer;
-	$showMenu = true;
+	$showMenu = false;
 </script>
 
-<Shell title="Stories">
-	<StoryViewer story={defaultStory} bind:this={viewer} />
+<Shell title="History">
+	<ContentPane padding={0}>
+		<StoryViewer story={defaultStory} bind:this={viewer} />
+	</ContentPane>
 	<StoryMenu slot="menu" {viewer} />
 </Shell>

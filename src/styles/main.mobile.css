@@ -1,33 +1,56 @@
 @media all and (max-width: 768px), (max-aspect-ratio: 0.74) {
-    :root {
-        --divider-gap: 3em;
-    }
-    .top-panel{
-        height: calc(85vh - var(--divider-gap));
-    }
+	:root {
+		--divider-gap: 3em;
+	}
+	.vertical-acordion {
+		overflow: hidden;
+	}
+	.top-panel {
+		/* height: calc(85vh - var(--divider-gap)); */
+		height: 90vh;
+	}
 
-    .accordion-divider,
+	/* .accordion-divider,
     .acordion-divider-decoration {
         height: calc(10vh - var(--divider-gap));
         min-height: 3vh;
-    }
-    .bottom-panel {
-        height: 94vh;
-    }
-    .bottom .bottom-panel {
-        top: 5vh;
-        transform: translateY(1vh);
-    }
+    } */
+	.bottom-panel {
+		height: 94vh;
+		max-width: 98vw;
+	}
+	.bottom .bottom-panel {
+		top: 0vh;
+		transform: translateY(10vh);
+	}
 }
 
 @media (max-width: 750px) {
-    .acordion-divider-decoration {
-        --aug-border-all: 0.25vh;
+	.acordion-divider-decoration {
+		--aug-border-all: 0.25vh;
+	}
+	.bottom .acordion-divider-decoration {
+		--aug-border-bottom: 0.25vh;
+	}
+	.bottom .accordion-divider .global-toolbar button.btn-menu {
+		transform: translate(0, 75%) rotateZ(180deg);
+	}
+
+	.vertical-acordion {
+		width: 99vw;
+	}
+	.content-toolbar-container {		
+		width: 100vw;		
+		padding: 0;
+		margin-bottom: 0rem;
+		top: 80vh;
+        background-color: #000000ad;
+	}
+    .content-toolbar-container > .toolbar > div {
+        justify-content: space-around;
     }
-    .bottom .acordion-divider-decoration {
-        --aug-border-bottom: 0.25vh;
-    }
-    .vertical-acordion {
-        width: 99vw;
+
+    .content-toolbar-container .aug-button {
+        margin: 0.5rem 1rem;
     }
 }

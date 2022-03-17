@@ -8,18 +8,25 @@
     --bg-secondary: #190030;
 
     --light: rgba(255, 255, 255, 0.9);
+    --dark: rgba(0, 0, 0, 0.9);
     --blue-accent: #0093c4;
     --primary-accent: var(--blue-accent);
     --secondary-accent: #c643ff;
     /* #ff8300; */
     --third-accent: #ff15cb;
-    --fourth-accent: #bef800;
+    --fourth-accent: #f8be00dc;
     --disabled-color: rgb(196, 192, 192);
 
     --pink: #ef1ebf;
     --blue: #3e6ab3;
     --easing: 0.75s ease-in-out;
     --quick-in: 0.5s ease-in;
+
+    --transition-in-time: 300ms;
+	--transition-in-delay: 10ms;
+
+    --menu-inlay-bg-color: #ffffff17;
+    --menu-inlay-bg-color-hover: #ffffff37;
 }
 
 * {

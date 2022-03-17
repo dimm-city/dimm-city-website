@@ -35,5 +35,5 @@
 		height: 100%;
 		clip-path: inherit;
 		border: 0;
-	}
+	}	
 </style>

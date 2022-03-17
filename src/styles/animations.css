@@ -1,0 +1,16 @@
+.fade-zoom-in {
+	animation: zoomIn var(--transition-in-time) ease-in var(--transition-in-delay) 1 both;
+}
+
+.fade-in {
+	animation: fadeIn var(--transition-in-time) ease-in var(--transition-in-delay) 1 both;
+}
+
+.slide-in-up {
+	animation: fadeInUpBig 380ms ease-in 5ms 1 both;
+}
+
+.slide-in-down {
+	animation: fadeInDownBig 450ms ease-in-out 10ms 1 both;
+	animation-timing-function: linear;
+}
