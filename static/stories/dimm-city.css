@@ -193,13 +193,13 @@ a:active {
     font-size: 1.5em;
     margin: 0 3em;
 }
-.action-toolbar a::before {
-    /* content: "<"; 
-    padding-right: 0.25em;*/
+ /*.action-toolbar a::before {
+    content: "<"; 
+    padding-right: 0.25em;
 }
 .action-toolbar a::after {
     /* content: ">";
-    padding-left: 0.25em; */
+    padding-left: 0.25em; 
 }
 
 .action-toolbar a.icon-link::before {
@@ -209,7 +209,7 @@ a:active {
 .action-toolbar a.icon-link::after {
     content: "";
     padding-left: 0.25em;
-}
+}*/
 
 @media all and (max-width: 768px), (max-aspect-ratio: 3/4) {
     .passage {
@@ -226,7 +226,7 @@ a:active {
         font-size: 1.1em;
         margin: 0 1em;
     }
-    .action-toolbar a.next {
+    /* .action-toolbar a.next {
         font-size: 1.1em;
         margin: 0 1em;
         content: ">";
@@ -238,7 +238,7 @@ a:active {
     .action-toolbar a::after {
         content: ">";
         padding-left: 0.1em;
-    }
+    } */
 }
 :root {
     --story-animation-length: 10s;
