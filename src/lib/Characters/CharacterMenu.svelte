@@ -6,7 +6,6 @@
 
 	const dispatcher = createEventDispatcher();
 
-
 	function loadCharacters() {
 		return fetch(config.graphUrl, {
 			method: 'POST',
@@ -31,7 +30,11 @@
 				console.log('loadCharacters failed', reason);
 			});
 	}
-	let query = loadCharacters();
+	let query = new Promise((resolve) =>
+		setTimeout(async () => {
+			loadCharacters().then((d) => resolve(d));
+		}, 2000)
+	);
 
 	function selectCharacter(id) {
 		dispatcher('character.selected', id);
@@ -39,7 +42,9 @@
 </script>
 
 {#await query}
-	Loading...
+	<div class="loading-indicator fade-in" data-augmented-ui>
+		<div>Locating citizen data...</div>
+	</div>
 {:then characters}
 	{#if characters != null}
 		{#each characters as character}

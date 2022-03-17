@@ -77,7 +77,9 @@
 
 <div class="character-container">
 	{#await query}
-		Loading...
+	<div class="loading-indicator fade-in" data-augmented-ui>
+		<div>Loading data...</div>
+	</div>
 	{:then}
 		<div class="title-container">
 			<div>

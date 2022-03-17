@@ -10,24 +10,23 @@
 	const loadStories = getStories();
 </script>
 
-<Shell title="History">
+<Shell title="History" showMenuButton={false}>
 	<ContentPane>
-		<Menu>
-			{#await loadStories}
-				<span>Loading</span>
-			{:then stories}
-				{#each stories as story}
-					<MenuItem disabled={story.disabled} icon={story.icon} title={story.title} url="/history/{story.slug}" description={story.description} />
-				{/each}
-			{/await}
-		</Menu>
 	</ContentPane>
 	<Menu slot="menu">
 		{#await loadStories}
-			<span>Loading</span>
+			<div class="loading-indicator fade-in" data-augmented-ui>
+				<div>Locating historical data...</div>
+			</div>
 		{:then stories}
 			{#each stories as story}
-				<MenuItem disabled={story.disabled} icon={story.icon} title={story.title} url="/history/{story.slug}" description={story.description} />
+				<MenuItem
+					disabled={story.disabled}
+					icon={story.icon}
+					title={story.title}
+					url="/history/{story.slug}"
+					description={story.description}
+				/>
 			{/each}
 		{/await}
 	</Menu>
