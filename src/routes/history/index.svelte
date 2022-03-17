@@ -17,7 +17,7 @@
 				<span>Loading</span>
 			{:then stories}
 				{#each stories as story}
-					<MenuItem icon={story.icon} title={story.title} url="/history/{story.slug}" description={story.description} />
+					<MenuItem disabled={story.disabled} icon={story.icon} title={story.title} url="/history/{story.slug}" description={story.description} />
 				{/each}
 			{/await}
 		</Menu>
@@ -27,7 +27,7 @@
 			<span>Loading</span>
 		{:then stories}
 			{#each stories as story}
-				<MenuItem icon={story.icon} title={story.title} url="/history/{story.slug}" description={story.description} />
+				<MenuItem disabled={story.disabled} icon={story.icon} title={story.title} url="/history/{story.slug}" description={story.description} />
 			{/each}
 		{/await}
 	</Menu>

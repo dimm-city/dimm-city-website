@@ -13,9 +13,9 @@
 			<MenuItem
 				icon={story.icon}
 				title={story.title}
+				disabled={story.disabled}
 				on:click={() => viewer.selectStory(story.slug)}
-				description={story.description}
-			/>
+				description={story.description} />
 		{/each}
 	{/await}
 </Menu>

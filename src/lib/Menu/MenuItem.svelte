@@ -3,13 +3,25 @@
 	export let title = 'Title';
 	export let url = '#';
 	export let description = '';
+	export let disabled = false;
 </script>
 
-<a href={url} on:click class="fade-zoom-in">
-	<div class="menu-item" data-augmented-ui>
-		<slot>
-			<p><i class={icon} />{title}</p>
-			<small>{description}</small>
-		</slot>
+{#if disabled}
+	<div class="fade-zoom-in" {disabled}>
+		<div class="menu-item" data-augmented-ui class:disabled>
+			<slot>
+				<p><i class={icon} />{title}</p>
+				<small>{description}</small>
+			</slot>
+		</div>
 	</div>
-</a>
+{:else}
+	<a href={url} on:click class="fade-zoom-in" {disabled}>
+		<div class="menu-item" data-augmented-ui class:disabled>
+			<slot>
+				<p><i class={icon} />{title}</p>
+				<small>{description}</small>
+			</slot>
+		</div>
+	</a>
+{/if}

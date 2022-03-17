@@ -80,6 +80,8 @@
 	--aug-inlay: initial;
 	--aug-inlay-bg: var(--menu-inlay-bg-color);
 	background-color: transparent;
+
+	
 }
 
 .menu-item:hover,
@@ -87,6 +89,17 @@
 	--aug-border-all: 0.35vh;
 	background-color: var(--menu-inlay-bg-color-hover);
 	opacity: 1;
+}
+
+.menu-item.disabled {
+	transition: all var(--transition-in-time);	
+	opacity: 0.5;
+	color: var(--disabled-color);
+	--aug-inlay-bg: #d3d3d311;
+	--aug-border-bg: radial-gradient(circle at top left, var(--disabled-color-dark) 40px, transparent 50px),
+		radial-gradient(circle at top right, var(--disabled-color-dark) 20px, transparent 30px),
+		radial-gradient(circle at bottom right, var(--disabled-color-dark) 40px, transparent 50px),
+		radial-gradient(circle at bottom left, var(--disabled-color-dark) 20px, transparent 30px);
 }
 
 .menu-item small {
