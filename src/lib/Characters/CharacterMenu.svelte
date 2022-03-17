@@ -47,7 +47,7 @@
 				url="/citizens/{character.attributes.tokenId}"
 				on:click={() => selectCharacter(character.attributes.tokenId)}
 			>
-				<p><i class="bi bi-person text-primary" />{character.attributes.name}</p>
+				<p><i class="bi bi-person text-light" />{character.attributes.name}</p>
 				<small>
 					<div>{character.attributes.race.data.attributes.name}</div>
 					<div>
@@ -56,13 +56,13 @@
 				</small>
 
 				<div class="toolbar">
-					<a
+					<!-- <a
 						target="_blank"
 						on:click|stopPropagation={() => true}
 						href="/citizens/print/{character.attributes.tokenId}"
 					>
 						<i class="bi bi-printer" />
-					</a>
+					</a> -->
 				</div>
 			</MenuItem>
 		{/each}

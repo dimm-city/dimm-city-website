@@ -15,7 +15,7 @@
 	let tokenId = $page.params.tokenId;
 </script>
 
-<Shell title="Citizen">
+<Shell title="Citizens">
 	<ContentPane>
 		<Character {tokenId} />
 	</ContentPane>
