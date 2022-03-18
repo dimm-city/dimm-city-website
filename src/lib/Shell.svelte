@@ -2,7 +2,9 @@
 	import MenuPanel from './Menu/MenuPanel.svelte';
 	import ContentPane from './ContentPane.svelte';
 	import MainMenu from './Menu/MainMenu.svelte';
-	import { showMenu, loggedIn } from './ShellStore';
+	import { Modals, closeModal, openModal } from 'svelte-modals';
+	import Modal from './Modal.svelte';
+	import { showMenu, loggedIn, showModal, modalComponent } from './ShellStore';
 	import '../styles/main.css';
 	import '../styles/main.mobile.css';
 	import '../styles/animations.css';
@@ -23,6 +25,10 @@
 		// 	disconnect();
 		// });
 	});
+
+	$: if ($modalComponent) {
+		openModal(Modal);
+	}
 </script>
 
 <svelte:head>
@@ -35,6 +41,9 @@
 	<slot name="head" />
 </svelte:head>
 
+<Modals>
+	<div slot="backdrop" class="backdrop" on:click={closeModal} />
+</Modals>
 <div class="vertical-acordion {title.toLowerCase()}" class:bottom={$showMenu} class:top={!$showMenu}>
 	<div class="top-panel slide-in-down">
 		<slot><ContentPane fullsize={true}>404</ContentPane></slot>
@@ -76,3 +85,15 @@
 	</div>
 	<slot name="scripts" />
 </div>
+
+<style>
+	.backdrop {
+		z-index: 1999;
+		position: fixed;
+		top: 0;
+		bottom: 0;
+		right: 0;
+		left: 0;
+		background: rgba(0, 0, 0, 0.5);
+	}
+</style>

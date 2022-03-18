@@ -39,7 +39,7 @@ a {
 }
 a:hover,
 a:active {
-	text-shadow: 1px 1px var(--secondary-accent);
+	/* text-shadow: 1px 1px var(--secondary-accent); */
 	transition: all var(--transition-in-time) ease;
 }
 

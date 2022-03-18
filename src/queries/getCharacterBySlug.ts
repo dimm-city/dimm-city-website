@@ -31,6 +31,9 @@ export const getCharacterBySlugQuery = `
               attributes{
                 name
                 slug
+                description
+                ap
+                rollDice
               }
             }
           }
@@ -41,9 +44,13 @@ export const getCharacterBySlugQuery = `
                 slug
                 abilities{
                   data{
+                    id
                     attributes{
                       name
                       slug
+                      description
+                      ap
+                      rollDice     
                     }
                   }
                 }
@@ -68,9 +75,13 @@ export const getCharacterBySlugQuery = `
           }
           selectedAbilities {
             data {
+              id
               attributes {
                 name
                 slug
+                description
+                ap
+                rollDice                
               }
             }
           }

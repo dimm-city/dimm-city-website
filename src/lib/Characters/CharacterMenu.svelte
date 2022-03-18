@@ -1,4 +1,5 @@
 <script>
+	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
 	import MenuItem from '$lib/Menu/MenuItem.svelte';
 	import { createEventDispatcher } from 'svelte';
 	import { getCharactersQuery } from '../../queries/getCharacters';
@@ -44,16 +45,13 @@
 </script>
 
 {#await query}
-	<div class="loading-indicator fade-in" data-augmented-ui>
+	<LoadingIndicator>
 		<div>Locating citizen data...</div>
-	</div>
+	</LoadingIndicator>
 {:then characters}
 	{#if characters != null}
 		{#each characters as character}
-			<MenuItem
-				url="/citizens/{character.attributes.tokenId}"
-				on:click={() => selectCharacter(character)}
-			>
+			<MenuItem url="/citizens/{character.attributes.tokenId}" on:click={() => selectCharacter(character)}>
 				<p><i class="bi bi-person text-light" />{character.attributes.name}</p>
 				<small>
 					<div>{character.attributes.race.data.attributes.name}</div>

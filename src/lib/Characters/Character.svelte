@@ -2,7 +2,10 @@
 	import { onMount } from 'svelte';
 	import { getCharacterBySlugQuery } from '../../queries/getCharacterBySlug';
 	import { config } from '$lib/config';
-	import { characters, myCollection, showMenu } from '$lib/ShellStore';
+	import { characters, modalComponent, myCollection, showMenu, showModal } from '$lib/ShellStore';
+	import { openModal } from 'svelte-modals';
+	import AbilityDetails from './AbilityDetails.svelte';
+	import { selectedAbility } from './CharacterStore';
 	export let tokenId; // `dcs1r1-${id}`;
 	let character;
 
@@ -52,7 +55,15 @@
 						character.metadata = sporo;
 						if (sporo && sporo.thumbnail_uri) character.thumbnail_uri = sporo.thumbnail_uri;
 						else if (character.mainImage && character.mainImage.data) {
-							character.thumbnail_uri = `https://dimm-city-api.azurewebsites.net${character.mainImage.data.attributes.url}`;
+							character.thumbnail_uri = character.mainImage.data.attributes.url;
+
+							character.thumbnail_uri = character.thumbnail_uri.replace(
+								'https://dimmcitystorage.blob.core.windows.net/files/',
+								'https://files.dimm.city/'
+							);
+
+							if (!character.thumbnail_uri.startsWith('http'))
+								character.thumbnail_uri = 'https://dimm-city-api.azurewebsites.net' + character.thumbnail_uri;
 						} else character.thumbnail_uri = '/assets/missing-image1.png';
 					} else {
 						console.log('no character for sporo', sporo);
@@ -72,6 +83,12 @@
 
 		query = loadCharacter(tokenId);
 	});
+
+	function selectAbility(ability: any) {
+		$modalComponent = AbilityDetails;
+		$selectedAbility = ability;
+		console.log(ability);
+	}
 </script>
 
 <div class="character-container">
@@ -131,7 +148,7 @@
 						<ul>
 							{#if character.race}
 								{#each character.race.data.attributes.abilities.data as ability}
-									<li class="small-menu-item" data-augmented-ui>
+									<li class="small-menu-item" data-augmented-ui on:click={() => selectAbility(ability)}>
 										<a href="#{ability.attributes.slug}"> {ability.attributes.name}</a>
 									</li>
 								{/each}
@@ -144,8 +161,8 @@
 						<ul class="aug-list">
 							{#if character.cybernetics}
 								{#each character.cybernetics.data as ability}
-									<li class="small-menu-item" data-augmented-ui>
-										<a href="#{ability.attributes.slug}"> {ability.attributes.name}</a>
+									<li class="small-menu-item" data-augmented-ui on:click={() => selectAbility(ability)}>
+										<buton> {ability.attributes.name}</buton>
 									</li>
 								{/each}
 							{/if}
@@ -158,7 +175,7 @@
 						<ul>
 							{#if character.selectedAbilities}
 								{#each character.selectedAbilities.data as ability}
-									<li class="small-menu-item" data-augmented-ui>
+									<li class="small-menu-item" data-augmented-ui on:click={() => selectAbility(ability)}>
 										<a href="#{ability.attributes.slug}"> {ability.attributes.name}</a>
 									</li>
 								{/each}
