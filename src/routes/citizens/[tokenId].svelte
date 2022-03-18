@@ -6,8 +6,8 @@
 	import { page } from '$app/stores';
 	import Character from '$lib/Characters/Character.svelte';
 	import CharacterMenu from '$lib/Characters/CharacterMenu.svelte';
-	import ContentPane from '$lib/ContentPane.svelte';
-	import Menu from '$lib/Menu/Menu.svelte';
+	import ContentPane from '$lib/Components/ContentPane.svelte';
+	import Menu from '$lib/Components/Menu/Menu.svelte';
 	import Shell from '$lib/Shell.svelte';
 	import { showMenu } from '$lib/ShellStore';
 

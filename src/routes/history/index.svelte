@@ -1,10 +1,10 @@
 <script lang="ts">
 	import Shell from '$lib/Shell.svelte';
-	import Menu from '$lib/Menu/Menu.svelte';
-	import MenuItem from '$lib/Menu/MenuItem.svelte';
+	import Menu from '$lib/Components/Menu/Menu.svelte';
+	import MenuItem from '$lib/Components/Menu/MenuItem.svelte';
 	import { showMenu } from '$lib/ShellStore';
 	import { getStories } from '$lib/Stories/Store';
-	import ContentPane from '$lib/ContentPane.svelte';
+	import ContentPane from '$lib/Components/ContentPane.svelte';
 	$showMenu = true;
 
 	const loadStories = getStories();

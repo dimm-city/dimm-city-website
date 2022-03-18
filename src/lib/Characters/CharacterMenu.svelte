@@ -1,6 +1,6 @@
 <script>
 	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
-	import MenuItem from '$lib/Menu/MenuItem.svelte';
+	import MenuItem from '$lib/Components/Menu/MenuItem.svelte';
 	import { createEventDispatcher } from 'svelte';
 	import { getCharactersQuery } from '../../queries/getCharacters';
 	import { config } from '../config';

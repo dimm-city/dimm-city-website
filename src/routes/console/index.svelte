@@ -6,12 +6,12 @@
 	// import abiJson from '../../contracts/DimmCityV1Base.json';
 	// import { config } from "$lib/config";
 	import Shell from '$lib/Shell.svelte';
-	import Menu from '$lib/Menu/Menu.svelte';
+	import Menu from '$lib/Components/Menu/Menu.svelte';
 	import Button from '$lib/Components/Button.svelte';
 	import { showMenu, loggedIn, myCollection } from '$lib/ShellStore';
 	import { provider, signer, signerAddress, connected, defaultEvmStores, chainId } from 'svelte-ethers-store';
-	import MenuItem from '$lib/Menu/MenuItem.svelte';
-	import ContentPane from '$lib/ContentPane.svelte';
+	import MenuItem from '$lib/Components/Menu/MenuItem.svelte';
+	import ContentPane from '$lib/Components/ContentPane.svelte';
 	import { onMount } from 'svelte';
 	import { Contract } from 'ethers';
 	import { connect, contract, contractConfig } from '$lib/ChainStore';

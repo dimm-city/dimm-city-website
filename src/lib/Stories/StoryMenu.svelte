@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Menu from '$lib/Menu/Menu.svelte';
-	import MenuItem from '$lib/Menu/MenuItem.svelte';
+	import Menu from '$lib/Components/Menu/Menu.svelte';
+	import MenuItem from '$lib/Components/Menu/MenuItem.svelte';
 	import { getStories } from './Store';
 	export let viewer;
 </script>

@@ -64,7 +64,7 @@
 
 							if (!character.thumbnail_uri.startsWith('http'))
 								character.thumbnail_uri = 'https://dimm-city-api.azurewebsites.net' + character.thumbnail_uri;
-						} else character.thumbnail_uri = '/assets/missing-image1.png';
+						} else character.thumbnail_uri = '/assets/missing-image.png';
 					} else {
 						console.log('no character for sporo', sporo);
 						character = Object.assign({}, sporo);
@@ -87,6 +87,7 @@
 	function selectAbility(ability: any) {
 		$modalComponent = AbilityDetails;
 		$selectedAbility = ability;
+		$showModal = true;
 		console.log(ability);
 	}
 </script>

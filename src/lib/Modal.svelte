@@ -7,17 +7,22 @@
     export let isOpen;
 
     $: isOpen = $showModal;
+
+    function dismiss() {
+        closeModal();
+        $showModal = false;
+    }
 </script>
 
 {#if isOpen}
-    <div role="dialog" class="modal" transition:fly={{ y: -600, delay: 0, duration: 500 }} on:introstart on:outroend>
+    <div role="dialog" class="modal" transition:fly={{ y: -600, delay: 0, duration: 350 }} on:introstart on:outroend>
         <div
             class="contents"
             class:fullscreen={$showModalFullscreen}
             data-augmented-ui="tl-2-clip-xy tr-2-clip-xy br-2-clip-y bl-2-clip-y both"
         >
             <div class="actions">
-                <div on:click={closeModal}><i class="bi bi-x-octagon" /></div>
+                <div on:click={dismiss}><i class="bi bi-x-octagon" /></div>
             </div>
             <div class="content-wrapper">
                 <svelte:component this={$modalComponent} />
