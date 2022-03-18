@@ -30,14 +30,16 @@
 				console.log('loadCharacters failed', reason);
 			});
 	}
-	let query = new Promise((resolve) =>
-		setTimeout(async () => {
-			loadCharacters().then((d) => resolve(d));
-		}, 2000)
-	);
+	// let query = new Promise((resolve) =>
+	// 	setTimeout(async () => {
+	// 		loadCharacters().then((d) => resolve(d));
+	// 	}, 2000)
+	// );
 
-	function selectCharacter(id) {
-		dispatcher('character.selected', id);
+	let query = loadCharacters();
+
+	function selectCharacter(character) {
+		dispatcher('character.selected', character.attributes.tokenId);
 	}
 </script>
 
@@ -50,7 +52,7 @@
 		{#each characters as character}
 			<MenuItem
 				url="/citizens/{character.attributes.tokenId}"
-				on:click={() => selectCharacter(character.attributes.tokenId)}
+				on:click={() => selectCharacter(character)}
 			>
 				<p><i class="bi bi-person text-light" />{character.attributes.name}</p>
 				<small>

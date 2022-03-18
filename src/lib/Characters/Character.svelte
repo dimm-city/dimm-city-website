@@ -3,24 +3,23 @@
 	import { getCharacterBySlugQuery } from '../../queries/getCharacterBySlug';
 	import { config } from '$lib/config';
 	import { characters, myCollection, showMenu } from '$lib/ShellStore';
-	import { set_attributes } from 'svelte/internal';
 	export let tokenId; // `dcs1r1-${id}`;
 	let character;
 
 	$: {
 		console.log('updated');
-		
+
 		if (!tokenId || tokenId.length < 1) {
 			character = {};
 		} else {
-			query = loadCharacter();
+			query = loadCharacter(tokenId);
 			$showMenu = false;
 		}
 	}
 
 	let query = new Promise(() => {});
 
-	function loadCharacter() {
+	function loadCharacter(tokenId) {
 		character = $characters.find((c) => c.tokenId === tokenId);
 		if (character) return character;
 
@@ -53,8 +52,8 @@
 						character.metadata = sporo;
 						if (sporo && sporo.thumbnail_uri) character.thumbnail_uri = sporo.thumbnail_uri;
 						else if (character.mainImage && character.mainImage.data) {
-							character.thumbnail_uri = `https://dimm-city-data.azurewebsites.net${character.mainImage.data.attributes.url}`;
-						}
+							character.thumbnail_uri = `https://dimm-city-api.azurewebsites.net${character.mainImage.data.attributes.url}`;
+						} else character.thumbnail_uri = '/assets/missing-image1.png';
 					} else {
 						console.log('no character for sporo', sporo);
 						character = Object.assign({}, sporo);
@@ -71,15 +70,15 @@
 	onMount(() => {
 		console.log('mount character', tokenId);
 
-		query = loadCharacter();
+		query = loadCharacter(tokenId);
 	});
 </script>
 
 <div class="character-container">
 	{#await query}
-	<div class="loading-indicator fade-in" data-augmented-ui>
-		<div>Loading data...</div>
-	</div>
+		<div class="loading-indicator fade-in" data-augmented-ui>
+			<div>Loading data...</div>
+		</div>
 	{:then}
 		<div class="title-container">
 			<div>
