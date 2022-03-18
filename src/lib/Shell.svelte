@@ -31,6 +31,7 @@
 	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=false" />
 	<title>{title} - Dimm City</title>
 	<link rel="icon" type="image/x-icon" href="/assets/icons/acorn256.png" />
+	<link rel="preload" as="font" href="/assets/dimm-city.woff2" type="font/woff2" crossorigin="anonymous" />
 	<slot name="head" />
 </svelte:head>
 
@@ -51,7 +52,7 @@
 		/>
 		<div class="version"><small>v {config.version}</small></div>
 		<div class="global-toolbar">
-			<span></span>
+			<span />
 			<!-- <a href="/console" data-augmented-ui="all-hex border">
 				{#if $loggedIn}
 					<i class="bi bi-window-dock fade-in" />
@@ -63,7 +64,7 @@
 				<button on:click={() => ($showMenu = !$showMenu)} data-augmented-ui="all-triangle-up border" class="btn-menu" />
 			{/if}
 			<!-- <a href="/help" data-augmented-ui="all-hex border"><i class="bi bi-question-lg fade-in" /></a> -->
-			<span></span>
+			<span />
 		</div>
 	</div>
 	<div class="bottom-panel">
