@@ -139,12 +139,11 @@
 }
 .small-menu-item:hover,
 .small-menu-item:focus {
-	background-color: #ffffff1e;
-	opacity: 1;
-	/* --aug-border-bg: radial-gradient(circle at top left, var(--third-accent) 40px, transparent 50px),
+	background-color: #ffffff1e;	
+	--aug-border-bg: radial-gradient(circle at top left, var(--third-accent) 40px, transparent 50px),
 		radial-gradient(circle at top right, var(--primary-accent) 20px, transparent 30px),
 		radial-gradient(circle at bottom right, var(--third-accent) 40px, transparent 50px),
-		radial-gradient(circle at bottom left, var(--primary-accent) 20px, transparent 30px); */
+		radial-gradient(circle at bottom left, var(--primary-accent) 20px, transparent 30px);
 }
 
 .small-menu-item small {

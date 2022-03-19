@@ -8,7 +8,7 @@
 	import Shell from '$lib/Shell.svelte';
 	import Menu from '$lib/Components/Menu/Menu.svelte';
 	import Button from '$lib/Components/Button.svelte';
-	import { showMenu, loggedIn, myCollection } from '$lib/ShellStore';
+	import { showMenu, loggedIn, myCollection, showModalComponent } from '$lib/ShellStore';
 	import { provider, signer, signerAddress, connected, defaultEvmStores, chainId } from 'svelte-ethers-store';
 	import MenuItem from '$lib/Components/Menu/MenuItem.svelte';
 	import ContentPane from '$lib/Components/ContentPane.svelte';
@@ -17,6 +17,8 @@
 	import { connect, contract, contractConfig } from '$lib/ChainStore';
 	import type { ContractContext } from 'src/contracts/DimmCityV1Base';
 	import Character from '$lib/Characters/Character.svelte';
+	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
+	import TokenView from '$lib/Tokens/TokenView.svelte';
 
 	let loadingTask: Promise<void>;
 	let selectedSporo = {} as any;
@@ -69,6 +71,12 @@
 		$showMenu = false;
 		selectedSporo = {};
 	}
+
+	function showToken(token: any) {
+		showModalComponent(TokenView, token);
+	}
+
+	let tokenView;
 </script>
 
 <Shell title="Console">
@@ -83,11 +91,13 @@
 					<div class="fade-in">
 						<h2>Your Sporos</h2>
 						{#await loadingTask}
-							<span>Locating sporos...</span>
+							<LoadingIndicator>
+								<span>Locating sporos...</span>
+							</LoadingIndicator>
 						{:then}
 							<ul>
 								{#each $myCollection as sporo}
-									<li data-augmented-ui class="small-menu-item" on:click={() => (selectedSporo = sporo)}>
+									<li data-augmented-ui class="small-menu-item" on:click={() => showToken(sporo)}>
 										{sporo.name} <small> {sporo.release}-{sporo.edition}</small>
 									</li>
 								{/each}
@@ -119,7 +129,9 @@
 				<strong>Your Sporos</strong>
 				<div>
 					{#await $contract.balanceOf($signerAddress)}
-						<span>Locating sporos...</span>
+						<LoadingIndicator>
+							<span>Locating sporos...</span>
+						</LoadingIndicator>
 					{:then count}
 						{count}
 					{/await}
@@ -138,7 +150,7 @@
 	h2 {
 		text-align: center;
 	}
-	.small-menu-item{
+	.small-menu-item {
 		display: flex;
 		justify-content: space-between;
 	}

@@ -53,6 +53,7 @@
 
 					if (character != null) {
 						character.metadata = sporo;
+
 						if (sporo && sporo.thumbnail_uri) character.thumbnail_uri = sporo.thumbnail_uri;
 						else if (character.mainImage && character.mainImage.data) {
 							character.thumbnail_uri = character.mainImage.data.attributes.url;
@@ -65,6 +66,10 @@
 							if (!character.thumbnail_uri.startsWith('http'))
 								character.thumbnail_uri = 'https://dimm-city-api.azurewebsites.net' + character.thumbnail_uri;
 						} else character.thumbnail_uri = '/assets/missing-image.png';
+
+						if (sporo) {
+							character.eyes = sporo.attributes.find((a) => a.trait_type == 'Eyes').value;
+						}
 					} else {
 						console.log('no character for sporo', sporo);
 						character = Object.assign({}, sporo);
@@ -88,7 +93,6 @@
 		$modalComponent = AbilityDetails;
 		$selectedAbility = ability;
 		$showModal = true;
-		console.log(ability);
 	}
 </script>
 
