@@ -1,8 +1,10 @@
 <script>
-	import MenuPanel from './Menu/MenuPanel.svelte';
-	import ContentPane from './ContentPane.svelte';
-	import MainMenu from './Menu/MainMenu.svelte';
-	import { showMenu, loggedIn } from './ShellStore';
+	import MenuPanel from './Components/Menu/MenuPanel.svelte';
+	import ContentPane from './Components/ContentPane.svelte';
+	import MainMenu from './Components/Menu/MainMenu.svelte';
+	import { Modals, closeModal, openModal } from 'svelte-modals';
+	import Modal from './Modal.svelte';
+	import { showMenu, loggedIn, showModal, modalComponent } from './ShellStore';
 	import '../styles/main.css';
 	import '../styles/main.mobile.css';
 	import '../styles/animations.css';
@@ -12,6 +14,7 @@
 	export let title;
 	export let showMenuButton = true;
 	export let showMainMenuButton = true;
+
 	onMount(async () => {
 		// if(window.ethereum && window.ethereum.isConnected()){
 		// 	connect();
@@ -23,6 +26,12 @@
 		// 	disconnect();
 		// });
 	});
+
+	$: if ($showModal) {
+		openModal(Modal);
+	} else {
+		closeModal();
+	}
 </script>
 
 <svelte:head>
@@ -31,9 +40,21 @@
 	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=false" />
 	<title>{title} - Dimm City</title>
 	<link rel="icon" type="image/x-icon" href="/assets/icons/acorn256.png" />
+	<link rel="preload" as="font" href="/assets/dimm-city.woff2" type="font/woff2" crossorigin="anonymous" />
 	<slot name="head" />
 </svelte:head>
 
+<Modals>
+	<div
+		slot="backdrop"
+		class="backdrop"
+		class:open={showModal}
+		on:click={() => {
+			closeModal();
+			$showModal = false;
+		}}
+	/>
+</Modals>
 <div class="vertical-acordion {title.toLowerCase()}" class:bottom={$showMenu} class:top={!$showMenu}>
 	<div class="top-panel slide-in-down">
 		<slot><ContentPane fullsize={true}>404</ContentPane></slot>
@@ -51,17 +72,19 @@
 		/>
 		<div class="version"><small>v {config.version}</small></div>
 		<div class="global-toolbar">
-			<a href="/console" data-augmented-ui="all-hex border">
+			<span />
+			<!-- <a href="/console" data-augmented-ui="all-hex border">
 				{#if $loggedIn}
 					<i class="bi bi-window-dock fade-in" />
 				{:else}
 					<i class="bi bi-window-dash fade-in" />
 				{/if}
-			</a>
+			</a> -->
 			{#if showMenuButton}
 				<button on:click={() => ($showMenu = !$showMenu)} data-augmented-ui="all-triangle-up border" class="btn-menu" />
 			{/if}
-			<a href="/help" data-augmented-ui="all-hex border"><i class="bi bi-question-lg fade-in" /></a>
+			<!-- <a href="/help" data-augmented-ui="all-hex border"><i class="bi bi-question-lg fade-in" /></a> -->
+			<span />
 		</div>
 	</div>
 	<div class="bottom-panel">
@@ -73,3 +96,17 @@
 	</div>
 	<slot name="scripts" />
 </div>
+
+<style>
+	.backdrop {
+		position: fixed;
+		top: 0;
+		bottom: 0;
+		right: 0;
+		left: 0;
+		background: rgba(0, 0, 0, 0.5);
+	}
+	.backdrop.open {
+		z-index: 1999;
+	}
+</style>

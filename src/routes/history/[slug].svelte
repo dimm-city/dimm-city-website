@@ -4,7 +4,7 @@
 	import StoryMenu from '$lib/Stories/StoryMenu.svelte';
 	import { page } from '$app/stores';
 	import { showMenu } from '$lib/ShellStore';
-	import ContentPane from '$lib/ContentPane.svelte';
+	import ContentPane from '$lib/Components/ContentPane.svelte';
 
 	const defaultStory = `/stories/${$page.params.slug || 'none'}.html`;
 	let viewer;

@@ -16,13 +16,15 @@ export async function getStories() {
 			slug: '',
 			title: 'Prologue - Scene 2',
 			description: 'generating...',
-			icon: 'bi bi-terminal'
+			icon: 'bi bi-terminal',
+			disabled: true
 		},
 		{
 			slug: '',
 			title: 'Locked',
 			description: 'identity unknown',
-			icon: 'bi bi-safe'
+			icon: 'bi bi-safe',
+			disabled: true
 		}
 	];
 }

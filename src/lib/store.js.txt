@@ -1,0 +1,71 @@
+import { writable, readable, derived } from "svelte/store";
+import { selectedAccount, web3, connected, chainData } from "svelte-web3";
+import { config } from "../../configuration/config";
+import { ReleasePhases } from "../lib/constants";
+
+export const isVideoPlaying = writable(false);
+export const modalComponent = writable(null);
+export const showModal = derived(modalComponent, ($comp) => $comp != null);
+export const showModalFullscreen = writable(false);
+
+export const networkAvailable = readable(true || window.ethereum);
+export const contractConnected = writable(false);
+export const isConnecting = writable(false);
+export const isLoading = writable(false);
+export const isMinting = writable(false);
+export const mintingInProgress = writable(false);
+export const isOpeningPack = writable(false);
+
+export const selectedReleaseKey = writable("s1r1");
+export const releasePhase = writable(-1);
+export let contract = null;
+
+export const pricePerPack = writable("0.04");
+export const isAdmin = writable(false);
+export const presaleCredits = writable(0);
+export const tokenIds = writable([]);
+export const tokens = writable([]);
+export const selectedCharacter = writable({});
+export const numberOfTokensToMint = writable(1);
+
+export const selectedRelease = derived(
+    [selectedReleaseKey, chainData],
+    async ([$selectedReleaseKey, $chainData], set) => {
+        if ($selectedReleaseKey && $chainData) {
+            config.releases[$selectedReleaseKey].contract = config.releases[$selectedReleaseKey][$chainData.network];
+            console.log("sr", config.releases[$selectedReleaseKey]);
+            set(config.releases[$selectedReleaseKey]);
+        } else set("0x0");
+    },
+    "0x0"
+);
+
+export const balance = derived(
+    [selectedAccount, connected, web3],
+    async ([$selectedAccount, $connected, $web3], set) => {
+        if ($connected && $web3.eth !== undefined) {
+            let balance = await $web3.eth.getBalance($selectedAccount);
+            balance = $web3.utils.fromWei(balance.toString());
+            set(balance);
+        } else set("?");
+    },
+    0
+);
+
+export const canMint = derived(
+    [isAdmin, releasePhase, presaleCredits, balance, pricePerPack],
+    ([$isAdmin, $releasePhase, $presaleCredits, $balance, $pricePerPack], set) => {
+        if ($balance < $pricePerPack) set(false);
+        else if ($isAdmin || $releasePhase == ReleasePhases.PublicPresale || $releasePhase == ReleasePhases.Released)
+            set(true);
+        else if ($releasePhase == ReleasePhases.Closed || $releasePhase == ReleasePhases.Disabled) set(false);
+        else if ($releasePhase == ReleasePhases.PrivatePresale && $presaleCredits > 0) set(true);
+        else set(false);
+    },
+    false
+);
+
+export const unopenedPacks = derived(tokens, ($tokens, set) => {
+    const packs = $tokens.filter((x) => x.state == 1);    
+    set(packs);
+}, []);

@@ -1,11 +1,11 @@
 <script>
-	import MenuItem from '$lib/Menu/MenuItem.svelte';
+	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
+	import MenuItem from '$lib/Components/Menu/MenuItem.svelte';
 	import { createEventDispatcher } from 'svelte';
 	import { getCharactersQuery } from '../../queries/getCharacters';
 	import { config } from '../config';
 
 	const dispatcher = createEventDispatcher();
-
 
 	function loadCharacters() {
 		return fetch(config.graphUrl, {
@@ -31,23 +31,28 @@
 				console.log('loadCharacters failed', reason);
 			});
 	}
+	// let query = new Promise((resolve) =>
+	// 	setTimeout(async () => {
+	// 		loadCharacters().then((d) => resolve(d));
+	// 	}, 2000)
+	// );
+
 	let query = loadCharacters();
 
-	function selectCharacter(id) {
-		dispatcher('character.selected', id);
+	function selectCharacter(character) {
+		dispatcher('character.selected', character.attributes.tokenId);
 	}
 </script>
 
 {#await query}
-	Loading...
+	<LoadingIndicator>
+		<div>Locating citizen data...</div>
+	</LoadingIndicator>
 {:then characters}
 	{#if characters != null}
 		{#each characters as character}
-			<MenuItem
-				url="/citizens/{character.attributes.tokenId}"
-				on:click={() => selectCharacter(character.attributes.tokenId)}
-			>
-				<p><i class="bi bi-person text-primary" />{character.attributes.name}</p>
+			<MenuItem url="/citizens/{character.attributes.tokenId}" on:click={() => selectCharacter(character)}>
+				<p><i class="bi bi-person text-light" />{character.attributes.name}</p>
 				<small>
 					<div>{character.attributes.race.data.attributes.name}</div>
 					<div>
@@ -56,13 +61,13 @@
 				</small>
 
 				<div class="toolbar">
-					<a
+					<!-- <a
 						target="_blank"
 						on:click|stopPropagation={() => true}
 						href="/citizens/print/{character.attributes.tokenId}"
 					>
 						<i class="bi bi-printer" />
-					</a>
+					</a> -->
 				</div>
 			</MenuItem>
 		{/each}

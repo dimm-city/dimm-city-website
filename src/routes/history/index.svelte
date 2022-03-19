@@ -1,33 +1,32 @@
 <script lang="ts">
 	import Shell from '$lib/Shell.svelte';
-	import Menu from '$lib/Menu/Menu.svelte';
-	import MenuItem from '$lib/Menu/MenuItem.svelte';
+	import Menu from '$lib/Components/Menu/Menu.svelte';
+	import MenuItem from '$lib/Components/Menu/MenuItem.svelte';
 	import { showMenu } from '$lib/ShellStore';
 	import { getStories } from '$lib/Stories/Store';
-	import ContentPane from '$lib/ContentPane.svelte';
+	import ContentPane from '$lib/Components/ContentPane.svelte';
 	$showMenu = true;
 
 	const loadStories = getStories();
 </script>
 
-<Shell title="History">
+<Shell title="History" showMenuButton={false}>
 	<ContentPane>
-		<Menu>
-			{#await loadStories}
-				<span>Loading</span>
-			{:then stories}
-				{#each stories as story}
-					<MenuItem icon={story.icon} title={story.title} url="/history/{story.slug}" description={story.description} />
-				{/each}
-			{/await}
-		</Menu>
 	</ContentPane>
 	<Menu slot="menu">
 		{#await loadStories}
-			<span>Loading</span>
+			<div class="loading-indicator fade-in" data-augmented-ui>
+				<div>Locating historical data...</div>
+			</div>
 		{:then stories}
 			{#each stories as story}
-				<MenuItem icon={story.icon} title={story.title} url="/history/{story.slug}" description={story.description} />
+				<MenuItem
+					disabled={story.disabled}
+					icon={story.icon}
+					title={story.title}
+					url="/history/{story.slug}"
+					description={story.description}
+				/>
 			{/each}
 		{/await}
 	</Menu>

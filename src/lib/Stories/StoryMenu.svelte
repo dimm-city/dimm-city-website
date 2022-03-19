@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Menu from '$lib/Menu/Menu.svelte';
-	import MenuItem from '$lib/Menu/MenuItem.svelte';
+	import Menu from '$lib/Components/Menu/Menu.svelte';
+	import MenuItem from '$lib/Components/Menu/MenuItem.svelte';
 	import { getStories } from './Store';
 	export let viewer;
 </script>
@@ -13,9 +13,9 @@
 			<MenuItem
 				icon={story.icon}
 				title={story.title}
+				disabled={story.disabled}
 				on:click={() => viewer.selectStory(story.slug)}
-				description={story.description}
-			/>
+				description={story.description} />
 		{/each}
 	{/await}
 </Menu>
