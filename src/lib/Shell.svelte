@@ -39,7 +39,8 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=false" />
 	<title>{title} - Dimm City</title>
-	<link rel="icon" type="image/x-icon" href="/assets/icons/acorn256.png" />
+	<meta name="description" content="" />			
+	<link rel="icon" type="image/x-icon" href="/assets/icons/shroom256.png" />
 	<link rel="preload" as="font" href="/assets/dimm-city.woff2" type="font/woff2" crossorigin="anonymous" />
 	<slot name="head" />
 </svelte:head>
