@@ -198,9 +198,10 @@ Well child, there is only one way to find out. I suggest you determine //your// 
 </tw-passagedata><tw-passagedata pid="9" name="PassageHeader" tags="" position="100,300" size="100,100">&lt;&lt;set $p to passage()&gt;&gt;
 &lt;&lt;audio &quot;:playing:not(:theme)&quot; stop&gt;&gt;
 &lt;&lt;if $p neq &quot;Start&quot;&gt;&gt;
-  &lt;&lt;audio &quot;:theme&quot; play loop&gt;&gt;
-  &lt;&lt;audio $p play&gt;&gt;
-&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="10" name="scene-2" tags="zoom" position="1025,175" size="100,100">&lt;&lt;background &quot;intro/scene-2.mp4&quot; &quot;intro/scene-2.png&quot;&gt;&gt;
+  &lt;&lt;audio &quot;:theme&quot; play loop volume 0.3&gt;&gt;
+  &lt;&lt;audio $p play volume 0.4&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+</tw-passagedata><tw-passagedata pid="10" name="scene-2" tags="zoom" position="1025,175" size="100,100">&lt;&lt;background &quot;intro/scene-2.mp4&quot; &quot;intro/scene-2.png&quot;&gt;&gt;
 &lt;&lt;cachevideo &quot;intro/scene-3.mp4&quot; &quot;intro/scene-3.png&quot;&gt;&gt;
 &lt;&lt;text-container&gt;&gt;
 Despite these efforts, some humans still become aware of the Ether and their connection to it. When they do, a Sporo awakens. 
