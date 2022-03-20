@@ -5,7 +5,7 @@
 		bottom: 0;
 		right: 0;
 		left: 0;
-		background: rgba(255, 255, 255, 0.8);
+		background: var(--primary-accent); /* rgba(255, 255, 255, 0.8);*/
 	}
 	.backdrop.open {
 		z-index: 1999;

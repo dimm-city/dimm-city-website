@@ -7,7 +7,20 @@
 		justify-items: center;
 	}
 	.image-wrapper {
-		max-width: min-content;
+		/* max-width: min-content; */
+		height: 400px;
+		width: 300px;
+		background-image: url('/assets/missing-image.png');
+		background-size: contain;
+		background-position: center;
+	}
+	@media (max-width: 745px) {
+		.token-attributes div {
+			font-size: 0.8rem;
+		}
+		.image-wrapper img {
+			max-width: 250px;
+		}
 	}
 	.token-attributes {
 		margin: 0 0.5rem;
@@ -53,7 +66,8 @@
                 </video> -->
 		<!-- <p class:d-none={isVideoLoaded}>loading...</p>
                 {:else} -->
-		<img src={$modalModel.thumbnail_uri} class="fade-in" alt={$modalModel.name} />
+		
+		<img src={$modalModel.thumbnail_uri} class="animate__fadeInLeft" alt={$modalModel.name} />
 		<!-- {/if} -->
 	</div>
 	<div>
@@ -94,9 +108,9 @@
 	</div>
 </div>
 <div class="release-details">
-    <p>
-        {$modalModel.description}
-    </p>
+	<p>
+		{$modalModel.description}
+	</p>
 	<a href="https://opensea.io/assets/0xef48df1d388aa7222da0b83d8b7cb265ef8d0b4a/{$modalModel.edition}" target="_blank"
 		>View on OpenSea</a
 	>
