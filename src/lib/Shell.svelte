@@ -7,7 +7,7 @@
 		left: 0;
 		background: var(--primary-accent); /* rgba(255, 255, 255, 0.8);*/
 		z-index: 1999;
-		filter: blur(10rem);		
+		filter: blur(10rem);
 	}
 </style>
 
@@ -60,8 +60,9 @@
 			{#if showMenuButton}
 				<button on:click={() => ($showMenu = !$showMenu)} data-augmented-ui="all-triangle-up border" class="btn-menu" />
 			{/if}
-			<!-- <a href="/help" data-augmented-ui="all-hex border"><i class="bi bi-question-lg fade-in" /></a> -->
-			<span />
+			<a on:click={showDice} data-augmented-ui="all-hex border"
+				><img src="/assets/icons/dice256.png" height="24" width="24" alt="dice icon" /></a
+			>
 		</div>
 	</div>
 	<div class="bottom-panel">
@@ -79,7 +80,7 @@
 	import MenuPanel from './Components/Menu/MenuPanel.svelte';
 	import ContentPane from './Components/ContentPane.svelte';
 	import MainMenu from './Components/Menu/MainMenu.svelte';
-	import { Modals, closeModal } from 'svelte-modals';
+	import { Modals, closeModal, openModal } from 'svelte-modals';
 	import { showMenu, loggedIn } from './ShellStore';
 	import '../styles/main.css';
 	import '../styles/main.mobile.css';
@@ -87,6 +88,7 @@
 	import 'animate.css';
 	import { onMount } from 'svelte';
 	import { config } from './config';
+	import DiceRollerModal from './Components/DiceRollerModal.svelte';
 	export let title;
 	export let showMenuButton = true;
 	export let showMainMenuButton = true;
@@ -102,4 +104,8 @@
 		// 	disconnect();
 		// });
 	});
+
+	function showDice() {
+		openModal(DiceRollerModal, { fullscreen: true });
+	}
 </script>

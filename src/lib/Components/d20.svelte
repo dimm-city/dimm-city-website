@@ -57,11 +57,11 @@
 
 	.die {
 		position: absolute;
-		width: 100%;
-		height: 100%;
+		width: 80%;
+		height: 80%;
 		transform-style: preserve-3d;
 		transition: transform 0.5s ease-out;
-		cursor: pointer;
+		
 		transform: rotateX(-53deg);
 	}
 
@@ -130,6 +130,7 @@
 		transform: rotateX(11deg) rotateY(-540deg);
 	}
 	.die .face {
+		cursor: pointer;
 		position: absolute;
 		left: 50%;
 		top: 0;
@@ -143,6 +144,10 @@
 		-webkit-backface-visibility: hidden;
 		backface-visibility: hidden;
 		counter-increment: steps 1;
+	}
+
+	.die .face:active{
+		text-decoration: none;
 	}
 	.die .face:before {
 		content: counter(steps);

@@ -6,6 +6,10 @@
 		margin: auto;
 		justify-items: center;
 	}
+	img {
+		opacity: 0;
+		transition: all;
+	}
 	.image-wrapper {
 		/* max-width: min-content; */
 		height: 400px;
@@ -23,7 +27,7 @@
 			width: fit-content;
 		}
 		.image-wrapper img {
-			max-width: 250px;
+			max-width: 220px;
 		}
 	}
 	.token-attributes {
@@ -71,7 +75,7 @@
 		<!-- <p class:d-none={isVideoLoaded}>loading...</p>
                 {:else} -->
 
-		<img src={data.thumbnail_uri} class="animate__fadeInLeft" alt={data.name} />
+		<img src={data.thumbnail_uri} class="fade-in" alt={data.name} />
 		<!-- {/if} -->
 	</div>
 	<div>

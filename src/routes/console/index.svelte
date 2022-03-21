@@ -13,6 +13,10 @@
 		display: flex;
 		justify-content: space-between;
 	}
+
+	small{
+		font-size: 1rem;
+	}
 </style>
 
 <Shell title="Console">
@@ -55,10 +59,7 @@
 			<MenuItem>
 				<strong>Profile</strong>
 				<div>
-					<small>{$signerAddress}</small>
-					{#await network then value}
-						{value.name}
-					{/await}
+					<small>{$signerAddress}</small>					
 				</div>
 			</MenuItem>
 			<MenuItem on:click={viewSporos}>
