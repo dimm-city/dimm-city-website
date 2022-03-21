@@ -1,6 +1,6 @@
 
 export const config = {
-	version: "0.1.0",
+	version: "0.2.0",
 	graphUrl: 'https://data.dimm.city/graphql', //  "http://localhost:1337/graphql",
 	releases: {
 		s1r1: {

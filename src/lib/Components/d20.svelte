@@ -298,6 +298,7 @@
 	let animationDuration = 3000;
 
 	onMount(() => {
+		//TODO: use props to set css variables
 		console.log('set css variables from props...', color);
 	});
 	function roll() {

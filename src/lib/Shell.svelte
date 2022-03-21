@@ -6,10 +6,8 @@
 		right: 0;
 		left: 0;
 		background: var(--primary-accent); /* rgba(255, 255, 255, 0.8);*/
-	}
-	.backdrop.open {
 		z-index: 1999;
-		filter: blur(10rem);
+		filter: blur(10rem);		
 	}
 </style>
 
@@ -27,14 +25,11 @@
 <Modals>
 	<div
 		slot="backdrop"
-		class="backdrop"
-		transition:fade={{ delay: 0, duration: 350 }}
+		class="backdrop fade-in"
 		on:introstart
 		on:outroend
-		class:open={showModal}
 		on:click={() => {
 			closeModal();
-			$showModal = false;
 		}}
 	/>
 </Modals>
@@ -80,13 +75,12 @@
 </div>
 
 <script>
-	import { fade } from "svelte/transition";
+	import { fade } from 'svelte/transition';
 	import MenuPanel from './Components/Menu/MenuPanel.svelte';
 	import ContentPane from './Components/ContentPane.svelte';
 	import MainMenu from './Components/Menu/MainMenu.svelte';
-	import { Modals, closeModal, openModal } from 'svelte-modals';
-	import Modal from './Modal.svelte';
-	import { showMenu, loggedIn, showModal, modalComponent } from './ShellStore';
+	import { Modals, closeModal } from 'svelte-modals';
+	import { showMenu, loggedIn } from './ShellStore';
 	import '../styles/main.css';
 	import '../styles/main.mobile.css';
 	import '../styles/animations.css';
@@ -108,10 +102,4 @@
 		// 	disconnect();
 		// });
 	});
-
-	$: if ($showModal) {
-		openModal(Modal);
-	} else {
-		closeModal();
-	}
 </script>

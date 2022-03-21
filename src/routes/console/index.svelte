@@ -1,83 +1,19 @@
-<script context="module">
-	export const prerender = false;
-</script>
-
-<script lang="ts">
-	// import abiJson from '../../contracts/DimmCityV1Base.json';
-	// import { config } from "$lib/config";
-	import Shell from '$lib/Shell.svelte';
-	import Menu from '$lib/Components/Menu/Menu.svelte';
-	import Button from '$lib/Components/Button.svelte';
-	import { showMenu, loggedIn, myCollection, showModalComponent } from '$lib/ShellStore';
-	import { provider, signer, signerAddress, connected, defaultEvmStores, chainId } from 'svelte-ethers-store';
-	import MenuItem from '$lib/Components/Menu/MenuItem.svelte';
-	import ContentPane from '$lib/Components/ContentPane.svelte';
-	import { onMount } from 'svelte';
-	import { Contract } from 'ethers';
-	import { connect, contract, contractConfig } from '$lib/ChainStore';
-	import type { ContractContext } from 'src/contracts/DimmCityV1Base';
-	import Character from '$lib/Characters/Character.svelte';
-	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
-	import TokenView from '$lib/Tokens/TokenView.svelte';
-
-	let loadingTask: Promise<void>;
-	let selectedSporo = {} as any;
-
-	$: tokenId = `${selectedSporo.release}-${selectedSporo.edition}`;
-	$showMenu = true;
-	//$: contractConfig = config.releases.s1r1.networks.find((n) => n.chainId === $chainId);
-	$: network = $connected ? $provider.getNetwork() : ({} as any);
-	//$: contract = $connected ? new Contract(contractConfig.address, abiJson.abi, $signer) as unknown as ContractContext : null;
-	//$: loggedIn = $connected && $signerAddress;
-	onMount(() => {
-		// add a test to return in SSR context
-		// defaultEvmStores.setProvider();
-	});
-
-	$: if ($connected) {
-		loadingTask = getSporos();
+<style>
+	.content-container {
+		padding: 1rem;
+	}
+	h2 {
+		text-align: center;
 	}
 
-	async function getSporos(): Promise<void> {
-		if (!$connected || !$contract) return;
-		const address = $signerAddress;
-		const number = (await $contract.balanceOf(address)).toNumber();
-
-		const tasks = new Array<Promise<any>>();
-		for (let index = 0; index < number; index++) {
-			const sporo = await $contract.tokenOfOwnerByIndex(address, index);
-			const tokenId = sporo.toNumber();
-			tasks.push(await downloadSporo(tokenId));
-		}
-
-		return Promise.all(tasks).then((sporos) => ($myCollection = sporos));
+	ul {
+		padding: 0;
 	}
-
-	async function downloadSporo(tokenId: number): Promise<any> {
-		let json = {};
-		try {
-			const response = await fetch(`${$contractConfig.metadataBaseUri}/${tokenId}`);
-
-			if (response.ok) {
-				json = await response.json();
-			}
-		} catch (error) {
-			console.error(error);
-		}
-		return json;
+	.small-menu-item {
+		display: flex;
+		justify-content: space-between;
 	}
-
-	function viewSporos() {
-		$showMenu = false;
-		selectedSporo = {};
-	}
-
-	function showToken(token: any) {
-		showModalComponent(TokenView, token);
-	}
-
-	let tokenView;
-</script>
+</style>
 
 <Shell title="Console">
 	<ContentPane padding={0}>
@@ -143,15 +79,86 @@
 	</Menu>
 </Shell>
 
-<style>
-	.content-container {
-		padding: 1rem;
+<script context="module">
+	export const prerender = false;
+</script>
+
+<script lang="ts">
+
+	import Shell from '$lib/Shell.svelte';
+	import Menu from '$lib/Components/Menu/Menu.svelte';
+	import Button from '$lib/Components/Button.svelte';
+	import { showMenu, loggedIn, myCollection } from '$lib/ShellStore';
+	import { provider, signer, signerAddress, connected, defaultEvmStores, chainId } from 'svelte-ethers-store';
+	import MenuItem from '$lib/Components/Menu/MenuItem.svelte';
+	import ContentPane from '$lib/Components/ContentPane.svelte';
+	import { onMount } from 'svelte';
+	import { connect, contract, contractConfig } from '$lib/ChainStore';
+	import Character from '$lib/Characters/Character.svelte';
+	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
+	import TokenViewModal from '$lib/Tokens/TokenViewModal.svelte';
+	import { openModal } from 'svelte-modals';
+
+	let loadingTask: Promise<void>;
+	let selectedSporo = {} as any;
+	let tokenView;
+
+	$: tokenId = `${selectedSporo.release}-${selectedSporo.edition}`;
+	$showMenu = true;
+	//$: contractConfig = config.releases.s1r1.networks.find((n) => n.chainId === $chainId);
+	$: network = $connected ? $provider.getNetwork() : ({} as any);
+	//$: contract = $connected ? new Contract(contractConfig.address, abiJson.abi, $signer) as unknown as ContractContext : null;
+	//$: loggedIn = $connected && $signerAddress;
+	onMount(() => {
+		// add a test to return in SSR context
+		// defaultEvmStores.setProvider();
+	});
+
+	$: if ($connected) {
+		loadingTask = getSporos();
 	}
-	h2 {
-		text-align: center;
+
+	async function getSporos(force: Boolean = false): Promise<void> {
+		if (!$connected || !$contract) return;
+
+		const address = $signerAddress;
+		const number = (await $contract.balanceOf(address)).toNumber();
+
+		if ($myCollection && $myCollection.length == number) return;
+
+		const tasks = new Array<Promise<any>>();
+		for (let index = 0; index < number; index++) {
+			const sporo = await $contract.tokenOfOwnerByIndex(address, index);
+			const tokenId = sporo.toNumber();
+			tasks.push(await downloadSporo(tokenId));
+		}
+
+		return Promise.all(tasks).then((sporos) => ($myCollection = sporos));
 	}
-	.small-menu-item {
-		display: flex;
-		justify-content: space-between;
+
+	async function downloadSporo(tokenId: number): Promise<any> {
+		let json = {};
+		try {
+			if ($myCollection.some((s) => s.tokenId == tokenId)) {
+				return $myCollection.find((s) => s.tokenId == tokenId);
+			}
+			const response = await fetch(`${$contractConfig.metadataBaseUri}/${tokenId}`);
+
+			if (response.ok) {
+				json = await response.json();
+			}
+		} catch (error) {
+			console.error(error);
+		}
+		return json;
 	}
-</style>
+
+	function viewSporos() {
+		$showMenu = false;
+		selectedSporo = {};
+	}
+
+	function showToken(token: any) {
+		openModal(TokenViewModal, { data: token });
+	}
+</script>

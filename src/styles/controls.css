@@ -13,7 +13,9 @@ i.btn:focus-visible {
     color: var(--secondary-accent);
 }
 
-
+hr{
+	border-color: var(--third-accent);
+}
 
 .loading-indicator {
     display: flex;

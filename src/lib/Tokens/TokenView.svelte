@@ -18,6 +18,10 @@
 		.token-attributes div {
 			font-size: 0.8rem;
 		}
+		.image-wrapper {
+			height: fit-content;
+			width: fit-content;
+		}
 		.image-wrapper img {
 			max-width: 250px;
 		}
@@ -66,20 +70,20 @@
                 </video> -->
 		<!-- <p class:d-none={isVideoLoaded}>loading...</p>
                 {:else} -->
-		
-		<img src={$modalModel.thumbnail_uri} class="animate__fadeInLeft" alt={$modalModel.name} />
+
+		<img src={data.thumbnail_uri} class="animate__fadeInLeft" alt={data.name} />
 		<!-- {/if} -->
 	</div>
 	<div>
 		<h3>Attributes</h3>
 		<div class="token-attributes">
 			<div>Token Id</div>
-			<div>{$modalModel.edition}</div>
+			<div>{data.edition}</div>
 			<div>Release</div>
-			<div>{$modalModel.release}</div>
+			<div>{data.release}</div>
 
 			<div>Artist</div>
-			<div>{$modalModel.artist}</div>
+			<div>{data.artist}</div>
 			<div>Eyes</div>
 			<div>{getAttributeValue('Eyes')}</div>
 			<div>Mouth</div>
@@ -109,23 +113,22 @@
 </div>
 <div class="release-details">
 	<p>
-		{$modalModel.description}
+		{data.description}
 	</p>
-	<a href="https://opensea.io/assets/0xef48df1d388aa7222da0b83d8b7cb265ef8d0b4a/{$modalModel.edition}" target="_blank"
+	<a href="https://opensea.io/assets/0xef48df1d388aa7222da0b83d8b7cb265ef8d0b4a/{data.edition}" target="_blank"
 		>View on OpenSea</a
 	>
 </div>
 
 <script lang="ts">
-	import { modalModel } from '$lib/ShellStore';
-
+	export let data;
 	function getAttributeValue(attribKey) {
-		let result = $modalModel.attributes.find((a) => a.trait_type == attribKey);
+		let result = data.attributes.find((a) => a.trait_type == attribKey);
 		return result ? result.value : '';
 	}
 	let hasWings =
-		Array.isArray($modalModel.attributes) &&
-		$modalModel.attributes.filter(
+		Array.isArray(data.attributes) &&
+		data.attributes.filter(
 			(a) => a.trait_type == 'Behind' && (a.value.indexOf('BIRD') > -1 || a.value.indexOf('WINGS') > -1)
 		).length > 0;
 </script>

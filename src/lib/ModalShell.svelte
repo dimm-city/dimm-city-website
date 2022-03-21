@@ -48,7 +48,7 @@
 	}
 
 	.content-wrapper::-webkit-scrollbar {
-		width: 0.3rem; /* width of the entire scrollbar */
+		width: 0px; /* width of the entire scrollbar */
 	}
 
 	.content-wrapper::-webkit-scrollbar-track {
@@ -56,9 +56,8 @@
 	}
 
 	.content-wrapper::-webkit-scrollbar-thumb {
-		background-color: var(--primary-accent); /* color of the scroll thumb */
-		border-radius: 0.1rem; /* roundness of the scroll thumb */
-		border: 1px solid var(--fourth-accent); /* creates padding around scroll thumb */
+		background-color: transparent;
+		border: 0px solid var(--fourth-accent); /* creates padding around scroll thumb */
 	}
 	@media only screen and (min-width: 320px) and (max-width: 767px) {
 		/* .contents.fullscreen {
@@ -89,6 +88,7 @@
 	}
 
 	.actions i {
+		color: var(--third-accent);
 		cursor: pointer;
 	}
 </style>

@@ -1,9 +1,9 @@
 {
   "name": "dimm.city",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "scripts": {
     "start": "swa start",
-    "dev": "svelte-kit dev --host",
+    "dev": "svelte-kit dev --host --https",
     "build": "svelte-kit build",
     "package": "svelte-kit package",
     "preview": "svelte-kit preview",
