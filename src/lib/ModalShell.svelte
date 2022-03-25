@@ -1,6 +1,6 @@
 <style>
 	[data-augmented-ui]::before {
-		background-color:  rgb(128 128 128 / 25%);
+		background-color: rgb(128 128 128 / 25%);
 	}
 	.modal {
 		position: fixed;
@@ -12,7 +12,6 @@
 		justify-content: center;
 		align-items: center;
 
-		z-index: 2000;
 		/* allow click-through to backdrop */
 		pointer-events: none;
 	}
@@ -31,7 +30,7 @@
 		pointer-events: auto;
 
 		color: var(--primary-accent);
-        font-size: 0.8rem;
+		font-size: 0.8rem;
 	}
 	.contents.fullscreen {
 		width: 100vw;
@@ -42,9 +41,9 @@
 	.content-wrapper {
 		max-height: 80vh;
 		overflow-y: scroll;
-        overflow-x: hidden;
+		overflow-x: hidden;
 		scrollbar-width: none;
-        margin: 1rem 0;
+		margin: 1rem 0;
 	}
 
 	.content-wrapper::-webkit-scrollbar {
@@ -52,7 +51,7 @@
 	}
 
 	.content-wrapper::-webkit-scrollbar-track {
-		background: transparent; 
+		background: transparent;
 	}
 
 	.content-wrapper::-webkit-scrollbar-thumb {
@@ -93,29 +92,27 @@
 	}
 </style>
 
-{#if isOpen}
-	<div role="dialog" class="modal" transition:fly={{ y: -600, delay: 0, duration: 350 }} on:introstart on:outroend>
-		<div
-			class="contents"
-			class:fullscreen
-			data-augmented-ui="tl-2-clip-xy tr-2-clip-xy br-2-clip-y bl-2-clip-y both"
-		>
+	<div
+		role="dialog"
+		class="modal"
+		transition:fly={{ y: -600, delay: 0, duration: 350 }}
+		on:introstart
+		on:outroend
+	>
+		<div class="contents" class:fullscreen data-augmented-ui="tl-2-clip-xy tr-2-clip-xy br-2-clip-y bl-2-clip-y both">
 			<div class="actions">
-				<slot name="actions"></slot>
+				<slot name="actions" />
 				<div on:click={dismiss}><i class="bi bi-x-octagon" /></div>
 			</div>
 			<div class="content-wrapper">
-				<slot {data}></slot>
+				<slot {data} />
 			</div>
 		</div>
 	</div>
-{/if}
 
 <script>
 	import { closeModal } from 'svelte-modals';
 	import { fly } from 'svelte/transition';
-	// provided by Modals
-	export let isOpen = true;
 
 	export let data = {};
 	export let fullscreen = true;

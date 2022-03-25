@@ -6,7 +6,7 @@
 		right: 0;
 		left: 0;
 		background: var(--primary-accent); /* rgba(255, 255, 255, 0.8);*/
-		z-index: 1999;
+		
 		filter: blur(10rem);
 	}
 </style>
@@ -22,17 +22,6 @@
 	<slot name="head" />
 </svelte:head>
 
-<Modals>
-	<div
-		slot="backdrop"
-		class="backdrop fade-in"
-		on:introstart
-		on:outroend
-		on:click={() => {
-			closeModal();
-		}}
-	/>
-</Modals>
 <div class="vertical-acordion {title.toLowerCase()}" class:bottom={$showMenu} class:top={!$showMenu}>
 	<div class="top-panel slide-in-down">
 		<slot><ContentPane fullsize={true}>404</ContentPane></slot>
@@ -75,6 +64,18 @@
 	<slot name="scripts" />
 </div>
 
+<Modals>
+	<div
+		slot="backdrop"
+		class="backdrop fade-in"
+		class:open={isOpen}
+		on:introstart
+		on:outroend
+		on:click={() => {
+			closeModal();
+		}}
+	/>
+</Modals>
 <script>
 	import { fade } from 'svelte/transition';
 	import MenuPanel from './Components/Menu/MenuPanel.svelte';
@@ -94,6 +95,7 @@
 	export let showMainMenuButton = true;
 
 	onMount(async () => {
+		closeModal();
 		// if(window.ethereum && window.ethereum.isConnected()){
 		// 	connect();
 		// }
