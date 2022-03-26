@@ -122,6 +122,11 @@
 	<a href="https://opensea.io/assets/0xef48df1d388aa7222da0b83d8b7cb265ef8d0b4a/{data.edition}" target="_blank"
 		>View on OpenSea</a
 	>
+	{#if data.hasCharacter}
+		<a href="/citizens/{data.release}-{data.edition}">View Citizen Profile</a>
+	{:else}
+		<a href="/citizens/import/{data.release}-{data.edition}">Create Citizen Profile</a>
+	{/if}
 </div>
 
 <script lang="ts">

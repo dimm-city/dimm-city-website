@@ -12,6 +12,8 @@
 		opacity: 0.75;
 		text-shadow: 0 0 0.25vh black, 0 0 0.25vh black;
 		transition: all var(--quick-in);
+		text-transform: uppercase;
+		
 
 		--aug-clip-tl1: initial;
 		--aug-clip-tr1: initial;

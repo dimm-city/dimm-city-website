@@ -1,10 +1,42 @@
-export class Character {
+export class Character implements ICharacter {
+	constructor(token: IToken = null) {
+		if (token) this.importToken(token);
+	}
 	name: string;
-	hp: number;
-	ap: number;
+	beliefs: string;
+	flaws: string;
+	dreams: string;
+	story: string;
+	token: IToken;
+	age: number;
+	height: number;
+	weight: number;
+	pronouns: string;
+	eyes: string;
+	skin: string;
+	hair: string;
+	vibe: string;
+	clothing: string;
+	mainImage: string;
+	thumbnailImage: string;
+	cybernetics: ISummaryItem[];
+	race: IRaceSummaryItem;
+	roles: ISummaryItem[];
+	currentLocation: ISummaryItem = { slug: '', name: '' };
+	selectedAbilities: ISummaryItem[];
+	items: ISummaryItem[];
 
-	constructor(data: any) {
-		this.name = data.name;
+	importToken(token: IToken) {
+		if (!token) return;
+		this.name = token.name;
+		this.eyes = this._getAttributeValue(token, 'eyes');
+		this.clothing = this._getAttributeValue(token, 'clothing');
+		this.token = token;
+	}
+
+	_getAttributeValue(token, attribKey): string {
+		const result = token.attributes.find((a) => a.trait_type.toLowerCase() == attribKey.toLowerCase());
+		return result ? result.value : '';
 	}
 }
 
@@ -13,7 +45,7 @@ export interface IAttribute {
 	value: string;
 }
 
-export interface ICharacter {
+export interface IToken {
 	compiler: string;
 	release: string;
 	artist: string;
@@ -30,38 +62,41 @@ export interface ICharacter {
 	fullresulotion_uri: string;
 	id: number;
 	tokenId: string;
-    noticeable: string;
+}
+export interface ICharacter {
+	//TODO: add to strapi
 	beliefs: string;
 	flaws: string;
 	dreams: string;
 	story: string;
+	token: IToken;
 
-    //-----//
-    age: number;
-    height: number;
-    weight: number;
-    pronouns: string;
-    eyes: string;
-    skin: string;
-    hair: string;
-    vibe: string;
-    clothing: string;
-    mainImage: string;
-    thumbnailImage: string;
-    cybernetics: ISummaryItem[];
-    race: IRaceSummaryItem;
-    roles: ISummaryItem[];
-    currentLocation: ISummaryItem;
-    selectedAbilities: ISummaryItem[];
-    items: ISummaryItem[];
+	//-----//
+	name: string;
+	age: number;
+	height: number;
+	weight: number;
+	pronouns: string;
+	eyes: string;
+	skin: string;
+	hair: string;
+	vibe: string;
+	clothing: string;
+	mainImage: string;
+	thumbnailImage: string;
+	cybernetics: ISummaryItem[];
+	race: IRaceSummaryItem;
+	roles: ISummaryItem[];
+	currentLocation: ISummaryItem;
+	selectedAbilities: ISummaryItem[];
+	items: ISummaryItem[];
 }
 
-
 export interface ISummaryItem {
-    name: string;
-    slug: string;
+	name: string;
+	slug: string;
 }
 
 export interface IRaceSummaryItem extends ISummaryItem {
-    abilities: ISummaryItem[]
+	abilities: ISummaryItem[];
 }

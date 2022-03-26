@@ -146,6 +146,13 @@
 		radial-gradient(circle at bottom left, var(--primary-accent) 20px, transparent 30px);
 }
 
+.small-menu-item.selected {
+	background-color: #ffffff3d;	
+	--aug-border-bg: radial-gradient(circle at top left, var(--third-accent) 40px, transparent 20%),
+		radial-gradient(circle at top right, var(--primary-accent) 20px, transparent 20%),
+		radial-gradient(circle at bottom right, var(--third-accent) 40px, transparent 50%),
+		radial-gradient(circle at bottom left, var(--primary-accent) 20px, transparent 30%);
+}
 .small-menu-item small {
 	font-size: 0.7em;
 }

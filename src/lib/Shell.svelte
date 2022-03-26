@@ -1,3 +1,38 @@
+<script lang="ts">
+	import MenuPanel from './Components/Menu/MenuPanel.svelte';
+	import ContentPane from './Components/ContentPane.svelte';
+	import MainMenu from './Components/Menu/MainMenu.svelte';
+	import { Modals, openModal, closeModal, closeAllModals } from 'svelte-modals';
+	import { showMenu, loggedIn } from './ShellStore';
+	import '../styles/main.css';
+	import '../styles/main.mobile.css';
+	import '../styles/animations.css';
+	import 'animate.css';
+	import { onMount } from 'svelte';
+	import { config } from './config';
+	import DiceRollerModal from './Components/DiceRollerModal.svelte';
+	export let title;
+	export let showMenuButton = true;
+	export let showMainMenuButton = true;
+
+	onMount(async () => {
+		closeAllModals();
+		// if(window.ethereum && window.ethereum.isConnected()){
+		// 	connect();
+		// }
+		// window.ethereum.on('connect', (connectInfo) => {
+		// 	connect();
+		// });
+		// window.ethereum.on('disconnect', (error) => {
+		// 	disconnect();
+		// });
+	});
+
+	function showDice() {
+		openModal(DiceRollerModal, { fullscreen: true });
+	}
+</script>
+
 <style>
 	.backdrop {
 		position: fixed;
@@ -6,7 +41,8 @@
 		right: 0;
 		left: 0;
 		background: var(--primary-accent); /* rgba(255, 255, 255, 0.8);*/
-		
+		--transition-in-delay: 50ms;
+		--transition-in-duration: 1s;
 		filter: blur(10rem);
 	}
 </style>
@@ -68,7 +104,6 @@
 	<div
 		slot="backdrop"
 		class="backdrop fade-in"
-		class:open={isOpen}
 		on:introstart
 		on:outroend
 		on:click={() => {
@@ -76,38 +111,3 @@
 		}}
 	/>
 </Modals>
-<script>
-	import { fade } from 'svelte/transition';
-	import MenuPanel from './Components/Menu/MenuPanel.svelte';
-	import ContentPane from './Components/ContentPane.svelte';
-	import MainMenu from './Components/Menu/MainMenu.svelte';
-	import { Modals, closeModal, openModal } from 'svelte-modals';
-	import { showMenu, loggedIn } from './ShellStore';
-	import '../styles/main.css';
-	import '../styles/main.mobile.css';
-	import '../styles/animations.css';
-	import 'animate.css';
-	import { onMount } from 'svelte';
-	import { config } from './config';
-	import DiceRollerModal from './Components/DiceRollerModal.svelte';
-	export let title;
-	export let showMenuButton = true;
-	export let showMainMenuButton = true;
-
-	onMount(async () => {
-		closeModal();
-		// if(window.ethereum && window.ethereum.isConnected()){
-		// 	connect();
-		// }
-		// window.ethereum.on('connect', (connectInfo) => {
-		// 	connect();
-		// });
-		// window.ethereum.on('disconnect', (error) => {
-		// 	disconnect();
-		// });
-	});
-
-	function showDice() {
-		openModal(DiceRollerModal, { fullscreen: true });
-	}
-</script>

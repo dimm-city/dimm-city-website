@@ -95,7 +95,7 @@
 	<div
 		role="dialog"
 		class="modal"
-		transition:fly={{ y: -600, delay: 0, duration: 350 }}
+		transition:fly={{ y: -600, delay: 0, duration: 450 }}
 		on:introstart
 		on:outroend
 	>

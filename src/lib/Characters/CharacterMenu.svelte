@@ -1,6 +1,7 @@
 <script>
 	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
 	import MenuItem from '$lib/Components/Menu/MenuItem.svelte';
+	import { characters } from '$lib/ShellStore';
 	import { createEventDispatcher } from 'svelte';
 	import { getCharactersQuery } from '../../queries/getCharacters';
 	import { config } from '../config';
@@ -37,20 +38,44 @@
 	// 	}, 2000)
 	// );
 
-	let query = loadCharacters();
+	let query = new Promise(async (resolve) => {
+		if ($characters?.length < 1) {
+			let data = await loadCharacters();
+			$characters = data;
+			resolve(data);
+		} else resolve($characters);
+	});
 
 	function selectCharacter(character) {
 		dispatcher('character.selected', character.attributes.tokenId);
 	}
 </script>
 
+<style>
+	.toolbar {
+		position: absolute;
+		bottom: 1rem;
+		right: 1rem;
+	}
+	.toolbar a,
+	.toolbar a:visited {
+		color: var(--third-accent);
+		transition: color 500ms ease-in-out;
+	}
+	.toolbar a:hover,
+	.toolbar a:active {
+		color: var(--primary-accent);
+		transition: color 500ms ease-in-out;
+	}
+</style>
+
 {#await query}
 	<LoadingIndicator>
 		<div>Locating citizen data...</div>
 	</LoadingIndicator>
-{:then characters}
-	{#if characters != null}
-		{#each characters as character}
+{:then}
+	{#if $characters != null}
+		{#each $characters as character}
 			<MenuItem url="/citizens/{character.attributes.tokenId}" on:click={() => selectCharacter(character)}>
 				<p><i class="bi bi-person text-light" />{character.attributes.name}</p>
 				<small>
@@ -75,21 +100,3 @@
 {:catch e}
 	<div>{e}</div>
 {/await}
-
-<style>
-	.toolbar {
-		position: absolute;
-		bottom: 1rem;
-		right: 1rem;
-	}
-	.toolbar a,
-	.toolbar a:visited {
-		color: var(--third-accent);
-		transition: color 500ms ease-in-out;
-	}
-	.toolbar a:hover,
-	.toolbar a:active {
-		color: var(--primary-accent);
-		transition: color 500ms ease-in-out;
-	}
-</style>
