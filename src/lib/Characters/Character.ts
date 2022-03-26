@@ -21,7 +21,7 @@ export class Character implements ICharacter {
 	thumbnailImage: string;
 	cybernetics: ISummaryItem[];
 	race: IRaceSummaryItem;
-	roles: ISummaryItem[];
+	roles: ISummaryItem[] = [];
 	currentLocation: ISummaryItem = { slug: '', name: '' };
 	selectedAbilities: ISummaryItem[];
 	items: ISummaryItem[];
@@ -31,6 +31,7 @@ export class Character implements ICharacter {
 		this.name = token.name;
 		this.eyes = this._getAttributeValue(token, 'eyes');
 		this.clothing = this._getAttributeValue(token, 'clothing');
+		this.skin = this._getAttributeValue(token, 'body');
 		this.token = token;
 	}
 

@@ -6,7 +6,7 @@
 	textarea {
 		width: 100%;
 		height: 100%;
-		padding: 0.5rem;
+		padding: 1rem;
 		background-color: rgba(17, 17, 17, 0.75);
 		border: 0;
 		color: var(--third-accent);

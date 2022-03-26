@@ -1,14 +1,13 @@
 <script lang="ts">
 	import { myCollection, districts } from '$lib/ShellStore';
-	import TokenView from '$lib/Tokens/TokenView.svelte';
 	import CharacterStats from './Editors/CharacterStats.svelte';
 	import StepWizard from 'svelte-step-wizard';
 	import { Character } from './Character';
 	import CharacterBiography from './Editors/CharacterBiography.svelte';
-	import RoleSelector from './Editors/RoleSelector.svelte';
+	import RoleSelector from './Editors/RoleSelectorMenu.svelte';
 	import LocationSelector from './Editors/DistrictSelector.svelte';
 	import Button from '$lib/Components/Button.svelte';
-import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
+	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
 	export let tokenId;
 
 	//ToDo: load token if not in local collection
@@ -101,7 +100,7 @@ import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
 			<div><h2>Creating character</h2></div>
 			<div>
 				<p>
-					<LoadingIndicator><div> compiling...</div></LoadingIndicator>
+					<LoadingIndicator><div>compiling...</div></LoadingIndicator>
 				</p>
 			</div>
 			<div>

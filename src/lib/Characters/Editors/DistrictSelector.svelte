@@ -2,7 +2,7 @@
 	import Image from '$lib/Components/Image.svelte';
 	import { config } from '$lib/config';
 	import { districts } from '$lib/ShellStore';
-	import { getDistrictsQuery } from '../../../queries/getDistricts';
+	import { getDistrictsQuery } from '../../queries/getDistricts';
 	import { onMount } from 'svelte';
 
 	$: selectedItem = $districts.find((l) => l.slug == value);

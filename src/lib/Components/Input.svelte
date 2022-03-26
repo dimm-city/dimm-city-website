@@ -1,5 +1,4 @@
 <script lang="ts">
-import AbilityModal from "$lib/Characters/AbilityModal.svelte";
 
 	export let value: any = "";
 	export let type = 'text';
@@ -11,7 +10,7 @@ import AbilityModal from "$lib/Characters/AbilityModal.svelte";
 <style>
 	input {
 		width: 100%;
-		padding: 0.5rem;
+		padding: 0.75rem 1rem;
 		background-color: rgba(17, 17, 17, 0.75);
 		border: 0;
 		color: var(--third-accent);

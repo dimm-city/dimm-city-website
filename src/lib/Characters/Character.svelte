@@ -196,7 +196,7 @@
 
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { getCharacterBySlugQuery } from '../../queries/getCharacterBySlug';
+	import { getCharacterBySlugQuery } from '../queries/getCharacterBySlug';
 	import { config } from '$lib/config';
 	import { characters, myCollection, showMenu } from '$lib/ShellStore';
 	import { openModal } from 'svelte-modals';

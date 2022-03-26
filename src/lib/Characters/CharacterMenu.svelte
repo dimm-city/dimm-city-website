@@ -3,7 +3,7 @@
 	import MenuItem from '$lib/Components/Menu/MenuItem.svelte';
 	import { characters } from '$lib/ShellStore';
 	import { createEventDispatcher } from 'svelte';
-	import { getCharactersQuery } from '../../queries/getCharacters';
+	import { getCharactersQuery } from '../queries/getCharacters';
 	import { config } from '../config';
 
 	const dispatcher = createEventDispatcher();

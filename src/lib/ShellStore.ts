@@ -14,6 +14,9 @@ export const loggedIn = derived(
 export const myCollection = writable(getSessionValue('collection') ?? []);
 myCollection.subscribe((value) => setSessionValue('collection', value));
 
+export const roles = writable(getSessionValue('roles') ?? []);
+roles.subscribe((value) => setSessionValue('roles', value));
+
 export const characters = writable(getLocalValue('characters') ?? []);
 characters.subscribe((value) => setLocalValue('characters', value, new Date(new Date().getTime() + 1 * 60000)));
 
