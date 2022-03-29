@@ -27,7 +27,7 @@ import Web3Modal from 'web3modal';
 // export const getSignerAddress = () => _selectedAddress;
 
 import { config } from '$lib/config';
-import { provider, signer, signerAddress, connected, defaultEvmStores, chainId } from 'svelte-ethers-store';
+import { signer, signerAddress, connected, defaultEvmStores, chainId } from 'svelte-ethers-store';
 import { BigNumber, Contract } from 'ethers';
 import type { ContractContext } from 'src/contracts/DimmCityV1Base';
 import abiJson from '../contracts/DimmCityV1Base.json';

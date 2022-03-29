@@ -55,7 +55,8 @@ export function loadRoles() {
 						thumbnailUrl: i.attributes.mainImage?.data?.attributes?.previewUrl,
 						imageUrl: i.attributes.mainImage?.data?.attributes?.url
 					};
-				});
+				}).sort((a,b) => a.name > b.name ? 1 : -1);
+				
 			}
 			return [];
 		})

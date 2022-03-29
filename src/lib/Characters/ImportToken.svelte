@@ -31,10 +31,18 @@
 
 <style>
 	.step-container {
-		min-height: 100%;
+		height: 80vh;
+		width: 100%;
 		display: grid;
 		grid-template-columns: 1fr;
 		grid-template-rows: 0.2fr auto 0.1fr;
+	}
+	.step-container div:nth-child(2) {
+		display: flex;
+		height: 70vh;
+		width: 100%;
+		justify-content: space-between;
+		overflow-y: auto;
 	}
 	.step-container div:nth-child(3) {
 		display: flex;

@@ -36,15 +36,14 @@
 
 <style>
 	.container {
-		min-height: 100%;
+		height: 100%;
+		width: 100%;
 		display: grid;
-		grid-template-columns: 0.7fr 1.6fr;
-		grid-template-rows: 0.5fr 0.5fr;
+		grid-template-columns: 0.4fr 0.56fr;
+		/* grid-template-rows: 0.5fr 0.5fr; */
 		gap: 1rem 1rem;
 		grid-auto-flow: row;
-		grid-template-areas:
-			'image-area attributes-area'
-			'description-area description-area';
+		grid-template-areas: 'image-area attributes-area';	
 	}
 
 	.image-area {
@@ -55,26 +54,37 @@
 		height: 100%;
 	}
 
-	.description-area {
+	/* .description-area {
 		grid-area: description-area;
-	}
+	} */
 
 	.attributes-area {
 		grid-area: attributes-area;
+		/* max-height: 400px;
+		overflow-y: auto; */
 	}
+
+	.roles-grid {
+		display: grid;
+		grid-template-columns: 0.5fr 0.5fr;
+		gap: 0.5rem 1.5rem;
+	}
+
+	
 </style>
 
 <div class="container">
 	<div class="image-area">
 		<Image imageUrl={selectedItem?.thumbnailUrl ?? selectedItem?.imageUrl} title={selectedItem?.name} />
-	</div>
-	<div class="description-area">
 		<p>{selectedItem?.description || ''}</p>
 	</div>
+	<!-- <div class="description-area">
+		<p>{selectedItem?.description || ''}</p>
+	</div> -->
 	<div class="attributes-area">
-		<ul>
+		<div class="roles-grid">
 			{#each items as item}
-				<li
+				<div
 					data-augmented-ui
 					class="small-menu-item"
 					class:selected={character.roles.some((r) => r.slug == item.slug)}
@@ -85,8 +95,8 @@
 					on:click={() => toggleItem(item)}
 				>
 					{item.name} <small />
-				</li>
+				</div>
 			{/each}
-		</ul>
+		</div>
 	</div>
 </div>
