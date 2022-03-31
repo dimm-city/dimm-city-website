@@ -3,7 +3,7 @@
 	import ContentPane from './Components/ContentPane.svelte';
 	import MainMenu from './Components/Menu/MainMenu.svelte';
 	import { Modals, openModal, closeModal, closeAllModals } from 'svelte-modals';
-	import { showMenu, loggedIn } from './ShellStore';
+	import { showMenu } from './ShellStore';
 	import '../styles/main.css';
 	import '../styles/main.mobile.css';
 	import '../styles/animations.css';
@@ -11,6 +11,7 @@
 	import { onMount } from 'svelte';
 	import { config } from './config';
 	import DiceRollerModal from './Components/DiceRollerModal.svelte';
+import { loggedIn } from './ChainStore';
 	export let title;
 	export let showMenuButton = true;
 	export let showMainMenuButton = true;

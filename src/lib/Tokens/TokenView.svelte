@@ -1,3 +1,16 @@
+<script lang="ts">
+	export let data;
+	function getAttributeValue(attribKey) {
+		let result = data.attributes.find((a) => a.trait_type == attribKey);
+		return result ? result.value : '';
+	}
+	let hasWings =
+		Array.isArray(data.attributes) &&
+		data.attributes.filter(
+			(a) => a.trait_type == 'Behind' && (a.value.indexOf('BIRD') > -1 || a.value.indexOf('WINGS') > -1)
+		).length > 0;
+</script>
+
 <style>
 	.token-container {
 		display: grid;
@@ -128,16 +141,3 @@
 		<a href="/citizens/import/{data.release}-{data.edition}">Create Citizen Profile</a>
 	{/if}
 </div>
-
-<script lang="ts">
-	export let data;
-	function getAttributeValue(attribKey) {
-		let result = data.attributes.find((a) => a.trait_type == attribKey);
-		return result ? result.value : '';
-	}
-	let hasWings =
-		Array.isArray(data.attributes) &&
-		data.attributes.filter(
-			(a) => a.trait_type == 'Behind' && (a.value.indexOf('BIRD') > -1 || a.value.indexOf('WINGS') > -1)
-		).length > 0;
-</script>

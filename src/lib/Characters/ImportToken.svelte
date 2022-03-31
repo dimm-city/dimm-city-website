@@ -12,6 +12,7 @@
 
 	//ToDo: load token if not in local collection
 	let token = $myCollection.find((s) => s.release + '-' + s.edition == tokenId);
+	
 	let character = new Character(token);
 	character.currentLocation = {
 		slug: '',

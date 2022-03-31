@@ -33,6 +33,7 @@ import type { ContractContext } from 'src/contracts/DimmCityV1Base';
 import abiJson from '../contracts/DimmCityV1Base.json';
 import { derived, get, writable, type Readable } from 'svelte/store';
 import { Web3Provider } from '@ethersproject/providers';
+import { getSessionValue, setSessionValue } from './StoreUtils';
 
 let packCost: BigNumber;
 let _contract: ContractContext;
@@ -49,6 +50,17 @@ export const contract: Readable<ContractContext> = derived(
 );
 
 chainId.subscribe((c) => contractConfig.set(config.releases.s1r1.networks.find((n) => n.chainId === c)));
+defaultEvmStores.signerAddress.subscribe((data) => setSessionValue('token', data));
+
+const sessionToken = writable(getSessionValue('token') ?? null);
+sessionToken.subscribe((value) => setSessionValue('token', value));
+
+export const loggedIn = derived(
+	[connected, signerAddress, sessionToken],
+	([$connected, $signerAddress, $sessionToken], set) => set($sessionToken > '' || ($connected && $signerAddress > '')),
+	false
+);
+
 export function disconnect() {
 	//connected.set(false);
 }
@@ -110,30 +122,32 @@ export async function buyPack(numberToMint: number) {
 	console.log(balance.toString());
 }
 
-// export async function getSporos(): Promise<Array<object>> {
-// 	const address = get(signerAddress);
-// 	const number = (await _contract.balanceOf(address)).toNumber();
+export async function getSporos(): Promise<any> {
+	if (!get(connected) || !get(contract)) return;
 
-// 	const tasks = new Array<Promise<any>>();
-// 	for (let index = 0; index < number; index++) {
-// 		const sporo = await _contract.tokenOfOwnerByIndex(address, index);
-// 		const tokenId = sporo.toNumber();
-// 		tasks.push(downloadSporo(tokenId));
-// 	}
+	const address = get(signerAddress);
+	const number = (await get(contract).balanceOf(address)).toNumber();
 
-// 	return Promise.all(tasks);
-// }
+	const tasks = new Array<Promise<any>>();
+	for (let index = 0; index < number; index++) {
+		const sporo = await get(contract).tokenOfOwnerByIndex(address, index);
+		const tokenId = sporo.toNumber();
+		tasks.push(await downloadSporo(tokenId));
+	}
 
-// async function downloadSporo(tokenId: number): Promise<object> {
-// 	let json = {};
-// 	try {
-// 		const response = await fetch(`${get(contractConfig).metadataBaseUri}/${tokenId}`);
+	return Promise.all(tasks).then((sporos) => sporos);
+}
 
-// 		if (response.ok) {
-// 			json = await response.json();
-// 		}
-// 	} catch (error) {
-// 		console.error(error);
-// 	}
-// 	return json;
-// }
+export async function downloadSporo(tokenId: number): Promise<any> {
+	let json = {};
+	try {
+		const response = await fetch(`${get(contractConfig).metadataBaseUri}/${tokenId}`);
+
+		if (response.ok) {
+			json = await response.json();
+		}
+	} catch (error) {
+		console.error(error);
+	}
+	return json;
+}
