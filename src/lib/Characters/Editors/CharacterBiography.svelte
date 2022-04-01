@@ -62,13 +62,13 @@
 			<div>What virtures does {character.name} value?</div>
 			<div><Input bind:value={character.beliefs} /></div>
 			<div>What faults does {character.name} have?</div>
-			<div><Input bind:value={character.beliefs} /></div>
+			<div><Input bind:value={character.flaws} /></div>
 			<div>What dreams does {character.name} have?</div>
 			<div><Input bind:value={character.dreams} /></div>
 		</div>
 	</div>
 	<div class="description-area">
 		<div>Tell us a bit about {character.name}'s backstory...</div>
-		<div style="display:contents;"><Textarea bind:value={character.dreams} /></div>
+		<div style="display:contents;"><Textarea bind:value={character.story} /></div>
 	</div>
 </div>

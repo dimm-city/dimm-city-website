@@ -8,11 +8,12 @@
 	import LocationSelector from './Editors/DistrictSelector.svelte';
 	import Button from '$lib/Components/Button.svelte';
 	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
+	import { connect, loggedIn, sessionToken } from '$lib/ChainStore';
 	export let tokenId;
 
 	//ToDo: load token if not in local collection
 	let token = $myCollection.find((s) => s.release + '-' + s.edition == tokenId);
-	
+
 	let character = new Character(token);
 	character.currentLocation = {
 		slug: '',
@@ -25,9 +26,36 @@
 	// 	return result ? result.value : '';
 	// }
 
+	// async function createCharacter(nextStep) {
+	// 	nextStep();
+	// }
 	async function createCharacter(nextStep) {
-		nextStep();
+		if (!$loggedIn) {
+			connect();
+		}
+
+		character.slug = character.name.replace(' ', '-');
+		window
+			.fetch('http://localhost:1337/api/sporos/import/' + token.release + '/' + token.edition, {
+				method: 'POST',
+				headers: {
+					authorization: $sessionToken,
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify(character)
+			})
+			.then(async (res) => {
+				const { data, errors } = await res.json();
+				if (res.ok) {
+					console.log('saved', data);
+					nextStep();
+				}
+			})
+			.catch((reason) => {
+				console.log('could not create character', reason);
+			});
 	}
+	
 </script>
 
 <style>

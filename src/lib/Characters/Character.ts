@@ -1,12 +1,14 @@
 export class Character implements ICharacter {
+
 	constructor(token: IToken = null) {
 		if (token) this.importToken(token);
 	}
+	slug: string;
 	name: string;
 	beliefs: string;
 	flaws: string;
 	dreams: string;
-	story: string;
+	backstory: string;
 	token: IToken;
 	age: number;
 	height: number;
@@ -69,7 +71,7 @@ export interface ICharacter {
 	beliefs: string;
 	flaws: string;
 	dreams: string;
-	story: string;
+	backstory: string;
 	token: IToken;
 
 	//-----//

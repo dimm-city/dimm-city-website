@@ -11,11 +11,12 @@
 	import MenuItem from '$lib/Components/Menu/MenuItem.svelte';
 	import ContentPane from '$lib/Components/ContentPane.svelte';
 	import { onMount } from 'svelte';
-	import { connect, loggedIn, contract, getSporos } from '$lib/ChainStore';
+	import { connect, loggedIn, contract, getSporos, signMessage, sessionToken } from '$lib/ChainStore';
 	import Character from '$lib/Characters/Character.svelte';
 	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
 	import TokenViewModal from '$lib/Tokens/TokenViewModal.svelte';
 	import { openModal } from 'svelte-modals';
+	import { ethers } from 'ethers';
 
 	let loadingTask: Promise<void>;
 	let selectedSporo = {} as any;
@@ -30,7 +31,7 @@
 	onMount(() => {
 		// add a test to return in SSR context
 		// defaultEvmStores.setProvider();
-		if(window.ethereum && $loggedIn && !$connected){
+		if (window.ethereum && $loggedIn && !$connected) {
 			connect();
 		}
 	});
@@ -46,6 +47,27 @@
 
 	function showToken(token: any) {
 		openModal(TokenViewModal, { data: token });
+	}
+
+	async function saveChanges() {
+		// const signature = await signMessage('importing sporo');
+
+		// const s = ethers.utils.verifyMessage('importing sporo', signature);
+		if (!$loggedIn) {
+			connect();
+		}
+		const res = await window.fetch('http://localhost:1337/api/sporos/import/' + selectedSporo.release + '-' + selectedSporo.edition, {
+			method: 'POST',
+			headers: {
+				authorization: $sessionToken
+			},
+			body: JSON.stringify({})
+		});
+
+		const { data, errors } = await res.json();
+		if (res.ok) {
+			console.log('saved', data);
+		}
 	}
 </script>
 
@@ -112,8 +134,11 @@
 				<div>
 					<small>{$signerAddress}</small>
 				</div>
-				
 			</MenuItem>
+			<MenuItem on:click={saveChanges}
+				>Save Changes
+				<div /></MenuItem
+			>
 			<MenuItem on:click={viewSporos}>
 				<strong>Your Sporos</strong>
 				<div>
@@ -127,7 +152,10 @@
 				</div>
 			</MenuItem>
 		{:else}
-			<MenuItem on:click={connect}>Connect<div></div></MenuItem>
+			<MenuItem on:click={connect}
+				>Connect
+				<div /></MenuItem
+			>
 		{/if}
 	</Menu>
 </Shell>

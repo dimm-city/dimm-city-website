@@ -1,3 +1,96 @@
+<script lang="ts">
+	import { onMount } from 'svelte';
+	import { getCharacterBySlugQuery } from '../queries/getCharacterBySlug';
+	import { config } from '$lib/config';
+	import { characters, myCollection, showMenu } from '$lib/ShellStore';
+	import { openModal } from 'svelte-modals';
+	import AbilityModal from './AbilityModal.svelte';
+	export let tokenId; // `dcs1r1-${id}`;
+	let character;
+
+	$: {
+		if (!tokenId || tokenId.length < 1) {
+			character = {};
+		} else {
+			query = loadCharacter(tokenId);
+			$showMenu = false;
+		}
+	}
+
+	let query = new Promise(() => {});
+
+	function loadCharacter(tokenId) {
+		character = $characters.find((c) => c.tokenId === tokenId);
+		if (character) return character;
+
+		return fetch(config.graphUrl, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Accept: 'application/json'
+			},
+			body: JSON.stringify({
+				query: getCharacterBySlugQuery,
+				variables: { tokenId }
+			})
+		})
+			.then(async (response) => {
+				if (response.ok) {
+					const json = await response.json();
+					console.log('data', tokenId, json);
+
+					character =
+						json.data.characters.data && json.data.characters.data.length > 0
+							? json.data.characters.data[0].attributes
+							: null;
+					const keys = tokenId.split('-');
+					console.log('keys', keys);
+
+					const sporo = $myCollection.find((s) => s.release === keys[0] && s.edition == keys[1]);
+
+					if (character != null) {
+						character.metadata = sporo;
+
+						if (sporo && sporo.thumbnail_uri) character.thumbnail_uri = sporo.thumbnail_uri;
+						else if (character.mainImage && character.mainImage.data) {
+							character.thumbnail_uri = character.mainImage.data.attributes.url;
+
+							character.thumbnail_uri = character.thumbnail_uri.replace(
+								'https://dimmcitystorage.blob.core.windows.net/files/',
+								'https://files.dimm.city/'
+							);
+
+							if (!character.thumbnail_uri.startsWith('http'))
+								character.thumbnail_uri = 'https://dimm-city-api.azurewebsites.net' + character.thumbnail_uri;
+						} else character.thumbnail_uri = '/assets/missing-image.png';
+
+						if (sporo) {
+							character.eyes = sporo.attributes.find((a) => a.trait_type == 'Eyes').value;
+						}
+					} else {
+						console.log('no character for sporo', sporo);
+						character = Object.assign({}, sporo);
+					}
+					$characters.push(character);
+					return character;
+				}
+				return null;
+			})
+			.catch((reason) => {
+				console.log('loadCharacter failed', reason);
+			});
+	}
+	onMount(() => {
+		console.log('mount character', tokenId);
+
+		query = loadCharacter(tokenId);
+	});
+
+	function selectAbility(ability: any) {
+		openModal(AbilityModal, { data: ability });
+	}
+</script>
+
 <style>
 	ul {
 		list-style: none;
@@ -137,7 +230,7 @@
 					</div>
 					<div>
 						Race: {#if character.race}
-							{character.race.data.attributes.name}							
+							{character.race.data.attributes.name}
 						{/if}
 					</div>
 
@@ -193,96 +286,3 @@
 		{/if}
 	{/await}
 </div>
-
-<script lang="ts">
-	import { onMount } from 'svelte';
-	import { getCharacterBySlugQuery } from '../queries/getCharacterBySlug';
-	import { config } from '$lib/config';
-	import { characters, myCollection, showMenu } from '$lib/ShellStore';
-	import { openModal } from 'svelte-modals';
-	import AbilityModal from './AbilityModal.svelte';
-	export let tokenId; // `dcs1r1-${id}`;
-	let character;
-
-	$: {
-		if (!tokenId || tokenId.length < 1) {
-			character = {};
-		} else {
-			query = loadCharacter(tokenId);
-			$showMenu = false;
-		}
-	}
-
-	let query = new Promise(() => {});
-
-	function loadCharacter(tokenId) {
-		character = $characters.find((c) => c.tokenId === tokenId);
-		if (character) return character;
-
-		return fetch(config.graphUrl, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				Accept: 'application/json'
-			},
-			body: JSON.stringify({
-				query: getCharacterBySlugQuery,
-				variables: { tokenId }
-			})
-		})
-			.then(async (response) => {
-				if (response.ok) {
-					const json = await response.json();
-					console.log('data', tokenId, json);
-
-					character =
-						json.data.characters.data && json.data.characters.data.length > 0
-							? json.data.characters.data[0].attributes
-							: null;
-					const keys = tokenId.split('-');
-					console.log('keys', keys);
-
-					const sporo = $myCollection.find((s) => s.release === keys[0] && s.edition == keys[1]);
-
-					if (character != null) {
-						character.metadata = sporo;
-
-						if (sporo && sporo.thumbnail_uri) character.thumbnail_uri = sporo.thumbnail_uri;
-						else if (character.mainImage && character.mainImage.data) {
-							character.thumbnail_uri = character.mainImage.data.attributes.url;
-
-							character.thumbnail_uri = character.thumbnail_uri.replace(
-								'https://dimmcitystorage.blob.core.windows.net/files/',
-								'https://files.dimm.city/'
-							);
-
-							if (!character.thumbnail_uri.startsWith('http'))
-								character.thumbnail_uri = 'https://dimm-city-api.azurewebsites.net' + character.thumbnail_uri;
-						} else character.thumbnail_uri = '/assets/missing-image.png';
-
-						if (sporo) {
-							character.eyes = sporo.attributes.find((a) => a.trait_type == 'Eyes').value;
-						}
-					} else {
-						console.log('no character for sporo', sporo);
-						character = Object.assign({}, sporo);
-					}
-					$characters.push(character);
-					return character;
-				}
-				return null;
-			})
-			.catch((reason) => {
-				console.log('loadCharacter failed', reason);
-			});
-	}
-	onMount(() => {
-		console.log('mount character', tokenId);
-
-		query = loadCharacter(tokenId);
-	});
-
-	function selectAbility(ability: any) {
-		openModal(AbilityModal, { data: ability });
-	}
-</script>

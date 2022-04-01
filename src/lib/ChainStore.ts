@@ -2,30 +2,6 @@
 // import { BigNumber, Contract, type Signer } from 'ethers';
 
 import Web3Modal from 'web3modal';
-// import { derived, get, writable, type Writable } from 'svelte/store';
-// import type { ContractContext } from 'src/contracts/DimmCityV1Base';
-// import { config } from './config';
-// import abiJson from '../contracts/DimmCityV1Base.json';
-
-// declare let window: any;
-
-// let _provider: Web3Provider;
-// let _signer: Signer;
-// let _network: Network;
-// let _selectedAddress: string;
-
-// export const signer: Writable<Signer> = writable(_signer, null);
-// export const address = writable();
-// export const provider = writable();
-// export const connected = writable(false);
-// export const network: Writable<Network> = writable();
-
-// let packCost: BigNumber;
-// let contractConfig; // = config.releases.s1r1.networks.find((n) => n.chainId === get(network).chainId);
-// let contract; // = new ethers.Contract(contractConfig.address, abiJson.abi, get(signer)) as unknown as ContractContext;
-
-// export const getSignerAddress = () => _selectedAddress;
-
 import { config } from '$lib/config';
 import { signer, signerAddress, connected, defaultEvmStores, chainId } from 'svelte-ethers-store';
 import { BigNumber, Contract } from 'ethers';
@@ -50,16 +26,29 @@ export const contract: Readable<ContractContext> = derived(
 );
 
 chainId.subscribe((c) => contractConfig.set(config.releases.s1r1.networks.find((n) => n.chainId === c)));
-defaultEvmStores.signerAddress.subscribe((data) => setSessionValue('token', data));
 
-const sessionToken = writable(getSessionValue('token') ?? null);
-sessionToken.subscribe((value) => setSessionValue('token', value));
+const profile = writable<string>(getSessionValue('profile') ?? null);
+profile.subscribe((value) => setSessionValue('profile', value));
+
+const token = writable<string>(getSessionValue('token') ?? null);
+token.subscribe((value) => setSessionValue('token', value));
+
+export const sessionToken = derived<Readable<string>, string>(token, ($token, set) => set($token));
 
 export const loggedIn = derived(
-	[connected, signerAddress, sessionToken],
+	[connected, signerAddress, token],
 	([$connected, $signerAddress, $sessionToken], set) => set($sessionToken > '' || ($connected && $signerAddress > '')),
 	false
 );
+
+defaultEvmStores.signer.subscribe(async (signer) => {
+	//when the signer changes, update the session variables
+	if (signer != null && (get(profile) <= '' || get(token) <= '')) {
+		const sign = await signMessage('Sign this message to connect to your Dimm City profile.');
+		token.set(sign);
+		profile.set(get(signerAddress));
+	}
+});
 
 export function disconnect() {
 	//connected.set(false);
@@ -101,6 +90,12 @@ export async function connect() {
 
 // 	contract = new Contract(contractConfig.address, abiJson.abi, _signer) as unknown as ContractContext;
 // }
+
+export async function signMessage(message: string) {
+	const _signer = get(defaultEvmStores.signer);
+
+	return await _signer.signMessage(message);
+}
 
 export async function getDetails() {
 	if (!get(connected)) await connect();

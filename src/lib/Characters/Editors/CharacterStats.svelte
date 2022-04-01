@@ -58,11 +58,11 @@
 			<div>Pronouns:</div>
 			<div><Input bind:value={character.pronouns} /></div>
 			<div>Age</div>
-			<div><Input type="number" min="1" max="200" bind:value={character.age} /></div>
+			<div><Input type="number" required min="1" max="200" bind:value={character.age} /></div>
 			<div>Height (m)</div>
-			<div><Input bind:value={character.height} type="number" step="0.5" min="0" max="100" /></div>
+			<div><Input bind:value={character.height} required type="number" step="0.5" min="0" max="100" /></div>
 			<div>Weight (kg)</div>
-			<div><Input type="number" min="0" max="100" bind:value={character.weight} /></div>
+			<div><Input type="number" required min="0" max="100" bind:value={character.weight} /></div>
 		</div>
 	</div>
 	<div class="description-area">
