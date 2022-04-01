@@ -9,6 +9,7 @@
 	const dispatcher = createEventDispatcher();
 
 	function loadCharacters() {
+		$characters = [];
 		return fetch(config.graphUrl, {
 			method: 'POST',
 			headers: {
@@ -24,7 +25,11 @@
 					const json = await response.json();
 					console.log('characters', json);
 
-					return json.data.characters.data;
+					return json.data.characters.data.map((c) => {
+						let x = { ...c.attributes };
+						x.id = c.id;
+						return x;
+					});
 				}
 				return {};
 			})
@@ -47,7 +52,7 @@
 	});
 
 	function selectCharacter(character) {
-		dispatcher('character.selected', character.attributes.tokenId);
+		dispatcher('character.selected', character.tokenId);
 	}
 </script>
 
@@ -76,25 +81,25 @@
 {:then}
 	{#if $characters != null}
 		{#each $characters as character}
-			<MenuItem url="/citizens/{character.attributes.tokenId}" on:click={() => selectCharacter(character)}>
-				<p><i class="bi bi-person text-light" />{character.attributes.name}</p>
-				<small>
-					<div>{character.attributes.race.data.attributes.name}</div>
-					<div>
-						{character.attributes.roles.data.map((r) => r.attributes.name).join(', ')}
-					</div>
-				</small>
+				<MenuItem url="/citizens/{character.tokenId}" on:click={() => selectCharacter(character)}>
+					<p><i class="bi bi-person text-light" />{character.name}</p>
+					<small>
+						<div>{character.race.data.attributes.name}</div>
+						<div>
+							{character.roles.data.map((r) => r.attributes.name).join(', ')}
+						</div>
+					</small>
 
-				<div class="toolbar">
-					<!-- <a
+					<div class="toolbar">
+						<!-- <a
 						target="_blank"
 						on:click|stopPropagation={() => true}
 						href="/citizens/print/{character.attributes.tokenId}"
 					>
 						<i class="bi bi-printer" />
 					</a> -->
-				</div>
-			</MenuItem>
+					</div>
+				</MenuItem>
 		{/each}
 	{/if}
 {:catch e}

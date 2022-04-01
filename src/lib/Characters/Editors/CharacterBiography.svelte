@@ -69,6 +69,6 @@
 	</div>
 	<div class="description-area">
 		<div>Tell us a bit about {character.name}'s backstory...</div>
-		<div style="display:contents;"><Textarea bind:value={character.story} /></div>
+		<div style="display:contents;"><Textarea bind:value={character.backstory} /></div>
 	</div>
 </div>

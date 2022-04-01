@@ -1,3 +1,4 @@
+import type { ISummaryItem } from '$lib/Characters/Character';
 import { config } from '../config';
 export const getDistrictsQuery = `
 query {
@@ -22,7 +23,7 @@ query {
 	}
 }`;
 
-export async function getDistricts() {
+export async function getDistricts() : Promise<ISummaryItem[]> {
 	return fetch(config.graphUrl, {
 		method: 'POST',
 		headers: {

@@ -1,5 +1,5 @@
 import { config as prod } from './config.prod';
-import { config as dev } from './config.staging';
+import { config as dev } from './config.dev';
 import { browser } from '$app/env';
 
 //ToDo: add staging env

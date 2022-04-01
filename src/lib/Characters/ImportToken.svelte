@@ -2,7 +2,7 @@
 	import { myCollection, districts } from '$lib/ShellStore';
 	import CharacterStats from './Editors/CharacterStats.svelte';
 	import StepWizard from 'svelte-step-wizard';
-	import { Character } from './Character';
+	import { Character, type ISummaryItem } from './Character';
 	import CharacterBiography from './Editors/CharacterBiography.svelte';
 	import RoleSelector from './Editors/RoleSelectorMenu.svelte';
 	import LocationSelector from './Editors/DistrictSelector.svelte';
@@ -16,33 +16,27 @@
 
 	let character = new Character(token);
 	character.currentLocation = {
-		slug: '',
-		name: ''
-	};
-	// character.eyes = getAttributeValue('EYES');
-	// function getAttributeValue(attribKey) {
-	// 	let result = token.attributes.find((a) => a.trait_type.toLowerCase() == attribKey.toLowerCase());
-	// 	console.log('attrib', result, token.attributes);
-	// 	return result ? result.value : '';
-	// }
+		id: -1
+	} as ISummaryItem;
 
-	// async function createCharacter(nextStep) {
-	// 	nextStep();
-	// }
 	async function createCharacter(nextStep) {
 		if (!$loggedIn) {
 			connect();
 		}
 
-		character.slug = character.name.replace(' ', '-');
+		let importData = JSON.parse(JSON.stringify(character));
+		importData.slug = character.name.replace(' ', '-');
+		importData.currentLocation = character.currentLocation.id;
+		importData.roles = character.roles.map(r => r.id);
+
 		window
 			.fetch('http://localhost:1337/api/sporos/import/' + token.release + '/' + token.edition, {
 				method: 'POST',
 				headers: {
 					authorization: $sessionToken,
-					"Content-Type": "application/json"
+					'Content-Type': 'application/json'
 				},
-				body: JSON.stringify(character)
+				body: JSON.stringify(importData)
 			})
 			.then(async (res) => {
 				const { data, errors } = await res.json();
@@ -55,7 +49,6 @@
 				console.log('could not create character', reason);
 			});
 	}
-	
 </script>
 
 <style>
@@ -78,7 +71,6 @@
 		justify-content: space-between;
 	}
 </style>
-
 <StepWizard initialStep={1}>
 	<StepWizard.Step num={1} let:nextStep>
 		<div class="step-container fade-in">
@@ -103,7 +95,7 @@
 	<StepWizard.Step num={3} let:previousStep let:nextStep>
 		<div class="step-container fade-in">
 			<div><h2>Where does your Sporo live in Dimm City?</h2></div>
-			<div><LocationSelector bind:value={character.currentLocation.slug} /></div>
+			<div><LocationSelector bind:value={character.currentLocation.id} /></div>
 			<div class="button-bar">
 				<Button on:click={previousStep}>go back</Button>
 				<Button on:click={nextStep}>continue</Button>
@@ -132,7 +124,7 @@
 			</div>
 		</div>
 	</StepWizard.Step>
-	<StepWizard.Step num={6} let:nextStep>
+	<StepWizard.Step num={6} let:nextStep let:previousStep>
 		<div class="step-container fade-in">
 			<div><h2>Creating character</h2></div>
 			<div>
@@ -141,6 +133,7 @@
 				</p>
 			</div>
 			<div>
+				<Button on:click={previousStep}>Go Back</Button>
 				<Button on:click={() => createCharacter(nextStep)}>Create your character</Button>
 			</div>
 		</div>

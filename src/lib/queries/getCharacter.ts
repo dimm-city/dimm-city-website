@@ -15,6 +15,8 @@ export const getCharacterQuery = `
           hair
           vibe
           clothing
+          imageUrl
+          thumbnailUrl
           mainImage{
             data{
               attributes{

@@ -5,6 +5,7 @@
 	import { characters, myCollection, showMenu } from '$lib/ShellStore';
 	import { openModal } from 'svelte-modals';
 	import AbilityModal from './AbilityModal.svelte';
+	import { Character } from './Character';
 	export let tokenId; // `dcs1r1-${id}`;
 	let character;
 
@@ -20,7 +21,7 @@
 	let query = new Promise(() => {});
 
 	function loadCharacter(tokenId) {
-		character = $characters.find((c) => c.tokenId === tokenId);
+		character = $characters.find((c) => c.tokenId === tokenId && c.loaded);
 		if (character) return character;
 
 		return fetch(config.graphUrl, {
@@ -41,37 +42,24 @@
 
 					character =
 						json.data.characters.data && json.data.characters.data.length > 0
-							? json.data.characters.data[0].attributes
+							? {
+									id: json.data.characters.data[0].id,
+									...json.data.characters.data[0].attributes,
+									loaded: true
+							  }
 							: null;
-					const keys = tokenId.split('-');
-					console.log('keys', keys);
-
-					const sporo = $myCollection.find((s) => s.release === keys[0] && s.edition == keys[1]);
 
 					if (character != null) {
-						character.metadata = sporo;
+						if (character.imageUrl == null || character.imageUrl.length === 0)
+							character.imageUrl = '/assets/missing-image.png';
+						if (character.thumbnailUrl == null || character.thumbnailUrl.length === 0)
+							character.thumbnailUrl = '/assets/missing-image.png';
 
-						if (sporo && sporo.thumbnail_uri) character.thumbnail_uri = sporo.thumbnail_uri;
-						else if (character.mainImage && character.mainImage.data) {
-							character.thumbnail_uri = character.mainImage.data.attributes.url;
-
-							character.thumbnail_uri = character.thumbnail_uri.replace(
-								'https://dimmcitystorage.blob.core.windows.net/files/',
-								'https://files.dimm.city/'
-							);
-
-							if (!character.thumbnail_uri.startsWith('http'))
-								character.thumbnail_uri = 'https://dimm-city-api.azurewebsites.net' + character.thumbnail_uri;
-						} else character.thumbnail_uri = '/assets/missing-image.png';
-
-						if (sporo) {
-							character.eyes = sporo.attributes.find((a) => a.trait_type == 'Eyes').value;
-						}
+						$characters = [character, ...$characters.filter((c) => c.id != character.id)];
 					} else {
-						console.log('no character for sporo', sporo);
-						character = Object.assign({}, sporo);
+						character = new Character();
+						character.name = 'Not found';
 					}
-					$characters.push(character);
 					return character;
 				}
 				return null;
@@ -239,7 +227,7 @@
 							src="https://lh3.googleusercontent.com/TFxb5LSw_-CdlY_JZ27-LBYzwCallPv6ZLNJQrhWSOoUUy2YKnd1VqZaOjotTPk-hjZ73UiC0kaCbb__4lbJ2_CYxFjN8iYqX37m5g=w600"
 							alt=""
 						/> -->
-						<img src={character.thumbnail_uri} alt="profile" />
+						<img src={character.imageUrl} alt="profile" />
 					</div>
 
 					<div>

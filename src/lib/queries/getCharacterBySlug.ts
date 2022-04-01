@@ -17,6 +17,8 @@ export const getCharacterBySlugQuery = `
           hair
           vibe
           clothing
+          imageUrl
+          thumbnailUrl
           mainImage{
             data{
               attributes{

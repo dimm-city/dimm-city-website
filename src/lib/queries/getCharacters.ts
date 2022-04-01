@@ -7,12 +7,25 @@ query {
          tokenId
          name
          race {
-            data {
-                 attributes{
-                     name
+          data {
+            attributes {
+              name
+              slug
+              abilities{
+                data{
+                  id
+                  attributes{
+                    name
+                    slug
+                    description
+                    ap
+                    rollDice     
+                  }
                 }
+              }
             }
-         }
+          }
+        }
          roles {
             data {
                  attributes{

@@ -4,9 +4,9 @@
 	import { getDistricts } from '../../queries/getDistricts';
 	import { onMount } from 'svelte';
 
-	$: selectedItem = $districts.find((l) => l.slug == value);
+	$: selectedItem = $districts.find((l) => l.id == value || l.slug == value);
 
-	export let value: string;
+	export let value: any;
 
 	onMount(async () => {
 		if ($districts.length < 1) {
@@ -15,17 +15,15 @@
 	});
 
 	function resetPreview() {
-		selectedItem = $districts.find((l) => l.slug == value);
+		selectedItem = $districts.find((l) => l.id == value || l.slug == value);
 	}
 	function selectItem(item: any) {
 		selectedItem = item;
-		value = item.slug;
+		value = item.id || item.slug;
 	}
 	function previewItem(item: any) {
 		selectedItem = item;
 	}
-
-
 </script>
 
 <style>
@@ -56,10 +54,9 @@
 	.attributes-area {
 		grid-area: attributes-area;
 	}
-
 </style>
 
-<div class="container">	
+<div class="container">
 	<div class="image-area">
 		<Image imageUrl={selectedItem?.thumbnailUrl ?? selectedItem?.imageUrl} title={selectedItem?.name} />
 	</div>
@@ -72,7 +69,7 @@
 				<li
 					data-augmented-ui
 					class="small-menu-item"
-					class:selected={value == item.slug}
+					class:selected={value == item.id}
 					on:focus={() => selectItem(item)}
 					on:mouseover={() => previewItem(item)}
 					on:mouseout={() => resetPreview()}

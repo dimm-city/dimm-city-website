@@ -1,5 +1,4 @@
 export class Character implements ICharacter {
-
 	constructor(token: IToken = null) {
 		if (token) this.importToken(token);
 	}
@@ -13,7 +12,7 @@ export class Character implements ICharacter {
 	age: number;
 	height: number;
 	weight: number;
-	pronouns: string;
+	pronouns = 'they/them';
 	eyes: string;
 	skin: string;
 	hair: string;
@@ -24,7 +23,7 @@ export class Character implements ICharacter {
 	cybernetics: ISummaryItem[];
 	race: IRaceSummaryItem;
 	roles: ISummaryItem[] = [];
-	currentLocation: ISummaryItem = { slug: '', name: '' };
+	currentLocation: ISummaryItem = { id: -1, slug: '', name: '' } as ISummaryItem;
 	selectedAbilities: ISummaryItem[];
 	items: ISummaryItem[];
 
@@ -96,8 +95,12 @@ export interface ICharacter {
 }
 
 export interface ISummaryItem {
+	id: number;
 	name: string;
 	slug: string;
+	description: string;
+	thumbnailUrl: string;
+	imageUrl: string;
 }
 
 export interface IRaceSummaryItem extends ISummaryItem {

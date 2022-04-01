@@ -48,27 +48,6 @@
 	function showToken(token: any) {
 		openModal(TokenViewModal, { data: token });
 	}
-
-	async function saveChanges() {
-		// const signature = await signMessage('importing sporo');
-
-		// const s = ethers.utils.verifyMessage('importing sporo', signature);
-		if (!$loggedIn) {
-			connect();
-		}
-		const res = await window.fetch('http://localhost:1337/api/sporos/import/' + selectedSporo.release + '-' + selectedSporo.edition, {
-			method: 'POST',
-			headers: {
-				authorization: $sessionToken
-			},
-			body: JSON.stringify({})
-		});
-
-		const { data, errors } = await res.json();
-		if (res.ok) {
-			console.log('saved', data);
-		}
-	}
 </script>
 
 <style>
@@ -135,10 +114,6 @@
 					<small>{$signerAddress}</small>
 				</div>
 			</MenuItem>
-			<MenuItem on:click={saveChanges}
-				>Save Changes
-				<div /></MenuItem
-			>
 			<MenuItem on:click={viewSporos}>
 				<strong>Your Sporos</strong>
 				<div>

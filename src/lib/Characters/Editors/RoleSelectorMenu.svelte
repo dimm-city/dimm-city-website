@@ -6,7 +6,7 @@
 
 	export let character;
 	$: items = $roles;
-	$: selectedItem = items.find((l) => character.roles.some((r) => r.slug == l.slug));
+	$: selectedItem = items.find((l) => character.roles.some((r) => r && r.slug == l.slug));
 
 	onMount(async () => {
 		if (items.length < 1) {
