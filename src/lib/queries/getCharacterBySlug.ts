@@ -66,6 +66,15 @@ export const getCharacterBySlugQuery = `
                 slug
               }
             }
+          }
+          specialties {
+            data {
+              id
+              attributes {
+                name
+                slug
+              }
+            }
           }         
           currentLocation {
             data {

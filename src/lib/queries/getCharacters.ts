@@ -26,13 +26,20 @@ query {
             }
           }
         }
-         roles {
+        specialties {
+          data {
+               attributes{
+                   name
+              }
+          }
+        }
+        roles {
             data {
                  attributes{
                      name
                 }
             }
-         }
+        }
        }
      }
    } 
