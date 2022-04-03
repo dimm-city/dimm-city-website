@@ -86,7 +86,7 @@
 					<small>
 						<div>{character.race.data.attributes.name}</div>
 						<div>
-							{character.roles.data.map((r) => r.attributes.name).join(', ')}
+							{character.specialties.data.map((r) => r.attributes.name).join(', ')}
 						</div>
 					</small>
 

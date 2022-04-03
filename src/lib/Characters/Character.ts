@@ -22,7 +22,7 @@ export class Character implements ICharacter {
 	thumbnailImage: string;
 	cybernetics: ISummaryItem[];
 	race: IRaceSummaryItem;
-	roles: ISummaryItem[] = [];
+	specialties: ISummaryItem[] = [];
 	currentLocation: ISummaryItem = { id: -1, slug: '', name: '' } as ISummaryItem;
 	selectedAbilities: ISummaryItem[];
 	items: ISummaryItem[];
@@ -88,7 +88,7 @@ export interface ICharacter {
 	thumbnailImage: string;
 	cybernetics: ISummaryItem[];
 	race: IRaceSummaryItem;
-	roles: ISummaryItem[];
+	specialties: ISummaryItem[];
 	currentLocation: ISummaryItem;
 	selectedAbilities: ISummaryItem[];
 	items: ISummaryItem[];

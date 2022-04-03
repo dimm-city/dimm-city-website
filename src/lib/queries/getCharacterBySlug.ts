@@ -58,14 +58,6 @@ export const getCharacterBySlugQuery = `
                 }
               }
             }
-          } 
-          roles {
-            data {
-              attributes {
-                name
-                slug
-              }
-            }
           }
           specialties {
             data {

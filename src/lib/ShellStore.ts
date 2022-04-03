@@ -8,8 +8,8 @@ export const showMenu = writable(true);
 export const myCollection = writable(getSessionValue('collection') ?? []);
 myCollection.subscribe((value) => setSessionValue('collection', value));
 
-export const roles = writable(getSessionValue('roles') ?? []);
-roles.subscribe((value) => setSessionValue('roles', value));
+export const specialties = writable(getSessionValue('specialties') ?? []);
+specialties.subscribe((value) => setSessionValue('specialties', value));
 
 export const characters = writable(getLocalValue('characters') ?? []);
 characters.subscribe((value) => setLocalValue('characters', value, new Date(new Date().getTime() + 60 * 1000)));

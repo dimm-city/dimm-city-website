@@ -1,7 +1,7 @@
 import { config } from '../config';
-const getRolesQuery = `
+const getSpecialtiesQuery = `
 query {
-	characterRoles {    
+	specialties {    
 		data {
 			id
 			attributes {
@@ -30,7 +30,7 @@ query {
 	}
 }`;
 
-export function loadRoles() {
+export function loadSpecialties() {
 	return fetch(config.graphUrl, {
 		method: 'POST',
 		headers: {
@@ -38,14 +38,14 @@ export function loadRoles() {
 			Accept: 'application/json'
 		},
 		body: JSON.stringify({
-			query: getRolesQuery
+			query: getSpecialtiesQuery
 		})
 	})
 		.then(async (response) => {
 			if (response.ok) {
 				const json = await response.json();
 
-				return json.data.characterRoles.data.map((i) => {
+				return json.data.specialties.data.map((i) => {
 					return {
 						id: i.id,
 						slug: i.attributes.slug,

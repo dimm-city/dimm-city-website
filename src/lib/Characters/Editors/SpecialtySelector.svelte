@@ -2,32 +2,32 @@
 	import Image from '$lib/Components/Image.svelte';
 	import { loadRoles } from '../../queries/getRoles';
 	import { onMount } from 'svelte';
-	import { roles } from '$lib/ShellStore';
+	import { specialties } from '$lib/ShellStore';
 
 	export let character;
-	$: items = $roles;
-	$: selectedItem = items.find((l) => character.roles.some((r) => r && r.slug == l.slug));
+	$: items = $specialties;
+	$: selectedItem = items.find((l) => character.specialties.some((r) => r && r.slug == l.slug));
 
 	onMount(async () => {
 		if (items.length < 1) {
-			$roles = await loadRoles();
+			$specialties = await loadRoles();
 		}
 	});
 
 	function resetPreview() {
 		selectedItem = items.find((i) => isSelected(i));
 	}
-	const isSelected = (item: any) => character.roles.some((r) => r.slug == item.slug);
+	const isSelected = (item: any) => character.specialties.some((r) => r.slug == item.slug);
 
 	function toggleItem(item: any) {
-		console.log(item, isSelected(item), character.roles);
+		console.log(item, isSelected(item), character.specialties);
 
 		if (isSelected(item)) {
-			character.roles = character.roles.filter((r) => r.slug != item.slug);
+			character.specialties = character.specialties.filter((r) => r.slug != item.slug);
 		} else {
-			character.roles = [item, ...character.roles];
+			character.specialties = [item, ...character.specialties];
 		}
-		console.log(character.roles);
+		console.log(character.specialties);
 	}
 	function previewItem(item: any) {
 		selectedItem = item;
@@ -64,7 +64,7 @@
 		overflow-y: auto; */
 	}
 
-	.roles-grid {
+	.specialties-grid {
 		display: grid;
 		grid-template-columns: 0.5fr 0.5fr;
 		gap: 0.5rem 1.5rem;
@@ -82,12 +82,12 @@
 		<p>{selectedItem?.description || ''}</p>
 	</div> -->
 	<div class="attributes-area">
-		<div class="roles-grid">
+		<div class="specialties-grid">
 			{#each items as item}
 				<div
 					data-augmented-ui
 					class="small-menu-item"
-					class:selected={character.roles.some((r) => r.slug == item.slug)}
+					class:selected={character.specialties.some((r) => r.slug == item.slug)}
 					on:focus={() => toggleItem(item)}
 					on:mouseover={() => previewItem(item)}
 					on:mouseout={() => resetPreview()}

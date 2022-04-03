@@ -49,8 +49,8 @@ export const getCharacterQuery = `
                 }
               }
             }
-          } 
-          roles {
+          }              
+          specialties {
             data {
               attributes {
                 name

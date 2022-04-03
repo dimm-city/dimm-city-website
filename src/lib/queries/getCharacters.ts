@@ -33,13 +33,6 @@ query {
               }
           }
         }
-        roles {
-            data {
-                 attributes{
-                     name
-                }
-            }
-        }
        }
      }
    } 

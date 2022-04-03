@@ -210,10 +210,10 @@
 						<div>Vibe: {character.vibe || ''}</div>
 						<!-- <div>Accessories: {character.height}</div> -->
 					</div>
-					<div class="roles">
-						Role(s):
-						{#if character.roles && character.roles.data}
-							<span>{character.roles.data.map((r) => r.attributes.name).join(', ')}</span>
+					<div class="specialties">
+						Specialties:
+						{#if character.specialties && character.specialties.data}
+							<span>{character.specialties.data.map((r) => r.attributes.name).join(', ')}</span>
 						{/if}
 					</div>
 					<div>

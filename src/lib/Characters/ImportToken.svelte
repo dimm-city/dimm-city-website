@@ -4,7 +4,7 @@
 	import StepWizard from 'svelte-step-wizard';
 	import { Character, type ISummaryItem } from './Character';
 	import CharacterBiography from './Editors/CharacterBiography.svelte';
-	import RoleSelector from './Editors/RoleSelectorMenu.svelte';
+	import SpecialtySelector from './Editors/SpecialtySelector.svelte';
 	import LocationSelector from './Editors/DistrictSelector.svelte';
 	import Button from '$lib/Components/Button.svelte';
 	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
@@ -27,7 +27,7 @@
 		let importData = JSON.parse(JSON.stringify(character));
 		importData.slug = character.name.replace(' ', '-');
 		importData.currentLocation = character.currentLocation.id;
-		importData.roles = character.roles.map(r => r.id);
+		importData.specialties = character.specialties.map(r => r.id);
 
 		window
 			.fetch('http://localhost:1337/api/sporos/import/' + token.release + '/' + token.edition, {
@@ -105,7 +105,7 @@
 	<StepWizard.Step num={4} let:previousStep let:nextStep>
 		<div class="step-container fade-in">
 			<div><h2>What skills does your Sporo have?</h2></div>
-			<div><RoleSelector {character} /></div>
+			<div><SpecialtySelector {character} /></div>
 			<div><Button on:click={previousStep}>Go Back</Button><Button on:click={nextStep}>continue</Button></div>
 		</div>
 	</StepWizard.Step>
