@@ -75,7 +75,7 @@
 	<StepWizard.Step num={1} let:nextStep>
 		<div class="step-container fade-in">
 			<div><h2>This is the first step is to give your Sporo a name...</h2></div>
-			<div><CharacterStats {character} /></div>
+			<div><CharacterStats {character}  readonly={false}/></div>
 			<div>
 				<div />
 				<Button on:click={nextStep}>continue</Button>

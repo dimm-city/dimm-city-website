@@ -3,22 +3,6 @@
 	export let padding = 3;
 </script>
 
-<div class="content-wrapper padding-{padding}" class:full-size={fullsize}>
-	<div
-		class="iframe-wrapper"
-		data-augmented-ui="bl-clip-inset br-clip-inset tl-2-clip-xy tr-2-clip-xy l-rect r-rect t-clip"
-	>
-		<slot />
-	</div>
-	<div class="content-decoration-glow">
-		<div
-			aria-hidden="true"
-			class="augmented-content-decoration"
-			data-augmented-ui="bl-clip-inset br-clip-inset tl-2-clip-xy tr-2-clip-xy l-rect r-rect t-clip"
-		/>
-	</div>
-</div>
-
 <style>
 	.content-decoration-glow {
 		position: absolute;
@@ -81,19 +65,16 @@
 
 		scrollbar-color: var(--third-accent) var(--secondary-accent);
 		scrollbar-width: thin;
-
 	}
 
-	.iframe-wrapper::-webkit-scrollbar
-	{
+	.iframe-wrapper::-webkit-scrollbar {
 		color: var(--secondary-accent);
 		/* width: 100px; */
-		
 	}
-	.content-wrapper.padding-0 .iframe-wrapper{
+	.content-wrapper.padding-0 .iframe-wrapper {
 		padding: 0;
 	}
-	.content-wrapper.padding-3 .iframe-wrapper{
+	.content-wrapper.padding-3 .iframe-wrapper {
 		padding: 1rem 3em;
 	}
 
@@ -117,3 +98,19 @@
 		}
 	}
 </style>
+
+<div class="content-wrapper padding-{padding}" class:full-size={fullsize}>
+	<div
+		class="iframe-wrapper"
+		data-augmented-ui="bl-clip-inset br-clip-inset tl-2-clip-xy tr-2-clip-xy l-rect r-rect t-clip"
+	>
+		<slot />
+	</div>
+	<div class="content-decoration-glow">
+		<div
+			aria-hidden="true"
+			class="augmented-content-decoration"
+			data-augmented-ui="bl-clip-inset br-clip-inset tl-2-clip-xy tr-2-clip-xy l-rect r-rect t-clip"
+		/>
+	</div>
+</div>

@@ -2,6 +2,7 @@ export class Character implements ICharacter {
 	constructor(token: IToken = null) {
 		if (token) this.importToken(token);
 	}
+	id: number;
 	slug: string;
 	name: string;
 	beliefs: string;
@@ -26,6 +27,8 @@ export class Character implements ICharacter {
 	currentLocation: ISummaryItem = { id: -1, slug: '', name: '' } as ISummaryItem;
 	selectedAbilities: ISummaryItem[];
 	items: ISummaryItem[];
+	thumbnailUrl: string;
+	imageUrl: string;
 
 	importToken(token: IToken) {
 		if (!token) return;
@@ -74,6 +77,7 @@ export interface ICharacter {
 	token: IToken;
 
 	//-----//
+	id: number;
 	name: string;
 	age: number;
 	height: number;
@@ -92,6 +96,8 @@ export interface ICharacter {
 	currentLocation: ISummaryItem;
 	selectedAbilities: ISummaryItem[];
 	items: ISummaryItem[];
+	thumbnailUrl: string;
+	imageUrl: string;
 }
 
 export interface ISummaryItem {

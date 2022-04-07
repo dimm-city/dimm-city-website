@@ -9,7 +9,7 @@ query {
 				name
 				description
 				shortDescription
-				skillTrees {
+				skilltrees {
 					data {
 						attributes{
 						name

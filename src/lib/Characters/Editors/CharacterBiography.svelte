@@ -4,6 +4,7 @@
 	import Textarea from '$lib/Components/Textarea.svelte';
 	import { Character } from '../Character';
 	export let character: Character = new Character();
+	export let readonly = true;
 </script>
 
 <style>
@@ -30,7 +31,7 @@
 	.description-area {
 		grid-area: description-area;
 	}
-	.description-area div{
+	.description-area div {
 		display: contents;
 	}
 
@@ -58,17 +59,17 @@
 	<div class="attributes-area">
 		<div class="attributes">
 			<div>What kind of vibe does {character.name} have?</div>
-			<div><Input bind:value={character.vibe} /></div>
+			<div><Input bind:value={character.vibe} disabled={readonly} /></div>
 			<div>What virtures does {character.name} value?</div>
-			<div><Input bind:value={character.beliefs} /></div>
+			<div><Input bind:value={character.beliefs} disabled={readonly} /></div>
 			<div>What faults does {character.name} have?</div>
-			<div><Input bind:value={character.flaws} /></div>
+			<div><Input bind:value={character.flaws} disabled={readonly} /></div>
 			<div>What dreams does {character.name} have?</div>
-			<div><Input bind:value={character.dreams} /></div>
+			<div><Input bind:value={character.dreams} disabled={readonly} /></div>
 		</div>
 	</div>
 	<div class="description-area">
 		<div>Tell us a bit about {character.name}'s backstory...</div>
-		<div style="display:contents;"><Textarea bind:value={character.backstory} /></div>
+		<div style="display:contents;"><Textarea bind:value={character.backstory} disabled={readonly} /></div>
 	</div>
 </div>

@@ -40,17 +40,9 @@
 		width: 99vw;
 	}
 	.content-toolbar-container {		
-		width: 100vw;		
-		padding: 0;
-		margin-bottom: 0rem;
-		top: 80vh;
-        background-color: #000000ad;
+		width: 100%;
+		padding: 1rem;		
+		top: 77vh;
 	}
-    .content-toolbar-container > .toolbar > div {
-        justify-content: space-around;
-    }
-
-    .content-toolbar-container .aug-button {
-        margin: 0.5rem 1rem;
-    }
+    
 }

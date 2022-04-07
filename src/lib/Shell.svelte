@@ -11,7 +11,8 @@
 	import { onMount } from 'svelte';
 	import { config } from './config';
 	import DiceRollerModal from './Components/DiceRollerModal.svelte';
-import { loggedIn } from './ChainStore';
+	import { loggedIn } from './ChainStore';
+	import Toolbar from './Components/Toolbar.svelte';
 	export let title;
 	export let showMenuButton = true;
 	export let showMainMenuButton = true;
@@ -63,9 +64,9 @@ import { loggedIn } from './ChainStore';
 	<div class="top-panel slide-in-down">
 		<slot><ContentPane fullsize={true}>404</ContentPane></slot>
 		<div class="content-toolbar-container">
-			<div class="toolbar fade-in">
+			<Toolbar>
 				<slot name="content-toolbar" />
-			</div>
+			</Toolbar>
 		</div>
 	</div>
 	<div class="accordion-divider">

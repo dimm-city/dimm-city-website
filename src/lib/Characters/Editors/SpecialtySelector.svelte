@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Image from '$lib/Components/Image.svelte';
-	import { loadRoles } from '../../queries/getRoles';
+	import { loadSpecialties } from '$lib/queries/getSpecialties';
 	import { onMount } from 'svelte';
 	import { specialties } from '$lib/ShellStore';
 
@@ -10,7 +10,7 @@
 
 	onMount(async () => {
 		if (items.length < 1) {
-			$specialties = await loadRoles();
+			$specialties = await loadSpecialties();
 		}
 	});
 
@@ -43,7 +43,7 @@
 		/* grid-template-rows: 0.5fr 0.5fr; */
 		gap: 1rem 1rem;
 		grid-auto-flow: row;
-		grid-template-areas: 'image-area attributes-area';	
+		grid-template-areas: 'image-area attributes-area';
 	}
 
 	.image-area {
@@ -69,8 +69,6 @@
 		grid-template-columns: 0.5fr 0.5fr;
 		gap: 0.5rem 1.5rem;
 	}
-
-	
 </style>
 
 <div class="container">

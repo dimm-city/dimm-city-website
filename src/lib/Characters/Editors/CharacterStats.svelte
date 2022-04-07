@@ -3,6 +3,7 @@
 	import ProfileImage from '$lib/Components/ProfileImage.svelte';
 	import { Character } from '../Character';
 	export let character: Character = new Character();
+	export let readonly = true;
 </script>
 
 <style>
@@ -54,15 +55,15 @@
 	<div class="attributes-area">
 		<div class="attributes">
 			<div>Name</div>
-			<div><Input bind:value={character.name} /></div>
+			<div><Input bind:value={character.name}  disabled={readonly}/></div>
 			<div>Pronouns:</div>
-			<div><Input bind:value={character.pronouns} /></div>
+			<div><Input bind:value={character.pronouns}   disabled={readonly}/></div>
 			<div>Age</div>
-			<div><Input type="number" required min="1" max="200" bind:value={character.age} /></div>
+			<div><Input type="number" required min="1" max="200" bind:value={character.age}   disabled={readonly}/></div>
 			<div>Height (m)</div>
-			<div><Input bind:value={character.height} required type="number" step="0.5" min="0" max="100" /></div>
+			<div><Input bind:value={character.height} required type="number" step="0.5" min="0" max="100"   disabled={readonly}/></div>
 			<div>Weight (kg)</div>
-			<div><Input type="number" required min="0" max="100" bind:value={character.weight} /></div>
+			<div><Input type="number" required min="0" max="100" bind:value={character.weight}   disabled={readonly}/></div>
 		</div>
 	</div>
 	<div class="description-area">
@@ -71,8 +72,8 @@
 			<div>{character.eyes ?? ''}</div>
 			<div>Skin:</div>
 			<div>{character.skin ?? ''}</div>
-			<div>Hair:</div>
-			<div>{character.hair ?? ''}</div>
+			<!-- <div>Hair:</div>
+			<div>{character.hair ?? ''}</div> -->
 		</div>
 	</div>
 </div>

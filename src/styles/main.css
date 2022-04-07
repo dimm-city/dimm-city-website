@@ -179,14 +179,12 @@ a:active {
 	/* background: var(--menu-inlay-bg-color); */
 	width: 100%;
 	position: absolute;
-	padding: 0 1.5rem;
+	padding: 1rem 2.5rem;
 	margin-bottom: -2rem;
 	top: 2.5rem;
 }
-.content-toolbar-container > .toolbar > div {
-	display: flex;
-	justify-content: space-between;
-}
+
+
 .accordion-divider {
 	transition: bottom var(--easing), transform var(--easing);
 }

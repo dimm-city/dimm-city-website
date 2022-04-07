@@ -1,78 +1,30 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { getCharacterBySlugQuery } from '../queries/getCharacterBySlug';
+	import { loadCharacter } from '../queries/getCharacterBySlug';
 	import { config } from '$lib/config';
 	import { characters, myCollection, showMenu } from '$lib/ShellStore';
 	import { openModal } from 'svelte-modals';
 	import AbilityModal from './AbilityModal.svelte';
 	import { Character } from './Character';
-	export let tokenId; // `dcs1r1-${id}`;
-	let character;
+	//	export let tokenId; // `dcs1r1-${id}`;
+	export let character;
 
-	$: {
-		if (!tokenId || tokenId.length < 1) {
-			character = {};
-		} else {
-			query = loadCharacter(tokenId);
-			$showMenu = false;
-		}
-	}
+	// $: {
+	// 	if (!tokenId || tokenId.length < 1) {
+	// 		character = {};
+	// 	} else {
+	// 		query = loadCharacter(tokenId);
+	// 		$showMenu = false;
+	// 	}
+	// }
 
-	let query = new Promise(() => {});
+	// let query = new Promise(() => {});
 
-	function loadCharacter(tokenId) {
-		character = $characters.find((c) => c.tokenId === tokenId && c.loaded);
-		if (character) return character;
+	// onMount(() => {
+	// 	console.log('mount character', tokenId);
 
-		return fetch(config.graphUrl, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				Accept: 'application/json'
-			},
-			body: JSON.stringify({
-				query: getCharacterBySlugQuery,
-				variables: { tokenId }
-			})
-		})
-			.then(async (response) => {
-				if (response.ok) {
-					const json = await response.json();
-					console.log('data', tokenId, json);
-
-					character =
-						json.data.characters.data && json.data.characters.data.length > 0
-							? {
-									id: json.data.characters.data[0].id,
-									...json.data.characters.data[0].attributes,
-									loaded: true
-							  }
-							: null;
-
-					if (character != null) {
-						if (character.imageUrl == null || character.imageUrl.length === 0)
-							character.imageUrl = '/assets/missing-image.png';
-						if (character.thumbnailUrl == null || character.thumbnailUrl.length === 0)
-							character.thumbnailUrl = '/assets/missing-image.png';
-
-						$characters = [character, ...$characters.filter((c) => c.id != character.id)];
-					} else {
-						character = new Character();
-						character.name = 'Not found';
-					}
-					return character;
-				}
-				return null;
-			})
-			.catch((reason) => {
-				console.log('loadCharacter failed', reason);
-			});
-	}
-	onMount(() => {
-		console.log('mount character', tokenId);
-
-		query = loadCharacter(tokenId);
-	});
+	// 	query = loadCharacter(tokenId);
+	// });
 
 	function selectAbility(ability: any) {
 		openModal(AbilityModal, { data: ability });
@@ -179,98 +131,92 @@
 </style>
 
 <div class="character-container">
-	{#await query}
-		<div class="loading-indicator fade-in" data-augmented-ui>
-			<div>Loading data...</div>
+	<div class="title-container">
+		<div>
+			<h1>Dimm City</h1>
+			<h5>Citizen Dossier</h5>
 		</div>
-	{:then}
-		<div class="title-container">
-			<div>
-				<h1>Dimm City</h1>
-				<h5>Citizen Dossier</h5>
-			</div>
-		</div>
+	</div>
 
-		{#if character != null}
-			<div class="parent">
-				<div class="container">
-					<div>Name: <span>{character.name}</span></div>
-					<div class="stats">
-						<h4>HP: <span class="points-block">{character.hp || 10}</span></h4>
-						<h4>AP: <span class="points-block">{character.ap || 10}</span></h4>
-					</div>
-					<div class="details">
-						<div>Pronouns: {character.pronouns || 'they/them'}</div>
-						<div>Age: {character.age || 0} years</div>
-						<div>Height: {character.height || 0} m</div>
-						<div>Weight: {character.weight || 0} kg</div>
-						<div>Eyes: {character.eyes || ''}</div>
-						<div>Skin: {character.skin || ''}</div>
-						<div>Hair: {character.hair || ''}</div>
-						<div>Vibe: {character.vibe || ''}</div>
-						<!-- <div>Accessories: {character.height}</div> -->
-					</div>
-					<div class="specialties">
-						Specialties:
-						{#if character.specialties && character.specialties.data}
-							<span>{character.specialties.data.map((r) => r.attributes.name).join(', ')}</span>
-						{/if}
-					</div>
-					<div>
-						Race: {#if character.race}
-							{character.race.data.attributes.name}
-						{/if}
-					</div>
+	{#if character != null}
+		<div class="parent">
+			<div class="container">
+				<div>Name: <span>{character.name}</span></div>
+				<div class="stats">
+					<h4>HP: <span class="points-block">{character.hp || 10}</span></h4>
+					<h4>AP: <span class="points-block">{character.ap || 10}</span></h4>
+				</div>
+				<div class="details">
+					<div>Pronouns: {character.pronouns || 'they/them'}</div>
+					<div>Age: {character.age || 0} years</div>
+					<div>Height: {character.height || 0} m</div>
+					<div>Weight: {character.weight || 0} kg</div>
+					<div>Eyes: {character.eyes || ''}</div>
+					<div>Skin: {character.skin || ''}</div>
+					<div>Hair: {character.hair || ''}</div>
+					<div>Vibe: {character.vibe || ''}</div>
+					<!-- <div>Accessories: {character.height}</div> -->
+				</div>
+				<div class="specialties">
+					Specialties:
+					{#if character.specialties && character.specialties.data}
+						<span>{character.specialties.data.map((r) => r.attributes.name).join(', ')}</span>
+					{/if}
+				</div>
+				<div>
+					Race: {#if character.race}
+						{character.race.data.attributes.name}
+					{/if}
+				</div>
 
-					<div class="image">
-						<!-- <img
+				<div class="image">
+					<!-- <img
 							src="https://lh3.googleusercontent.com/TFxb5LSw_-CdlY_JZ27-LBYzwCallPv6ZLNJQrhWSOoUUy2YKnd1VqZaOjotTPk-hjZ73UiC0kaCbb__4lbJ2_CYxFjN8iYqX37m5g=w600"
 							alt=""
 						/> -->
-						<img src={character.imageUrl} alt="profile" />
-					</div>
+					<img src={character.imageUrl} alt="profile" />
+				</div>
 
-					<div>
-						Racial Abilities
-						<ul>
-							{#if character.race}
-								{#each character.race.data.attributes.abilities.data as ability}
-									<li class="small-menu-item" data-augmented-ui on:click={() => selectAbility(ability)}>
-										<a href="#{ability.attributes.slug}"> {ability.attributes.name}</a>
-									</li>
-								{/each}
-							{/if}
-						</ul>
-					</div>
-					<div>Captial</div>
-					<div>
-						Cybernetics
-						<ul class="aug-list">
-							{#if character.cybernetics}
-								{#each character.cybernetics.data as ability}
-									<li class="small-menu-item" data-augmented-ui on:click={() => selectAbility(ability)}>
-										<buton> {ability.attributes.name}</buton>
-									</li>
-								{/each}
-							{/if}
-						</ul>
-					</div>
+				<div>
+					Racial Abilities
+					<ul>
+						{#if character.race}
+							{#each character.race.data.attributes.abilities.data as ability}
+								<li class="small-menu-item" data-augmented-ui on:click={() => selectAbility(ability)}>
+									<a href="#{ability.attributes.slug}"> {ability.attributes.name}</a>
+								</li>
+							{/each}
+						{/if}
+					</ul>
+				</div>
+				<div>Captial</div>
+				<div>
+					Cybernetics
+					<ul class="aug-list">
+						{#if character.cybernetics}
+							{#each character.cybernetics.data as ability}
+								<li class="small-menu-item" data-augmented-ui on:click={() => selectAbility(ability)}>
+									<buton> {ability.attributes.name}</buton>
+								</li>
+							{/each}
+						{/if}
+					</ul>
+				</div>
 
-					<div class="items">Items</div>
-					<div class="abilities">
-						Abilities
-						<ul>
-							{#if character.selectedAbilities}
-								{#each character.selectedAbilities.data as ability}
-									<li class="small-menu-item" data-augmented-ui on:click={() => selectAbility(ability)}>
-										<a href="#{ability.attributes.slug}"> {ability.attributes.name}</a>
-									</li>
-								{/each}
-							{/if}
-						</ul>
-					</div>
+				<div class="items">Items</div>
+				<div class="abilities">
+					Abilities
+					<ul>
+						{#if character.selectedAbilities}
+							{#each character.selectedAbilities.data as ability}
+								<li class="small-menu-item" data-augmented-ui on:click={() => selectAbility(ability)}>
+									<a href="#{ability.attributes.slug}"> {ability.attributes.name}</a>
+								</li>
+							{/each}
+						{/if}
+					</ul>
 				</div>
 			</div>
-		{/if}
-	{/await}
+		</div>
+	{/if}
 </div>
