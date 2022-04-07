@@ -1,7 +1,9 @@
 <style>
 	.toolbar {
-		height: fit-content;
+		display: flex;
+		justify-content: space-evenly;
 		width: 100%;
+		height: fit-content;
 		padding: 1rem 1rem;
 		min-height: min-content;
 		color: white;
@@ -26,21 +28,7 @@
 		--aug-inlay-bg: #000000eb;
 	}
 
-	:global(.toolbar ) {
-		display: flex;
-		justify-content: space-evenly;
-		width: 100%;
-	}
 
-	:global(.toolbar i) {
-		color: var(--blue-accent);
-		font-size: 2rem;
-		cursor: pointer;
-		transition: color 500ms;
-	}
-	:global(.toolbar i:hover) {
-		color: var(--third-accent);
-	}
 </style>
 
 <div data-augmented-ui="tl-clip-x tr-clip-x br-rect-x bl-rect-x both" class="toolbar"><slot /></div>

@@ -6,11 +6,13 @@
 i.btn {
 	cursor: pointer;
 	transition: all var(--easing);
+	color: var(--secondary-accent);
+	font-size: 2rem;
 }
 
 i.btn:hover,
 i.btn:focus-visible {
-	color: var(--secondary-accent);
+	color: var(--third-accent);
 }
 
 hr {
@@ -52,5 +54,3 @@ hr {
 .loading-indicator > * {
 	display: flex;
 }
-
-

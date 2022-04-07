@@ -14,7 +14,7 @@
 	import AccordionDivider from './Components/AccordionDivider.svelte';
 	export let title;
 	export let showMainMenuButton = true;
-
+	export let showMenuButton = true;
 	onMount(async () => {
 		closeAllModals();
 		// if(window.ethereum && window.ethereum.isConnected()){
@@ -84,7 +84,7 @@
 		width: 100%;
 		overflow: hidden;
 	}
-	.top-panel-toolbar-row {		
+	.top-panel-toolbar-row {
 		width: 100%;
 		overflow: hidden;
 		padding: 1rem;
@@ -144,7 +144,7 @@
 			</div>
 		</div>
 	</div>
-	<AccordionDivider />
+	<AccordionDivider {showMenuButton} />
 	<div class="bottom-panel">
 		<MenuPanel header={title} {showMainMenuButton}>
 			<slot name="menu">
