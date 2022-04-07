@@ -26,19 +26,19 @@
 		--aug-inlay-bg: #000000eb;
 	}
 
-	:global(.toolbar > div) {
+	:global(.toolbar ) {
 		display: flex;
 		justify-content: space-evenly;
 		width: 100%;
 	}
 
-	:global(.toolbar > div > i) {
-		color: var(--secondary-accent);
+	:global(.toolbar i) {
+		color: var(--blue-accent);
 		font-size: 2rem;
 		cursor: pointer;
-        transition: color 500ms;
+		transition: color 500ms;
 	}
-	:global(.toolbar > div > i:hover) {
+	:global(.toolbar i:hover) {
 		color: var(--third-accent);
 	}
 </style>

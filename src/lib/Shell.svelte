@@ -2,19 +2,17 @@
 	import MenuPanel from './Components/Menu/MenuPanel.svelte';
 	import ContentPane from './Components/ContentPane.svelte';
 	import MainMenu from './Components/Menu/MainMenu.svelte';
-	import { Modals, openModal, closeModal, closeAllModals } from 'svelte-modals';
+	import { Modals, closeModal, closeAllModals } from 'svelte-modals';
 	import { showMenu } from './ShellStore';
 	import '../styles/main.css';
-	import '../styles/main.mobile.css';
 	import '../styles/animations.css';
 	import 'animate.css';
 	import { onMount } from 'svelte';
 	import { config } from './config';
-	import DiceRollerModal from './Components/DiceRollerModal.svelte';
 	import { loggedIn } from './ChainStore';
 	import Toolbar from './Components/Toolbar.svelte';
+	import AccordionDivider from './Components/AccordionDivider.svelte';
 	export let title;
-	export let showMenuButton = true;
 	export let showMainMenuButton = true;
 
 	onMount(async () => {
@@ -29,10 +27,6 @@
 		// 	disconnect();
 		// });
 	});
-
-	function showDice() {
-		openModal(DiceRollerModal, { fullscreen: true });
-	}
 </script>
 
 <style>
@@ -47,6 +41,85 @@
 		--transition-in-duration: 1s;
 		filter: blur(10rem);
 	}
+	.vertical-accordion {
+		position: absolute;
+		left: 50%;
+		width: 90vw;
+		max-width: calc(90vh / 9 * 16);
+		top: 0;
+		bottom: 0;
+		transform: translateX(-50%);
+	}
+	.top-panel {
+		height: calc(100vh - var(--divider-height));
+		transition: margin-top var(--easing);
+		overflow: hidden;
+		padding-top: 1rem;
+	}
+	.bottom .top-panel {
+		margin-top: -100vh;
+	}
+
+	.bottom-panel {
+		height: 92vh;
+		position: absolute;
+		width: 100%;
+		top: 115vh;
+		transition: top var(--easing);
+	}
+
+	.bottom .bottom-panel {
+		top: 15vh;
+	}
+
+	.top-panel-grid {
+		height: 100%;
+		display: grid;
+		grid-template-rows: 1fr min-content;
+	}
+
+	.top-panel-content-row {
+		display: flex;
+		height: 100%;
+		width: 100%;
+		overflow: hidden;
+	}
+	.top-panel-toolbar-row {		
+		width: 100%;
+		overflow: hidden;
+		padding: 1rem;
+	}
+	@media all and (max-width: 768px), (max-aspect-ratio: 0.74) {
+		:root {
+			--divider-gap: 3em;
+		}
+		.vertical-accordion {
+			overflow: hidden;
+		}
+		.top-panel {
+			height: 90vh;
+		}
+
+		.bottom-panel {
+			height: 94vh;
+			max-width: 98vw;
+		}
+		.bottom .bottom-panel {
+			top: 0vh;
+			transform: translateY(10vh);
+		}
+	}
+
+	@media (max-width: 750px) {
+		.vertical-accordion {
+			width: 99vw;
+		}
+		.content-toolbar-container {
+			width: 100%;
+			padding: 1rem;
+			top: 77vh;
+		}
+	}
 </style>
 
 <svelte:head>
@@ -60,38 +133,18 @@
 	<slot name="head" />
 </svelte:head>
 
-<div class="vertical-acordion {title.toLowerCase()}" class:bottom={$showMenu} class:top={!$showMenu}>
+<div class="vertical-accordion {title.toLowerCase()}" class:bottom={$showMenu} class:top={!$showMenu}>
 	<div class="top-panel slide-in-down">
-		<slot><ContentPane fullsize={true}>404</ContentPane></slot>
-		<div class="content-toolbar-container">
-			<Toolbar>
+		<div class="top-panel-grid">
+			<div class="top-panel-content-row">
+				<slot><ContentPane fullsize={true}>404</ContentPane></slot>
+			</div>
+			<div class="top-panel-toolbar-row">
 				<slot name="content-toolbar" />
-			</Toolbar>
+			</div>
 		</div>
 	</div>
-	<div class="accordion-divider">
-		<div
-			class="acordion-divider-decoration fade-in"
-			aria-hidden="true"
-			data-augmented-ui="tl-clip l-clip t-clip-x b-clip-x tr-clip r-clip bl-clip br-clip"
-		/>
-		<div class="version"><small>v {config.version}</small></div>
-		<div class="global-toolbar">
-			<a href="/console" data-augmented-ui="all-hex border">
-				{#if $loggedIn}
-					<i class="bi bi-window-dock fade-in" />
-				{:else}
-					<i class="bi bi-window-dash fade-in" />
-				{/if}
-			</a>
-			{#if showMenuButton}
-				<button on:click={() => ($showMenu = !$showMenu)} data-augmented-ui="all-triangle-up border" class="btn-menu" />
-			{/if}
-			<a on:click={showDice} data-augmented-ui="all-hex border"
-				><img src="/assets/icons/dice256.png" height="24" width="24" alt="dice icon" /></a
-			>
-		</div>
-	</div>
+	<AccordionDivider />
 	<div class="bottom-panel">
 		<MenuPanel header={title} {showMainMenuButton}>
 			<slot name="menu">

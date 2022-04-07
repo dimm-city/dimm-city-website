@@ -1,3 +1,15 @@
+<script>
+	import { closeModal } from 'svelte-modals';
+	import { fly } from 'svelte/transition';
+
+	export let data = {};
+	export let fullscreen = true;
+
+	function dismiss() {
+		closeModal();
+	}
+</script>
+
 <style>
 	[data-augmented-ui]::before {
 		background-color: rgb(128 128 128 / 25%);
@@ -38,7 +50,7 @@
 		margin: 2em;
 	}
 
-	.content-wrapper {
+	.modal-content-container {
 		max-height: 80vh;
 		overflow-y: scroll;
 		overflow-x: hidden;
@@ -46,15 +58,15 @@
 		margin: 1rem 0;
 	}
 
-	.content-wrapper::-webkit-scrollbar {
+	.modal-content-container::-webkit-scrollbar {
 		width: 0px; /* width of the entire scrollbar */
 	}
 
-	.content-wrapper::-webkit-scrollbar-track {
+	.modal-content-container::-webkit-scrollbar-track {
 		background: transparent;
 	}
 
-	.content-wrapper::-webkit-scrollbar-thumb {
+	.modal-content-container::-webkit-scrollbar-thumb {
 		background-color: transparent;
 		border: 0px solid var(--fourth-accent); /* creates padding around scroll thumb */
 	}
@@ -92,32 +104,14 @@
 	}
 </style>
 
-	<div
-		role="dialog"
-		class="modal"
-		transition:fly={{ y: -600, delay: 0, duration: 450 }}
-		on:introstart
-		on:outroend
-	>
-		<div class="contents" class:fullscreen data-augmented-ui="tl-2-clip-xy tr-2-clip-xy br-2-clip-y bl-2-clip-y both">
-			<div class="actions">
-				<slot name="actions" />
-				<div on:click={dismiss}><i class="bi bi-x-octagon" /></div>
-			</div>
-			<div class="content-wrapper">
-				<slot {data} />
-			</div>
+<div role="dialog" class="modal" transition:fly={{ y: -600, delay: 0, duration: 450 }} on:introstart on:outroend>
+	<div class="contents" class:fullscreen data-augmented-ui="tl-2-clip-xy tr-2-clip-xy br-2-clip-y bl-2-clip-y both">
+		<div class="actions">
+			<slot name="actions" />
+			<div on:click={dismiss}><i class="bi bi-x-octagon" /></div>
+		</div>
+		<div class="modal-content-container">
+			<slot {data} />
 		</div>
 	</div>
-
-<script>
-	import { closeModal } from 'svelte-modals';
-	import { fly } from 'svelte/transition';
-
-	export let data = {};
-	export let fullscreen = true;
-
-	function dismiss() {
-		closeModal();
-	}
-</script>
+</div>

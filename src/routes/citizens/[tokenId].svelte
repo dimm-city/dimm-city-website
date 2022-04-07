@@ -16,6 +16,7 @@
 	import { onMount } from 'svelte';
 	import CharacterBiography from '$lib/Characters/Editors/CharacterBiography.svelte';
 	import TabPanel from '$lib/Components/TabPanel.svelte';
+	import Toolbar from '$lib/Components/Toolbar.svelte';
 
 	$showMenu = false;
 	let tokenId = $page.params.tokenId;
@@ -63,13 +64,15 @@
 
 <Shell title="Citizen Dossier">
 	<div slot="content-toolbar">
-		<i class="bi bi-file-person fade-in" on:click={() => tabs.setTab('stats')} />
-		<i class="bi bi-journal fade-in" on:click={() => tabs.setTab('story')} />
-		<i class="bi bi-gpu-card fade-in" on:click={() => tabs.setTab('sheet')} />
-		<i class="bi bi-pencil fade-in" on:click={() => tabs.setTab('sheet')} />
-		<!-- <Button on:click={() => setTab('stats')}>Story</Button>
+		<Toolbar>
+			<i class="btn bi bi-file-person fade-in" on:click={() => tabs.setTab('stats')} />
+			<i class="bi bi-journal fade-in" on:click={() => tabs.setTab('story')} />
+			<i class="bi bi-gpu-card fade-in" on:click={() => tabs.setTab('sheet')} />
+			<i class="bi bi-pencil fade-in" on:click={() => tabs.setTab('sheet')} />
+			<!-- <Button on:click={() => setTab('stats')}>Story</Button>
 			<Button on:click={() => setTab('sheet')}>Sheet</Button>
 		<Button on:click={() => setTab('story')}>Story</Button> -->
+		</Toolbar>
 	</div>
 	{#await query}
 		<div class="loading-indicator fade-in" data-augmented-ui>
@@ -97,6 +100,6 @@
 		</TabPanel>
 	{/await}
 	<Menu slot="menu">
-		<CharacterMenu  />
+		<CharacterMenu />
 	</Menu>
 </Shell>

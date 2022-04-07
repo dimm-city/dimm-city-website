@@ -26,7 +26,7 @@
 		--aug-border-bg: var(--blue);
 	}
 	.augmented-content-decoration,
-	.content-wrapper .iframe-wrapper {
+	.content-container.content-wrapper {
 		--aug-bl: 2vmin;
 		--aug-br: 2vmin;
 		--aug-l: 1vmin;
@@ -39,57 +39,58 @@
 		--aug-t-center: 20vmin;
 	}
 
-	.content-wrapper {
+	.content-container {
+		display: flex;
 		position: relative;
-		height: 87vh;
-		max-width: 100vw;
+		min-height: 100%;
+		width: 100%;
 		aspect-ratio: 16 / 9;
-		margin-top: calc((100vh - 100% / 16 * 9) / 2 - 5vh);
-		overflow-x: hidden;
+		overflow: hidden;
 	}
-	.content-wrapper.full-size {
+	.content-container.full-size {
 		aspect-ratio: unset;
-		margin-top: 1em;
 	}
-	.content-wrapper .iframe-wrapper {
+	.content-container .content-wrapper {
 		display: block;
 		width: 99%;
-		height: 99%;
+		height: 100%;
 		margin: auto;
 		overflow: hidden;
-		height: 100%;
 		filter: drop-shadow(0 0 2vh var(--pink));
 		background: rgb(17 17 17 / 0.75);
 		color: var(--light);
-		overflow-y: auto;
+		/* overflow-y: auto; */
 
 		scrollbar-color: var(--third-accent) var(--secondary-accent);
 		scrollbar-width: thin;
 	}
-
-	.iframe-wrapper::-webkit-scrollbar {
+	.scrolling-container {
+		height: 100%;
+		width: 100%;
+		overflow-y: auto;
+		padding: 0 3rem;
+	}
+	.scrolling-container.padding-0 {
+		overflow: hidden;
+		padding: 0;
+	}
+	.content-wrapper::-webkit-scrollbar {
 		color: var(--secondary-accent);
 		/* width: 100px; */
 	}
-	.content-wrapper.padding-0 .iframe-wrapper {
-		padding: 0;
-	}
-	.content-wrapper.padding-3 .iframe-wrapper {
-		padding: 1rem 3em;
-	}
 
 	@media all and (max-width: 768px), (max-aspect-ratio: 0.74) {
-		.content-wrapper {
+		.content-container {
 			position: relative;
 			height: 100%;
 			max-width: 90vw;
 			aspect-ratio: 3/4;
-			margin: 1em auto 0;
+			/* margin: 1em auto 0; */
 		}
 
-		.content-wrapper.full-size {
+		/* .content-container.full-size {
 			height: 75vh;
-		}
+		} */
 	}
 
 	@media (max-width: 750px) {
@@ -99,12 +100,14 @@
 	}
 </style>
 
-<div class="content-wrapper padding-{padding}" class:full-size={fullsize}>
+<div class="content-container" class:full-size={fullsize}>
 	<div
-		class="iframe-wrapper"
+		class="content-wrapper"
 		data-augmented-ui="bl-clip-inset br-clip-inset tl-2-clip-xy tr-2-clip-xy l-rect r-rect t-clip"
 	>
-		<slot />
+		<div class="scrolling-container padding-{padding}">
+			<slot />
+		</div>
 	</div>
 	<div class="content-decoration-glow">
 		<div
