@@ -9,17 +9,27 @@
 		transition: all;
 		max-height: 100%;
 		margin: auto;
+		transition-duration: 1s;
+		transition-property: all;
+		transition-timing-function: ease-in-out;
 	}
+	img:hover {
+		transform: scale(1.3) translate(0, 1rem);
+	}
+
 	.image-wrapper {
 		/* max-width: min-content; */
 		display: flex;
-		margin:auto;
+		margin: auto;
 		height: 400px;
 		width: 300px;
 		background-image: url('/assets/missing-image.png');
 		background-size: contain;
 		background-position: center;
+
+		overflow: hidden;
 	}
+
 	@media (max-width: 745px) {
 		.image-wrapper {
 			height: fit-content;

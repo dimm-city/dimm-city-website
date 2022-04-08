@@ -32,6 +32,7 @@
 		min-width: 80vw;
 		margin: 5rem;
 		min-height: 10rem;
+		display: flex;
 
 		/* border-radius: 2em; */
 		padding: 2.5rem;
@@ -52,6 +53,7 @@
 
 	.modal-content-container {
 		max-height: 80vh;
+		width: 100%;
 		overflow-y: scroll;
 		overflow-x: hidden;
 		scrollbar-width: none;

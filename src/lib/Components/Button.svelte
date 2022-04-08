@@ -6,11 +6,8 @@
 <style>
 	.aug-button {
 		display: inline-block;
-		height: fit-content;
-		width: max-content;
 		cursor: pointer;
-		padding: 0.5rem 1rem;
-		min-height: 20%;
+		padding: 0.5rem 0.75rem;
 		color: white;
 		overflow: hidden;
 		opacity: 0.75;
@@ -42,6 +39,7 @@
 	.aug-button:focus {
 		background-color: #ffffff1e;
 		opacity: 1;
+		color: var(--third-accent);
 		--aug-border-bg: radial-gradient(circle at top left, var(--third-accent) 40px, transparent 50px),
 			radial-gradient(circle at top right, var(--primary-accent) 20px, transparent 30px),
 			radial-gradient(circle at bottom right, var(--third-accent) 40px, transparent 50px),
@@ -57,6 +55,7 @@
 		--aug-tr1: 0.5rem;
 		--aug-br1: 0.5rem;
 		--aug-bl1: 0.5rem;
+		aspect-ratio: 1/1;
 	}
 </style>
 

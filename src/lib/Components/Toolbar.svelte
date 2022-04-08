@@ -25,9 +25,12 @@
 
 		--aug-inlay: initial;
 		--aug-inlay-bg: #000000f3;
+
+		transition: transform 0.1s ease;
+		transform-style: preserve-3d;
+		will-change: transform;
+		transform: translateZ(12px);
 	}
-
-
 </style>
 
 <div data-augmented-ui="tl-clip-x tr-clip-x br-rect-x bl-rect-x both" class="toolbar"><slot /></div>
