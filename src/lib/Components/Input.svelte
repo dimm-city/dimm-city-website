@@ -17,6 +17,10 @@
 		font-size: 1rem;
 		font-family: var(--main-font-family);
 	}
+
+	input:read-only, .aug-input[disabled=true]{
+		--aug-border-bg: var(--blue-accent);
+	}
 	.aug-input {
 		width: 100%;
 
@@ -30,11 +34,11 @@
 		--aug-tr1: 1vh;
 		--aug-br1: 1vh;
 		--aug-bl1: 1vh;
-		--aug-border-bg: var(--blue-accent);
+		--aug-border-bg: var(--secondary-accent);
 
 		--aug-inlay: initial;
 		--aug-inlay-bg: var(--menu-inlay-bg-color);
 	}
 </style>
 
-<div data-augmented-ui class="aug-input"><input {type} on:change={onChange}  {...$$props}/></div>
+<div data-augmented-ui class="aug-input" disabled={$$props.disabled}><input readonly={$$props.disabled} {type} on:change={onChange}  {...$$props}/></div>

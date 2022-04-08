@@ -5,6 +5,7 @@
 	import { Character } from '../Character';
 	export let character: Character = new Character();
 	export let readonly = true;
+	export let title = 'Biography';
 </script>
 
 <style>
@@ -13,7 +14,7 @@
 		display: grid;
 		width: 100%;
 		grid-template-columns: 0.7fr 1.6fr;
-		grid-template-rows:min-content 0.5fr 0.8fr;
+		grid-template-rows: min-content 0.5fr 0.8fr;
 		gap: 1rem;
 		grid-auto-flow: row;
 		grid-template-areas:
@@ -21,7 +22,9 @@
 			'image-area attributes-area'
 			'description-area description-area';
 	}
-
+	.title-area {
+		grid-area: title-area;
+	}
 	.image-area {
 		justify-self: center;
 		align-self: center;
@@ -49,18 +52,22 @@
 		margin: 0 0.5rem;
 		display: grid;
 		grid-template-rows: 1fr;
-		gap: 0.5rem;
+		gap: 1.25rem;
 	}
-	.attributes div:nth-child(odd) {
+	.attributes div:nth-child(odd), .label {
 		font-weight: bold;
 		width: min-content;
 		white-space: nowrap;
+	}
+
+	.label{
+		margin-bottom: 1.25rem;
 	}
 </style>
 
 <div class="container">
 	<div class="title-area">
-		<h2>Biography</h2>
+		<h2>{title}</h2>
 	</div>
 	<div class="image-area">
 		<ProfileImage {character} />
@@ -78,7 +85,7 @@
 		</div>
 	</div>
 	<div class="description-area">
-		<div>Tell us a bit about {character.name}'s backstory...</div>
+		<div class="label">Tell us a bit about {character.name}'s backstory...</div>
 		<div><Textarea bind:value={character.backstory} disabled={readonly} /></div>
 	</div>
 </div>

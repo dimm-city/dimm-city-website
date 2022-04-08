@@ -23,7 +23,9 @@
 		margin: auto;
 		height: 400px;
 		width: 300px;
-		background-image: url('/assets/missing-image.png');
+		/* background-image: url('/assets/missing-image.png'); */
+		background-color: var(--translucent-dark);
+		
 		background-size: contain;
 		background-position: center;
 

@@ -1,7 +1,7 @@
 export const config = {
 	version: '0.2.0',
 	graphUrl: 'https://data.dimm.city/graphql',
-	baseUrl: 'azurewebsites.net',
+	baseUrl: 'azure',
 	releases: {
 		s1r1: {
 			name: 'Sporo Rabbits',

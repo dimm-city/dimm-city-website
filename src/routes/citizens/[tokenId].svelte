@@ -68,9 +68,8 @@
 		<LoadingIndicator>Extracting character data...</LoadingIndicator>
 	{:then}
 		<TabPanel bind:this={tabs} initialTab="stats">
-			<Tab id="stats" padding={2}>
-				<h2>{character.name}</h2>
-				<CharacterStats {character} />
+			<Tab id="stats" padding={2}>				
+				<CharacterStats {character} title={character.name}/>
 			</Tab>
 			<Tab id="story" padding={2}>
 				<CharacterBiography {character} />
