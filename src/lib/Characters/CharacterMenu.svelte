@@ -2,7 +2,7 @@
 	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
 	import MenuItem from '$lib/Components/Menu/MenuItem.svelte';
 	import { characters } from '$lib/ShellStore';
-	import { createEventDispatcher } from 'svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
 	import { getCharactersQuery } from '../queries/getCharacters';
 	import { config } from '../config';
 
@@ -42,15 +42,16 @@
 	// 		loadCharacters().then((d) => resolve(d));
 	// 	}, 2000)
 	// );
-
-	let query = new Promise(async (resolve) => {
-		if ($characters?.length < 1) {
-			let data = await loadCharacters();
-			$characters = data;
-			resolve(data);
-		} else resolve($characters);
+	let query;
+	onMount(() => {
+		query = new Promise(async (resolve) => {
+			if ($characters?.length < 1) {
+				let data = await loadCharacters();
+				$characters = data;
+				resolve(data);
+			} else resolve($characters);
+		});
 	});
-
 	function selectCharacter(character) {
 		dispatcher('character.selected', character.tokenId);
 	}

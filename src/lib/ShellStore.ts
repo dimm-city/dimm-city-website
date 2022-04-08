@@ -12,7 +12,11 @@ export const specialties = writable(getSessionValue('specialties') ?? []);
 specialties.subscribe((value) => setSessionValue('specialties', value));
 
 export const characters = writable(getLocalValue('characters') ?? []);
-characters.subscribe((value) => setLocalValue('characters', value, new Date(new Date().getTime() + 60 * 1000)));
+characters.subscribe((value) => setLocalValue('characters', value, getExpiryTime()));
 
 export const districts = writable<ISummaryItem[]>(getLocalValue('districts') ?? []);
-districts.subscribe((value) => setLocalValue('districts', value, new Date(new Date().getTime() + 60 * 1000)));
+districts.subscribe((value) => setLocalValue('districts', value, getExpiryTime()));
+function getExpiryTime(): number {
+    return new Date(new Date().getTime() + 60 * 1000).getTime();
+}
+
