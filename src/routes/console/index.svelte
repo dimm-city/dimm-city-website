@@ -61,7 +61,7 @@
 	ul {
 		padding: 0;
 	}
-	.small-menu-item {
+	:global(.console-menu-item) {
 		display: flex;
 		justify-content: space-between;
 	}
@@ -71,7 +71,7 @@
 	}
 </style>
 
-<Shell title="Console">
+<Shell title="Console" showMenuButton={false}>
 	<ContentPane padding={0}>
 		<div class="content-container">
 			{#if $loggedIn}
@@ -100,23 +100,14 @@
 			{/if}
 		</div>
 	</ContentPane>
-	<div slot="content-toolbar">
-		{#if selectedSporo.edition > 0}
-			<Button on:click={() => (selectedSporo = {})}>edit</Button>
-			<Button on:click={() => (selectedSporo = {})}>back</Button>
-		{/if}
-	</div>
-	<Menu slot="menu" columns={$loggedIn ? '2' : '1'}>
+	<Menu slot="menu" columns={1}>
 		{#if $connected && $signerAddress}
 			<MenuItem>
-				<strong>Profile</strong>
+				<strong>Profile: {$signerAddress}</strong>
+
 				<div>
-					<small>{$signerAddress}</small>
-				</div>
-			</MenuItem>
-			<MenuItem on:click={viewSporos}>
-				<strong>Your Sporos</strong>
-				<div>
+					<strong>Your Sporos: </strong>
+
 					{#await $contract.balanceOf($signerAddress)}
 						<LoadingIndicator>
 							<span>Locating sporos...</span>
@@ -126,6 +117,13 @@
 					{/await}
 				</div>
 			</MenuItem>
+			{#each $myCollection as sporo}
+				<MenuItem on:click={() => showToken(sporo)} classes="console-menu-item">
+					
+						{sporo.name} <small> {sporo.release}-{sporo.edition}</small>
+					
+				</MenuItem>
+			{/each}
 		{:else}
 			<MenuItem on:click={connect}
 				>Connect
