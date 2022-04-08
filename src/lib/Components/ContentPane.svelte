@@ -1,6 +1,7 @@
-<script>
+<script lang="ts">
 	export let fullsize = true;
 	export let padding = 3;
+	export let scrollable:boolean = true;
 </script>
 
 <style>
@@ -26,7 +27,7 @@
 		--aug-border-bg: var(--blue);
 	}
 	.augmented-content-decoration,
-	.content-container.content-wrapper {
+	.content-container .content-wrapper {
 		--aug-bl: 2vmin;
 		--aug-br: 2vmin;
 		--aug-l: 1vmin;
@@ -64,15 +65,14 @@
 		scrollbar-color: var(--third-accent) var(--secondary-accent);
 		scrollbar-width: thin;
 	}
-	.scrolling-container {
+	.content-slot {
 		height: 100%;
 		width: 100%;
-		overflow-y: auto;
+		overflow: hidden;
 		padding: 0 3rem;
 	}
-	.scrolling-container.padding-0 {
-		overflow: hidden;
-		padding: 0;
+	.content-slot.scrollable {
+		overflow-y: auto;
 	}
 	.content-wrapper::-webkit-scrollbar {
 		color: var(--secondary-accent);
@@ -105,7 +105,7 @@
 		class="content-wrapper"
 		data-augmented-ui="bl-clip-inset br-clip-inset tl-2-clip-xy tr-2-clip-xy l-rect r-rect t-clip"
 	>
-		<div class="scrolling-container padding-{padding}">
+		<div class="content-slot padding-{padding}" class:scrollable>
 			<slot />
 		</div>
 	</div>

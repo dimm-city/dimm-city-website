@@ -15,6 +15,7 @@
 	export let title;
 	export let showMainMenuButton = true;
 	export let showMenuButton = true;
+	export let fullscreen = false;
 	onMount(async () => {
 		closeAllModals();
 		// if(window.ethereum && window.ethereum.isConnected()){
@@ -61,13 +62,16 @@
 	}
 
 	.bottom-panel {
-		height: 92vh;
+		height: calc(100vh - var(--divider-height));
 		position: absolute;
 		width: 100%;
 		top: 115vh;
 		transition: top var(--easing);
 	}
-
+	.fullscreen .top-panel,
+	.fullscreen .bottom-panel {
+		height: 100vh;
+	}
 	.bottom .bottom-panel {
 		top: 15vh;
 	}
@@ -133,7 +137,7 @@
 	<slot name="head" />
 </svelte:head>
 
-<div class="vertical-accordion {title.toLowerCase()}" class:bottom={$showMenu} class:top={!$showMenu}>
+<div class="vertical-accordion {title.toLowerCase()}" class:bottom={$showMenu} class:top={!$showMenu} class:fullscreen>
 	<div class="top-panel slide-in-down">
 		<div class="top-panel-grid">
 			<div class="top-panel-content-row">
@@ -144,7 +148,9 @@
 			</div>
 		</div>
 	</div>
-	<AccordionDivider {showMenuButton} />
+	{#if !fullscreen}
+		<AccordionDivider {showMenuButton} />
+	{/if}
 	<div class="bottom-panel">
 		<MenuPanel header={title} {showMainMenuButton}>
 			<slot name="menu">

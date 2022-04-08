@@ -1,12 +1,12 @@
 @import url('./variables.css');
 @import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css');
-.bi {
+/* .bi {
 	margin-right: 0.4em;
-}
+} */
 i.btn {
 	cursor: pointer;
 	transition: all var(--easing);
-	color: var(--secondary-accent);
+	color: var(--blue);
 	font-size: 2rem;
 }
 
@@ -17,40 +17,4 @@ i.btn:focus-visible {
 
 hr {
 	border-color: var(--third-accent);
-}
-
-.loading-indicator {
-	display: flex;
-
-	cursor: none;
-	padding: 1rem;
-	min-height: 20%;
-	font-size: 2.5vh;
-	color: white;
-	overflow: hidden;
-	opacity: 0.75;
-	text-shadow: 0 0 0.25vh black, 0 0 0.25vh black;
-	transition: all var(--quick-in);
-	--aug-clip-tl1: initial;
-	--aug-clip-tr1: initial;
-	--aug-clip-bl1: initial;
-	--aug-clip-br1: initial;
-	--aug-border: initial;
-	--aug-border-all: 0.25vh;
-	--aug-tl1: 1vh;
-	--aug-tr1: 2vh;
-	--aug-br1: 1vh;
-	--aug-bl1: 1vh;
-	--aug-border-bg: radial-gradient(circle at top left, var(--pink) 40px, transparent 50px),
-		radial-gradient(circle at top right, var(--blue) 20px, transparent 30px),
-		radial-gradient(circle at bottom right, var(--pink) 40px, transparent 50px),
-		radial-gradient(circle at bottom left, var(--blue) 20px, transparent 30px);
-
-	--aug-inlay: initial;
-	--aug-inlay-bg: var(--menu-inlay-bg-color);
-	background-color: transparent;
-}
-
-.loading-indicator > * {
-	display: flex;
 }

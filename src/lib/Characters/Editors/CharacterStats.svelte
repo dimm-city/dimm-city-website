@@ -8,7 +8,7 @@
 
 <style>
 	.container {
-		min-height: 100%;
+		width: 100%;
 		display: grid;
 		grid-template-columns: 0.7fr 1.6fr;
 		grid-template-rows: 0.5fr 0.5fr;
@@ -63,17 +63,11 @@
 			<div>Height (m)</div>
 			<div><Input bind:value={character.height} required type="number" step="0.5" min="0" max="100"   disabled={readonly}/></div>
 			<div>Weight (kg)</div>
-			<div><Input type="number" required min="0" max="100" bind:value={character.weight}   disabled={readonly}/></div>
-		</div>
-	</div>
-	<div class="description-area">
-		<div class="attributes">
+			<div><Input type="number" required min="0" max="100" bind:value={character.weight} disabled={readonly}/></div>
 			<div>Eyes:</div>
-			<div>{character.eyes ?? ''}</div>
+			<div><Input bind:value={character.eyes}   disabled={readonly}/></div>
 			<div>Skin:</div>
-			<div>{character.skin ?? ''}</div>
-			<!-- <div>Hair:</div>
-			<div>{character.hair ?? ''}</div> -->
+			<div><Input bind:value={character.skin}   disabled={readonly}/></div>
 		</div>
 	</div>
 </div>

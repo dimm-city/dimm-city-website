@@ -16,6 +16,8 @@
 	import CharacterBiography from '$lib/Characters/Editors/CharacterBiography.svelte';
 	import TabPanel from '$lib/Components/TabPanel.svelte';
 	import Toolbar from '$lib/Components/Toolbar.svelte';
+	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
+	import Button from '$lib/Components/Button.svelte';
 
 	$showMenu = false;
 	let tokenId = $page.params.tokenId;
@@ -41,40 +43,44 @@
 		});
 		$showMenu = false;
 	}
-
 </script>
 
 <Shell title="Citizen Dossier">
 	<div slot="content-toolbar">
 		{#await query then}
-		<Toolbar>
-			<i class="fade-in btn bi bi-file-person" on:click={() => tabs.setTab('stats')} />
-			<i class="fade-in btn bi bi-journal" on:click={() => tabs.setTab('story')} />
-			<i class="fade-in btn bi bi-gpu-card" on:click={() => tabs.setTab('sheet')} />
-			<i class="fade-in btn bi bi-pencil" on:click={() => tabs.setTab('sheet')} />
-		</Toolbar>
+			<Toolbar>
+				<Button on:click={() => tabs.setTab('stats')} shape="square">
+					<i class="btn bi bi-person-badge" />
+				</Button>
+				<Button on:click={() => tabs.setTab('story')} shape="square">
+					<i class="fade-in btn bi bi-book" />
+				</Button>
+				<Button on:click={() => tabs.setTab('sheet')} shape="square">
+					<i class="fade-in btn bi bi-gpu-card" />
+				</Button>
+				<Button on:click={() => tabs.setTab('stats')} shape="square">
+					<i class="fade-in btn bi bi-pencil" />
+				</Button>
+			</Toolbar>
 		{/await}
 	</div>
 	{#await query}
-		<div class="loading-indicator fade-in" data-augmented-ui>
-			<div>Loading data...</div>
-		</div>
+		<LoadingIndicator>Extracting character data...</LoadingIndicator>
 	{:then}
 		<TabPanel bind:this={tabs} initialTab="stats">
-			<Tab id="stats">
+			<Tab id="stats" padding={2}>
 				<h2>{character.name}</h2>
 				<CharacterStats {character} />
 			</Tab>
-			<Tab id="story">
-				<h2>Biography</h2>
+			<Tab id="story" padding={2}>
 				<CharacterBiography {character} />
 			</Tab>
-			<Tab id="sheet">
+			<Tab id="sheet" padding={1}>
 				<Character {character} />
 			</Tab>
 		</TabPanel>
 	{/await}
 	<Menu slot="menu">
-		<CharacterMenu on:character.selected={e => selectCharcter(e.detail)} />
+		<CharacterMenu on:character.selected={(e) => selectCharcter(e.detail)} />
 	</Menu>
 </Shell>

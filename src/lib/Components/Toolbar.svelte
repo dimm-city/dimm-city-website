@@ -8,7 +8,6 @@
 		min-height: min-content;
 		color: white;
 		overflow: hidden;
-		opacity: 0.9;
 		transition: all var(--quick-in);
 		text-transform: uppercase;
 
@@ -25,7 +24,7 @@
 		--aug-border-all: 1px;
 
 		--aug-inlay: initial;
-		--aug-inlay-bg: #000000eb;
+		--aug-inlay-bg: #000000f3;
 	}
 
 

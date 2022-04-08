@@ -9,13 +9,15 @@
 
 <style>
 	.container {
-		min-height: 100%;
+		height: 100%;
 		display: grid;
+		width: 100%;
 		grid-template-columns: 0.7fr 1.6fr;
-		grid-template-rows: 0.5fr 0.5fr;
-		gap: 1rem 1rem;
+		grid-template-rows:min-content 0.5fr 0.8fr;
+		gap: 1rem;
 		grid-auto-flow: row;
 		grid-template-areas:
+			'title-area title-area'
 			'image-area attributes-area'
 			'description-area description-area';
 	}
@@ -30,9 +32,13 @@
 
 	.description-area {
 		grid-area: description-area;
+		display: block;
+		height: 100%;
+		width: 100%;
 	}
-	.description-area div {
-		display: contents;
+	.description-area div:last-child {
+		display: flex;
+		height: 100%;
 	}
 
 	.attributes-area {
@@ -53,6 +59,9 @@
 </style>
 
 <div class="container">
+	<div class="title-area">
+		<h2>Biography</h2>
+	</div>
 	<div class="image-area">
 		<ProfileImage {character} />
 	</div>
@@ -70,6 +79,6 @@
 	</div>
 	<div class="description-area">
 		<div>Tell us a bit about {character.name}'s backstory...</div>
-		<div style="display:contents;"><Textarea bind:value={character.backstory} disabled={readonly} /></div>
+		<div><Textarea bind:value={character.backstory} disabled={readonly} /></div>
 	</div>
 </div>

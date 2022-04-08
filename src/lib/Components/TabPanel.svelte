@@ -16,6 +16,6 @@
 	});
 </script>
 
-<ContentPane>
+<ContentPane padding={0}>
 	<slot />
 </ContentPane>

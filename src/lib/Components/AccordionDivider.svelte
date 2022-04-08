@@ -6,6 +6,7 @@
 	import Toolbar from './Toolbar.svelte';
 	import { openModal } from 'svelte-modals';
 	export let showMenuButton = true;
+	export let visible = true;
 	function showDice() {
 		openModal(DiceRollerModal, { fullscreen: true });
 	}
@@ -24,6 +25,11 @@
 		bottom: 0;
 		width: 100%;
 	}
+	.visible.accordion-divider,
+	.visible > .accordion-divider-decoration  {
+		height: var(--divider-height);
+	}
+
 	.accordion-divider-decoration {
 		background: rgb(17 17 17 / 0.75);
 		--aug-tl1: 2vh;
@@ -141,7 +147,7 @@
 	}
 </style>
 
-<div class="accordion-divider" class:bottom={$showMenu}>
+<div class="accordion-divider" class:bottom={$showMenu} class:test={visible}>
 	<div
 		class="accordion-divider-decoration fade-in"
 		class:bottom={$showMenu}

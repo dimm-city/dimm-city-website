@@ -1,11 +1,15 @@
-<div data-augmented-ui class="aug-button" on:click><slot /></div>
+<script>
+	export let border = '';
+	export let shape = 'default';
+</script>
+
 <style>
 	.aug-button {
-        display: inline-block;
+		display: inline-block;
 		height: fit-content;
-        width: max-content;
+		width: max-content;
 		cursor: pointer;
-		padding: 0.5rem 1rem;        
+		padding: 0.5rem 1rem;
 		min-height: 20%;
 		color: white;
 		overflow: hidden;
@@ -13,7 +17,6 @@
 		text-shadow: 0 0 0.25vh black, 0 0 0.25vh black;
 		transition: all var(--quick-in);
 		text-transform: uppercase;
-		
 
 		--aug-clip-tl1: initial;
 		--aug-clip-tr1: initial;
@@ -34,6 +37,7 @@
 		--aug-inlay-bg: #ffffff1e;
 		background-color: transparent;
 	}
+
 	.aug-button:hover,
 	.aug-button:focus {
 		background-color: #ffffff1e;
@@ -47,4 +51,13 @@
 	:global(.aug-button small) {
 		font-size: 0.7em;
 	}
+
+	.square {
+		--aug-tl1: 0.5rem;
+		--aug-tr1: 0.5rem;
+		--aug-br1: 0.5rem;
+		--aug-bl1: 0.5rem;
+	}
 </style>
+
+<div data-augmented-ui class="aug-button {shape}" style="--aug-border-bg: {border}" on:click><slot /></div>

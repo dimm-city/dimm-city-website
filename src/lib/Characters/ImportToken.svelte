@@ -19,6 +19,10 @@
 		id: -1
 	} as ISummaryItem;
 
+	function cancelImport() {
+		if (window.history.length > 0) window.history.back();
+		else window.location.href = '/console';
+	}
 	async function createCharacter(nextStep) {
 		if (!$loggedIn) {
 			connect();
@@ -26,8 +30,8 @@
 
 		let importData = JSON.parse(JSON.stringify(character));
 		importData.slug = character.name.replace(' ', '-');
-		importData.currentLocation = character.currentLocation.id;
-		importData.specialties = character.specialties.map(r => r.id);
+		// importData.currentLocation = character.currentLocation.id;
+		// importData.specialties = character.specialties.map(r => r.id);
 
 		window
 			.fetch('http://localhost:1337/api/sporos/import/' + token.release + '/' + token.edition, {
@@ -53,11 +57,12 @@
 
 <style>
 	.step-container {
-		height: 80vh;
+		height: 100%;
 		width: 100%;
 		display: grid;
 		grid-template-columns: 1fr;
 		grid-template-rows: 0.2fr auto 0.1fr;
+		padding: 1rem 0;
 	}
 	.step-container div:nth-child(2) {
 		display: flex;
@@ -71,13 +76,14 @@
 		justify-content: space-between;
 	}
 </style>
+
 <StepWizard initialStep={1}>
 	<StepWizard.Step num={1} let:nextStep>
 		<div class="step-container fade-in">
 			<div><h2>This is the first step is to give your Sporo a name...</h2></div>
-			<div><CharacterStats {character}  readonly={false}/></div>
+			<div><CharacterStats {character} readonly={false} /></div>
 			<div>
-				<div />
+				<Button on:click={cancelImport}>cancel</Button>
 				<Button on:click={nextStep}>continue</Button>
 			</div>
 		</div>
@@ -87,12 +93,13 @@
 			<div><h2>... now what is your Sporos story?</h2></div>
 			<div><CharacterBiography {character} /></div>
 			<div>
-				<Button on:click={previousStep}>Go Back</Button>
+				<Button on:click={previousStep}>Back</Button>
+				<Button on:click={cancelImport}>cancel</Button>
 				<Button on:click={nextStep}>continue</Button>
 			</div>
 		</div>
 	</StepWizard.Step>
-	<StepWizard.Step num={3} let:previousStep let:nextStep>
+	<!-- <StepWizard.Step num={3} let:previousStep let:nextStep>
 		<div class="step-container fade-in">
 			<div><h2>Where does your Sporo live in Dimm City?</h2></div>
 			<div><LocationSelector bind:value={character.currentLocation.id} /></div>
@@ -108,9 +115,9 @@
 			<div><SpecialtySelector {character} /></div>
 			<div><Button on:click={previousStep}>Go Back</Button><Button on:click={nextStep}>continue</Button></div>
 		</div>
-	</StepWizard.Step>
+	</StepWizard.Step> -->
 
-	<StepWizard.Step num={5} let:previousStep let:nextStep>
+	<StepWizard.Step num={3} let:previousStep let:nextStep>
 		<div class="step-container fade-in">
 			<div><h2>Profile Complete</h2></div>
 			<div>
@@ -119,18 +126,17 @@
 				</p>
 			</div>
 			<div>
-				<Button on:click={previousStep}>Go Back</Button>
-				<Button on:click={() => createCharacter(nextStep)}>Create your character</Button>
+				<Button on:click={previousStep}>Back</Button>
+				<Button on:click={cancelImport}>cancel</Button>
+				<Button on:click={nextStep}>Complete</Button>
 			</div>
 		</div>
 	</StepWizard.Step>
-	<StepWizard.Step num={6} let:nextStep let:previousStep>
+	<StepWizard.Step num={4} let:nextStep let:previousStep>
 		<div class="step-container fade-in">
 			<div><h2>Creating character</h2></div>
 			<div>
-				<p>
-					<LoadingIndicator><div>compiling...</div></LoadingIndicator>
-				</p>
+				<LoadingIndicator><div class="centered-container">compiling...</div></LoadingIndicator>
 			</div>
 			<div>
 				<Button on:click={previousStep}>Go Back</Button>

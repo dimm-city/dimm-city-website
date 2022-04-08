@@ -30,6 +30,12 @@
     --menu-inlay-bg-color-hover: #ffffff37;
 
     --divider-height: 8vh;
+
+    --button-aug-border-bg: radial-gradient(circle at top left, var(--pink) 40px, transparent 50px),
+			radial-gradient(circle at top right, var(--blue) 20px, transparent 30px),
+			radial-gradient(circle at bottom right, var(--pink) 40px, transparent 50px),
+			radial-gradient(circle at bottom left, var(--blue) 20px, transparent 30px);
+
 }
 
 * {

@@ -15,7 +15,7 @@
 	let tokenId = $page.params.tokenId;
 </script>
 
-<Shell title="Citizens">
+<Shell title="Citizens" fullscreen={true}>
 	<ContentPane>
 		<ImportToken {tokenId} />
 	</ContentPane>
