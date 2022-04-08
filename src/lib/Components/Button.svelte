@@ -1,6 +1,7 @@
 <script>
 	export let border = '';
 	export let shape = 'default';
+	export let title = "";
 </script>
 
 <style>
@@ -59,4 +60,4 @@
 	}
 </style>
 
-<div data-augmented-ui class="aug-button {shape}" style="--aug-border-bg: {border}" on:click><slot /></div>
+<button data-augmented-ui class="aug-button {shape}" style="--aug-border-bg: {border}" on:click alt="{title}" title="{title}"><slot /></button>

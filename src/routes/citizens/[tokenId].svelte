@@ -58,8 +58,8 @@
 				<Button on:click={() => tabs.setTab('sheet')} shape="square">
 					<i class="fade-in btn bi bi-gpu-card" />
 				</Button>
-				<Button on:click={() => tabs.setTab('stats')} shape="square">
-					<i class="fade-in btn bi bi-pencil" />
+				<Button on:click={() => tabs.setTab('stats')} shape="square" title="Edit citizen profile">
+					<i class="fade-in btn bi bi-device-ssd" />
 				</Button>
 			</Toolbar>
 		{/await}

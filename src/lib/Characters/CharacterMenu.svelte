@@ -81,25 +81,33 @@
 {:then}
 	{#if $characters != null}
 		{#each $characters as character}
-				<MenuItem url="/citizens/{character.tokenId}" on:click={() => selectCharacter(character)}>
-					<p><i class="bi bi-person text-light" />{character.name}</p>
-					<small>
+			<MenuItem url="/citizens/{character.tokenId}" on:click={() => selectCharacter(character)}>
+				<p><i class="bi bi-person text-light" />{character.name}</p>
+				<small>
+					{#if character.race.data.attributes}
 						<div>{character.race.data.attributes.name}</div>
+					{:else}
+						<div>Unknown race</div>
+					{/if}
+					{#if character.specialties && character.specialties.data}
 						<div>
 							{character.specialties.data.map((r) => r.attributes.name).join(', ')}
 						</div>
-					</small>
+					{:else}
+						<div>Unknown specialties</div>
+					{/if}
+				</small>
 
-					<div class="toolbar">
-						<!-- <a
+				<div class="toolbar">
+					<!-- <a
 						target="_blank"
 						on:click|stopPropagation={() => true}
 						href="/citizens/print/{character.attributes.tokenId}"
 					>
 						<i class="bi bi-printer" />
 					</a> -->
-					</div>
-				</MenuItem>
+				</div>
+			</MenuItem>
 		{/each}
 	{/if}
 {:catch e}
