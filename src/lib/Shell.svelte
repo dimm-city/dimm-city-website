@@ -53,7 +53,7 @@
 	}
 	.top-panel {
 		height: calc(100vh - var(--divider-height));
-		transition: margin-top var(--easing);
+		transition: all var(--easing);
 		overflow: hidden;
 		padding-top: 1rem;
 	}
@@ -138,7 +138,7 @@
 </svelte:head>
 
 <div class="vertical-accordion {title.toLowerCase()}" class:bottom={$showMenu} class:top={!$showMenu} class:fullscreen>
-	<div class="top-panel slide-in-down">
+	<div class="top-panel animate__animated animate__backInDown">
 		<div class="top-panel-grid">
 			<div class="top-panel-content-row">
 				<slot><ContentPane fullsize={true}>404</ContentPane></slot>

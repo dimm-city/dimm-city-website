@@ -5,10 +5,7 @@ export class Character implements ICharacter {
 	id: number;
 	slug: string;
 	name: string;
-	beliefs: string;
-	flaws: string;
-	dreams: string;
-	backstory: string;
+	tokenId: string;
 	token: IToken;
 	age: number;
 	height: number;
@@ -18,6 +15,10 @@ export class Character implements ICharacter {
 	skin: string;
 	hair: string;
 	vibe: string;
+	beliefs: string;
+	flaws: string;
+	dreams: string;
+	backstory: string;
 	clothing: string;
 	mainImage: string;
 	thumbnailImage: string;
@@ -78,6 +79,7 @@ export interface ICharacter {
 
 	//-----//
 	id: number;
+	tokenId: string;
 	name: string;
 	age: number;
 	height: number;

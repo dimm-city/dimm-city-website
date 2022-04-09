@@ -1,6 +1,7 @@
 <script lang="ts">
 	export let title;
 	export let imageUrl;
+	export let height = "100px";
 </script>
 
 <style>
@@ -16,7 +17,7 @@
 		transition-timing-function: ease-in-out;
 	}
 	img:hover {
-		transform: scale(1.3) translate(0, 0.6rem);
+		transform: scale(1.3) translate(0, 0.5rem);
 	}
 
 	.thumbnail-wrapper {
@@ -40,6 +41,6 @@
 	}
 </style>
 
-<div class="thumbnail-wrapper" data-augmented-ui="tl-clip tr-clip br-clip bl-clip both">
-	<img src={imageUrl} class="fade-in" alt={title} />
+<div class="thumbnail-wrapper" data-augmented-ui="tl-clip tr-clip br-clip bl-clip both"  style="height: {height}">
+	<img src={imageUrl} class="fade-in" alt={title} style="height: {height}" />
 </div>

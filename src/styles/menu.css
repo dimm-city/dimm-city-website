@@ -1,9 +1,9 @@
 .menu-item {
-	height: 8em;
+	height: 7em;
 	cursor: pointer;
-	padding: 1rem;
+	padding-inline: 1rem;
 	min-height: 20%;
-	font-size: 2.5vh;
+	font-size: 1.2rem;
 	color: white;
 	overflow: hidden;
 	opacity: 0.75;
@@ -35,7 +35,7 @@
 .menu-item:focus {
 	--aug-border-all: 0.35vh;
 	background-color: var(--menu-inlay-bg-color-hover);
-	opacity: 1;
+	opacity: 0.9;
 }
 
 .menu-item.disabled {

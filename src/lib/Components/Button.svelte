@@ -3,6 +3,7 @@
 	export let shape = 'default';
 	export let title = "";
 	export let url ="";
+	export let height = "auto";
 </script>
 
 <style>
@@ -58,7 +59,10 @@
 		--aug-br1: 0.5rem;
 		--aug-bl1: 0.5rem;
 		aspect-ratio: 1/1;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
 </style>
 
-<a href="{url}" data-augmented-ui class="aug-button {shape}" style="--aug-border-bg: {border}" on:click alt="{title}" title="{title}"><slot /></a>
+<a href="{url}" data-augmented-ui class="aug-button {shape}" style="--aug-border-bg: {border}; height: {height};" on:click alt="{title}" title="{title}"><slot /></a>

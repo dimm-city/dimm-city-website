@@ -13,10 +13,13 @@
 	font-weight: 400;
 	font-display: swap;
 	src: url('/assets/dimm-city.woff2') format('woff2');
-	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-  }
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC,
+		U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 * {
 	box-sizing: border-box;
+	scrollbar-color: var(--third-accent) var(--secondary-accent);
+	scrollbar-width: thin;
 }
 
 html,
@@ -55,31 +58,47 @@ a:active {
 *::-webkit-scrollbar-thumb {
 	/* background-color: var(--fourth-accent); color of the scroll thumb */
 
-	 background-color: linear-gradient(90deg, rgba(0,0,0,0) 0%, var(--fourth-accent) 29%, var(--fourth-accent) 65%, rgba(0,0,0,0) 100%); 
+	background-color: linear-gradient(
+		90deg,
+		rgba(0, 0, 0, 0) 0%,
+		var(--fourth-accent) 29%,
+		var(--fourth-accent) 65%,
+		rgba(0, 0, 0, 0) 100%
+	);
 	border-radius: 1rem; /* roundness of the scroll thumb */
 	border: 1px solid var(--fourth-accent); /* creates padding around scroll thumb */
 }
 
-.centered-container{
+.text-primary {
+	color: var(--primary-accent) !important;
+}
+.text-secondary {
+	color: var(--secondary-accent) !important;
+}
+.text-highlight {
+	color: var(--third-accent) !important;
+}
+
+.centered-container {
 	display: flex;
 	justify-content: center !important;
 	align-items: center;
 	width: 100%;
 }
 
-.h-100{
+.h-100 {
 	height: 100%;
 }
 
-.padding-0{
+.padding-0 {
 	padding: 0 !important;
 }
-.padding-1{
+.padding-1 {
 	padding: 1rem;
 }
-.padding-2{
+.padding-2 {
 	padding: 2rem;
 }
-.padding-3{
+.padding-3 {
 	padding: 3rem;
 }

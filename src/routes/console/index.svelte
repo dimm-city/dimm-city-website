@@ -75,6 +75,8 @@
 
 	.menu-item-grid {
 		width: 100%;
+		padding-top: 0.5rem;
+		padding-bottom: 0.5rem;
 		display: grid;
 		grid-template-columns: 2fr 1fr;
 		grid-template-rows: min-content auto;
@@ -164,7 +166,7 @@
 					<div class="menu-item-grid">
 						<div class="name-column">{sporo.name}</div>
 						<div class="id-column"><small> {sporo.release}-{sporo.edition}</small></div>
-						<div class="image-column"><Thumbnail title="thumbnail" imageUrl={sporo.thumbnail_uri} /></div>
+						<div class="image-column"><Thumbnail title="thumbnail" imageUrl={sporo.thumbnail_uri} height="4rem" /></div>
 						<div class="toolbar-column">
 							{#if sporo.hasCharacter}
 								<i class="bi bi-file-person" title="Has citizen profile in the archives" />

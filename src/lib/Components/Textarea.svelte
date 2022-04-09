@@ -27,7 +27,7 @@
 		--aug-tr1: 1vh;
 		--aug-br1: 1vh;
 		--aug-bl1: 1vh;
-		--aug-border-bg: var(--secondary-accent);
+		--aug-border-bg: var(--fourth-accent);
 		--aug-inlay: initial;
 		--aug-inlay-bg: var(--menu-inlay-bg-color);
 	}

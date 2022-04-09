@@ -16,7 +16,7 @@
 
 
 {#if $tab === id}
-	<div class="fade-in h-100 padding-{padding}">
+	<div class="animate__animated animate__fadeIn h-100 padding-{padding}">
 		<slot {setTab} />
 	</div>
 {/if}

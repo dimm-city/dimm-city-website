@@ -43,9 +43,9 @@
 					Console. This console will allow you to complete a citizen profile for the Sporo you are connected to. That
 					profile will be saved to into the console for other Ops to reference.
 				</p>
+				<p>We remain hopeful that, with enough information, there still may be a chance...</p>
 				<p>
-					We remain hopeful that, with enough information, there still may be a chance... Your assistance in greatly
-					appreciated,
+					Your assistance in greatly appreciated,
 					<br />-founder3
 				</p>
 			</TextContainer>

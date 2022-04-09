@@ -19,6 +19,10 @@ export const getCharacterBySlugQuery = `
           skin
           hair
           vibe
+          beliefs
+          flaws
+          dreams
+          backstory
           clothing
           imageUrl
           thumbnailUrl
