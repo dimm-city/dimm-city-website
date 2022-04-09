@@ -17,6 +17,7 @@
 	import TokenViewModal from '$lib/Tokens/TokenViewModal.svelte';
 	import { openModal } from 'svelte-modals';
 	import { ethers } from 'ethers';
+	import Thumbnail from '$lib/Components/Thumbnail.svelte';
 
 	let loadingTask: Promise<void>;
 	let selectedSporo = {} as any;
@@ -67,7 +68,38 @@
 	}
 
 	small {
-		font-size: 1rem;
+		white-space: nowrap;
+		font-size: clamp(0.3rem, 0.7rem, 1.25rem);
+	}
+
+	.menu-item-grid {
+		width: 100%;
+		display: grid;
+		grid-template-columns: 2fr 1fr;
+		grid-template-rows: min-content auto;
+		grid-template-areas:
+			'name-column id-column'
+			'image-column toolbar-column';
+	}
+	.name-column {
+		grid-area: name-column;
+	}
+	.id-column {
+		grid-area: id-column;
+		display: flex;
+		justify-content: end;
+	}
+	.image-column {
+		grid-area: image-column;
+		display: flex;
+		justify-content: start;
+	}
+	.toolbar-column {
+		grid-area: toolbar-column;
+		display: flex;
+		height: 100%;
+		justify-content: end;
+		align-items: end;
 	}
 </style>
 
@@ -100,35 +132,51 @@
 			{/if}
 		</div>
 	</ContentPane>
-	<Menu slot="menu" columns={1}>
-		{#if $connected && $signerAddress}
+	<Menu slot="menu" columns={3}>
+		<div slot="menu-toolbar">
 			<MenuItem>
-				<strong>Profile: {$signerAddress}</strong>
+				{#if $connected && $signerAddress}
+					<small>Profile: {$signerAddress}</small>
 
-				<div>
-					<strong>Your Sporos: </strong>
+					<div>
+						<strong>Your Sporos: </strong>
 
-					{#await $contract.balanceOf($signerAddress)}
-						<LoadingIndicator>
-							<span>Locating sporos...</span>
-						</LoadingIndicator>
-					{:then count}
-						{count}
-					{/await}
-				</div>
+						{#await $contract.balanceOf($signerAddress)}
+							<LoadingIndicator>
+								<span>Locating sporos...</span>
+							</LoadingIndicator>
+						{:then count}
+							{count}
+							<div>
+								{#if $myCollection.some((s) => !s.hasCharacter)}
+									<span>{$myCollection.filter((s) => !s.hasCharacter).length} sporos are missing citizen profiles</span
+									>
+								{/if}
+							</div>
+						{/await}
+					</div>
+				{:else}
+					<MenuItem on:click={connect}>Connect</MenuItem>
+				{/if}
 			</MenuItem>
+		</div>
+		{#if $connected && $signerAddress}
 			{#each $myCollection as sporo}
 				<MenuItem on:click={() => showToken(sporo)} classes="console-menu-item">
-					
-						{sporo.name} <small> {sporo.release}-{sporo.edition}</small>
-					
+					<div class="menu-item-grid">
+						<div class="name-column">{sporo.name}</div>
+						<div class="id-column"><small> {sporo.release}-{sporo.edition}</small></div>
+						<div class="image-column"><Thumbnail title="thumbnail" imageUrl={sporo.thumbnail_uri} /></div>
+						<div class="toolbar-column">
+							{#if sporo.hasCharacter}
+								<i class="bi bi-file-person" title="Has citizen profile in the archives" />
+							{:else}
+								<i class="bi bi-file" title="Citizen profile not found in the archives" />
+							{/if}
+						</div>
+					</div>
 				</MenuItem>
 			{/each}
-		{:else}
-			<MenuItem on:click={connect}
-				>Connect
-				<div /></MenuItem
-			>
 		{/if}
 	</Menu>
 </Shell>
