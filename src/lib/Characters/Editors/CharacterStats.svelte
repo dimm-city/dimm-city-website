@@ -48,6 +48,41 @@
 		display: flex;
 		align-items: center;
 	}
+
+	@media (max-width: 768px) {
+		.container {
+			height: 100%;
+			display: grid;
+			width: 100%;
+			grid-template-columns: 1fr;
+			grid-template-rows: repeat(3, 1fr);
+			gap: 1rem;
+			grid-auto-flow: row;
+			grid-template-areas:
+				'title-area'
+				'image-area'
+				'attributes-area';
+		}
+
+		.title-area {
+			display: none;
+		}
+		.attributes {
+			margin: 1rem 2rem 5rem;
+			display: grid;
+			grid-template-columns: 1fr;
+			gap: 1rem;
+		}
+		.attributes div:nth-child(odd) {
+			font-weight: bold;
+			width: min-content;
+			display: flex;
+			align-items: center;
+		}
+		.attributes div:nth-child(even) {
+			margin-bottom: 0.75rem;
+		}
+	}
 </style>
 
 <div class="container">

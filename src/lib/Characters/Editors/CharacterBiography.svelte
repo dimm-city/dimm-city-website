@@ -35,13 +35,13 @@
 
 	.description-area {
 		grid-area: description-area;
-		display: block;
 		height: 100%;
 		width: 100%;
 	}
 	.description-area div:last-child {
 		display: flex;
 		height: 100%;
+		padding-bottom: 1rem;
 	}
 
 	.attributes-area {
@@ -49,19 +49,54 @@
 	}
 
 	.attributes {
-		margin: 0 0.5rem;
+		margin: 0;
 		display: grid;
 		grid-template-rows: 1fr;
-		gap: 1.25rem;
+		gap: 1rem;
 	}
-	.attributes div:nth-child(odd), .label {
+	.attributes div:nth-child(odd),
+	.label {
 		font-weight: bold;
 		width: min-content;
 		white-space: nowrap;
 	}
 
-	.label{
+	.label {
 		margin-bottom: 1.25rem;
+	}
+
+	@media (max-width: 768px) {
+		.container {
+			height: 100%;
+			display: grid;
+			width: 100%;
+			grid-template-columns: 1fr;
+			grid-template-rows: min-content repeat(2, 1fr);
+			gap: 1rem;
+			grid-auto-flow: row;
+			grid-template-areas:
+				'title-area'
+				'attributes-area'
+				'description-area';
+		}
+
+		.image-area {
+			display: none;
+		}
+
+		.attributes {
+			margin: 0 0.5rem;
+			display: grid;
+			grid-template-rows: 1fr;
+			gap: 1rem;
+		}
+		.attributes div:nth-child(odd),
+		.label {
+			font-weight: bold;
+			width: min-content;
+			white-space: nowrap;
+			font-size: 0.7rem;
+		}
 	}
 </style>
 

@@ -60,8 +60,6 @@
 		filter: drop-shadow(0 0 2vh var(--pink));
 		background: rgb(17 17 17 / 0.75);
 		color: var(--light);
-		/* overflow-y: auto; */
-
 		scrollbar-color: var(--third-accent) var(--secondary-accent);
 		scrollbar-width: thin;
 	}
@@ -76,21 +74,16 @@
 	}
 	.content-wrapper::-webkit-scrollbar {
 		color: var(--secondary-accent);
-		/* width: 100px; */
 	}
 
 	@media all and (max-width: 768px), (max-aspect-ratio: 0.74) {
 		.content-container {
 			position: relative;
 			height: 100%;
-			max-width: 90vw;
+			width: 100%;
+			margin-inline: 1rem;
 			aspect-ratio: 3/4;
-			/* margin: 1em auto 0; */
 		}
-
-		/* .content-container.full-size {
-			height: 75vh;
-		} */
 	}
 
 	@media (max-width: 750px) {
