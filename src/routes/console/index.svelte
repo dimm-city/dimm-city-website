@@ -18,6 +18,7 @@
 	import { openModal } from 'svelte-modals';
 	import { ethers } from 'ethers';
 	import Thumbnail from '$lib/Components/Thumbnail.svelte';
+	import TextContainer from '$lib/Components/TextContainer.svelte';
 
 	let loadingTask: Promise<void>;
 	let selectedSporo = {} as any;
@@ -134,31 +135,28 @@
 	</ContentPane>
 	<Menu slot="menu" columns={3}>
 		<div slot="menu-toolbar">
-			<MenuItem>
-				{#if $connected && $signerAddress}
+			{#if $connected && $signerAddress}
+				<TextContainer>
 					<small>Profile: {$signerAddress}</small>
-
 					<div>
-						<strong>Your Sporos: </strong>
-
 						{#await $contract.balanceOf($signerAddress)}
 							<LoadingIndicator>
 								<span>Locating sporos...</span>
 							</LoadingIndicator>
 						{:then count}
-							{count}
-							<div>
-								{#if $myCollection.some((s) => !s.hasCharacter)}
-									<span>{$myCollection.filter((s) => !s.hasCharacter).length} sporos are missing citizen profiles</span
-									>
-								{/if}
-							</div>
+							<h4>Sporos Located: {count}</h4>
+
+							{#if $myCollection.some((s) => !s.hasCharacter)}
+								<span class="text-highlight"
+									>{$myCollection.filter((s) => !s.hasCharacter).length} Sporos missing citizen profiles</span
+								>
+							{/if}
 						{/await}
 					</div>
-				{:else}
-					<MenuItem on:click={connect}>Connect</MenuItem>
-				{/if}
-			</MenuItem>
+				</TextContainer>
+			{:else}
+				<MenuItem on:click={connect}>Connect</MenuItem>
+			{/if}
 		</div>
 		{#if $connected && $signerAddress}
 			{#each $myCollection as sporo}

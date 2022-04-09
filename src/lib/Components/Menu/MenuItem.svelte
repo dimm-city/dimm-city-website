@@ -6,7 +6,11 @@
 	export let disabled = false;
 	export let classes = "";
 </script>
-
+<style>
+	.menu-item i {
+		margin-right: 0.5rem;
+	}
+</style>
 {#if disabled}
 	<div class="fade-zoom-in" {disabled}>
 		<div class="menu-item" data-augmented-ui class:disabled>

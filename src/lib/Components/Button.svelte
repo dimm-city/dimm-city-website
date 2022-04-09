@@ -60,4 +60,4 @@
 	}
 </style>
 
-<button data-augmented-ui class="aug-button {shape}" style="--aug-border-bg: {border}" on:click alt="{title}" title="{title}"><slot /></button>
+<a data-augmented-ui class="aug-button {shape}" style="--aug-border-bg: {border}" on:click alt="{title}" title="{title}"><slot /></a>
