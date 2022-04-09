@@ -20,7 +20,7 @@
 
 		--aug-inlay: initial;
 		--aug-inlay-bg: var(--menu-inlay-bg-color);
-		background-color: transparent;        
+		background-color: transparent;
 	}
 </style>
 

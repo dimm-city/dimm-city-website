@@ -22,7 +22,7 @@
 		display: grid;
 		gap: 1em;
 		max-width: 100%;
-		grid-template-columns: repeat(2, 1fr);
+		grid-template-columns: repeat(3, 1fr);
 		list-style: none;
 		overflow-y: visible;
 		scrollbar-width: none;
@@ -31,6 +31,10 @@
 	.menu-items.col-1 {
 		grid-template-columns: repeat(1, 1fr);
 	}
+	.menu-items.col-2 {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
 	.menu-items.col-3 {
 		grid-template-columns: repeat(3, 1fr);
 	}

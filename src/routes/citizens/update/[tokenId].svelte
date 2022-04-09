@@ -58,7 +58,7 @@
 				<Button on:click={() => tabs.setTab('sheet')} shape="square">
 					<i class="fade-in btn bi bi-gpu-card" />
 				</Button>
-				<Button url="/citizens/update/{character.tokenId}" shape="square" title="Edit citizen profile">
+				<Button on:click={() => tabs.setTab('stats')} shape="square" title="Edit citizen profile">
 					<i class="fade-in btn bi bi-device-ssd" />
 				</Button>
 			</Toolbar>
@@ -69,13 +69,13 @@
 	{:then}
 		<TabPanel bind:this={tabs} initialTab="stats">
 			<Tab id="stats" padding={2}>				
-				<CharacterStats {character} title={character.name}/>
+				<CharacterStats {character} title={character.name} readonly={false}/>
 			</Tab>
 			<Tab id="story" padding={2}>
-				<CharacterBiography {character} />
+				<CharacterBiography {character}  readonly={false}/>
 			</Tab>
 			<Tab id="sheet" padding={1}>
-				<Character {character} />
+				<Character {character}  />
 			</Tab>
 		</TabPanel>
 	{/await}

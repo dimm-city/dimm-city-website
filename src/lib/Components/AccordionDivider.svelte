@@ -1,15 +1,10 @@
 <script lang="ts">
 	import { showMenu } from '../ShellStore';
 	import { config } from '../config';
-	import DiceRollerModal from './DiceRollerModal.svelte';
 	import { loggedIn } from '../ChainStore';
 	import Toolbar from './Toolbar.svelte';
-	import { openModal } from 'svelte-modals';
 	export let showMenuButton = true;
 	export let visible = true;
-	function showDice() {
-		openModal(DiceRollerModal, { fullscreen: true });
-	}
 </script>
 
 <style>
@@ -26,7 +21,7 @@
 		width: 100%;
 	}
 	.visible.accordion-divider,
-	.visible > .accordion-divider-decoration  {
+	.visible > .accordion-divider-decoration {
 		height: var(--divider-height);
 	}
 
@@ -156,18 +151,16 @@
 	/>
 	<div class="version"><small>v {config.version}</small></div>
 	<div class="global-toolbar">
+		<a href="/" data-augmented-ui="all-hex border"><i class="bi bi-motherboard" /></a>
+		{#if showMenuButton}
+			<button on:click={() => ($showMenu = !$showMenu)} data-augmented-ui="all-triangle-up border" class="btn-menu" />
+		{/if}
 		<a href="/console" data-augmented-ui="all-hex border">
 			{#if $loggedIn}
-				<i class="bi bi-window-dock fade-in" />
+				<i class="bi bi-person-workspace fade-in" />
 			{:else}
 				<i class="bi bi-window-dash fade-in" />
 			{/if}
 		</a>
-		{#if showMenuButton}
-			<button on:click={() => ($showMenu = !$showMenu)} data-augmented-ui="all-triangle-up border" class="btn-menu" />
-		{/if}
-		<button on:click={showDice} data-augmented-ui="all-hex border"
-			><img src="/assets/icons/dice256.png" height="24" width="24" alt="dice icon" /></button
-		>
 	</div>
 </div>

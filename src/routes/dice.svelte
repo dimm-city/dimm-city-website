@@ -14,7 +14,7 @@
 	import MainMenu from '$lib/Components/Menu/MainMenu.svelte';
 	import ContentPane from '$lib/Components/ContentPane.svelte';
 
-	import D20 from '$lib/Components/d20.svelte';
+	import D20 from '$lib/Components/Dice/d20.svelte';
 	import { showMenu } from '$lib/ShellStore';
 
 	$showMenu = false;
