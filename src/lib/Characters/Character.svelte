@@ -6,6 +6,7 @@
 	import { openModal } from 'svelte-modals';
 	import AbilityModal from './AbilityModal.svelte';
 	import { Character } from './Character';
+	import Image from '$lib/Components/Image.svelte';
 	//	export let tokenId; // `dcs1r1-${id}`;
 	export let character;
 
@@ -53,19 +54,21 @@
 
 	.container {
 		display: grid;
-		grid-template-columns: 1.2fr minmax(180px 0.7fr) 1.1fr;
-		grid-template-rows: 0.1fr 0.2fr minmax(250px, 0.2fr) minmax(100px, 0.9fr) 0.9fr;
-		gap: 0px 1em;
+		grid-template-columns: 0.5fr 0.5fr 0.2fr;
+		grid-template-rows: 0.1fr 0.1fr 0.1fr min-content 0.8fr;
+		gap: 1em;
 		grid-auto-flow: row;
 		align-content: start;
 		grid-template-areas:
-			'. . image'
-			'. details image'
-			'. details image'
-			'. . .'
-			'. abilities abilities';
+			'details details image'
+			'details details image'
+			'details details image'
+			'capitial items items'
+			'cybernetics abilities abilities'
+			'cybernetics abilities abilities';
 		width: 100%;
 		height: 100%;
+		margin-bottom: 5rem;
 	}
 
 	.container > .image {
@@ -78,12 +81,32 @@
 	.details {
 		grid-area: details;
 		width: 100%;
+		max-height: 100%;
+		overflow-y: hidden;
+	}
+	.race {
+		grid-area: race;
+	}
+	.specialties {
+		grid-area: specialties;
+		width: 100%;
 	}
 
 	.details > div {
 		padding-bottom: 0.25rem;
+		text-overflow: ellipsis;
 	}
-
+	.details div:nth-child(odd) {
+		display: inline;
+		font-weight: bold;
+	}
+	.details div:nth-child(even) {
+		display: inline;
+	}
+	.details div:nth-child(even)::after {
+		content: '';
+		display: block;
+	}
 	.stats {
 		display: flex;
 		justify-content: space-between;
@@ -101,7 +124,15 @@
 		font-size: 1.5rem;
 		padding: 0.1rem;
 	}
-
+	.capitial {
+		grid-area: capitial;
+	}
+	.items {
+		grid-area: items;
+	}
+	.cybernetics {
+		grid-area: cybernetics;
+	}
 	.abilities {
 		grid-area: abilities;
 	}
@@ -109,11 +140,6 @@
 	.container > div {
 		padding: 0.5rem;
 		border-top: 1px solid #dfdfdf;
-	}
-
-	img {
-		max-height: 400px;
-		max-width: 300px;
 	}
 
 	@media screen and (max-width: 700px) {
@@ -128,12 +154,16 @@
 	.character-container {
 		overflow-y: auto;
 	}
+
+	ul {
+		padding-bottom: 1.5rem;
+	}
 </style>
 
 <div class="character-container">
 	<div class="title-container">
 		<div>
-			<h1>Dimm City</h1>
+			<h1>{character.name ?? 'Loading...'}</h1>
 			<h5>Citizen Dossier</h5>
 		</div>
 	</div>
@@ -141,44 +171,61 @@
 	{#if character != null}
 		<div class="parent">
 			<div class="container">
-				<div>Name: <span>{character.name}</span></div>
-				<div class="stats">
+				<!-- <div>Name: <span>{character.name}</span></div> -->
+				<!-- <div class="stats">
 					<h4>HP: <span class="points-block">{character.hp || 10}</span></h4>
 					<h4>AP: <span class="points-block">{character.ap || 10}</span></h4>
-				</div>
+				</div> -->
 				<div class="details">
-					<div>Pronouns: {character.pronouns || 'they/them'}</div>
-					<div>Age: {character.age || 0} years</div>
-					<div>Height: {character.height || 0} m</div>
-					<div>Weight: {character.weight || 0} kg</div>
-					<div>Eyes: {character.eyes || ''}</div>
-					<div>Skin: {character.skin || ''}</div>
-					<div>Hair: {character.hair || ''}</div>
-					<div>Vibe: {character.vibe || ''}</div>
-					<!-- <div>Accessories: {character.height}</div> -->
+					<div>Pronouns:</div>
+					<div>{character.pronouns || 'they/them'}</div>
+					<div>Age:</div>
+					<div>{character.age || 0} years</div>
+					<div>Race:</div>
+					<div>
+						{#if character.race}
+							{character.race.data.attributes.name}
+						{/if}
+					</div>
+					<div>Height:</div>
+					<div>{character.height || 0} m</div>
+					<div>Weight:</div>
+					<div>{character.weight || 0} kg</div>
+					<div>Eyes:</div>
+					<div>{character.eyes || ''}</div>
+					<div>Skin:</div>
+					<div>{character.skin || ''}</div>
+					<div>Hair:</div>
+					<div>{character.hair || ''}</div>
+
+					<div>Specialties:</div>
+					<div>
+						{#if character.specialties && character.specialties.data}
+							<span>{character.specialties.data.map((r) => r.attributes.name).join(', ')}</span>
+						{/if}
+					</div>
+
+					<div>Vibe:</div>
+					<div>{character.vibe || ''}</div>
+					<div>Virtues:</div>
+					<div>{character.beliefs || ''}</div>
+					<div>Flaws:</div>
+					<div>{character.flaws || ''}</div>
+					<div>Dreams:</div>
+					<div>{character.dreams || ''}</div>
+					<!-- <div>Background: {character.backstory || ''}</div> -->
 				</div>
-				<div class="specialties">
+				<!-- <div class="specialties">
 					Specialties:
 					{#if character.specialties && character.specialties.data}
 						<span>{character.specialties.data.map((r) => r.attributes.name).join(', ')}</span>
 					{/if}
-				</div>
-				<div>
+				</div> -->
+				<!-- <div class="race">
 					Race: {#if character.race}
 						{character.race.data.attributes.name}
 					{/if}
-				</div>
-
-				<div class="image">
-					<!-- <img
-							src="https://lh3.googleusercontent.com/TFxb5LSw_-CdlY_JZ27-LBYzwCallPv6ZLNJQrhWSOoUUy2YKnd1VqZaOjotTPk-hjZ73UiC0kaCbb__4lbJ2_CYxFjN8iYqX37m5g=w600"
-							alt=""
-						/> -->
-					<img src={character.imageUrl} alt="profile" />
-				</div>
-
-				<div>
-					Racial Abilities
+					<h5>Racial Abilities</h5>
 					<ul>
 						{#if character.race}
 							{#each character.race.data.attributes.abilities.data as ability}
@@ -188,11 +235,15 @@
 							{/each}
 						{/if}
 					</ul>
+				</div> -->
+				<div class="image">
+					<Image imageUrl={character.imageUrl} title="Profile" />
 				</div>
-				<div>Captial</div>
-				<div>
+				<div class="capitial">Captial</div>
+				<div class="items">Items</div>
+				<div class="cybernetics">
 					Cybernetics
-					<ul class="aug-list">
+					<ul>
 						{#if character.cybernetics}
 							{#each character.cybernetics.data as ability}
 								<li class="small-menu-item" data-augmented-ui on:click={() => selectAbility(ability)}>
@@ -202,11 +253,19 @@
 						{/if}
 					</ul>
 				</div>
-
-				<div class="items">Items</div>
 				<div class="abilities">
 					Abilities
 					<ul>
+						{#if character.race}
+							{#each character.race.data.attributes.abilities.data as ability}
+								<li class="small-menu-item" data-augmented-ui on:click={() => selectAbility(ability)}>
+									<a href="#{ability.attributes.slug}">
+										<span>{ability.attributes.name}</span> 
+										<i class="bi bi-person" title="racial ability"/>
+									</a>
+								</li>
+							{/each}
+						{/if}
 						{#if character.selectedAbilities}
 							{#each character.selectedAbilities.data as ability}
 								<li class="small-menu-item" data-augmented-ui on:click={() => selectAbility(ability)}>

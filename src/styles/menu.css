@@ -64,6 +64,7 @@
 	opacity: 0.75;
 	text-shadow: 0 0 0.25vh black, 0 0 0.25vh black;
 	transition: all var(--quick-in);
+	
 
 	--aug-clip-tl1: initial;
 	--aug-clip-tr1: initial;
@@ -93,6 +94,10 @@
 		radial-gradient(circle at bottom left, var(--primary-accent) 20px, transparent 30px);
 }
 
+.small-menu-item a {
+	display: flex;
+	justify-content: space-between;
+}
 .small-menu-item.selected {
 	background-color: #ffffff3d;	
 	--aug-border-bg: radial-gradient(circle at top left, var(--third-accent) 40px, transparent 20%),
