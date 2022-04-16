@@ -18,6 +18,7 @@
 	.home-container {
 		height: min-content;
 		width: 100%;
+		padding-inline: 2rem;
 	}
 	:global(.home-menu-item) {
 		width: 300px;
@@ -28,9 +29,9 @@
 </style>
 
 <Shell title="Home" showMenuButton={true} showMainMenuButton={false}>
-	<ContentPane>
+	<ContentPane padding={0}>
 		<div class="home-container animate__animated animate__backInDown">
-			<h3 class="">Dimm City Console v{config.version}</h3>
+			<h6 class="">Dimm City Console v{config.version}</h6>
 			<TextContainer>
 				<p>Hello Op, we are glad you came.</p>
 				<p>

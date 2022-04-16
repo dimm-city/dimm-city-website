@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Button from '$lib/Components/Button.svelte';
-import Image from '$lib/Components/Image.svelte';
+	import Image from '$lib/Components/Image.svelte';
 
 	import Toolbar from '$lib/Components/Toolbar.svelte';
 
@@ -74,8 +74,8 @@ import Image from '$lib/Components/Image.svelte';
 </style>
 
 <div class="token-container">
-	<Image imageUrl={data.thumbnail_uri} title={data.name}></Image>
-	
+	<Image imageUrl={data.thumbnail_uri} title={data.name} />
+
 	<div>
 		<h3>Attributes</h3>
 		<div class="token-attributes">
@@ -120,13 +120,17 @@ import Image from '$lib/Components/Image.svelte';
 	</div>
 	<div class="toolbar-row">
 		<Toolbar>
-
 			<Button shape="square">
-				
 				{#if data.hasCharacter}
-					<a href="/citizens/{data.release}-{data.edition}"><i class="btn bi bi-person-badge" /><div>Profile</div></a>
+					<a href="/citizens/{data.release}-{data.edition}"
+						><i class="btn bi bi-person-badge" />
+						<div>Profile</div></a
+					>
 				{:else}
-					<a href="/citizens/import/{data.release}-{data.edition}"><i class="btn bi bi-person-badge" /><div>Profile</div></a>
+					<a href="/citizens/import/{data.release}-{data.edition}"
+						><i class="btn bi bi-person-badge" />
+						<div>Profile</div></a
+					>
 				{/if}
 			</Button>
 			<Button shape="square">

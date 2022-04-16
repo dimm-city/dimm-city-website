@@ -37,11 +37,12 @@ html {
 }
 a {
 	text-decoration: none;
-	color: var(--text-color);
+	color: var(--primary-accent);
 	transition: all var(--transition-in-time) ease;
 }
 a:hover,
 a:active {
+	color: var(--third-accent);
 	/* text-shadow: 1px 1px var(--secondary-accent); */
 	transition: all var(--transition-in-time) ease;
 }
@@ -69,6 +70,14 @@ a:active {
 	border: 1px solid var(--fourth-accent); /* creates padding around scroll thumb */
 }
 
+ul.unstyled-list {
+	list-style: none;
+	padding-left: 0;
+}
+ul.unstyled-list li {
+	padding-bottom: 0.5rem;
+}
+
 .text-primary {
 	color: var(--primary-accent) !important;
 }
@@ -94,11 +103,11 @@ a:active {
 	padding: 0 !important;
 }
 .padding-1 {
-	padding: 1rem;
+	padding: 1rem !important;
 }
 .padding-2 {
-	padding: 2rem;
+	padding: 2rem !important;
 }
 .padding-3 {
-	padding: 3rem;
+	padding: 3rem !important;
 }
