@@ -6,7 +6,7 @@ import { browser } from '$app/env';
 export const config = getCurrentConfig(); 
 
 function getCurrentConfig() {
-	return prod;
+	//return prod;
 	if (!browser && process && process.env && process.env.NODE_ENV === 'production') return prod;
 	if (browser && window.location.href.includes(prod.baseUrl)) return prod;
 	if (browser && window.location.href.includes(staging.baseUrl)) return staging;

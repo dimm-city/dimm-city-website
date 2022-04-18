@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { loadCharacter } from '../queries/getCharacterBySlug';
+	import { loadCharacter } from '../../queries/getCharacterBySlug';
 	import { config } from '$lib/config';
 	import { characters, myCollection, showMenu } from '$lib/ShellStore';
 	import { openModal } from 'svelte-modals';
-	import AbilityModal from './AbilityModal.svelte';
-	import { Character } from './Character';
+	import AbilityModal from '../Components/AbilityModal.svelte';
+	import { Character } from '../Character';
 	import Image from '$lib/Components/Image.svelte';
 	//	export let tokenId; // `dcs1r1-${id}`;
 	export let character;

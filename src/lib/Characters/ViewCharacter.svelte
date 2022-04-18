@@ -1,5 +1,8 @@
+<script context="module">
+	export const prerender = false;
+</script>
+
 <script>
-	//import { page } from '$app/stores';
 	import Character from '$lib/Characters/Tabs/Character.svelte';
 	import CharacterMenu from '$lib/Characters/Components/CharacterMenu.svelte';
 	import Menu from '$lib/Components/Menu/Menu.svelte';
@@ -14,18 +17,17 @@
 	import Toolbar from '$lib/Components/Toolbar.svelte';
 	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
 	import Button from '$lib/Components/Button.svelte';
-	import { canEdit, updateCharacter } from '$lib/queries/updateCharacter';
+	import { canEdit } from '$lib/queries/updateCharacter';
 
 	$showMenu = false;
-	export let tokenId;
-	let isSaving = false;
+	export let tokenId; // = $page.params.tokenId;
 	let character;
 	let query = new Promise(() => {});
 	let tabs;
-	onMount(async () => {
-		const isEditable = await canEdit(tokenId);
-		if (!isEditable) window.history.back();
+	let isEditable = true;
 
+	onMount(async () => {
+		isEditable = await canEdit(tokenId);
 		character = $characters.find((c) => c.tokenId === tokenId && c.loaded);
 		if (character == null || character.id < 1) {
 			query = loadCharacter(tokenId).then((c) => {
@@ -38,41 +40,36 @@
 	});
 	async function selectCharcter(id) {
 		tokenId = id;
+
+		canEdit(tokenId).then((data) => {
+			isEditable = data;
+		});
 		query = loadCharacter(tokenId).then((c) => {
 			character = c;
 			$characters = [c, ...$characters.filter((l) => l.id != c.id)];
 		});
 		$showMenu = false;
 	}
-
-	async function save() {
-		isSaving = true;
-		query = updateCharacter(character);
-		isSaving = false;
-	}
-
-	async function cancel() {
-		if (window.history.length > 0) window.history.back();
-		else window.location.href = '/citizens';
-	}
 </script>
 
-<Shell title="Update Citizen File" fullscreen={true}>
+<Shell title="Citizens">
 	<div slot="content-toolbar">
 		{#await query then}
 			<Toolbar>
-				<Button on:click={() => cancel()} shape="square" title="cancel">
-					<i class="fade-in btn bi bi-file-x" />
-				</Button>
-				<Button on:click={() => tabs.setTab('stats')} shape="square" title="stats">
+				<Button on:click={() => tabs.setTab('stats')} shape="square">
 					<i class="btn bi bi-person-badge" />
 				</Button>
-				<Button on:click={() => tabs.setTab('story')} shape="square" title="notes">
+				<Button on:click={() => tabs.setTab('story')} shape="square">
 					<i class="fade-in btn bi bi-book" />
 				</Button>
-				<Button on:click={() => save()} shape="square" title="save changes">
-					<i class="fade-in btn bi bi-device-ssd" />
+				<Button on:click={() => tabs.setTab('sheet')} shape="square">
+					<i class="fade-in btn bi bi-gpu-card" />
 				</Button>
+				{#if isEditable}
+					<Button url="/citizens/update/{character.tokenId}" shape="square" title="Edit citizen profile">
+						<i class="fade-in btn bi bi-device-ssd" />
+					</Button>
+				{/if}
 			</Toolbar>
 		{/await}
 	</div>
@@ -81,10 +78,10 @@
 	{:then}
 		<TabPanel bind:this={tabs} initialTab="stats">
 			<Tab id="stats" padding={2}>
-				<CharacterStats {character} title={character.name} readonly={false} />
+				<CharacterStats {character} title={character.name} />
 			</Tab>
 			<Tab id="story" padding={2}>
-				<CharacterBiography {character} readonly={false} />
+				<CharacterBiography {character} />
 			</Tab>
 			<Tab id="sheet" padding={1}>
 				<Character {character} />

@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { myCollection, districts } from '$lib/ShellStore';
-	import CharacterStats from './Editors/CharacterStats.svelte';
+	import CharacterStats from './Tabs/CharacterStats.svelte';
 	import StepWizard from 'svelte-step-wizard';
 	import { Character, type ISummaryItem } from './Character';
-	import CharacterBiography from './Editors/CharacterBiography.svelte';
-	import SpecialtySelector from './Editors/SpecialtySelector.svelte';
-	import LocationSelector from './Editors/DistrictSelector.svelte';
+	import CharacterBiography from './Tabs/CharacterBiography.svelte';
+	import SpecialtySelector from './Tabs/SpecialtySelector.svelte';
+	import LocationSelector from './Tabs/DistrictSelector.svelte';
 	import Button from '$lib/Components/Button.svelte';
 	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
 	import { connect, loggedIn, sessionToken } from '$lib/ChainStore';

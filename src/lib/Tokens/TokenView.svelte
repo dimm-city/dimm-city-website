@@ -1,9 +1,8 @@
 <script lang="ts">
 	import Button from '$lib/Components/Button.svelte';
 	import Image from '$lib/Components/Image.svelte';
-
 	import Toolbar from '$lib/Components/Toolbar.svelte';
-
+	
 	export let data;
 	function getAttributeValue(attribKey) {
 		let result = data.attributes.find((a) => a.trait_type == attribKey);
@@ -14,6 +13,8 @@
 		data.attributes.filter(
 			(a) => a.trait_type == 'Behind' && (a.value.indexOf('BIRD') > -1 || a.value.indexOf('WINGS') > -1)
 		).length > 0;
+
+	
 </script>
 
 <style>
@@ -60,7 +61,8 @@
 		grid-column: 1 / span 2;
 		display: flex;
 		align-items: end;
-		width: 100%;
+		width: 95%;
+		justify-self: center;
 	}
 
 	:global(.toolbar-row .aug-button) {
@@ -111,25 +113,24 @@
 			<div>Background</div>
 			<div>{getAttributeValue('Background')}</div>
 		</div>
-	</div>
-
-	<div class="release-details">
 		<p>
 			{data.description}
 		</p>
 	</div>
+
+	<div class="release-details" />
 	<div class="toolbar-row">
 		<Toolbar>
 			<Button shape="square">
 				{#if data.hasCharacter}
 					<a href="/citizens/{data.release}-{data.edition}"
 						><i class="btn bi bi-person-badge" />
-						<div>Profile</div></a
+						<div>File</div></a
 					>
 				{:else}
 					<a href="/citizens/import/{data.release}-{data.edition}"
 						><i class="btn bi bi-person-badge" />
-						<div>Profile</div></a
+						<div>File</div></a
 					>
 				{/if}
 			</Button>

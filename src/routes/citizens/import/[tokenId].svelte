@@ -4,8 +4,8 @@
 
 <script>
 	import { page } from '$app/stores';
-	import ImportToken from '$lib/Characters/ImportToken.svelte';
-	import CharacterMenu from '$lib/Characters/CharacterMenu.svelte';
+	import ImportToken from '$lib/Characters/ImportCharacter.svelte';
+	import CharacterMenu from '$lib/Characters/Components/CharacterMenu.svelte';
 	import ContentPane from '$lib/Components/ContentPane.svelte';
 	import Menu from '$lib/Components/Menu/Menu.svelte';
 	import Shell from '$lib/Shell.svelte';

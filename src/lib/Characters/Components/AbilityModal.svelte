@@ -28,7 +28,7 @@
 </ModalShell>
 
 <script lang="ts">
-	import ModalShell from '../ModalShell.svelte';
+	import ModalShell from '../../ModalShell.svelte';
 	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
 	import markdownit from 'markdown-it';
 

@@ -12,7 +12,7 @@
 	import ContentPane from '$lib/Components/ContentPane.svelte';
 	import { onMount } from 'svelte';
 	import { connect, loggedIn, contract, getSporos, signMessage, sessionToken } from '$lib/ChainStore';
-	import Character from '$lib/Characters/Character.svelte';
+	import Character from '$lib/Characters/Tabs/Character.svelte';
 	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
 	import TokenViewModal from '$lib/Tokens/TokenViewModal.svelte';
 	import { openModal } from 'svelte-modals';
@@ -136,7 +136,7 @@
 		</div>
 	</ContentPane>
 	<Menu slot="menu" columns={3}>
-		<div slot="menu-toolbar">
+		<div class="fade-in" slot="menu-toolbar">
 			{#if $connected && $signerAddress}
 				<TextContainer>
 					<small>Profile: {$signerAddress}</small>
@@ -156,22 +156,28 @@
 						{/await}
 					</div>
 				</TextContainer>
+				{#if $myCollection.length == 0}
+				<div class="fade-in" style="margin-top: 1rem;">
+					<LoadingIndicator>Extracting Sporo's data...</LoadingIndicator>
+				</div>
+					
+				{/if}
 			{:else}
 				<MenuItem on:click={connect}>Connect</MenuItem>
 			{/if}
 		</div>
 		{#if $connected && $signerAddress}
 			{#each $myCollection as sporo}
-				<MenuItem on:click={() => showToken(sporo)} classes="console-menu-item">
+				<MenuItem on:click={() => showToken(sporo)} classes="console-menu-item fade-in">
 					<div class="menu-item-grid">
 						<div class="name-column">{sporo.name}</div>
 						<div class="id-column"><small> {sporo.release}-{sporo.edition}</small></div>
 						<div class="image-column"><Thumbnail title="thumbnail" imageUrl={sporo.thumbnail_uri} height="4rem" /></div>
 						<div class="toolbar-column">
 							{#if sporo.hasCharacter}
-								<i class="bi bi-file-person" title="Has citizen profile in the archives" />
+								<i class="bi bi-file-person text-primary" title="Has citizen file in the archives" />
 							{:else}
-								<i class="bi bi-file" title="Citizen profile not found in the archives" />
+								<i class="bi bi-file text-highlight" title="Citizen file not found in the archives" />
 							{/if}
 						</div>
 					</div>

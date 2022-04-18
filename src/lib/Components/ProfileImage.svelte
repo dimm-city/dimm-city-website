@@ -4,7 +4,7 @@
 
 	export let character: Character;
 	$: imageUrl =
-		character.thumbnailImage || (character.token ? character.token.thumbnail_uri : '/assets/missing-image.png');
+		character.thumbnailImage || character.imageUrl || (character.token ? character.token.thumbnail_uri : '/assets/missing-image.png');
 </script>
 
 <Image {imageUrl} title={character.name} />

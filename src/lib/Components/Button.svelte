@@ -1,9 +1,9 @@
 <script>
 	export let border = '';
 	export let shape = 'default';
-	export let title = "";
-	export let url ="";
-	export let height = "auto";
+	export let title = '';
+	export let url = '';
+	export let height = 'auto';
 </script>
 
 <style>
@@ -63,6 +63,20 @@
 		justify-content: center;
 		align-items: center;
 	}
+
+	@media (max-width: 500px) {
+		.aug-button{
+			padding: 0.25rem .5rem;
+		}
+	}
 </style>
 
-<a href="{url}" data-augmented-ui class="aug-button {shape}" style="--aug-border-bg: {border}; height: {height};" on:click alt="{title}" title="{title}"><slot /></a>
+<a
+	href={url}
+	data-augmented-ui
+	class="aug-button {shape}"
+	style="--aug-border-bg: {border}; height: {height};"
+	on:click
+	alt={title}
+	{title}><slot /></a
+>

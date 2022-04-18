@@ -25,7 +25,7 @@ export const contract: Readable<ContractContext> = derived(
 	}
 );
 
-chainId.subscribe((c) => contractConfig.set(config.releases.s1r1.networks.find((n) => n.chainId === c)));
+chainId.subscribe((c) => contractConfig.set(config.releases.dcs1r1.networks.find((n) => n.chainId === c)));
 
 const profile = writable<string>(getSessionValue('profile') ?? null);
 profile.subscribe((value) => setSessionValue('profile', value));

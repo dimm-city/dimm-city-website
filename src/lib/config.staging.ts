@@ -1,9 +1,10 @@
 export const config = {
 	version: '0.2.0',
 	graphUrl: 'https://data.dimm.city/graphql',
+	apiBaseUrl: 'https://data.dimm.city/api',
 	baseUrl: 'azure',
 	releases: {
-		s1r1: {
+		dcs1r1: {
 			name: 'Sporo Rabbits',
 			maxTokens: 10,
 			networks: [
