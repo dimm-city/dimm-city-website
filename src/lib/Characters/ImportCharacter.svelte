@@ -9,7 +9,7 @@
 	import Button from '$lib/Components/Button.svelte';
 	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
 	import { connect, loggedIn, sessionToken } from '$lib/ChainStore';
-
+	import { config } from '$lib/config';
 	export let tokenId;
 
 	let isSaving = false;
@@ -38,7 +38,7 @@
 		// importData.specialties = character.specialties.map(r => r.id);
 
 		window
-			.fetch('http://localhost:1337/api/sporos/import/' + token.release + '/' + token.edition, {
+			.fetch(config.apiBaseUrl + '/sporos/import/' + token.release + '/' + token.edition, {
 				method: 'POST',
 				headers: {
 					authorization: $sessionToken,
