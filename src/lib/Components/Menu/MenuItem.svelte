@@ -4,29 +4,33 @@
 	export let url = '#';
 	export let description = '';
 	export let disabled = false;
-	export let classes = "";
+	export let classes = '';
 </script>
+
 <style>
 	.menu-item i {
 		margin-right: 0.5rem;
 	}
 </style>
-{#if disabled}
-	<div class="fade-zoom-in" {disabled}>
-		<div class="menu-item" data-augmented-ui class:disabled>
-			<slot>
-				<p><i class={icon} />{title}</p>
-				<small>{description}</small>
-			</slot>
+
+<div on:mouseenter on:mouseleave>
+	{#if disabled}
+		<div class="fade-zoom-in" {disabled}>
+			<div class="menu-item" data-augmented-ui class:disabled>
+				<slot>
+					<p><i class={icon} />{title}</p>
+					<small>{description}</small>
+				</slot>
+			</div>
 		</div>
-	</div>
-{:else}
-	<a href={url} on:click class="fade-zoom-in" {disabled}>
-		<div class="menu-item {classes}" data-augmented-ui class:disabled>
-			<slot>
-				<p><i class={icon} />{title}</p>
-				<small>{description}</small>
-			</slot>
-		</div>
-	</a>
-{/if}
+	{:else}
+		<a href={url} on:click class="fade-zoom-in" {disabled}>
+			<div class="menu-item {classes}" data-augmented-ui class:disabled>
+				<slot>
+					<p><i class={icon} />{title}</p>
+					<small>{description}</small>
+				</slot>
+			</div>
+		</a>
+	{/if}
+</div>

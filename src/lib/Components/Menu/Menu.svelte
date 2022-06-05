@@ -5,7 +5,7 @@
 
 <style>
 	.menu {
-		margin-bottom: 5rem;
+		/* margin-bottom: 5rem; */
 		overflow-y: hidden;
 		width: 100%;
 		scrollbar-color: var(--third-accent) var(--secondary-accent);

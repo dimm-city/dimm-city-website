@@ -1,3 +1,6 @@
+<script lang="ts">
+	export let text = "";
+</script>
 <style>
 	.text-container {
         color: var(--light);
@@ -24,4 +27,4 @@
 	}
 </style>
 
-<div class="text-container" data-augmented-ui><slot /></div>
+<div class="text-container" data-augmented-ui><slot>{text}</slot></div>
