@@ -127,7 +127,9 @@ export async function getSporos(): Promise<any> {
 	for (let index = 0; index < number; index++) {
 		const sporo = await get(contract).tokenOfOwnerByIndex(address, index);
 		const tokenId = sporo.toNumber();
-		tasks.push(await downloadSporo(tokenId));
+		const data = await downloadSporo(tokenId);
+		//if (data && data.id > -1) 
+		tasks.push(data);
 	}
 
 	return Promise.all(tasks).then((sporos) => sporos);

@@ -49,7 +49,13 @@
 			.then(async (res) => {
 				const { data, errors } = await res.json();
 				if (res.ok) {
-					console.log('saved', data);
+					console.log('saved');
+					
+					token.name = character.name;
+					token.description = character.vibe;
+					token.hasCharacter = true;
+					$myCollection = [token, ...$myCollection.filter((s) => s.release + '-' + s.edition != tokenId)];
+
 					nextStep();
 				} else {
 					//TODO: display error
@@ -153,6 +159,7 @@
 	<StepWizard.Step num={4} let:nextStep let:previousStep>
 		<div class="step-container fade-in">
 			<div><h2>Profile Submitted</h2></div>
+			<Button on:click={()=> window.document.location.href = "/console"}>Return to Op Console</Button>
 			<div class="button-row">
 				<Button on:click={previousStep}>Go Back</Button>
 				<!-- <Button on:click={() => createCharacter(nextStep)}>Create your character</Button> -->
