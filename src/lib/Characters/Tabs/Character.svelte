@@ -164,7 +164,7 @@
 	<div class="title-container">
 		<div>
 			<h1>{character.name ?? 'Loading...'}</h1>
-			<h5>Citizen Dossier</h5>
+			<h5>Citizen File</h5>
 		</div>
 	</div>
 

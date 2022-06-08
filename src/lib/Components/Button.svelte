@@ -3,7 +3,7 @@
 	export let shape = 'default';
 	export let title = '';
 	export let url = '';
-	export let height = 'auto';
+	export let height = 'max-content';
 </script>
 
 <style>

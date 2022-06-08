@@ -99,13 +99,13 @@
 			<div>Pronouns:</div>
 			<div><Input bind:value={character.pronouns} disabled={readonly} /></div>
 			<div>Age</div>
-			<div><Input type="number" required min="1" max="200" bind:value={character.age} disabled={readonly} /></div>
+			<div><Input type="number" required min="1" max="200" bind:value={character.age} disabled={readonly} placeholder="21" /></div>
 			<div>Height (m)</div>
 			<div>
-				<Input bind:value={character.height} required type="number" step="0.5" min="0" max="100" disabled={readonly} />
+				<Input bind:value={character.height} required type="number" step="0.5" min="0" max="100" disabled={readonly} placeholder="1.1"/>
 			</div>
 			<div>Weight (kg)</div>
-			<div><Input type="number" required min="0" max="100" bind:value={character.weight} disabled={readonly} /></div>
+			<div><Input type="number" required min="0" max="100" bind:value={character.weight} disabled={readonly}  placeholder="2.2"/></div>
 			<div>Eyes:</div>
 			<div><Input bind:value={character.eyes} disabled={true} /></div>
 			<div>Skin:</div>

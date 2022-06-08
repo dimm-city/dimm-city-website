@@ -4,7 +4,7 @@
 
 <script>
 	import { page } from '$app/stores';
-	import ImportToken from '$lib/Characters/ImportCharacter.svelte';
+	import ImportCharacter from '$lib/Characters/ImportCharacter.svelte';
 	import CharacterMenu from '$lib/Characters/Components/CharacterMenu.svelte';
 	import ContentPane from '$lib/Components/ContentPane.svelte';
 	import Menu from '$lib/Components/Menu/Menu.svelte';
@@ -17,7 +17,7 @@
 
 <Shell title="Citizens" fullscreen={true}>
 	<ContentPane>
-		<ImportToken {tokenId} />
+		<ImportCharacter {tokenId} />
 	</ContentPane>
 	<Menu slot="menu">
 		<CharacterMenu on:character.selected={(t) => (tokenId = t.detail)} />

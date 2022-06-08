@@ -1,6 +1,6 @@
 export const getCharactersQuery = `
 query {
-    characters{
+    characters(pagination: { page: 1, pageSize: 100 }){
      data{
        id
        attributes{

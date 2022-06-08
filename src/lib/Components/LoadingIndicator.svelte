@@ -5,7 +5,7 @@
 		width: 100%;
 		cursor: none;
 		padding: 1rem;
-		min-height: 20%;
+		min-height: max-content;
 		font-size: 2.5vh;
 		color: white;
 		overflow: hidden;

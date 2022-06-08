@@ -50,7 +50,7 @@
 				const { data, errors } = await res.json();
 				if (res.ok) {
 					console.log('saved');
-					
+
 					token.name = character.name;
 					token.description = character.vibe;
 					token.hasCharacter = true;
@@ -79,7 +79,7 @@
 		padding: 1rem 0;
 	}
 	.step-container div:nth-child(1) {
-		min-height: 70vh;
+		min-height: max-content;
 		height: 100%;
 		width: 100%;
 		justify-content: space-between;
@@ -88,6 +88,9 @@
 	.button-row {
 		display: flex;
 		justify-content: space-between;
+	}
+	.step-container div:nth-child(1) .centered-container{
+		height: fit-content;
 	}
 </style>
 
@@ -136,7 +139,7 @@
 	<StepWizard.Step num={3} let:previousStep let:nextStep>
 		<div class="step-container fade-in">
 			<div class="centered-container h-100">
-				<div>
+				<div class="">
 					<h2>Profile Complete</h2>
 					<p>
 						You have completed {character.name}'s profile.
@@ -158,8 +161,10 @@
 	</StepWizard.Step>
 	<StepWizard.Step num={4} let:nextStep let:previousStep>
 		<div class="step-container fade-in">
-			<div><h2>Profile Submitted</h2></div>
-			<Button on:click={()=> window.document.location.href = "/console"}>Return to Op Console</Button>
+			<div>
+				<h2>Profile Submitted</h2>
+				<Button on:click={() => (window.document.location.href = '/console')}>Return to Op Console</Button>
+			</div>
 			<div class="button-row">
 				<Button on:click={previousStep}>Go Back</Button>
 				<!-- <Button on:click={() => createCharacter(nextStep)}>Create your character</Button> -->
