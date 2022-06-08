@@ -14,7 +14,7 @@
 
 	<MenuItem icon="bi bi-journals" title="Historical Records" url="/history" description="History of Dimm City" />
 
-	<MenuItem url="/console/man" icon="bi-info-circle" title="Op Manual" description="Operator's Console Manual" />
+	<!-- <MenuItem url="/console/man" icon="bi-info-circle" title="Op Manual" description="Operator's Console Manual" /> -->
 	<MenuItem
 		url="/console/change-log"
 		icon="bi-journal-check"
