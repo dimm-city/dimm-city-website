@@ -25,11 +25,16 @@
 					const json = await response.json();
 					console.log('characters', json);
 
-					return json.data.characters.data.map((c) => {
-						let x = { ...c.attributes };
-						x.id = c.id;
-						return x;
-					});
+					return json.data.characters.data
+						.map((c) => {
+							let x = { ...c.attributes };
+							x.id = c.id;
+							return x;
+						})
+						.sort((a, b) => {
+							if (a.name > b.name) return 1;
+							else return -1;
+						});
 				}
 				return {};
 			})
@@ -47,7 +52,10 @@
 		query = new Promise(async (resolve) => {
 			if ($characters?.length < 1) {
 				let data = await loadCharacters();
-				$characters = data;
+				$characters = data.sort((a, b) => {
+					if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+					else return -1;
+				});
 				resolve(data);
 			} else resolve($characters);
 		});
@@ -72,6 +80,11 @@
 	.toolbar a:active {
 		color: var(--primary-accent);
 		transition: color 500ms ease-in-out;
+	}
+
+	.item-container{
+		margin-bottom: 5em;
+		width: 100%;
 	}
 </style>
 
@@ -110,6 +123,7 @@
 				</div>
 			</MenuItem>
 		{/each}
+		<div class="item-container">&nbsp;</div>
 	{/if}
 {:catch e}
 	<div>{e}</div>
