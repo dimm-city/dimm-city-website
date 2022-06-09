@@ -1,0 +1,121 @@
+<script>
+	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
+	import MenuItem from '$lib/Components/Menu/MenuItem.svelte';
+	import { districts } from '$lib/ShellStore';
+	import { createEventDispatcher, onMount } from 'svelte';
+	import { getDistricts } from '../queries/getDistricts';
+	import { config } from '../config';
+
+	const dispatcher = createEventDispatcher();
+
+	function loadCharacters() {
+		$districts = [];
+		return fetch(config.graphUrl, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Accept: 'application/json'
+			},
+			body: JSON.stringify({
+				query: getDistricts
+			})
+		})
+			.then(async (response) => {
+				if (response.ok) {
+					const json = await response.json();
+					console.log('districts', json);
+
+					return json.data.districts.data
+						.map((c) => {
+							let x = { ...c.attributes };
+							x.id = c.id;
+							return x;
+						})
+						.sort((a, b) => {
+							if (a.name > b.name) return 1;
+							else return -1;
+						});
+				}
+				return {};
+			})
+			.catch((reason) => {
+				console.log('districts failed', reason);
+			});
+	}
+	// let query = new Promise((resolve) =>
+	// 	setTimeout(async () => {
+	// 		loadCharacters().then((d) => resolve(d));
+	// 	}, 2000)
+	// );
+	let query;
+	onMount(() => {
+		query = new Promise(async (resolve) => {
+			if ($districts?.length < 1) {
+				let data = await getDistricts();
+				$districts = data.sort((a, b) => {
+					if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+					else return -1;
+				});
+				resolve(data);
+			} else resolve($districts);
+		});
+	});
+	
+</script>
+
+<style>
+	.toolbar {
+		position: absolute;
+		bottom: 1rem;
+		right: 1rem;
+	}
+	.toolbar a,
+	.toolbar a:visited {
+		color: var(--third-accent);
+		transition: color 500ms ease-in-out;
+	}
+	.toolbar a:hover,
+	.toolbar a:active {
+		color: var(--primary-accent);
+		transition: color 500ms ease-in-out;
+	}
+
+	.item-container{
+		margin-bottom: 5em;
+		width: 100%;
+	}
+</style>
+
+{#await query}
+	<LoadingIndicator>
+		<div>Loading location data...</div>
+	</LoadingIndicator>
+{:then}
+	{#if $districts != null}
+		{#each $districts as district}
+			<MenuItem url="/locations/{district.slug}">
+				<p><i class="bi bi-person text-light" />{district.name}</p>
+				<small>
+					{#if district.description}
+						<div></div>
+					{:else}
+						<div>Unknown specialties</div>
+					{/if}
+				</small>
+
+				<div class="toolbar">
+					<!-- <a
+						target="_blank"
+						on:click|stopPropagation={() => true}
+						href="/citizens/print/{character.attributes.tokenId}"
+					>
+						<i class="bi bi-printer" />
+					</a> -->
+				</div>
+			</MenuItem>
+		{/each}
+		<div class="item-container">&nbsp;</div>
+	{/if}
+{:catch e}
+	<div>{e}</div>
+{/await}
