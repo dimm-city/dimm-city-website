@@ -1,17 +1,22 @@
-<div data-augmented-ui class="aug-button" on:click><slot /></div>
+<script>
+	export let border = '';
+	export let shape = 'default';
+	export let title = '';
+	export let url = '';
+	export let height = 'max-content';
+</script>
+
 <style>
 	.aug-button {
-        display: inline-block;
-		height: fit-content;
-        width: max-content;
+		display: inline-block;
 		cursor: pointer;
-		padding: 0.5rem 1rem;        
-		min-height: 20%;
+		padding: 0.5rem 0.75rem;
 		color: white;
 		overflow: hidden;
 		opacity: 0.75;
 		text-shadow: 0 0 0.25vh black, 0 0 0.25vh black;
 		transition: all var(--quick-in);
+		text-transform: uppercase;
 
 		--aug-clip-tl1: initial;
 		--aug-clip-tr1: initial;
@@ -32,10 +37,12 @@
 		--aug-inlay-bg: #ffffff1e;
 		background-color: transparent;
 	}
+
 	.aug-button:hover,
 	.aug-button:focus {
 		background-color: #ffffff1e;
 		opacity: 1;
+		color: var(--third-accent);
 		--aug-border-bg: radial-gradient(circle at top left, var(--third-accent) 40px, transparent 50px),
 			radial-gradient(circle at top right, var(--primary-accent) 20px, transparent 30px),
 			radial-gradient(circle at bottom right, var(--third-accent) 40px, transparent 50px),
@@ -45,4 +52,31 @@
 	:global(.aug-button small) {
 		font-size: 0.7em;
 	}
+
+	.square {
+		--aug-tl1: 0.5rem;
+		--aug-tr1: 0.5rem;
+		--aug-br1: 0.5rem;
+		--aug-bl1: 0.5rem;
+		aspect-ratio: 1/1;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	@media (max-width: 500px) {
+		.aug-button{
+			padding: 0.25rem .5rem;
+		}
+	}
 </style>
+
+<a
+	href={url}
+	data-augmented-ui
+	class="aug-button {shape}"
+	style="--aug-border-bg: {border}; height: {height};"
+	on:click
+	alt={title}
+	{title}><slot /></a
+>

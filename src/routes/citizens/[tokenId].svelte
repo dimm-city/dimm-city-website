@@ -4,22 +4,9 @@
 
 <script>
 	import { page } from '$app/stores';
-	import Character from '$lib/Characters/Character.svelte';
-	import CharacterMenu from '$lib/Characters/CharacterMenu.svelte';
-	import ContentPane from '$lib/Components/ContentPane.svelte';
-	import Menu from '$lib/Components/Menu/Menu.svelte';
-	import Shell from '$lib/Shell.svelte';
-	import { showMenu } from '$lib/ShellStore';
+	import ViewCharacter from '$lib/Characters/ViewCharacter.svelte';
 
-	$showMenu = false;
 	let tokenId = $page.params.tokenId;
 </script>
 
-<Shell title="Citizens">
-	<ContentPane>
-		<Character {tokenId} />
-	</ContentPane>
-	<Menu slot="menu">
-		<CharacterMenu on:character.selected={(t) => (tokenId = t.detail)} />
-	</Menu>
-</Shell>
+<ViewCharacter {tokenId} />

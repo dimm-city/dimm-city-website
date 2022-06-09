@@ -13,10 +13,13 @@
 	font-weight: 400;
 	font-display: swap;
 	src: url('/assets/dimm-city.woff2') format('woff2');
-	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-  }
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC,
+		U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 * {
 	box-sizing: border-box;
+	scrollbar-color: var(--third-accent) var(--secondary-accent);
+	scrollbar-width: thin;
 }
 
 html,
@@ -34,17 +37,19 @@ html {
 }
 a {
 	text-decoration: none;
-	color: var(--text-color);
+	color: var(--primary-accent);
 	transition: all var(--transition-in-time) ease;
 }
 a:hover,
 a:active {
+	color: var(--third-accent);
 	/* text-shadow: 1px 1px var(--secondary-accent); */
 	transition: all var(--transition-in-time) ease;
 }
 
+/* https://css-tricks.com/custom-scrollbars-in-webkit/ */
 *::-webkit-scrollbar {
-	width: 0.3rem; /* width of the entire scrollbar */
+	width: 0.2rem; /* width of the entire scrollbar */
 }
 
 *::-webkit-scrollbar-track {
@@ -52,164 +57,57 @@ a:active {
 }
 
 *::-webkit-scrollbar-thumb {
-	background-color: var(--primary-accent); /* color of the scroll thumb */
-	border-radius: 0.1rem; /* roundness of the scroll thumb */
+	/* background-color: var(--fourth-accent); color of the scroll thumb */
+
+	background-color: linear-gradient(
+		90deg,
+		rgba(0, 0, 0, 0) 0%,
+		var(--fourth-accent) 29%,
+		var(--fourth-accent) 65%,
+		rgba(0, 0, 0, 0) 100%
+	);
+	border-radius: 1rem; /* roundness of the scroll thumb */
 	border: 1px solid var(--fourth-accent); /* creates padding around scroll thumb */
 }
 
-.vertical-acordion {
-	position: absolute;
-	left: 50%;
-	width: 90vw;
-	max-width: calc(90vh / 9 * 16);
-	top: 0;
-	bottom: 0;
-	transform: translateX(-50%);
+ul.unstyled-list {
+	list-style: none;
+	padding-left: 0;
+}
+ul.unstyled-list li {
+	padding-bottom: 0.5rem;
 }
 
-.accordion-divider {
-	--ds: drop-shadow(0 0 2vh var(--blue));
-	filter: var(--ds) var(--ds);
+.text-primary {
+	color: var(--primary-accent) !important;
+}
+.text-secondary {
+	color: var(--secondary-accent) !important;
+}
+.text-highlight {
+	color: var(--third-accent) !important;
 }
 
-.accordion-divider,
-.acordion-divider-decoration {
-	height: calc(10vh - 16px);
-	position: absolute;
-	bottom: 0;
-	width: 100%;
-}
-.acordion-divider-decoration {
-	background: rgb(17 17 17 / 0.75);
-	--aug-tl1: 2vh;
-	--aug-tr1: 2vh;
-	--aug-t1: 1vh;
-	--aug-t2: 1vh;
-	--aug-t-extend1: (80% - 10vh);
-	--aug-b1: 0px;
-	--aug-b2: 0px;
-	--aug-b-extend1: (80% - 10vh);
-	--aug-l1: 2vh;
-	--aug-l2: 2vh;
-	--aug-r1: 2vh;
-	--aug-r2: 2vh;
-	--aug-border: initial;
-	--aug-border-bg: var(--pink);
-	--aug-border-all: 0.5vh;
-	--aug-border-bottom: 0px;
-	--aug-bl1: 0px;
-	--aug-br1: 0px;
-}
-
-.acordion-divider-decoration,
-.acordion-divider-decoration::before,
-.acordion-divider-decoration::after {
-	transition: clip-path var(--easing);
-}
-
-.bottom .acordion-divider-decoration {
-	--aug-t1: 0px;
-	--aug-t2: 0px;
-	--aug-border-top: 0px;
-	--aug-border-bottom: 0.5vh;
-	--aug-b1: 1vh;
-	--aug-b2: 1vh;
-	--aug-bl1: 2vh;
-	--aug-br1: 2vh;
-	--aug-tl1: 0px;
-	--aug-tr1: 0px;
-}
-.accordion-divider .global-toolbar {
+.centered-container {
 	display: flex;
-	justify-content: space-between;
-}
-
-.accordion-divider button,
-.accordion-divider a {
-	cursor: pointer;
-	border: none;
-	background: var(--pink);
-	/* transform: translate(0, -30%) rotateZ(0deg); */
-	--aug-border-all: 0.2vh;
-	--aug-border-bg: var(--blue);
-	--aug-all-width: 5vh;
-	transition: transform var(--easing);
-}
-.accordion-divider .global-toolbar a {
-	display: flex;
+	justify-content: center !important;
 	align-items: center;
-	justify-content: center;
-}
-
-.bottom .accordion-divider .global-toolbar a {
-	transform: translate(0, 0%) rotateZ(360deg);
-}
-
-.accordion-divider .global-toolbar button.btn-menu {
-	transform: translate(0, 0%) rotateZ(360deg);
-}
-.bottom .accordion-divider .global-toolbar button.btn-menu {
-	transform: translate(0, 100%) rotateZ(180deg);
-}
-
-.version {
-	color: var(--third-accent);
-	position: absolute;
-	bottom: 0em;
-	padding-right: 1rem;
 	width: 100%;
-	display: flex;
-	justify-content: end;
-	transition: all var(--transition-in-time);
-	font-size: 0.75rem;
 }
 
-.bottom .version {
-	bottom: 0.3em;
-	padding-right: 1.2rem;
-}
-.global-toolbar i {
-	margin: 0;
-	font-size: 1.5rem;
-	color: var(--light);
+.h-100 {
+	height: 100%;
 }
 
-.content-toolbar-container {
-	/* background: var(--menu-inlay-bg-color); */
-	width: 100%;
-	position: absolute;
-	padding: 0 1.5rem;
-	margin-bottom: -2rem;
-	top: 2.5rem;
+.padding-0 {
+	padding: 0 !important;
 }
-.content-toolbar-container > .toolbar > div {
-	display: flex;
-	justify-content: space-between;
+.padding-1 {
+	padding: 1rem !important;
 }
-.accordion-divider {
-	transition: bottom var(--easing), transform var(--easing);
+.padding-2 {
+	padding: 2rem !important;
 }
-.bottom .accordion-divider {
-	bottom: 100%;
-	transform: translateY(100%);
-}
-
-.top-panel {
-	transition: margin-top var(--easing);
-	overflow: hidden;
-}
-.bottom .top-panel {
-	margin-top: -100vh;
-}
-
-.bottom-panel {
-	height: 85vh;
-	position: absolute;
-	width: 100%;
-	top: 115vh;
-	transition: top var(--easing);
-}
-
-.bottom .bottom-panel {
-	top: 15vh;
+.padding-3 {
+	padding: 3rem !important;
 }

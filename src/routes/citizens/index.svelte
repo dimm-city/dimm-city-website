@@ -4,7 +4,7 @@
 	import MenuItem from '$lib/Components/Menu/MenuItem.svelte';
 	import { showMenu } from '$lib/ShellStore';
 	import ContentPane from '$lib/Components/ContentPane.svelte';
-	import CharacterMenu from '$lib/Characters/CharacterMenu.svelte';
+	import CharacterMenu from '$lib/Characters/Components/CharacterMenu.svelte';
 	$showMenu = true;
 </script>
 

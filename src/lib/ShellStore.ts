@@ -1,20 +1,23 @@
-import { writable, derived } from 'svelte/store';
-import { signerAddress, connected } from 'svelte-ethers-store';
+import { writable } from 'svelte/store';
+import type { ISummaryItem } from './Characters/Character';
+import { getLocalValue, getSessionValue, setLocalValue, setSessionValue } from './StoreUtils';
 
 export const menuItems = writable([]);
 export const showMenu = writable(true);
 
-export const modalComponent = writable(null);
-//export const showModal = derived(modalComponent, ($comp) => $comp != null);
-export const showModal = writable(false);
-export const showModalFullscreen = writable(false);
+export const myCollection = writable(getSessionValue('collection') ?? []);
+myCollection.subscribe((value) => setSessionValue('collection', value));
 
-export const loggedIn = derived(
-	[connected, signerAddress],
-	([$connected, $signerAddress], set) => set($connected && $signerAddress > ''),
-	false
-);
+export const specialties = writable(getSessionValue('specialties') ?? []);
+specialties.subscribe((value) => setSessionValue('specialties', value));
 
-export const myCollection = writable([]);
+export const characters = writable(getLocalValue('characters') ?? []);
+characters.subscribe((value) => setLocalValue('characters', value, getExpiryTime()));
 
-export const characters = writable([]);
+export const districts = writable<ISummaryItem[]>(getLocalValue('districts') ?? []);
+districts.subscribe((value) => setLocalValue('districts', value, getExpiryTime()));
+function getExpiryTime(): number {
+    return new Date(new Date().getTime() + 60 * 1000).getTime();
+}
+
+

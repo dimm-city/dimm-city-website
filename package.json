@@ -1,9 +1,13 @@
 {
   "name": "dimm.city",
-  "version": "0.1.0",
+  "version": "0.2.0",
+  "engines": {
+    "npm": ">=7.0.0",
+    "node": ">=16.7.0"
+  },
   "scripts": {
     "start": "swa start",
-    "dev": "svelte-kit dev --host",
+    "dev": "svelte-kit dev --host --https",
     "build": "svelte-kit build",
     "package": "svelte-kit package",
     "preview": "svelte-kit preview",
@@ -32,6 +36,7 @@
     "svelte-check": "^2.2.6",
     "svelte-ethers-store": "^2.1.0",
     "svelte-preprocess": "^4.10.1",
+    "svelte-step-wizard": "^0.0.2",
     "tslib": "^2.3.1",
     "typescript": "~4.6.2",
     "web3modal": "^1.9.5"

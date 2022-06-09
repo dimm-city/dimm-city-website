@@ -13,11 +13,10 @@ export async function getStories() {
 			icon: 'bi bi-cpu-fill'
 		},
 		{
-			slug: '',
+			slug: 'prologue-scene-2',
 			title: 'Prologue - Scene 2',
-			description: 'generating...',
-			icon: 'bi bi-terminal',
-			disabled: true
+			description: 'In the beginning...',
+			icon: 'bi bi-house'
 		},
 		{
 			slug: '',

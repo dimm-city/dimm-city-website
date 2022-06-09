@@ -6,7 +6,7 @@
 	const toggleMenu = () => showMainMenuButton && (showMainMenu = !showMainMenu);
 </script>
 
-<div class="menu-container slide-in-up">
+<div class="menu-container animate__animated animate__fadeInUpBig">
 	<div class="menu-toolbar" />
 	<div class="left-header" data-augmented-ui="tl-clip l-clip">
 		{header}

@@ -12,7 +12,7 @@
 </script>
 
 <Shell title="History">
-	<ContentPane padding={0}>
+	<ContentPane padding={0} scrollable={false}>
 		<StoryViewer story={defaultStory} bind:this={viewer} />
 	</ContentPane>
 	<StoryMenu slot="menu" {viewer} />

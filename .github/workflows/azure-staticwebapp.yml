@@ -19,7 +19,7 @@ on:
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
-      - main
+      - main    
 
 # Environment variables available to all jobs and steps in this workflow
 env:
@@ -36,6 +36,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
+          fetch-depth: 1
           submodules: true
       - name: Build And Deploy
         id: builddeploy
