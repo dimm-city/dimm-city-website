@@ -43,7 +43,7 @@
 	}
 </style>
 
-<div
+<div on:click
 	class="m-3 p-4 d-flex image-wrapper text-primary"
 	data-augmented-ui="tl-clip t-clip-x tr-clip-y br-clip b-rect bl-clip l-scoop border"
 >

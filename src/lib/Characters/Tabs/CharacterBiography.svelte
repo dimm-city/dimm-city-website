@@ -2,6 +2,7 @@
 	import Input from '$lib/Components/Input.svelte';
 	import ProfileImage from '$lib/Components/ProfileImage.svelte';
 	import Textarea from '$lib/Components/Textarea.svelte';
+import TextContainer from '$lib/Components/TextContainer.svelte';
 	import { Character } from '../Character';
 	export let character: Character = new Character();
 	export let readonly = true;
@@ -120,7 +121,12 @@
 		</div>
 	</div>
 	<div class="description-area">
-		<div class="label">Tell us a bit about {character.name}'s backstory...</div>
-		<div><Textarea bind:value={character.backstory} disabled={readonly} /></div>
+		{#if readonly}
+			<div class="label">{character.name}'s backstory</div>
+			<TextContainer>{character.backstory > "" ? character.backstory : "404: Unable to locate file"}</TextContainer>
+		{:else}
+			<div class="label">Tell us a bit about {character.name}'s backstory...</div>
+			<Textarea bind:value={character.backstory} disabled={readonly} />
+		{/if}
 	</div>
 </div>

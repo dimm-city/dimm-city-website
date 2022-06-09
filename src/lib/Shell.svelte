@@ -3,7 +3,7 @@
 	import ContentPane from './Components/ContentPane.svelte';
 	import MainMenu from './Components/Menu/MainMenu.svelte';
 	import { Modals, closeModal, closeAllModals } from 'svelte-modals';
-	import { showMenu } from './ShellStore';
+	import { pageImage, showMenu } from './ShellStore';
 	import '../styles/main.css';
 	import '../styles/animations.css';
 	import 'animate.css';
@@ -56,6 +56,9 @@
 		transition: all var(--easing);
 		overflow: hidden;
 		padding-top: 1rem;
+		animation-duration: 500ms;
+		animation-delay: 300ms;
+		--animate-delay: 300ms;
 	}
 	.bottom .top-panel {
 		margin-top: -100vh;
@@ -132,6 +135,7 @@
 	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=false" />
 	<title>{title} - Dimm City</title>
 	<meta name="description" content="" />
+	<meta name="twitter:image" content="{$pageImage}" />
 	<link rel="icon" type="image/x-icon" href="/assets/icons/shroom256.png" />
 	<link rel="preload" as="font" href="/assets/dimm-city.woff2" type="font/woff2" crossorigin="anonymous" />
 	<slot name="head" />

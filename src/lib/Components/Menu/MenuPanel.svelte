@@ -11,7 +11,7 @@
 	<div class="left-header" data-augmented-ui="tl-clip l-clip">
 		{header}
 	</div>
-	<div class="right-header" class:active={showMainMenu} data-augmented-ui="tr-clip r-clip" on:click={toggleMenu}>
+	<div class="right-header" title="switch menu" class:active={showMainMenu} data-augmented-ui="tr-clip r-clip" on:click={toggleMenu}>
 		{#if showMainMenuButton}
 			<i class="bi bi-bezier2" />
 		{/if}

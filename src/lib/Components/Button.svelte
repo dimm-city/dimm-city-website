@@ -4,6 +4,7 @@
 	export let title = '';
 	export let url = '';
 	export let height = 'max-content';
+	export let target = null;
 </script>
 
 <style>
@@ -78,5 +79,6 @@
 	style="--aug-border-bg: {border}; height: {height};"
 	on:click
 	alt={title}
+	{target}
 	{title}><slot /></a
 >

@@ -151,11 +151,11 @@
 	/>
 	<div class="version"><small>v {config.version}</small></div>
 	<div class="global-toolbar">
-		<a href="/" data-augmented-ui="all-hex border"><i class="bi bi-motherboard" /></a>
+		<a href="/" data-augmented-ui="all-hex border"><i class="bi bi-motherboard" title="home screen"/></a>
 		{#if showMenuButton}
-			<button on:click={() => ($showMenu = !$showMenu)} data-augmented-ui="all-triangle-up border" class="btn-menu" />
+			<button title="toggle view" on:click={() => ($showMenu = !$showMenu)} data-augmented-ui="all-triangle-up border" class="btn-menu" />
 		{/if}
-		<a href="/console" data-augmented-ui="all-hex border">
+		<a href="/console" data-augmented-ui="all-hex border" title="op console">
 			{#if $loggedIn}
 				<i class="bi bi-person-workspace fade-in" />
 			{:else}

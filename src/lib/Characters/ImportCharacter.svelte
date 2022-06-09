@@ -89,7 +89,7 @@
 		display: flex;
 		justify-content: space-between;
 	}
-	.step-container div:nth-child(1) .centered-container{
+	.step-container div:nth-child(1) .centered-container {
 		height: fit-content;
 	}
 </style>
@@ -147,6 +147,12 @@
 					<p>
 						Click the <strong>complete</strong> button to save this data and submit it to the Dimm City Archive.
 					</p>
+
+					<p>
+						Please note that submitting this information to the Dimm City Archive will make it freely available to the
+						public. All information submitted to the archive will be considered to be available on the CC-BY license
+						unless otherwise stated. Contact the founders if you would like more information.
+					</p>
 					{#if isSaving}
 						<LoadingIndicator><div class="centered-container">compiling...</div></LoadingIndicator>
 					{/if}
@@ -163,10 +169,11 @@
 		<div class="step-container fade-in">
 			<div>
 				<h2>Profile Submitted</h2>
-				<Button on:click={() => (window.document.location.href = '/console')}>Return to Op Console</Button>
+				
 			</div>
 			<div class="button-row">
-				<Button on:click={previousStep}>Go Back</Button>
+				<Button url={'/citizens/' + token.release + '-' + token.edition}>View Citizen File</Button>
+				<Button url='/console'>Return to Op Console</Button>
 				<!-- <Button on:click={() => createCharacter(nextStep)}>Create your character</Button> -->
 			</div>
 		</div>

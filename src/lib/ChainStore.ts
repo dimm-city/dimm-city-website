@@ -138,7 +138,7 @@ export async function getSporos(): Promise<any> {
 export async function downloadSporo(tokenId: number): Promise<any> {
 	let json = {};
 	try {
-		const response = await fetch(`${get(contractConfig).metadataBaseUri}/${tokenId}`);
+		const response = await fetch(`${get(contractConfig).metadataBaseUri}/${tokenId}.json`);
 
 		if (response.ok) {
 			json = await response.json();

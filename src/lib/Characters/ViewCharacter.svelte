@@ -7,7 +7,7 @@
 	import CharacterMenu from '$lib/Characters/Components/CharacterMenu.svelte';
 	import Menu from '$lib/Components/Menu/Menu.svelte';
 	import Shell from '$lib/Shell.svelte';
-	import { characters, showMenu } from '$lib/ShellStore';
+	import { characters, pageImage, showMenu } from '$lib/ShellStore';
 	import Tab from '$lib/Components/Tab.svelte';
 	import CharacterStats from '$lib/Characters/Tabs/CharacterStats.svelte';
 	import { loadCharacter } from '$lib/queries/getCharacterBySlug';
@@ -18,6 +18,7 @@
 	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
 	import Button from '$lib/Components/Button.svelte';
 	import { canEdit } from '$lib/queries/updateCharacter';
+	import TwitterButton from '$lib/Components/TwitterButton.svelte';
 
 	$showMenu = false;
 	export let tokenId; // = $page.params.tokenId;
@@ -33,6 +34,7 @@
 			query = loadCharacter(tokenId).then((c) => {
 				character = c;
 				$characters = [c, ...$characters.filter((l) => l.id != c.id)];
+				$pageImage = character.thumbnailImage;
 			});
 		} else {
 			query = new Promise((resolve) => resolve());
@@ -56,15 +58,18 @@
 	<div slot="content-toolbar">
 		{#await query then}
 			<Toolbar>
-				<Button on:click={() => tabs.setTab('stats')} shape="square">
+				<Button on:click={() => tabs.setTab('stats')} shape="square" title="Citizen Stats">
 					<i class="btn bi bi-person-badge" />
 				</Button>
-				<Button on:click={() => tabs.setTab('story')} shape="square">
+				<Button on:click={() => tabs.setTab('story')} shape="square" title="Citizen Biography">
 					<i class="fade-in btn bi bi-book" />
 				</Button>
-				<Button on:click={() => tabs.setTab('sheet')} shape="square">
+				<!-- <Button on:click={() => tabs.setTab('sheet')} shape="square">
 					<i class="fade-in btn bi bi-gpu-card" />
-				</Button>
+				</Button> -->
+				<TwitterButton text="Check out this Dimm City citizen file" hashTags="Sporos,DimmCity" shape="square" title="Share citizen file">
+					<i class="fade-in btn bi bi-share" />
+				</TwitterButton>
 				{#if isEditable}
 					<Button url="/citizens/update/{character.tokenId}" shape="square" title="Edit citizen profile">
 						<i class="fade-in btn bi bi-device-ssd" />
