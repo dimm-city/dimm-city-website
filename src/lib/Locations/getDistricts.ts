@@ -1,4 +1,5 @@
-import type { ISummaryItem } from '$lib/Characters/Character';
+
+import type { ISummaryItem } from '$lib/ISummaryItem';
 import { config } from '../config';
 export const getDistrictsQuery = `
 query {

@@ -3,45 +3,45 @@
 	import MenuItem from '$lib/Components/Menu/MenuItem.svelte';
 	import { districts } from '$lib/ShellStore';
 	import { createEventDispatcher, onMount } from 'svelte';
-	import { getDistricts } from '../queries/getDistricts';
+	import { getDistricts } from './getDistricts';
 	import { config } from '../config';
 
 	const dispatcher = createEventDispatcher();
 
-	function loadCharacters() {
-		$districts = [];
-		return fetch(config.graphUrl, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				Accept: 'application/json'
-			},
-			body: JSON.stringify({
-				query: getDistricts
-			})
-		})
-			.then(async (response) => {
-				if (response.ok) {
-					const json = await response.json();
-					console.log('districts', json);
+	// function loadDistricts() {
+	// 	$districts = [];
+	// 	return fetch(config.graphUrl, {
+	// 		method: 'POST',
+	// 		headers: {
+	// 			'Content-Type': 'application/json',
+	// 			Accept: 'application/json'
+	// 		},
+	// 		body: JSON.stringify({
+	// 			query: getDistricts
+	// 		})
+	// 	})
+	// 		.then(async (response) => {
+	// 			if (response.ok) {
+	// 				const json = await response.json();
+	// 				console.log('districts', json);
 
-					return json.data.districts.data
-						.map((c) => {
-							let x = { ...c.attributes };
-							x.id = c.id;
-							return x;
-						})
-						.sort((a, b) => {
-							if (a.name > b.name) return 1;
-							else return -1;
-						});
-				}
-				return {};
-			})
-			.catch((reason) => {
-				console.log('districts failed', reason);
-			});
-	}
+	// 				return json.data.districts.data
+	// 					.map((c) => {
+	// 						let x = { ...c.attributes };
+	// 						x.id = c.id;
+	// 						return x;
+	// 					})
+	// 					.sort((a, b) => {
+	// 						if (a.name > b.name) return 1;
+	// 						else return -1;
+	// 					});
+	// 			}
+	// 			return {};
+	// 		})
+	// 		.catch((reason) => {
+	// 			console.log('districts failed', reason);
+	// 		});
+	// }
 	// let query = new Promise((resolve) =>
 	// 	setTimeout(async () => {
 	// 		loadCharacters().then((d) => resolve(d));
@@ -99,7 +99,7 @@
 					{#if district.description}
 						<div></div>
 					{:else}
-						<div>Unknown specialties</div>
+						<div>Unknown location</div>
 					{/if}
 				</small>
 

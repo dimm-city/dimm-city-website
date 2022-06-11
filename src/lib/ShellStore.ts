@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store';
-import type { ISummaryItem } from './Characters/Character';
+import type { ISummaryItem } from "./ISummaryItem";
 import { getLocalValue, getSessionValue, setLocalValue, setSessionValue } from './StoreUtils';
 
 export const menuItems = writable([]);

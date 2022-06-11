@@ -2,7 +2,7 @@
 	import { myCollection, districts } from '$lib/ShellStore';
 	import CharacterStats from './Tabs/CharacterStats.svelte';
 	import StepWizard from 'svelte-step-wizard';
-	import { Character, type ISummaryItem } from './Character';
+	import { Character } from './Character';
 	import CharacterBiography from './Tabs/CharacterBiography.svelte';
 	import SpecialtySelector from './Tabs/SpecialtySelector.svelte';
 	import LocationSelector from './Tabs/DistrictSelector.svelte';
@@ -10,6 +10,7 @@
 	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
 	import { connect, loggedIn, sessionToken } from '$lib/ChainStore';
 	import { config } from '$lib/config';
+	import type { ISummaryItem } from '$lib/ISummaryItem';
 	export let tokenId;
 
 	let isSaving = false;
@@ -169,11 +170,10 @@
 		<div class="step-container fade-in">
 			<div>
 				<h2>Profile Submitted</h2>
-				
 			</div>
 			<div class="button-row">
 				<Button url={'/citizens/' + token.release + '-' + token.edition}>View Citizen File</Button>
-				<Button url='/console'>Return to Op Console</Button>
+				<Button url="/console">Return to Op Console</Button>
 				<!-- <Button on:click={() => createCharacter(nextStep)}>Create your character</Button> -->
 			</div>
 		</div>

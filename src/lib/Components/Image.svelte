@@ -1,10 +1,17 @@
 <script lang="ts">
 	export let title;
 	export let imageUrl;
+	export let videoUrl = '';
+	export let aug = 'tl-clip t-clip-x tr-clip-y br-clip b-rect bl-clip l-scoop border';
+
+	function onVideoLoaded() {
+		console.log('video loaded');
+	}
 </script>
 
 <style>
-	img {
+	img,
+	video {
 		opacity: 0;
 		transition: all;
 		max-height: 100%;
@@ -13,7 +20,8 @@
 		transition-property: all;
 		transition-timing-function: ease-in-out;
 	}
-	img:hover {
+	img:hover,
+	video:hover {
 		transform: scale(1.3) translate(0, 1rem);
 	}
 
@@ -25,7 +33,7 @@
 		width: 300px;
 		/* background-image: url('/assets/missing-image.png'); */
 		background-color: var(--translucent-dark);
-		
+
 		background-size: contain;
 		background-position: center;
 
@@ -43,20 +51,14 @@
 	}
 </style>
 
-<div on:click
-	class="m-3 p-4 d-flex image-wrapper text-primary"
-	data-augmented-ui="tl-clip t-clip-x tr-clip-y br-clip b-rect bl-clip l-scoop border"
->
-	<!-- {#if animation_url > ""} -->
-	<!-- svelte-ignore a11y-media-has-caption -->
-	<!-- <video autoplay on:loadeddata={onVideoLoaded} class="fade-in">
-                <source src={$animation_url} type="video/mp4" />
-
-                Your browser does not support the video tag.
-            </video> -->
-	<!-- <p class:d-none={isVideoLoaded}>loading...</p>
-            {:else} -->
-
-	<img src={imageUrl} class="fade-in" alt={title} />
-	<!-- {/if} -->
+<div on:click class="m-3 p-4 d-flex image-wrapper text-primary" data-augmented-ui={aug}>
+	{#if videoUrl > ''}
+		<!-- svelte-ignore a11y-media-has-caption -->
+		<video autoplay on:loadeddata={onVideoLoaded} class="fade-in" loop>
+			<source src={videoUrl} type="video/mp4" />
+			Your browser does not support the video tag.
+		</video>
+	{:else}
+		<img src={imageUrl} class="fade-in" alt={title} />
+	{/if}
 </div>
