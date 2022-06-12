@@ -1,4 +1,5 @@
 <script lang="ts">
+	import './specialties.css';
 	import Shell from '$lib/Shell.svelte';
 	import { showMenu } from '$lib/ShellStore';
 	import ContentPane from '$lib/Components/ContentPane.svelte';
@@ -14,13 +15,17 @@
 	onMount(async () => {
 		specialty = await getSpecialty(slug);
 	});
+
+	$: if (slug > '') {
+		getSpecialty(slug).then((s) => (specialty = s));
+	}
 </script>
 
 <Shell title="Specialties">
 	<ContentPane padding={0} scrollable={true}>
-		<Article model={specialty} />
+		<Article model={specialty} imageAug={null} />
 	</ContentPane>
 	<Menu slot="menu">
-		<SpecialtyMenu />
+		<SpecialtyMenu bind:selectedItem={slug} />
 	</Menu>
 </Shell>

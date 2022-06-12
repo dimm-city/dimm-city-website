@@ -1,52 +1,11 @@
 <script>
 	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
 	import MenuItem from '$lib/Components/Menu/MenuItem.svelte';
-	import { districts } from '$lib/ShellStore';
+	import { districts, showMenu } from '$lib/ShellStore';
 	import { createEventDispatcher, onMount } from 'svelte';
 	import { getDistricts } from './getDistricts';
-	import { config } from '../config';
 
-	const dispatcher = createEventDispatcher();
-
-	// function loadDistricts() {
-	// 	$districts = [];
-	// 	return fetch(config.graphUrl, {
-	// 		method: 'POST',
-	// 		headers: {
-	// 			'Content-Type': 'application/json',
-	// 			Accept: 'application/json'
-	// 		},
-	// 		body: JSON.stringify({
-	// 			query: getDistricts
-	// 		})
-	// 	})
-	// 		.then(async (response) => {
-	// 			if (response.ok) {
-	// 				const json = await response.json();
-	// 				console.log('districts', json);
-
-	// 				return json.data.districts.data
-	// 					.map((c) => {
-	// 						let x = { ...c.attributes };
-	// 						x.id = c.id;
-	// 						return x;
-	// 					})
-	// 					.sort((a, b) => {
-	// 						if (a.name > b.name) return 1;
-	// 						else return -1;
-	// 					});
-	// 			}
-	// 			return {};
-	// 		})
-	// 		.catch((reason) => {
-	// 			console.log('districts failed', reason);
-	// 		});
-	// }
-	// let query = new Promise((resolve) =>
-	// 	setTimeout(async () => {
-	// 		loadCharacters().then((d) => resolve(d));
-	// 	}, 2000)
-	// );
+	export let selectedItem = '';
 	let query;
 	onMount(() => {
 		query = new Promise(async (resolve) => {
@@ -60,7 +19,11 @@
 			} else resolve($districts);
 		});
 	});
-	
+	function selectItem(item) {
+		selectedItem = item.slug;
+		$showMenu = false;
+		return true;
+	}
 </script>
 
 <style>
@@ -80,7 +43,7 @@
 		transition: color 500ms ease-in-out;
 	}
 
-	.item-container{
+	.item-container {
 		margin-bottom: 5em;
 		width: 100%;
 	}
@@ -93,11 +56,11 @@
 {:then}
 	{#if $districts != null}
 		{#each $districts as district}
-			<MenuItem url="/locations/{district.slug}">
+			<MenuItem url="/locations/{district.slug}" on:click={() => selectItem(district)}>
 				<p><i class="bi bi-person text-light" />{district.name}</p>
 				<small>
 					{#if district.description}
-						<div></div>
+						<div />
 					{:else}
 						<div>Unknown location</div>
 					{/if}

@@ -45,7 +45,7 @@
 					url="/locations"
 					icon="bi-map"
 					title="Locations"
-					description="View information about locations identified within Dimm City"
+					description="Locations identified within Dimm City"
 				/>
 				<MenuItem
 					on:mouseenter={() => updateText('citizens')}
@@ -54,6 +54,14 @@
 					icon="bi-people"
 					title="Citizen Files"
 					description="Access the available citizen files"
+				/>
+				<MenuItem
+					on:mouseenter={() => updateText('specialties')}
+					on:mouseleave={() => updateText('')}
+					url="/specialties"
+					icon="bi-code"
+					title="Specialties"
+					description="Documenting the true skills of the Sporos"
 				/>
 
 				<MenuItem
@@ -124,7 +132,7 @@
 					<div class="fade-in">
 						<h4>Locations</h4>
 						<p>
-							We have begun the process of identifying locations within the city. Here you can access the notes we have 
+							We have begun the process of identifying locations within the city. Here you can access the notes we have
 							put together based on what we know so far.
 						</p>
 					</div>

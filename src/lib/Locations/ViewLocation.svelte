@@ -1,4 +1,5 @@
 <script lang="ts">
+	import './locations.css';
 	import Shell from '$lib/Shell.svelte';
 	import { showMenu } from '$lib/ShellStore';
 	import ContentPane from '$lib/Components/ContentPane.svelte';
@@ -14,13 +15,17 @@
 	onMount(async () => {
 		location = await getLocation(slug);
 	});
+	$: if(slug > ""){
+		getLocation(slug).then(data => location = data);
+	}
 </script>
-
 <Shell title="Locations">
 	<ContentPane padding={0} scrollable={true}>
-		<Article model={location} />
+		<div class="location">
+			<Article model={location} />
+		</div>
 	</ContentPane>
 	<Menu slot="menu">
-		<LocationsMenu />
+		<LocationsMenu bind:selectedItem={slug}/>
 	</Menu>
 </Shell>

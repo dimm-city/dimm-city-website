@@ -5,7 +5,6 @@
 	import { Modals, closeModal, closeAllModals } from 'svelte-modals';
 	import { pageImage, showMenu } from './ShellStore';
 	import '../styles/main.css';
-	import '../styles/animations.css';
 	import 'animate.css';
 	import { onMount } from 'svelte';
 	import { config } from './config';

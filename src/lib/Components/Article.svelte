@@ -2,9 +2,10 @@
 	import Image from '$lib/Components/Image.svelte';
 	import type { IArticle } from '$lib/IArticle';
 	import { marked } from 'marked';
-	export let model: IArticle; 
+	export let model: IArticle;
+    export let imageAug = "tl-clip tr-clip br-clip bl-clip border";
 	let html = '';
-	$: html = model != null ? marked.parse(model.description || " ") : '';
+	$: html = model != null ? marked.parse(model.description || ' ') : '';
 </script>
 
 <style>
@@ -21,16 +22,6 @@
 		margin-inline-end: 0.75rem;
 		margin-block-end: 0.2rem;
 		color: rgba(255, 255, 255, 0.35) !important;
-	}
-	:global(.main-image .image-wrapper) {
-		color: unset !important;
-		height: 300px;
-		width: 300px;
-	}
-	:global(.main-image img, .main-image video) {
-		background-color: rgba(0, 0, 0, 0.5);
-		height: 300px;
-		width: 300px;
 	}
 
 	.text-area {
@@ -65,14 +56,16 @@
 	</div>
 	<article class="text-area">
 		<div class="main-image">
-			<Image
-				height=""
-				width=""
-				imageUrl={model.imageUrl}
-				title={model.name}
-				videoUrl={model.videoUrl}
-				aug="tl-clip tr-clip br-clip bl-clip border"
-			/>
+			<slot name="main-image">
+				<Image
+					height=""
+					width=""
+					imageUrl={model.imageUrl}
+					title={model.name}
+					videoUrl={model.videoUrl}
+					aug="{imageAug}"
+				/>
+			</slot>
 		</div>
 		<section>
 			{@html html}

@@ -1,10 +1,12 @@
 <script>
 	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
 	import MenuItem from '$lib/Components/Menu/MenuItem.svelte';
-	import { specialties } from '$lib/ShellStore';
+	import { showMenu, specialties } from '$lib/ShellStore';
 	import { onMount } from 'svelte';
 	import { getSpecialties } from './getSpecialties';
+	import { Specialty } from './Specialty';
 
+	export let selectedItem = '';
 	let query;
 	onMount(() => {
 		query = new Promise(async (resolve) => {
@@ -20,6 +22,12 @@
 			} else resolve($specialties);
 		});
 	});
+
+	function selectItem(item) {
+		selectedItem = item.slug;
+		$showMenu = false;
+		return true;
+	}
 </script>
 
 <style>
@@ -52,13 +60,13 @@
 {:then}
 	{#if $specialties != null}
 		{#each $specialties as item}
-			<MenuItem url="/specialties/{item.slug}">
+			<MenuItem url="/specialties/{item.slug}" on:click={selectItem}>
 				<p><i class="bi bi-person text-light" />{item.name}</p>
 				<small>
 					{#if item.description}
 						<div />
 					{:else}
-						<div>Unknown location</div>
+						<div>Unknown specialty</div>
 					{/if}
 				</small>
 
