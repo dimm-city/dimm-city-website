@@ -8,6 +8,7 @@
 	<MenuItem url="/citizens" icon="bi-people" title="Citizen Files" description="Access the available citizen files" />
 
 	<MenuItem url="/locations" icon="bi-map" title="Locations" description="View information about locations identified within Dimm City" />
+	<MenuItem url="/specialties" icon="bi-school" title="Specialties" description="Documenting the true skills of the Sporos" />
 
 	<MenuItem icon="bi bi-journals" title="Historical Records" url="/history" description="History of Dimm City" />
 
