@@ -1,12 +1,11 @@
 
-export interface ISummaryItem {
+
+export interface IArticle {
 	id: number;
 	name: string;
 	slug: string;
 	description: string;
-	thumbnailUrl: string;
 	imageUrl: string;
+	videoUrl: string;
+	thumbnailUrl: string;
 }
-
-
-

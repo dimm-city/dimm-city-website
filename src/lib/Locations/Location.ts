@@ -1,4 +1,5 @@
-export class Location {
+import type{  IArticle } from "../IArticle";
+export class Location implements IArticle {
     /**
      *
      */
