@@ -8,8 +8,8 @@ export const showMenu = writable(true);
 export const myCollection = writable(getSessionValue('collection') ?? []);
 myCollection.subscribe((value) => setSessionValue('collection', value));
 
-export const specialties = writable(getSessionValue('specialties') ?? []);
-specialties.subscribe((value) => setSessionValue('specialties', value));
+export const specialties = writable(getLocalValue('specialties') ?? []);
+specialties.subscribe((value) => setLocalValue('specialties', value, getExpiryTime()));
 
 export const characters = writable(getLocalValue('characters') ?? []);
 characters.subscribe((value) => setLocalValue('characters', value, getExpiryTime()));
