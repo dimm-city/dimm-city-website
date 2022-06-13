@@ -21,7 +21,7 @@
 		float: left;
 		margin-inline-end: 0.75rem;
 		margin-block-end: 0.2rem;
-		color: rgba(255, 255, 255, 0.35) !important;
+		/* color: rgba(255, 255, 255, 0.35) !important; */
 	}
 
 	.text-area {
