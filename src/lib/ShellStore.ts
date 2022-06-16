@@ -21,4 +21,4 @@ function getExpiryTime(): number {
 }
 
 
-export const pageImage = writable("https://data.dimm.city/api/images/sporos/dcs1r1/34.png");
+export const pageImage = writable("https://files.dimm.city/stories/intro/index.png");

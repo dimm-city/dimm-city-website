@@ -1,10 +1,10 @@
-<script>
+<script lang="ts">
 	//import { page } from '$app/stores';
-	import Character from '$lib/Characters/Tabs/Character.svelte';
+	import CharacterTab from '$lib/Characters/Tabs/Character.svelte';
 	import CharacterMenu from '$lib/Characters/Components/CharacterMenu.svelte';
 	import Menu from '$lib/Components/Menu/Menu.svelte';
 	import Shell from '$lib/Shell.svelte';
-	import { characters, showMenu } from '$lib/ShellStore';
+	import { characters, showMenu, myCollection } from '$lib/ShellStore';
 	import Tab from '$lib/Components/Tab.svelte';
 	import CharacterStats from '$lib/Characters/Tabs/CharacterStats.svelte';
 	import { loadCharacter } from '$lib/queries/getCharacterBySlug';
@@ -15,15 +15,16 @@
 	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
 	import Button from '$lib/Components/Button.svelte';
 	import { canEdit, updateCharacter } from '$lib/queries/updateCharacter';
+	import { Character } from './Character';
 
 	$showMenu = false;
 	export let tokenId;
 	let isSaving = false;
-	let character;
+	let character: Character;
 	let query = new Promise(() => {});
 	let tabs;
 	onMount(async () => {
-		const isEditable = await canEdit(tokenId);
+		const isEditable: boolean = await canEdit(tokenId);
 		if (!isEditable) window.history.back();
 
 		character = $characters.find((c) => c.tokenId === tokenId && c.loaded);
@@ -33,7 +34,7 @@
 				$characters = [c, ...$characters.filter((l) => l.id != c.id)];
 			});
 		} else {
-			query = new Promise((resolve) => resolve());
+			query = new Promise((resolve) => resolve(new Character()));
 		}
 	});
 	async function selectCharcter(id) {
@@ -47,13 +48,30 @@
 
 	async function save() {
 		isSaving = true;
-		query = updateCharacter(character);
-		isSaving = false;
+		query = updateCharacter(character)
+			.then(() => {
+				isSaving = false;
+				//$characters = [...$characters.filter((l) => l.id != character.id)];
+				//window.location.href = '/citizens/' + tokenId;
+				// if (window.history.length > 0) window.history.back();
+				// else window.location.href = '/citizens';
+			})
+			.catch((reason) => {
+				console.error('Error updating citizen file', reason);
+			});
 	}
 
 	async function cancel() {
-		if (window.history.length > 0) window.history.back();
-		else window.location.href = '/citizens';
+		query = loadCharacter(tokenId)
+			.then((c) => {
+				character = c;
+				$characters = [c, ...$characters.filter((l) => l.id != c.id)];
+			})
+			.then(() => {
+				// if (window.history.length > 0) window.history.back();
+				// else
+				window.location.href = '/citizens';
+			});
 	}
 </script>
 
@@ -87,7 +105,7 @@
 				<CharacterBiography {character} readonly={false} />
 			</Tab>
 			<Tab id="sheet" padding={1}>
-				<Character {character} />
+				<CharacterTab {character} />
 			</Tab>
 		</TabPanel>
 	{/await}

@@ -1,6 +1,7 @@
 import { sessionToken } from '$lib/ChainStore';
 import type { Character } from '$lib/Characters/Character';
 import { config } from '$lib/config';
+import { myCollection, characters } from '$lib/ShellStore';
 import { get } from 'svelte/store';
 
 export async function canEdit(tokenId: string): Promise<boolean> {
@@ -48,6 +49,28 @@ export async function updateCharacter(character: Character) {
 			const { data, errors } = await res.json();
 			if (res.ok) {
 				console.log('saved', data);
+				console.assert(data != null);
+				console.log('finding token');
+
+				const token = get(myCollection).find((t) => t.release + '-' + t.edition == character.tokenId.toUpperCase());
+
+				if (token != null) {
+					console.log('updating local token');
+
+					token.name = character.name;
+					token.description = character.vibe;
+					token.hasCharacter = true;
+					myCollection.update(
+						($myCollection) =>
+							($myCollection = [
+								token,
+								...$myCollection.filter((s) => s.release + '-' + s.edition != character.tokenId.toUpperCase())
+							])
+					);
+				} else {
+					console.warn('could not find token');
+				}
+				characters.set([character, ...get(characters).filter((l) => l.id != character.id)]);
 			} else {
 				//TODO: display error
 				console.log('failed', errors, data);
