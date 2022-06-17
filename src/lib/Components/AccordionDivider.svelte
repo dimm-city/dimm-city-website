@@ -78,7 +78,7 @@
 		/* transform: translate(0, -30%) rotateZ(0deg); */
 		--aug-border-all: 0.2vh;
 		--aug-border-bg: var(--blue);
-		--aug-all-width: 5vh;
+		--aug-all-width: max(5vh, 5vw);
 		transition: transform var(--easing);
 	}
 	.accordion-divider .global-toolbar a {
@@ -140,6 +140,12 @@
 			transform: translate(0, 75%) rotateZ(180deg);
 		}
 	}
+
+	@media (min-width: 750px) and (min-aspect-ratio: 4/3) {
+		.accordion-divider .global-toolbar a {
+			transform: translate(0, -60%);
+		}
+	}
 </style>
 
 <div class="accordion-divider" class:bottom={$showMenu} class:test={visible}>
@@ -151,9 +157,14 @@
 	/>
 	<div class="version"><small>v {config.version}</small></div>
 	<div class="global-toolbar">
-		<a href="/" data-augmented-ui="all-hex border"><i class="bi bi-motherboard" title="home screen"/></a>
+		<a href="/" data-augmented-ui="all-hex border"><i class="bi bi-motherboard" title="home screen" /></a>
 		{#if showMenuButton}
-			<button title="toggle view" on:click={() => ($showMenu = !$showMenu)} data-augmented-ui="all-triangle-up border" class="btn-menu" />
+			<button
+				title="toggle view"
+				on:click={() => ($showMenu = !$showMenu)}
+				data-augmented-ui="all-triangle-up border"
+				class="btn-menu"
+			/>
 		{/if}
 		<a href="/console" data-augmented-ui="all-hex border" title="op console">
 			{#if $loggedIn}

@@ -104,7 +104,7 @@
 			overflow: hidden;
 		}
 		.top-panel {
-			height: 90vh;
+			height: calc(95vh - var(--divider-height));
 		}
 
 		.bottom-panel {
@@ -135,7 +135,7 @@
 	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=false" />
 	<title>{title} - Dimm City</title>
 	<meta name="description" content="" />
-	<meta name="twitter:image" content="{$pageImage}" />
+	<meta name="twitter:image" content={$pageImage} />
 	<link rel="icon" type="image/x-icon" href="/assets/icons/shroom256.png" />
 	<link rel="preload" as="font" href="/assets/dimm-city.woff2" type="font/woff2" crossorigin="anonymous" />
 	<slot name="head" />
