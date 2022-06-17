@@ -2,7 +2,7 @@
 	import Input from '$lib/Components/Input.svelte';
 	import ProfileImage from '$lib/Components/ProfileImage.svelte';
 	import Textarea from '$lib/Components/Textarea.svelte';
-import TextContainer from '$lib/Components/TextContainer.svelte';
+	import TextContainer from '$lib/Components/TextContainer.svelte';
 	import { Character } from '../Character';
 	export let character: Character = new Character();
 	export let readonly = true;
@@ -14,17 +14,23 @@ import TextContainer from '$lib/Components/TextContainer.svelte';
 		height: 100%;
 		display: grid;
 		width: 100%;
-		grid-template-columns: 0.7fr 1.6fr;
-		grid-template-rows: min-content 0.5fr 0.8fr;
+		grid-template-columns: 1fr;
+		grid-template-rows: repeat(3, min-content);
 		gap: 1rem;
 		grid-auto-flow: row;
 		grid-template-areas:
-			'title-area title-area'
-			'image-area attributes-area'
-			'description-area description-area';
+			'title-area'
+			'image-area'
+			'attributes-area'
+			'description-area';
 	}
+
 	.title-area {
 		grid-area: title-area;
+	}
+
+	.title-area h2 {
+		font-size: clamp(0.7rem, 1.25rem, 1.5rem);
 	}
 	.image-area {
 		justify-self: center;
@@ -48,9 +54,8 @@ import TextContainer from '$lib/Components/TextContainer.svelte';
 	.attributes-area {
 		grid-area: attributes-area;
 	}
-
 	.attributes {
-		margin: 0;
+		margin: 0 0.5rem;
 		display: grid;
 		grid-template-rows: 1fr;
 		gap: 1rem;
@@ -60,33 +65,28 @@ import TextContainer from '$lib/Components/TextContainer.svelte';
 		font-weight: bold;
 		width: min-content;
 		white-space: nowrap;
+		font-size: 0.7rem;
 	}
-
 	.label {
 		margin-bottom: 1.25rem;
 	}
 
-	@media (max-width: 768px) {
+	@media (min-width: 768px) and (min-height: 500px) {
 		.container {
 			height: 100%;
 			display: grid;
 			width: 100%;
-			grid-template-columns: 1fr;
-			grid-template-rows: min-content repeat(2, 1fr);
+			grid-template-columns: 0.7fr 1.6fr;
+			grid-template-rows: min-content 0.5fr 0.8fr;
 			gap: 1rem;
 			grid-auto-flow: row;
 			grid-template-areas:
-				'title-area'
-				'attributes-area'
-				'description-area';
+				'title-area title-area'
+				'image-area attributes-area'
+				'description-area description-area';
 		}
-
-		.image-area {
-			display: none;
-		}
-
 		.attributes {
-			margin: 0 0.5rem;
+			margin: 0;
 			display: grid;
 			grid-template-rows: 1fr;
 			gap: 1rem;
@@ -96,14 +96,13 @@ import TextContainer from '$lib/Components/TextContainer.svelte';
 			font-weight: bold;
 			width: min-content;
 			white-space: nowrap;
-			font-size: 0.7rem;
 		}
 	}
 </style>
 
 <div class="container">
 	<div class="title-area">
-		<h2>{title}</h2>
+		<h2>{character.name}'s {title}</h2>
 	</div>
 	<div class="image-area">
 		<ProfileImage {character} />
@@ -123,7 +122,7 @@ import TextContainer from '$lib/Components/TextContainer.svelte';
 	<div class="description-area">
 		{#if readonly}
 			<div class="label">{character.name}'s backstory</div>
-			<TextContainer>{character.backstory > "" ? character.backstory : "404: Unable to locate file"}</TextContainer>
+			<TextContainer>{character.backstory > '' ? character.backstory : '404: Unable to locate file'}</TextContainer>
 		{:else}
 			<div class="label">Tell us a bit about {character.name}'s backstory...</div>
 			<Textarea bind:value={character.backstory} disabled={readonly} />

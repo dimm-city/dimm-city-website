@@ -81,7 +81,7 @@
 	{#await query}
 		<LoadingIndicator>Extracting character data...</LoadingIndicator>
 	{:then}
-		<TabPanel bind:this={tabs} initialTab="stats">
+		<TabPanel bind:this={tabs} initialTab="story">
 			<Tab id="stats" padding={2}>
 				<CharacterStats {character} title={character.name} />
 			</Tab>

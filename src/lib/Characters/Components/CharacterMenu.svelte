@@ -98,7 +98,7 @@
 			<MenuItem url="/citizens/{character.tokenId}" on:click={() => selectCharacter(character)}>
 				<p><i class="bi bi-person text-light" />{character.name}</p>
 				<small>
-					{#if character.race.data.attributes}
+					{#if character.race?.data?.attributes}
 						<div>{character.race.data.attributes.name}</div>
 					{:else}
 						<div>Unknown race</div>
