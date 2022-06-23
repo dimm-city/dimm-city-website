@@ -12,10 +12,15 @@
 
 <Shell title="Change Log" showMenuButton={true} showMainMenuButton={false}>
 	<ContentPane>
+		<h4 class="">Dimm City Console v0.3.0</h4>
+		<ul class="unstyled-list">
+			<li><a href="/locations">Location data added</a></li>
+			<li><a href="/specialties">Additional Citizen Data</a></li>
+		</ul>
 		<h4 class="">Dimm City Console v0.2.0</h4>
 		<ul class="unstyled-list">
 			<li><a href="/console">Op Console</a></li>
-			<li><a href="">Sporo Data Recorder</a></li>
+			<li><a href="/console">Sporo Data Recorder</a></li>
 			<li><a href="/citizens">Additional Citizen Data</a></li>
 			<li><a href="/history/prologue-scene-2">More Historical Data Extracted</a></li>
 		</ul>

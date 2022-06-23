@@ -128,6 +128,15 @@
 							manage with what we have.
 						</p>
 					</div>
+				{:else if currentText == 'specialties'}
+					<div class="fade-in">
+						<h4>Specialties</h4>
+						<p>
+							It has become clear that there are some exceptional Sporos that operate on a level beyond that of the average
+							citizen. These Sporos specialize in a variety of skills. Some harness there power from technology and
+							others direct from the Ether.
+						</p>
+					</div>
 				{:else if currentText == 'locations'}
 					<div class="fade-in">
 						<h4>Locations</h4>
