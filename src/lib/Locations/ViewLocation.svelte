@@ -12,9 +12,7 @@
 	export let slug;
 	$showMenu = false;
 	let location = new Location();
-	onMount(async () => {
-		location = await getLocation(slug);
-	});
+
 	$: if(slug > ""){
 		getLocation(slug).then(data => location = data);
 	}
@@ -22,6 +20,7 @@
 <Shell title="Locations">
 	<ContentPane padding={0} scrollable={true}>
 		<div class="location">
+			
 			<Article model={location} />
 		</div>
 	</ContentPane>

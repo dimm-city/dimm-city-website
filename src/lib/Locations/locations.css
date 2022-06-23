@@ -2,6 +2,7 @@
 	color: unset !important;
 	height: 300px;
 	width: 300px;
+	aspect-ratio: 1/1;
 }
 
 .main-image img,

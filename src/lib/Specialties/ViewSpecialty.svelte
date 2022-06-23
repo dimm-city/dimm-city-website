@@ -11,19 +11,19 @@
 	import { Specialty } from './Specialty';
 	export let slug;
 	$showMenu = false;
-	let specialty = new Specialty();
-	onMount(async () => {
-		specialty = await getSpecialty(slug);
-	});
+	let specialty = null;
 
 	$: if (slug > '') {
+		specialty = null;
 		getSpecialty(slug).then((s) => (specialty = s));
 	}
 </script>
 
 <Shell title="Specialties">
 	<ContentPane padding={0} scrollable={true}>
-		<Article model={specialty} imageAug={null} />
+		{#if specialty}
+			<Article model={specialty} imageAug="tl-clip tr-clip-y br-clip bl-clip-y" />
+		{/if}
 	</ContentPane>
 	<Menu slot="menu">
 		<SpecialtyMenu bind:selectedItem={slug} />

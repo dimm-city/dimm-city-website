@@ -78,7 +78,7 @@
 		/* transform: translate(0, -30%) rotateZ(0deg); */
 		--aug-border-all: 0.2vh;
 		--aug-border-bg: var(--blue);
-		--aug-all-width: max(5vh, 5vw);
+		--aug-all-width: max(5vh, 2vw);
 		transition: transform var(--easing);
 	}
 	.accordion-divider .global-toolbar a {

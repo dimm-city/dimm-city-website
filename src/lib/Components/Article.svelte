@@ -17,7 +17,7 @@
 	}
 
 	.main-image {
-		height: 300px;
+		min-height: 300px;
 		float: left;
 		margin-inline-end: 0.75rem;
 		margin-block-end: 0.2rem;

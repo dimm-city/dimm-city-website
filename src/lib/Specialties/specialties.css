@@ -3,8 +3,8 @@
 .main-image .image-wrapper,
 .main-image img,
 .main-image video {
-	background-color: rgba(0, 0, 0, 0);
+	background-color: rgba(0, 0, 0, 0.267);
 	color: var(--blue-accent);
-	height: 400px;
+	
 	width: 300px;
 }
