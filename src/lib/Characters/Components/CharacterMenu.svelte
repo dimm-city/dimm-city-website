@@ -1,10 +1,10 @@
 <script>
 	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
 	import MenuItem from '$lib/Components/Menu/MenuItem.svelte';
-	import { characters } from '$lib/ShellStore';
+	import { characters } from '$lib/Shared/ShellStore';
 	import { createEventDispatcher, onMount } from 'svelte';
-	import { getCharactersQuery } from '../../queries/getCharacters';
-	import { config } from '../../config';
+	import { getCharactersQuery } from '../getCharacters';
+	import { config } from '../../Shared/config';
 
 	const dispatcher = createEventDispatcher();
 

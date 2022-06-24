@@ -1,5 +1,5 @@
 import { JournalEntry } from './JournalEntry';
-import { config } from '$lib/config';
+import { config } from '$lib/Shared/config';
 
 const getJournalEntryBySlugQuery = `
   query getJournalEntryBySlug($slug: String!) {

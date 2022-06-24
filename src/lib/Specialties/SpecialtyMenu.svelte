@@ -1,7 +1,7 @@
 <script>
 	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
 	import MenuItem from '$lib/Components/Menu/MenuItem.svelte';
-	import { showMenu, specialties } from '$lib/ShellStore';
+	import { showMenu, specialties } from '$lib/Shared/ShellStore';
 	import { onMount } from 'svelte';
 	import { getSpecialties } from './getSpecialties';
 	import { Specialty } from './Specialty';

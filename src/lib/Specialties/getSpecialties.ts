@@ -1,6 +1,6 @@
 
-import type { ISummaryItem } from '$lib/ISummaryItem';
-import { config } from '../config';
+import type { ISummaryItem } from '$lib/Shared/ISummaryItem';
+import { config } from '$lib/Shared/config';
 export const getSpecialtiesQuery = `
 query {
 	specialties {
