@@ -1,3 +1,5 @@
+import type { ISummaryItem } from "$lib/ISummaryItem";
+
 export class Character implements ICharacter {
 	constructor(token: IToken = null) {
 		if (token) this.importToken(token);
@@ -98,15 +100,6 @@ export interface ICharacter {
 	currentLocation: ISummaryItem;
 	selectedAbilities: ISummaryItem[];
 	items: ISummaryItem[];
-	thumbnailUrl: string;
-	imageUrl: string;
-}
-
-export interface ISummaryItem {
-	id: number;
-	name: string;
-	slug: string;
-	description: string;
 	thumbnailUrl: string;
 	imageUrl: string;
 }

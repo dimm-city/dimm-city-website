@@ -4,17 +4,21 @@
 </script>
 
 <Menu>
+	
+	<MenuItem url="/citizens" icon="bi-people" title="Citizen Files" description="Access the available citizen files" />
+
+	<MenuItem url="/locations" icon="bi-map" title="Locations" description="Locations identified within Dimm City" />
+	<MenuItem url="/specialties" icon="bi-code" title="Specialties" description="Documenting the true skills of the Sporos" />
+
+	<MenuItem icon="bi bi-journals" title="Historical Records" url="/history" description="History of Dimm City" />
+
+	<!-- <MenuItem url="/console/man" icon="bi-info-circle" title="Op Manual" description="Operator's Console Manual" /> -->
 	<MenuItem
 		url="/console"
 		icon="bi-person-workspace"
 		title="Op Console"
 		description="Connect to your Operator's Console"
 	/>
-	<MenuItem url="/citizens" icon="bi-people" title="Citizen Files" description="Access the available citizen files" />
-
-	<MenuItem icon="bi bi-journals" title="Historical Records" url="/history" description="History of Dimm City" />
-
-	<!-- <MenuItem url="/console/man" icon="bi-info-circle" title="Op Manual" description="Operator's Console Manual" /> -->
 	<MenuItem
 		url="/console/change-log"
 		icon="bi-journal-check"

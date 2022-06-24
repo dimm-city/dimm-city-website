@@ -15,7 +15,7 @@
 	<ContentPane>
 		<h4 class="">Console Stats:</h4>
 		<ul class="unstyled-list">
-			<li>Current Version: 0.2.0</li>
+			<li>Current Version: {config.version}</li>
 			<li>Connection Status: Weak</li>
 			<li>Citizen Profiles recorded: {$characters.length}</li>
 			<li>Citizen Specialities recorded: {$specialties.length}</li>

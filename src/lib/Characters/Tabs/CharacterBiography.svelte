@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Input from '$lib/Components/Input.svelte';
-	import ProfileImage from '$lib/Components/ProfileImage.svelte';
+	import ProfileImage from '$lib/Characters/Components/ProfileImage.svelte';
 	import Textarea from '$lib/Components/Textarea.svelte';
 	import TextContainer from '$lib/Components/TextContainer.svelte';
 	import { Character } from '../Character';

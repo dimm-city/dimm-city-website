@@ -15,7 +15,7 @@
 
 	let currentText = 'op-console';
 	function updateText(key: string) {
-		currentText = key == ''? 'op-console' : key;
+		currentText = key == '' ? 'op-console' : key;
 	}
 </script>
 
@@ -40,12 +40,12 @@
 
 			<Menu columns={3}>
 				<MenuItem
-					on:mouseenter={() => updateText('op-console')}
+					on:mouseenter={() => updateText('locations')}
 					on:mouseleave={() => updateText('')}
-					url="/console"
-					icon="bi-person-workspace"
-					title="Op Console"
-					description="Connect to your Operator's Console"
+					url="/locations"
+					icon="bi-map"
+					title="Locations"
+					description="Locations identified within Dimm City"
 				/>
 				<MenuItem
 					on:mouseenter={() => updateText('citizens')}
@@ -54,6 +54,14 @@
 					icon="bi-people"
 					title="Citizen Files"
 					description="Access the available citizen files"
+				/>
+				<MenuItem
+					on:mouseenter={() => updateText('specialties')}
+					on:mouseleave={() => updateText('')}
+					url="/specialties"
+					icon="bi-code"
+					title="Specialties"
+					description="Documenting the true skills of the Sporos"
 				/>
 
 				<MenuItem
@@ -73,6 +81,15 @@
 					title="Op Manual"
 					description="Operator's Console Manual"
 				/> -->
+				<MenuItem
+					on:mouseenter={() => updateText('op-console')}
+					on:mouseleave={() => updateText('')}
+					url="/console"
+					icon="bi-person-workspace"
+					title="Op Console"
+					description="Connect to your Operator's Console"
+				/>
+
 				<MenuItem
 					on:mouseenter={() => updateText('change-log')}
 					on:mouseleave={() => updateText('')}
@@ -109,6 +126,23 @@
 							fragments of data. Honestly, we are not entirely sure how, or if, they are connected. Our ability to
 							recover this data from the Ether is improving each day, but is still very much lacking. So, for now, we
 							manage with what we have.
+						</p>
+					</div>
+				{:else if currentText == 'specialties'}
+					<div class="fade-in">
+						<h4>Specialties</h4>
+						<p>
+							It has become clear that there are some exceptional Sporos that operate on a level beyond that of the average
+							citizen. These Sporos specialize in a variety of skills. Some harness there power from technology and
+							others direct from the Ether.
+						</p>
+					</div>
+				{:else if currentText == 'locations'}
+					<div class="fade-in">
+						<h4>Locations</h4>
+						<p>
+							We have begun the process of identifying locations within the city. Here you can access the notes we have
+							put together based on what we know so far.
 						</p>
 					</div>
 				{:else if currentText == 'manual'}
