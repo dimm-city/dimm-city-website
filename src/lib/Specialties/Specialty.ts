@@ -1,4 +1,4 @@
-import type{  IArticle } from "../IArticle";
+import type{  IArticle } from "../Shared/IArticle";
 export class Specialty implements IArticle {
     /**
      *
@@ -13,4 +13,7 @@ export class Specialty implements IArticle {
 	imageUrl: string;
 	videoUrl: string;
 	thumbnailUrl: string;
+	tags: string;
+	type: string;
+	author: string;
 }

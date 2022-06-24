@@ -1,14 +1,15 @@
 
 import type { ISummaryItem } from '$lib/Shared/ISummaryItem';
 import { config } from '$lib/Shared/config';
-export const getSpecialtiesQuery = `
+export const getJournalEntriesQuery = `
 query {
-	specialties {
+	journalEntries {
 		data {
 			id
 			attributes {
 				slug
-				name
+				tags
+				title
 				description
 				shortDescription
 				imageUrl
@@ -17,7 +18,7 @@ query {
 	}
 }`;
 
-export async function getSpecialties() : Promise<ISummaryItem[]> {
+export async function getJournalEntries() : Promise<ISummaryItem[]> {
 	return fetch(config.graphUrl, {
 		method: 'POST',
 		headers: {
@@ -25,27 +26,27 @@ export async function getSpecialties() : Promise<ISummaryItem[]> {
 			Accept: 'application/json'
 		},
 		body: JSON.stringify({
-			query: getSpecialtiesQuery
+			query: getJournalEntriesQuery
 		})
 	})
 		.then(async (response) => {
 			if (response.ok) {
 				const json = await response.json();
 
-				return json.data.specialties.data.map((i) => {
+				return json.data.journalEntries.data.map((i) => {
 					return {
 						id: i.id,
 						slug: i.attributes.slug,
-						name: i.attributes.name,
-						description: i.attributes.description ?? 'no information on this subject...',
-						thumbnailUrl: i.attributes.mainImage?.data?.attributes?.previewUrl,
-						imageUrl: i.attributes.mainImage?.data?.attributes?.url
+						name: i.attributes.title,
+						description: i.attributes.shortDescription ?? 'no information on this subject...',
+						thumbnailUrl: i.attributes.thumbnailUrl,
+						imageUrl: i.attributes.imageUrl
 					};
 				}).sort((a,b) => a.name > b.name ? 1 : -1);
 			}
 			return [];
 		})
 		.catch((reason) => {
-			console.log('loadSpecialties failed', reason);
+			console.log('getJournalEntries failed', reason);
 		});
 }

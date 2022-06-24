@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { myCollection, districts } from '$lib/ShellStore';
+	import { myCollection, districts } from '$lib/Shared/ShellStore';
 	import CharacterStats from './Tabs/CharacterStats.svelte';
 	import StepWizard from 'svelte-step-wizard';
 	import { Character } from './Character';
@@ -8,8 +8,8 @@
 	import LocationSelector from './Tabs/DistrictSelector.svelte';
 	import Button from '$lib/Components/Button.svelte';
 	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
-	import { connect, loggedIn, sessionToken } from '$lib/ChainStore';
-	import { config } from '$lib/config';
+	import { connect, loggedIn, sessionToken } from '$lib/Shared/ChainStore';
+	import { config } from '$lib/Shared/config';
 	import type { ISummaryItem } from '$lib/ISummaryItem';
 	export let tokenId;
 

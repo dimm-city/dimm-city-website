@@ -1,5 +1,5 @@
 import type { IArticle } from '../Shared/IArticle';
-export class Location implements IArticle {
+export class JournalEntry implements IArticle {
 	/**
 	 *
 	 */

@@ -1,5 +1,10 @@
-export const config = {
-	version: '0.3.0',
+import { config as prod } from './config.prod';
+import { config as staging } from './config.staging';
+import { config as dev } from './config.dev';
+import { browser } from '$app/env';
+
+const defaultConfig = {
+	version: '0.4.0',
 	graphUrl: 'http://localhost:1337/graphql',
 	baseUrl: 'https://localhost:3000',
 	apiBaseUrl: 'http://localhost:1337/api',
@@ -24,3 +29,13 @@ export const config = {
 		}
 	}
 };
+export const config = Object.assign(defaultConfig, getCurrentConfig());
+
+function getCurrentConfig() {
+	//return prod;
+	if (!browser && process && process.env && process.env.NODE_ENV === 'production') return prod;
+	if (browser && window.location.href.includes(prod.baseUrl)) return prod;
+	if (browser && window.location.href.includes(staging.baseUrl)) return staging;
+	if (browser && window.location.href.includes(dev.baseUrl)) return dev;
+	return dev;
+}

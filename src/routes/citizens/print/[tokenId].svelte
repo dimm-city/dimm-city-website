@@ -1,5 +1,5 @@
 <script>
-    import '../../../styles/print.css';
+    import '$lib/styles/print.css';
 </script>
 <svelte:head>
 	<meta charset="UTF-8" />

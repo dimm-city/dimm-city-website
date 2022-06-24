@@ -3,11 +3,11 @@
 </script>
 
 <script lang="ts">
-	import { config } from '$lib/config';
-	import Shell from '$lib/Shell.svelte';
+	import { config } from '$lib/Shared/config';
+	import Shell from '$lib/Components/Shell.svelte';
 	import MainMenu from '$lib/Components/Menu/MainMenu.svelte';
 	import ContentPane from '$lib/Components/ContentPane.svelte';
-	import { showMenu } from '$lib/ShellStore';
+	import { showMenu } from '$lib/Shared/ShellStore';
 	import MenuItem from '$lib/Components/Menu/MenuItem.svelte';
 	import TextContainer from '$lib/Components/TextContainer.svelte';
 	import Menu from '$lib/Components/Menu/Menu.svelte';
@@ -72,6 +72,14 @@
 					url="/history"
 					description="History of Dimm City"
 				/>
+				<MenuItem
+					on:mouseenter={() => updateText('journal-entries')}
+					on:mouseleave={() => updateText('')}
+					icon="bi bi-journal-code"
+					title="Founder Journals"
+					url="/journal-entries"
+					description="Files from the founder's journals"
+				/>
 
 				<!-- <MenuItem
 					on:mouseenter={() => updateText('manual')}
@@ -128,13 +136,21 @@
 							manage with what we have.
 						</p>
 					</div>
+				{:else if currentText == 'journal-entries'}
+					<div class="fade-in">
+						<h4>Founders' Journal Entries</h4>
+						<p>
+							Access files from the founders' journals to get first hand information about Dimm City and the founders' mission 
+							to extract as much information about this strange world as possible.
+						</p>
+					</div>
 				{:else if currentText == 'specialties'}
 					<div class="fade-in">
 						<h4>Specialties</h4>
 						<p>
-							It has become clear that there are some exceptional Sporos that operate on a level beyond that of the average
-							citizen. These Sporos specialize in a variety of skills. Some harness there power from technology and
-							others direct from the Ether.
+							It has become clear that there are some exceptional Sporos that operate on a level beyond that of the
+							average citizen. These Sporos specialize in a variety of skills. Some harness there power from technology
+							and others direct from the Ether.
 						</p>
 					</div>
 				{:else if currentText == 'locations'}

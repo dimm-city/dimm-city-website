@@ -1,25 +1,26 @@
 <script>
 	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
 	import MenuItem from '$lib/Components/Menu/MenuItem.svelte';
-	import { showMenu, specialties } from '$lib/Shared/ShellStore';
+	import { showMenu } from '$lib/Shared/ShellStore';
 	import { onMount } from 'svelte';
-	import { getSpecialties } from './getSpecialties';
-	import { Specialty } from './Specialty';
+	import { getJournalEntries } from './getJournalEntries';
+	import { JournalEntry } from './JournalEntry';
 
 	export let selectedItem = '';
+	let journalEntries = [];
 	let query;
 	onMount(() => {
 		query = new Promise(async (resolve) => {
-			if ($specialties?.length < 1) {
-				let data = await getSpecialties();
+			if (journalEntries?.length < 1) {
+				let data = await getJournalEntries();
 				if (data != null) {
-					$specialties = data.sort((a, b) => {
+					journalEntries = data.sort((a, b) => {
 						if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
 						else return -1;
 					});
 				}
 				resolve(data);
-			} else resolve($specialties);
+			} else resolve(journalEntries);
 		});
 	});
 
@@ -55,20 +56,13 @@
 
 {#await query}
 	<LoadingIndicator>
-		<div>Loading location data...</div>
+		<div>Loading data...</div>
 	</LoadingIndicator>
 {:then}
-	{#if $specialties != null}
-		{#each $specialties as item}
-			<MenuItem url="/specialties/{item.slug}" on:click={selectItem}>
-				<p><i class="bi bi-person text-light" />{item.name}</p>
-				<small>
-					{#if item.description}
-						<div />
-					{:else}
-						<div>Unknown specialty</div>
-					{/if}
-				</small>
+	{#if journalEntries != null}
+		{#each journalEntries as item}
+			<MenuItem url="/journal-entries/{item.slug}" on:click={selectItem}>
+				<p><i class="bi bi-person text-light" />{item.name}</p>				
 
 				<div class="toolbar">
 					<!-- <a

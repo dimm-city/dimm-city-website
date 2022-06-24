@@ -1,7 +1,7 @@
 <script lang="ts">
 	import './specialties.css';
-	import Shell from '$lib/Shell.svelte';
-	import { showMenu } from '$lib/ShellStore';
+	import Shell from '$lib/Components/Shell.svelte';
+	import { showMenu } from '$lib/Shared/ShellStore';
 	import ContentPane from '$lib/Components/ContentPane.svelte';
 	import Menu from '$lib/Components/Menu/Menu.svelte';
 	import { onMount } from 'svelte';
