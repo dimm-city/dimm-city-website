@@ -3,15 +3,15 @@
 </script>
 
 <script lang="ts">
-	import Shell from '$lib/Shell.svelte';
+	import Shell from '$lib/Components/Shell.svelte';
 	import Menu from '$lib/Components/Menu/Menu.svelte';
 	import Button from '$lib/Components/Button.svelte';
-	import { showMenu, myCollection } from '$lib/ShellStore';
+	import { showMenu, myCollection } from '$lib/Shared/ShellStore';
 	import { provider, signer, signerAddress, connected, defaultEvmStores, chainId } from 'svelte-ethers-store';
 	import MenuItem from '$lib/Components/Menu/MenuItem.svelte';
 	import ContentPane from '$lib/Components/ContentPane.svelte';
 	import { onMount } from 'svelte';
-	import { connect, loggedIn, contract, getSporos, signMessage, sessionToken } from '$lib/ChainStore';
+	import { connect, loggedIn, contract, getSporos, signMessage, sessionToken } from '$lib/Shared/ChainStore';
 	import Character from '$lib/Characters/Tabs/Character.svelte';
 	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
 	import TokenViewModal from '$lib/Tokens/TokenViewModal.svelte';

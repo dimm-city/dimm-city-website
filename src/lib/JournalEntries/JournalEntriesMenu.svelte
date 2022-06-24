@@ -1,7 +1,7 @@
 <script>
 	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
 	import MenuItem from '$lib/Components/Menu/MenuItem.svelte';
-	import { showMenu } from '$lib/ShellStore';
+	import { showMenu } from '$lib/Shared/ShellStore';
 	import { onMount } from 'svelte';
 	import { getJournalEntries } from './getJournalEntries';
 	import { JournalEntry } from './JournalEntry';

@@ -1,5 +1,5 @@
 import { Character } from '$lib/Characters/Character';
-import { config } from '$lib/config';
+import { config } from '$lib/Shared/config';
 
 export const getCharacterBySlugQuery = `
   query getCharacterBySlug($tokenId: String!) {

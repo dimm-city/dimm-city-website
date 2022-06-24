@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { showMenu } from '../ShellStore';
-	import { config } from '../config';
-	import { loggedIn } from '../ChainStore';
+	import { showMenu } from '../Shared/ShellStore';
+	import { config } from '../Shared/config';
+	import { loggedIn } from '../Shared/ChainStore';
 	import Toolbar from './Toolbar.svelte';
 	export let showMenuButton = true;
 	export let visible = true;

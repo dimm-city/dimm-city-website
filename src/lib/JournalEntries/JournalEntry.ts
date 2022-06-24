@@ -1,4 +1,4 @@
-import type{  IArticle } from "../IArticle";
+import type{  IArticle } from "../Shared/IArticle";
 export class JournalEntry implements IArticle {
     /**
      *

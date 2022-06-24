@@ -1,4 +1,4 @@
-import type { ISummaryItem } from "$lib/ISummaryItem";
+import type { ISummaryItem } from "$lib/Shared/ISummaryItem";
 
 export class Character implements ICharacter {
 	constructor(token: IToken = null) {

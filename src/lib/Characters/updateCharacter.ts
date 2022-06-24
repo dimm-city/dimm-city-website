@@ -1,7 +1,7 @@
-import { sessionToken } from '$lib/ChainStore';
+import { sessionToken } from '$lib/Shared/ChainStore';
 import type { Character } from '$lib/Characters/Character';
-import { config } from '$lib/config';
-import { myCollection, characters } from '$lib/ShellStore';
+import { config } from '$lib/Shared/config';
+import { myCollection, characters } from '$lib/Shared/ShellStore';
 import { get } from 'svelte/store';
 
 export async function canEdit(tokenId: string): Promise<boolean> {

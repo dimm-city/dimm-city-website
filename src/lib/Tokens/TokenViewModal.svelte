@@ -1,6 +1,6 @@
 
 <script>
-	import ModalShell from '$lib/ModalShell.svelte';
+	import ModalShell from '$lib/Components/ModalShell.svelte';
 	import TokenView from './TokenView.svelte';
 	export let data;
 	export let isOpen;

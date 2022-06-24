@@ -1,8 +1,8 @@
 <script lang="ts">
 	import Image from '$lib/Components/Image.svelte';
-	import { loadSpecialties } from '$lib/queries/getSpecialties';
+	import { getSpecialties } from '$lib/Specialties/getSpecialties';
 	import { onMount } from 'svelte';
-	import { specialties } from '$lib/ShellStore';
+	import { specialties } from '$lib/Shared/ShellStore';
 
 	export let character;
 	$: items = $specialties;
@@ -10,7 +10,7 @@
 
 	onMount(async () => {
 		if (items.length < 1) {
-			$specialties = await loadSpecialties();
+			$specialties = await getSpecialties();
 		}
 	});
 

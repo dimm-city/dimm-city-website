@@ -3,11 +3,11 @@
 </script>
 
 <script lang="ts">
-	import { config } from '$lib/config';
-	import Shell from '$lib/Shell.svelte';
+	import { config } from '$lib/Shared/config';
+	import Shell from '$lib/Components/Shell.svelte';
 	import MainMenu from '$lib/Components/Menu/MainMenu.svelte';
 	import ContentPane from '$lib/Components/ContentPane.svelte';
-	import { showMenu } from '$lib/ShellStore';
+	import { showMenu } from '$lib/Shared/ShellStore';
 	import MenuItem from '$lib/Components/Menu/MenuItem.svelte';
 	import TextContainer from '$lib/Components/TextContainer.svelte';
 	import Menu from '$lib/Components/Menu/Menu.svelte';

@@ -1,5 +1,5 @@
 import { Specialty } from './Specialty';
-import { config } from '$lib/config';
+import { config } from '$lib/Shared/config';
 
 const getSpecialtyBySlugQuery = `
   query getSpecialtyBySlug($slug: String!) {

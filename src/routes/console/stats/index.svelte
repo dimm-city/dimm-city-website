@@ -3,11 +3,11 @@
 </script>
 
 <script lang="ts">
-	import Shell from '$lib/Shell.svelte';
+	import Shell from '$lib/Components/Shell.svelte';
 	import MainMenu from '$lib/Components/Menu/MainMenu.svelte';
 	import ContentPane from '$lib/Components/ContentPane.svelte';
-	import { characters, districts, showMenu, specialties } from '$lib/ShellStore';
-	import { config } from '$lib/config';
+	import { characters, districts, showMenu, specialties } from '$lib/Shared/ShellStore';
+	import { config } from '$lib/Shared/config';
 	$showMenu = false;
 </script>
 

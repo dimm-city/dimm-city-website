@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { showMenu } from '$lib/ShellStore';
+	import { showMenu } from '$lib/Shared/ShellStore';
 	import { onMount } from 'svelte';
 	export let story = '';
 	export function selectStory(story) {
