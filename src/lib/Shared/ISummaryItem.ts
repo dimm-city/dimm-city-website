@@ -6,6 +6,7 @@ export interface ISummaryItem {
 	description: string;
 	thumbnailUrl: string;
 	imageUrl: string;
+	tags: string;
 }
 
 

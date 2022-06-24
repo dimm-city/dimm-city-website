@@ -13,4 +13,7 @@ export class Specialty implements IArticle {
 	imageUrl: string;
 	videoUrl: string;
 	thumbnailUrl: string;
+	tags: string;
+	type: string;
+	author: string;
 }

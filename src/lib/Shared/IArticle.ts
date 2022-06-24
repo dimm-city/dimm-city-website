@@ -8,4 +8,6 @@ export interface IArticle {
 	imageUrl: string;
 	videoUrl: string;
 	thumbnailUrl: string;
+	tags: string;
+	author: string;
 }

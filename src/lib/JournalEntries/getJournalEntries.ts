@@ -8,6 +8,7 @@ query {
 			id
 			attributes {
 				slug
+				tags
 				title
 				description
 				shortDescription

@@ -8,9 +8,10 @@
 	import Article from '$lib/Components/Article.svelte';
 	import Image from '$lib/Components/Image.svelte';
 	import JournalEntriesMenu from './JournalEntriesMenu.svelte';
+	import type { JournalEntry } from './JournalEntry';
 	export let slug;
 	$showMenu = false;
-	let model = null;
+	let model: JournalEntry = null;
 
 	$: if (slug > '') {
 		model = null;
