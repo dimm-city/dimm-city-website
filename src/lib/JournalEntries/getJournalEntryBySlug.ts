@@ -8,12 +8,14 @@ const getJournalEntryBySlugQuery = `
         id
         attributes {
           slug
+		  tags
           name: title
           description
           shortDescription
           imageUrl
           thumbnailUrl
           videoUrl
+		  type  
         }
       }
     }
