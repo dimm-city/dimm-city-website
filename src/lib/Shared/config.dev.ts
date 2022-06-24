@@ -1,5 +1,4 @@
 export const config = {
-	version: '0.3.0',
 	graphUrl: 'http://localhost:1337/graphql',
 	baseUrl: 'https://localhost:3000',
 	apiBaseUrl: 'http://localhost:1337/api',

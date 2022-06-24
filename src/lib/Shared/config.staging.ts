@@ -1,5 +1,4 @@
 export const config = {
-	version: '0.2.0',
 	graphUrl: 'https://data.dimm.city/graphql',
 	apiBaseUrl: 'https://data.dimm.city/api',
 	baseUrl: 'azure',
