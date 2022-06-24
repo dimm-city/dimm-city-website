@@ -15,7 +15,7 @@
 		<h4 class="">Dimm City Console v0.3.0</h4>
 		<ul class="unstyled-list">
 			<li><a href="/locations">Location data added</a></li>
-			<li><a href="/specialties">Additional Citizen Data</a></li>
+			<li><a href="/specialties">Initial specialty data extracted</a></li>
 		</ul>
 		<h4 class="">Dimm City Console v0.2.0</h4>
 		<ul class="unstyled-list">
