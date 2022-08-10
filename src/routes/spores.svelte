@@ -13,9 +13,9 @@
 	import Menu from '$lib/Components/Menu/Menu.svelte';
 	$showMenu = false;
 
-	let currentText = 'op-console';
+	let currentText = 'spores';
 	function updateText(key: string) {
-		currentText = key == '' ? 'op-console' : key;
+		currentText = key == '' ? 'spores' : key;
 	}
 </script>
 
@@ -36,9 +36,18 @@
 <Shell title="Home" showMenuButton={true} showMainMenuButton={false}>
 	<ContentPane padding={0}>
 		<div class="home-container animate__animated animate__backInDown">
-			<h6 class="">Dimm City Console v{config.version}</h6>
+			<h3 class="">Dimm City Spores</h3>
+			<small>Welcome to the Dimm City 1-Page RPG</small>
 
-			<Menu columns={3}>
+			<Menu columns={2}>
+				<!-- <MenuItem
+					on:mouseenter={() => updateText('spores')}
+					on:mouseleave={() => updateText('')}
+					url="/spores"
+					icon="bi-pin"
+					title="Dimm City Spores"
+					description="Welcome to the Dimm City 1-Page RPG"
+				/> -->
 				<MenuItem
 					on:mouseenter={() => updateText('locations')}
 					on:mouseleave={() => updateText('')}
@@ -46,14 +55,6 @@
 					icon="bi-map"
 					title="Locations"
 					description="Districts and locations identified within Dimm City"
-				/>
-				<MenuItem
-					on:mouseenter={() => updateText('citizens')}
-					on:mouseleave={() => updateText('')}
-					url="/citizens"
-					icon="bi-people"
-					title="Citizen Files"
-					description="Access the available citizen files"
 				/>
 				<MenuItem
 					on:mouseenter={() => updateText('specialties')}
@@ -64,6 +65,14 @@
 					description="Documenting the true skills of the Sporos"
 				/>
 
+				<MenuItem
+					on:mouseenter={() => updateText('citizens')}
+					on:mouseleave={() => updateText('')}
+					url="/citizens"
+					icon="bi-people"
+					title="Citizen Files"
+					description="Access the available citizen files"
+				/>
 				<MenuItem
 					on:mouseenter={() => updateText('history')}
 					on:mouseleave={() => updateText('')}
@@ -81,31 +90,6 @@
 					title="Op Manual"
 					description="Operator's Console Manual"
 				/> -->
-				<MenuItem
-					on:mouseenter={() => updateText('op-console')}
-					on:mouseleave={() => updateText('')}
-					url="/console"
-					icon="bi-person-workspace"
-					title="Op Console"
-					description="Connect to your Operator's Console"
-				/>
-
-				<MenuItem
-					on:mouseenter={() => updateText('change-log')}
-					on:mouseleave={() => updateText('')}
-					url="/console/change-log"
-					icon="bi-journal-check"
-					title="Change Log"
-					description="Latest changes to Dimm City Console"
-				/>
-				<MenuItem
-					on:mouseenter={() => updateText('stats')}
-					on:mouseleave={() => updateText('')}
-					url="/console/stats"
-					icon="bi-diagram-3"
-					title="System Stats"
-					description="Console information and diagnostics"
-				/>
 			</Menu>
 			<TextContainer>
 				{#if currentText == 'citizens'}
@@ -132,9 +116,9 @@
 					<div class="fade-in">
 						<h4>Specialties</h4>
 						<p>
-							It has become clear that there are some exceptional Sporos that operate on a level beyond that of the average
-							citizen. These Sporos specialize in a variety of skills. Some harness there power from technology and
-							others direct from the Ether.
+							It has become clear that there are some exceptional Sporos that operate on a level beyond that of the
+							average citizen. These Sporos specialize in a variety of skills. Some harness there power from technology
+							and others direct from the Ether.
 						</p>
 					</div>
 				{:else if currentText == 'locations'}
@@ -145,51 +129,18 @@
 							put together based on what we know so far.
 						</p>
 					</div>
-				{:else if currentText == 'manual'}
+				{:else if currentText == 'spores'}
 					<div class="fade-in">
-						<h4>Op Manual</h4>
-						<p />
-					</div>
-				{:else if currentText == 'change-log'}
-					<div class="fade-in">
-						<h4>Change Log</h4>
+						<p>Welcome Dream Master</p>
+						<p>Thank you for following the note on the mushroom and finding your way here.</p>
 						<p>
-							Read up on the latest changes to the console. As we make improvements, we will list them here for quick
-							reference. This is an easy way to see if any new tools have been added or bugs have been fixed in the
-							latest release.
+							The sections show above will allow you to find more information about Dimm City and what life is like for
+							it's citizens, the Sporos.
 						</p>
-					</div>
-				{:else if currentText == 'stats'}
-					<div class="fade-in">
-						<h4>System Stats</h4>
-						<blockquote>"Metrics are important, diagnostics are divine." -founder3</blockquote>
+						<p>To download a copy of a spore, open that districts Location file and click the download button.</p>
 						<p>
-							The console has a varity of connections, subsystems, and cron jobs that it needs to keep things running.
-							This area of the console takes a look under the hood to see what's going on.
-						</p>
-						<p>
-							More important than either metrics or diagnostics is community and open collaboration. This area also
-							highlights technologies, projects, and contributions that make the console possible. Without the people
-							behind these resources the exploration of Dimm City would not be possible.
-						</p>
-					</div>
-				{:else if currentText == 'op-console'}
-					<div class="fade-in">
-						<p>Hello Op, we are glad you came.</p>
-						<p>
-							The console is online, but barely. We have only managed to scavage a few pieces of data from the Ether so
-							far. We need all the help we can get! Please contribute any information you can provide regarding the
-							citizens of Dimm City.
-						</p>
-						<p>
-							If you have successfully connected to a Sporo, you should be able to access that connection from the Op
-							Console. This console will allow you to complete a citizen profile for the Sporo you are connected to.
-							That profile will be saved to into the console for other Ops to reference.
-						</p>
-						<p>We remain hopeful that, with enough information, there still may be a chance...</p>
-						<p>
-							Your assistance in greatly appreciated,
-							<br />-founder3
+							We hope you enjoy your journey,
+							<br />-the founders
 						</p>
 					</div>
 				{:else}

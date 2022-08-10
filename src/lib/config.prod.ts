@@ -1,6 +1,6 @@
 
 export const config = {
-	version: "0.3.0",
+	version: '',
 	baseUrl:   "https://dimm.city",
 	graphUrl: 'https://data.dimm.city/graphql', //  "http://localhost:1337/graphql",
 	apiBaseUrl: 'https://data.dimm.city/api',
