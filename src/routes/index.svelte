@@ -40,6 +40,15 @@
 
 			<Menu columns={3}>
 				<MenuItem
+					on:mouseenter={() => updateText('journal-entries')}
+					on:mouseleave={() => updateText('')}
+					icon="bi bi-journal-code"
+					title="Founder Journals"
+					url="/journal-entries"
+					description="Files from the founder's journals"
+				/>
+				
+				<MenuItem
 					on:mouseenter={() => updateText('locations')}
 					on:mouseleave={() => updateText('')}
 					url="/locations"
@@ -72,14 +81,7 @@
 					url="/history"
 					description="History of Dimm City"
 				/>
-				<MenuItem
-					on:mouseenter={() => updateText('journal-entries')}
-					on:mouseleave={() => updateText('')}
-					icon="bi bi-journal-code"
-					title="Founder Journals"
-					url="/journal-entries"
-					description="Files from the founder's journals"
-				/>
+				
 
 				<!-- <MenuItem
 					on:mouseenter={() => updateText('manual')}

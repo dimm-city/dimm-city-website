@@ -12,6 +12,6 @@ function getCurrentConfig() {
 	if (browser && window.location.href.includes(staging.baseUrl)) output = staging;
 	if (browser && window.location.href.includes(dev.baseUrl)) output = dev;
 
-	output.version = '0.3.1';
+	output.version = '0.4.0';
 	return output;
 }

@@ -9,6 +9,7 @@
 	import Image from '$lib/Components/Image.svelte';
 	import JournalEntriesMenu from './JournalEntriesMenu.svelte';
 	import type { JournalEntry } from './JournalEntry';
+	import { formatDate } from '$lib/Shared/FormatFunctions';
 	export let slug;
 	$showMenu = false;
 	let model: JournalEntry = null;
@@ -23,6 +24,10 @@
 	<ContentPane padding={0} scrollable={true}>
 		{#if model}
 			<Article {model}>
+				<div slot="header">
+					<h1>{model.name}</h1>
+					<small>recorded &thickapprox; {formatDate(model.recordedAt)}</small>
+				</div>
 				<div slot="main-image">
 					{#if model.imageUrl > ''}
 						<Image
@@ -38,7 +43,7 @@
 			</Article>
 		{/if}
 	</ContentPane>
-	<Menu slot="menu">
+	<Menu slot="menu" columns={4}>
 		<JournalEntriesMenu bind:selectedItem={slug} />
 	</Menu>
 </Shell>

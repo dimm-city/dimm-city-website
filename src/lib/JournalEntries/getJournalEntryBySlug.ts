@@ -16,6 +16,8 @@ const getJournalEntryBySlugQuery = `
           thumbnailUrl
           videoUrl
 		  type  
+		  publishedAt
+          recordedAt
         }
       }
     }

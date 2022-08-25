@@ -13,6 +13,8 @@ query {
 				description
 				shortDescription
 				imageUrl
+				publishedAt
+				recordedAt
 			}
 		}
 	}
@@ -40,7 +42,8 @@ export async function getJournalEntries() : Promise<ISummaryItem[]> {
 						name: i.attributes.title,
 						description: i.attributes.shortDescription ?? 'no information on this subject...',
 						thumbnailUrl: i.attributes.thumbnailUrl,
-						imageUrl: i.attributes.imageUrl
+						imageUrl: i.attributes.imageUrl,
+						recordedAt: i.attributes.recordedAt
 					};
 				}).sort((a,b) => a.name > b.name ? 1 : -1);
 			}

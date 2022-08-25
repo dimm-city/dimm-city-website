@@ -38,6 +38,10 @@
 	.menu-items.col-3 {
 		grid-template-columns: repeat(3, 1fr);
 	}
+
+	.menu-items.col-4 {
+		grid-template-columns: repeat(4, 1fr);
+	}
 	.menu-items::--webkit-scrollbar {
 		scrollbar-color: var(--third-accent) var(--secondary-accent);
 		scrollbar-width: thin;
@@ -53,7 +57,7 @@
 			grid-template-columns: repeat(2, 1fr);
 			grid-gap: 1em;
 		}
-		.menu-items.col-3 {
+		.menu-items.col-3, .menu-items.col-4 {
 			grid-template-columns: repeat(2, 1fr);
 		}
 	}
@@ -65,7 +69,7 @@
 			grid-template-columns: repeat(1, 1fr);
 			grid-gap: 1em;
 		}
-		.menu-items.col-3 {
+		.menu-items.col-3 , .menu-items.col-4{
 			grid-template-columns: repeat(1, 1fr);
 		}
 	}

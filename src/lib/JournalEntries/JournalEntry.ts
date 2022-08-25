@@ -16,4 +16,6 @@ export class JournalEntry implements IArticle {
 	tags: string;
 	type: string;
 	author: string;
+	publishedAt: Date;
+    recordedAt: Date;
 }

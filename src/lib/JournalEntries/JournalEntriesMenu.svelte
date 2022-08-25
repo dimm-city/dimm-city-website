@@ -1,6 +1,7 @@
 <script>
 	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
 	import MenuItem from '$lib/Components/Menu/MenuItem.svelte';
+	import { formatDate } from '$lib/Shared/FormatFunctions';
 	import { showMenu } from '$lib/Shared/ShellStore';
 	import { onMount } from 'svelte';
 	import { getJournalEntries } from './getJournalEntries';
@@ -52,6 +53,25 @@
 		margin-bottom: 5em;
 		width: 100%;
 	}
+
+	.menu-item-header {
+		margin-top: 0.5rem;
+		display: flex;
+		justify-content: space-between;
+		/* white-space: nowrap; */
+	}
+	.menu-item-header .title-container {
+		max-width: 30%;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap;
+		max-width: 10ch;
+	}
+
+	.description {
+		white-space: normal;
+		max-width: 20ch;
+	}
 </style>
 
 {#await query}
@@ -61,9 +81,12 @@
 {:then}
 	{#if journalEntries != null}
 		{#each journalEntries as item}
-			<MenuItem url="/journal-entries/{item.slug}" on:click={selectItem}>
-				<p><i class="bi bi-person text-light" />{item.name}</p>				
-
+			<MenuItem url="/journal-entries/{item.slug}" on:click={selectItem} classes="small">
+				<div class="menu-item-header" style="">
+					<div class="title-container"><i class="bi bi-file-text text-light" />{item.name}</div>
+					<div><small>&thickapprox; {formatDate(item.recordedAt)}</small></div>
+				</div>
+				<div class="description"><small>{item.description}</small></div>
 				<div class="toolbar">
 					<!-- <a
 						target="_blank"
@@ -75,6 +98,9 @@
 				</div>
 			</MenuItem>
 		{/each}
+		<MenuItem>Test 01</MenuItem>
+		<MenuItem>Test 01</MenuItem>
+		<MenuItem>Test 01</MenuItem>
 		<div class="item-container">&nbsp;</div>
 	{/if}
 {:catch e}
