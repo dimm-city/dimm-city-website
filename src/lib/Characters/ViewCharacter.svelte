@@ -67,7 +67,12 @@
 				<!-- <Button on:click={() => tabs.setTab('sheet')} shape="square">
 					<i class="fade-in btn bi bi-gpu-card" />
 				</Button> -->
-				<TwitterButton text="Check out this Dimm City citizen file" hashTags="Sporos,DimmCity" shape="square" title="Share citizen file">
+				<TwitterButton
+					text="Check out this Dimm City citizen file"
+					hashTags="Sporos,DimmCity"
+					shape="square"
+					title="Share citizen file"
+				>
 					<i class="fade-in btn bi bi-share" />
 				</TwitterButton>
 				{#if isEditable}
@@ -93,7 +98,5 @@
 			</Tab>
 		</TabPanel>
 	{/await}
-	<Menu slot="menu">
-		<CharacterMenu on:character.selected={(e) => selectCharcter(e.detail)} />
-	</Menu>
+	<CharacterMenu slot="menu" on:character.selected={(e) => selectCharcter(e.detail)} />
 </Shell>

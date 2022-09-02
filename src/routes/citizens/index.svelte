@@ -12,7 +12,5 @@
 	<ContentPane>
 		<Menu />
 	</ContentPane>
-	<Menu slot="menu">
-		<CharacterMenu />
-	</Menu>
+	<CharacterMenu slot="menu" />
 </Shell>

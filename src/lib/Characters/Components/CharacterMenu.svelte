@@ -1,6 +1,5 @@
 <script>
-	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
-	import MenuItem from '$lib/Components/Menu/MenuItem.svelte';
+	import FlexMenu from '$lib/Components/Menu/FlexMenu.svelte';
 	import { characters } from '$lib/Shared/ShellStore';
 	import { createEventDispatcher, onMount } from 'svelte';
 	import { getCharactersQuery } from '../getCharacters';
@@ -60,71 +59,28 @@
 			} else resolve($characters);
 		});
 	});
-	function selectCharacter(character) {
+	function selectCharacter(e) {
+		let character = e.detail;
 		dispatcher('character.selected', character.tokenId);
+		document.location = '/citizens/' + character.tokenId;
 	}
 </script>
 
-<style>
-	.toolbar {
-		position: absolute;
-		bottom: 1rem;
-		right: 1rem;
-	}
-	.toolbar a,
-	.toolbar a:visited {
-		color: var(--third-accent);
-		transition: color 500ms ease-in-out;
-	}
-	.toolbar a:hover,
-	.toolbar a:active {
-		color: var(--primary-accent);
-		transition: color 500ms ease-in-out;
-	}
-
-	.item-container{
-		margin-bottom: 5em;
-		width: 100%;
-	}
-</style>
-
-{#await query}
-	<LoadingIndicator>
-		<div>Locating citizen data...</div>
-	</LoadingIndicator>
-{:then}
-	{#if $characters != null}
-		{#each $characters as character}
-			<MenuItem url="/citizens/{character.tokenId}" on:click={() => selectCharacter(character)}>
-				<p><i class="bi bi-person text-light" />{character.name}</p>
-				<small>
-					{#if character.race?.data?.attributes}
-						<div>{character.race.data.attributes.name}</div>
-					{:else}
-						<div>Unknown race</div>
-					{/if}
-					{#if character.specialties && character.specialties.data}
-						<div>
-							{character.specialties.data.map((r) => r.attributes.name).join(', ')}
-						</div>
-					{:else}
-						<div>Unknown specialties</div>
-					{/if}
-				</small>
-
-				<div class="toolbar">
-					<!-- <a
-						target="_blank"
-						on:click|stopPropagation={() => true}
-						href="/citizens/print/{character.attributes.tokenId}"
-					>
-						<i class="bi bi-printer" />
-					</a> -->
-				</div>
-			</MenuItem>
-		{/each}
-		<div class="item-container">&nbsp;</div>
-	{/if}
-{:catch e}
-	<div>{e}</div>
-{/await}
+<FlexMenu on:itemSelected={e => selectCharacter(e)} data={$characters} {query}>
+	<svelte:fragment let:item slot="subtitle">
+		{#if item.race?.data?.attributes}
+			<div>{item.race.data.attributes.name}</div>
+		{:else}
+			<div>Unknown race</div>
+		{/if}</svelte:fragment
+	>
+	<div slot="description" let:item>
+		{#if item.specialties && item.specialties.data}
+			<div>
+				{item.specialties.data.map((r) => r.attributes.name).join(', ')}
+			</div>
+		{:else}
+			<div>Unknown specialties</div>
+		{/if}
+	</div>
+</FlexMenu>

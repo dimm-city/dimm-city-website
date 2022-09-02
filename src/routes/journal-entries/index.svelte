@@ -11,7 +11,5 @@
 	<ContentPane>
 		<Menu />
 	</ContentPane>
-	<Menu slot="menu" columns={2}>
-		<JournalEntriesMenu />
-	</Menu>
+	<JournalEntriesMenu slot="menu" />
 </Shell>

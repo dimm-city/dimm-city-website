@@ -3,7 +3,6 @@
 	import Shell from '$lib/Components/Shell.svelte';
 	import { showMenu } from '$lib/Shared/ShellStore';
 	import ContentPane from '$lib/Components/ContentPane.svelte';
-	import Menu from '$lib/Components/Menu/Menu.svelte';
 	import { getJournalEntry } from './getJournalEntryBySlug';
 	import Article from '$lib/Components/Article.svelte';
 	import Image from '$lib/Components/Image.svelte';
@@ -43,7 +42,6 @@
 			</Article>
 		{/if}
 	</ContentPane>
-	<Menu slot="menu" columns={4}>
-		<JournalEntriesMenu bind:selectedItem={slug} />
-	</Menu>
+
+	<JournalEntriesMenu slot="menu" bind:selectedItem={slug} />
 </Shell>
