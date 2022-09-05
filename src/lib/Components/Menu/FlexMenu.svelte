@@ -21,12 +21,13 @@
 		flex-wrap: wrap;
 		margin: 0.5rem;
 		min-width: 300px;
-        justify-content: center;
+		justify-content: center;
 	}
 	.flex-menu > div {
 		flex: 1 1 350px;
 		margin: 0.25rem;
 		max-width: 500px;
+        overflow: hidden;
 		margin-inline: 0.5rem;
 	}
 
@@ -56,6 +57,26 @@
 		white-space: nowrap;
 	}
 
+	.menu-item-header {
+		margin-top: 0.5rem;
+		display: flex;
+		justify-content: space-between;
+		width: 100%;
+		/* white-space: nowrap; */
+	}
+	.menu-item-header .title-container {
+		max-width: 100ch;
+		text-overflow: ellipsis;
+        overflow: hidden;
+		white-space: nowrap;
+	}
+
+	.description {
+		margin-block: 0.25rem;
+		white-space: normal;
+		text-overflow: clip;
+	}
+
 	@media (max-width: 650px) {
 		.subtitle {
 			display: none;
@@ -69,30 +90,10 @@
 			display: none;
 		}
 		.title-container {
-			max-width: 150px;
+			max-width: 100%;
 		}
 	}
-
-	.menu-item-header {
-		margin-top: 0.5rem;
-		display: flex;
-		justify-content: space-between;
-		width: 100%;
-		/* white-space: nowrap; */
-	}
-	.menu-item-header .title-container {
-		max-width: 30%;
-		text-overflow: ellipsis;
-		overflow: hidden;
-		white-space: nowrap;
-		max-width: 10ch;
-	}
-
-	.description {
-        margin-block: 0.25rem;
-		white-space: normal;
-		text-overflow: clip;
-	}
+   
 </style>
 
 <div class="flex-menu">
@@ -103,7 +104,7 @@
 	{:then}
 		{#if data != null}
 			{#each data as item}
-				<div>
+				<div class="flex-menu-item">
 					<MenuItem on:click={() => selectItem(item)} classes="small">
 						<div class="menu-item-header" style="">
 							<slot name="item-header" {item}>

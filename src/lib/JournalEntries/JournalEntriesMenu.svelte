@@ -1,11 +1,12 @@
-<script>	
+<script lang="ts">
 	import FlexMenu from '$lib/Components/Menu/FlexMenu.svelte';
 	import { formatDate } from '$lib/Shared/FormatFunctions';
 	import { showMenu } from '$lib/Shared/ShellStore';
 	import { onMount } from 'svelte';
 	import { getJournalEntries } from './getJournalEntries';
+	import { JournalEntry } from './JournalEntry';
 
-	export let selectedItem = '';
+	export let selectedItem: JournalEntry = new JournalEntry();
 	let journalEntries = [];
 	let query;
 	onMount(() => {
@@ -24,14 +25,25 @@
 	});
 
 	function selectItem(item) {
-		selectedItem = item.slug;
+		selectedItem = item.detail;
+		document.location = `/journal-entries/${selectedItem.slug}`;
 		$showMenu = false;
 		return true;
 	}
 </script>
+<style>
+	.subtitle{
+		white-space: nowrap;
+	}
+	@media (max-width: 500px){
+		.subtitle{
+			display: none;
+		}
+	}
+</style>
 
 <FlexMenu data={journalEntries} {query} on:itemSelected={selectItem}>
 	<svelte:fragment slot="subtitle" let:item>
-		<div><small>&thickapprox; {formatDate(item.recordedAt)}</small></div>
+		<div class="subtitle"><small>&thickapprox; {formatDate(item.recordedAt)}</small></div>
 	</svelte:fragment>
 </FlexMenu>
