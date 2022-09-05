@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Shell from '$lib/Components/Shell.svelte';
+	import Shell from '$lib/Components/NewShell.svelte';
 	import Menu from '$lib/Components/Menu/Menu.svelte';
 	import { showMenu } from '$lib/Shared/ShellStore';
 	import ContentPane from '$lib/Components/ContentPane.svelte';
@@ -9,7 +9,7 @@
 
 <Shell title="Journals" showMenuButton={false}>
 	<ContentPane>
-		<Menu />
+		<JournalEntriesMenu />
 	</ContentPane>
 	<JournalEntriesMenu slot="menu" />
 </Shell>

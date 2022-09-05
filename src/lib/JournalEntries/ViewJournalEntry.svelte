@@ -1,6 +1,6 @@
 <script lang="ts">
 	import './journal-entries.css';
-	import Shell from '$lib/Components/Shell.svelte';
+	import Shell from '$lib/Components/NewShell.svelte';
 	import { showMenu } from '$lib/Shared/ShellStore';
 	import ContentPane from '$lib/Components/ContentPane.svelte';
 	import { getJournalEntry } from './getJournalEntryBySlug';
@@ -42,6 +42,4 @@
 			</Article>
 		{/if}
 	</ContentPane>
-
-	<JournalEntriesMenu slot="menu" bind:selectedItem={slug} />
 </Shell>

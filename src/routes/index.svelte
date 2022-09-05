@@ -4,7 +4,7 @@
 
 <script lang="ts">
 	import { config } from '$lib/Shared/config';
-	import Shell from '$lib/Components/Shell.svelte';
+	import Shell from '$lib/Components/NewShell.svelte';
 	import MainMenu from '$lib/Components/Menu/MainMenu.svelte';
 	import ContentPane from '$lib/Components/ContentPane.svelte';
 	import { showMenu } from '$lib/Shared/ShellStore';
@@ -33,11 +33,10 @@
 	}
 </style>
 
-<Shell title="Home" showMenuButton={true} showMainMenuButton={false}>
+<Shell title="Home" showMenuButton={true}>
 	<ContentPane padding={0}>
-		<div class="home-container animate__animated animate__backInDown">
-			<h6 class="">Dimm City Console v{config.version}</h6>
-
+		<div class="home-container">
+			
 			<Menu columns={3}>
 				<MenuItem
 					on:mouseenter={() => updateText('journal-entries')}

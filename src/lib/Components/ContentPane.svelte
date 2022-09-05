@@ -1,7 +1,7 @@
 <script lang="ts">
 	export let fullsize = true;
 	export let padding = 3;
-	export let scrollable:boolean = true;
+	export let scrollable: boolean = true;
 </script>
 
 <style>
@@ -74,6 +74,11 @@
 	}
 	.content-wrapper::-webkit-scrollbar {
 		color: var(--secondary-accent);
+	}
+
+	/* https://css-tricks.com/custom-scrollbars-in-webkit/ */
+	*::-webkit-scrollbar {
+		width: 0rem; /* width of the entire scrollbar */
 	}
 
 	@media all and (max-width: 768px), (max-aspect-ratio: 0.74) {
