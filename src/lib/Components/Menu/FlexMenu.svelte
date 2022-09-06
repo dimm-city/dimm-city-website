@@ -5,6 +5,7 @@
 	export let query;
 	export let data;
 	export let selectedItem = '';
+	export let icon = "bi-file-text";
 
 	const dispather = createEventDispatcher();
 
@@ -108,10 +109,10 @@
 					<MenuItem on:click={() => selectItem(item)} classes="small">
 						<div class="menu-item-header" style="">
 							<slot name="item-header" {item}>
-								<div class="title-container"><i class="bi bi-file-text text-light" />{item.name}</div>
+								<div class="title-container"><i class="bi {icon} text-light" />{item.name}</div>
 							</slot>
 							<slot name="subtitle" {item}>
-								<div class="subtitle"><small>&thickapprox;</small></div>
+								<div class="subtitle"></div>
 							</slot>
 						</div>
 						<div class="description">

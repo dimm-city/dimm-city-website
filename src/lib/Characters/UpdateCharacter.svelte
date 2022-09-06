@@ -3,7 +3,7 @@
 	import CharacterTab from '$lib/Characters/Tabs/Character.svelte';
 	import CharacterMenu from '$lib/Characters/Components/CharacterMenu.svelte';
 	import Menu from '$lib/Components/Menu/Menu.svelte';
-	import Shell from '$lib/Components/Shell.svelte';
+	import Shell from '$lib/Components/NewShell.svelte';
 	import { characters, showMenu, myCollection } from '$lib/Shared/ShellStore';
 	import Tab from '$lib/Components/Tab.svelte';
 	import CharacterStats from '$lib/Characters/Tabs/CharacterStats.svelte';
@@ -109,7 +109,4 @@
 			</Tab>
 		</TabPanel>
 	{/await}
-	<Menu slot="menu">
-		<CharacterMenu on:character.selected={(e) => selectCharcter(e.detail)} />
-	</Menu>
 </Shell>

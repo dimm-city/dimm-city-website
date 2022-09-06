@@ -3,9 +3,7 @@
 </script>
 
 <script lang="ts">
-	import Shell from '$lib/Components/Shell.svelte';
-	import Menu from '$lib/Components/Menu/Menu.svelte';
-	import Button from '$lib/Components/Button.svelte';
+	import Shell from '$lib/Components/NewShell.svelte';
 	import { showMenu, myCollection } from '$lib/Shared/ShellStore';
 	import { provider, signer, signerAddress, connected, defaultEvmStores, chainId } from 'svelte-ethers-store';
 	import MenuItem from '$lib/Components/Menu/MenuItem.svelte';
@@ -25,7 +23,7 @@
 	let tokenView;
 
 	$: tokenId = `${selectedSporo.release}-${selectedSporo.edition}`;
-	$showMenu = true;
+
 	//$: contractConfig = config.releases.s1r1.networks.find((n) => n.chainId === $chainId);
 	//$: network = $connected ? $provider.getNetwork() : ({} as any);
 	//$: contract = $connected ? new Contract(contractConfig.address, abiJson.abi, $signer) as unknown as ContractContext : null;
@@ -43,7 +41,6 @@
 	}
 
 	function viewSporos() {
-		$showMenu = false;
 		selectedSporo = {};
 	}
 
@@ -106,83 +103,29 @@
 	}
 </style>
 
-<Shell title="Console" showMenuButton={false}>
+<Shell title="Console">
 	<ContentPane padding={0}>
 		<div class="content-container">
-			{#if $loggedIn}
-				{#if selectedSporo.edition > 0}
-					<div class="fade-in">
-						<Character {tokenId} />
-					</div>
-				{:else}
-					<div class="fade-in">
-						<h2>Your Sporos</h2>
-						{#await loadingTask}
-							<LoadingIndicator>
-								<span>Locating sporos...</span>
-							</LoadingIndicator>
-						{:then}
-							<ul>
-								{#each $myCollection as sporo}
-									<li data-augmented-ui class="small-menu-item" on:click={() => showToken(sporo)}>
-										{sporo.name} <small> {sporo.release}-{sporo.edition}</small>
-									</li>
-								{/each}
-							</ul>
-						{/await}
-					</div>
-				{/if}
-			{/if}
-		</div>
-	</ContentPane>
-	<Menu slot="menu" columns={3}>
-		<div class="fade-in" slot="menu-toolbar">
 			{#if $connected && $signerAddress}
-				<TextContainer>
-					<small>Profile: {$signerAddress}</small>
-					<div>
-						{#await $contract.balanceOf($signerAddress)}
-							<LoadingIndicator>
-								<span>Locating sporos...</span>
-							</LoadingIndicator>
-						{:then count}
-							<h4>Sporos Located: {count}</h4>
-
-							{#if $myCollection.some((s) => !s.hasCharacter)}
-								<span class="text-highlight"
-									>{$myCollection.filter((s) => !s.hasCharacter).length} Sporos missing citizen profiles</span
-								>
-							{/if}
-						{/await}
-					</div>
-				</TextContainer>
-				{#if $myCollection.length == 0}
-				<div class="fade-in" style="margin-top: 1rem;">
-					<LoadingIndicator>Extracting Sporo's data...</LoadingIndicator>
+				<div class="fade-in">
+					<h2>Your Sporos</h2>
+					{#await loadingTask}
+						<LoadingIndicator>
+							<span>Locating sporos...</span>
+						</LoadingIndicator>
+					{:then}
+						<ul>
+							{#each $myCollection as sporo}
+								<li data-augmented-ui class="small-menu-item" on:click={() => showToken(sporo)}>
+									{sporo.name} <small> {sporo.release}-{sporo.edition}</small>
+								</li>
+							{/each}
+						</ul>
+					{/await}
 				</div>
-					
-				{/if}
 			{:else}
 				<MenuItem on:click={connect}>Connect</MenuItem>
 			{/if}
 		</div>
-		{#if $connected && $signerAddress}
-			{#each $myCollection as sporo}
-				<MenuItem on:click={() => showToken(sporo)} classes="console-menu-item fade-in">
-					<div class="menu-item-grid">
-						<div class="name-column">{sporo.name}</div>
-						<div class="id-column"><small> {sporo.release}-{sporo.edition}</small></div>
-						<div class="image-column"><Thumbnail title="thumbnail" imageUrl={sporo.thumbnail_uri} height="4rem" /></div>
-						<div class="toolbar-column">
-							{#if sporo.hasCharacter}
-								<i class="bi bi-file-person text-primary" title="Has citizen file in the archives" />
-							{:else}
-								<i class="bi bi-file text-highlight" title="Citizen file not found in the archives" />
-							{/if}
-						</div>
-					</div>
-				</MenuItem>
-			{/each}
-		{/if}
-	</Menu>
+	</ContentPane>
 </Shell>

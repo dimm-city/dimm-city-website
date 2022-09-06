@@ -33,7 +33,7 @@
 	}
 </style>
 
-<Shell title="Home">
+<Shell title="DCC Dashboard">
 	<ContentPane padding={0}>
 		<div class="home-container">
 			

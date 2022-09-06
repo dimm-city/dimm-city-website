@@ -2,20 +2,19 @@
 	import ContentPane from './ContentPane.svelte';
 
 	import { Modals, closeModal, closeAllModals } from 'svelte-modals';
-	import { pageImage, showSearchResults, searchText } from '../Shared/ShellStore';
+	import { pageImage } from '../Shared/ShellStore';
 	import '../styles/main.css';
 	import 'animate.css';
 	import { onMount } from 'svelte';
 	import Toolbar from './Toolbar.svelte';
 	import TopMenu from './TopMenu.svelte';
-	import SearchResults from './SearchResults.svelte';
 
 	export let title;
 	export let fullscreen = false;
-    export let enableSearch = false;
+	export let enableSearch = false;
 
 	onMount(async () => {
-		$searchText = '';
+		
 		closeAllModals();
 		// if(window.ethereum && window.ethereum.isConnected()){
 		// 	connect();
@@ -134,22 +133,7 @@
 </svelte:head>
 
 <div class="main-container {title.toLowerCase()}">
-	<div
-		class="search-results-panel animate__animated"
-		class:animate__fadeOutUp={!$showSearchResults}
-		class:animate__backInUp={$showSearchResults}
-		class:hidden={!$showSearchResults}
-	>
-		<ContentPane>
-			<SearchResults />
-		</ContentPane>
-	</div>
-	<div
-		class="content-panel animate__animated"
-		class:animate__fadeOutUp={$showSearchResults}
-		class:animate__backInUp={!$showSearchResults}
-		class:hidden={$showSearchResults}
-	>
+	<div class="content-panel animate__animated animate__backInUp">
 		<div class="content-panel-grid">
 			<div class="content-panel-content-row">
 				<slot><ContentPane fullsize={true}>404</ContentPane></slot>
@@ -160,7 +144,7 @@
 		</div>
 	</div>
 	{#if !fullscreen}
-		<TopMenu {title} {enableSearch}/>
+		<TopMenu {title} {enableSearch} />
 	{/if}
 	<slot name="scripts" />
 </div>

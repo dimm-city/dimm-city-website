@@ -25,7 +25,12 @@ export const contract: Readable<ContractContext> = derived(
 	}
 );
 
-chainId.subscribe((c) => contractConfig.set(config.releases.dcs1r1.networks.find((n) => n.chainId === c)));
+chainId.subscribe((c) => {
+	const record = config.releases.dcs1r1.networks.find((n) => n.chainId === c);
+	console.log('contract', c, record);
+
+	contractConfig.set(record);
+});
 
 const profile = writable<string>(getSessionValue('profile') ?? null);
 profile.subscribe((value) => setSessionValue('profile', value));
@@ -128,7 +133,7 @@ export async function getSporos(): Promise<any> {
 		const sporo = await get(contract).tokenOfOwnerByIndex(address, index);
 		const tokenId = sporo.toNumber();
 		const data = await downloadSporo(tokenId);
-		//if (data && data.id > -1) 
+		//if (data && data.id > -1)
 		tasks.push(data);
 	}
 

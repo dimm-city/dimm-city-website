@@ -6,13 +6,18 @@
 	import { openModal } from 'svelte-modals';
 
 	export let enableSearch = false;
-	export let title = "";
+	export let title = '';
 	function showModalMenu() {
 		openModal(MainMenuModal, { fullscreen: true });
 	}
 </script>
 
 <style>
+	h4{
+		position: absolute;
+		color: var(--third-accent);
+		margin-top: 0px;
+	}
 	.top-panel {
 		--ds: drop-shadow(0 0 2vh var(--blue));
 		filter: var(--ds) var(--ds);
@@ -159,13 +164,15 @@
 			{/if}
 		</a>
 	</div>
-	{#if enableSearch}
-		<div class="search-container">
+	<div class="search-container">
+		{#if enableSearch}
 			<div data-augmented-ui class="aug-input">
-				<i class="bi bi-gear" />
+				<!-- <i class="bi bi-gear" /> -->
 				<input bind:value={$searchText} type="text" placeholder="Search {title}..." />
 				<i class="bi bi-search" />
 			</div>
-		</div>
-	{/if}
+		{:else}
+			<h4>{title}</h4>
+		{/if}
+	</div>
 </div>

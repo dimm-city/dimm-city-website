@@ -38,6 +38,7 @@ export async function getSpecialties() : Promise<ISummaryItem[]> {
 						slug: i.attributes.slug,
 						name: i.attributes.name,
 						description: i.attributes.description ?? 'no information on this subject...',
+						shortDescription: i.attributes.shortDescription ?? 'no information on this subject...',
 						thumbnailUrl: i.attributes.mainImage?.data?.attributes?.previewUrl,
 						imageUrl: i.attributes.mainImage?.data?.attributes?.url
 					};

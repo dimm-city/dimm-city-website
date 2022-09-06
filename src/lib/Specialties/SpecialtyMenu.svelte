@@ -1,58 +1,43 @@
 <script>
-	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
-	import MenuItem from '$lib/Components/Menu/MenuItem.svelte';
-	import { showMenu, specialties } from '$lib/Shared/ShellStore';
+	import FlexMenu from '$lib/Components/Menu/FlexMenu.svelte';
+	import { filterAndSort, specialties, searchText } from '$lib/Shared/ShellStore';
 	import { onMount } from 'svelte';
 	import { getSpecialties } from './getSpecialties';
-	import { Specialty } from './Specialty';
 
 	export let selectedItem = '';
+
 	let query;
 	onMount(() => {
 		query = new Promise(async (resolve) => {
 			if ($specialties?.length < 1) {
 				let data = await getSpecialties();
 				if (data != null) {
-					$specialties = data.sort((a, b) => {
-						if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
-						else return -1;
-					});
+					$specialties = data;
 				}
 				resolve(data);
 			} else resolve($specialties);
 		});
 	});
 
+	$: filteredSpecialties = $searchText
+		? $specialties.filter((c) =>  c.name.toLowerCase().includes($searchText.toLowerCase()) 
+			|| c.description.toLowerCase().includes($searchText.toLowerCase()))
+		: $specialties;
+
 	function selectItem(item) {
 		selectedItem = item.slug;
-		$showMenu = false;
+		document.location = '/specialties/' + item.slug;
 		return true;
 	}
 </script>
 
-<style>
-	.toolbar {
-		position: absolute;
-		bottom: 1rem;
-		right: 1rem;
-	}
-	.toolbar a,
-	.toolbar a:visited {
-		color: var(--third-accent);
-		transition: color 500ms ease-in-out;
-	}
-	.toolbar a:hover,
-	.toolbar a:active {
-		color: var(--primary-accent);
-		transition: color 500ms ease-in-out;
-	}
+<FlexMenu data={filteredSpecialties} {query} on:itemSelected={selectItem} icon="bi-person-fill">
+	<div slot="description" let:item>
+		<small>{item.shortDescription}</small>
+	</div>
+</FlexMenu>
 
-	.item-container {
-		margin-bottom: 5em;
-		width: 100%;
-	}
-</style>
-
+<!-- 
 {#await query}
 	<LoadingIndicator>
 		<div>Loading location data...</div>
@@ -71,13 +56,6 @@
 				</small>
 
 				<div class="toolbar">
-					<!-- <a
-						target="_blank"
-						on:click|stopPropagation={() => true}
-						href="/citizens/print/{character.attributes.tokenId}"
-					>
-						<i class="bi bi-printer" />
-					</a> -->
 				</div>
 			</MenuItem>
 		{/each}
@@ -85,4 +63,4 @@
 	{/if}
 {:catch e}
 	<div>{e}</div>
-{/await}
+{/await} -->

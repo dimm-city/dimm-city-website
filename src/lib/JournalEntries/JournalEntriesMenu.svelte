@@ -1,7 +1,7 @@
 <script lang="ts">
 	import FlexMenu from '$lib/Components/Menu/FlexMenu.svelte';
 	import { formatDate } from '$lib/Shared/FormatFunctions';
-	import { showMenu } from '$lib/Shared/ShellStore';
+	import { searchText, filterAndSort } from '$lib/Shared/ShellStore';
 	import { onMount } from 'svelte';
 	import { getJournalEntries } from './getJournalEntries';
 	import { JournalEntry } from './JournalEntry';
@@ -14,35 +14,34 @@
 			if (journalEntries?.length < 1) {
 				let data = await getJournalEntries();
 				if (data != null) {
-					journalEntries = data.sort((a, b) => {
-						if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
-						else return -1;
-					});
+					journalEntries = data;
 				}
 				resolve(data);
 			} else resolve(journalEntries);
 		});
 	});
+	
+	$: filteredJournalEntries = filterAndSort(journalEntries, $searchText);
 
 	function selectItem(item) {
 		selectedItem = item.detail;
 		document.location = `/journal-entries/${selectedItem.slug}`;
-		$showMenu = false;
 		return true;
 	}
 </script>
+
 <style>
-	.subtitle{
+	.subtitle {
 		white-space: nowrap;
 	}
-	@media (max-width: 500px){
-		.subtitle{
+	@media (max-width: 500px) {
+		.subtitle {
 			display: none;
 		}
 	}
 </style>
 
-<FlexMenu data={journalEntries} {query} on:itemSelected={selectItem}>
+<FlexMenu data={filteredJournalEntries} {query} on:itemSelected={selectItem}>
 	<svelte:fragment slot="subtitle" let:item>
 		<div class="subtitle"><small>&thickapprox; {formatDate(item.recordedAt)}</small></div>
 	</svelte:fragment>
