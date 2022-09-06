@@ -7,7 +7,7 @@
 	$showMenu = true;
 </script>
 
-<Shell title="Journals" showMenuButton={false}>
+<Shell title="Journals">
 	<ContentPane>
 		<JournalEntriesMenu />
 	</ContentPane>

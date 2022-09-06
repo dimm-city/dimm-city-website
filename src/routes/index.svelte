@@ -33,7 +33,7 @@
 	}
 </style>
 
-<Shell title="Home" showMenuButton={true}>
+<Shell title="Home">
 	<ContentPane padding={0}>
 		<div class="home-container">
 			

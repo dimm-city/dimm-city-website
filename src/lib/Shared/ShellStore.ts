@@ -1,9 +1,12 @@
-import { writable } from 'svelte/store';
+import { readable, writable, get, derived } from 'svelte/store';
 import type { ISummaryItem } from "./ISummaryItem";
 import { getLocalValue, getSessionValue, setLocalValue, setSessionValue } from './StoreUtils';
 
 export const menuItems = writable([]);
 export const showMenu = writable(true);
+
+export const searchText = writable('');
+export const showSearchResults = derived(searchText, $searchText => $searchText != null && $searchText.length > 2);
 
 export const myCollection = writable(getSessionValue('collection') ?? []);
 myCollection.subscribe((value) => setSessionValue('collection', value));

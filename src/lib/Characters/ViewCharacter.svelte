@@ -6,7 +6,7 @@
 	import Character from '$lib/Characters/Tabs/Character.svelte';
 	import CharacterMenu from '$lib/Characters/Components/CharacterMenu.svelte';
 	import Menu from '$lib/Components/Menu/Menu.svelte';
-	import Shell from '$lib/Components/Shell.svelte';
+	import Shell from '$lib/Components/NewShell.svelte';
 	import { characters, pageImage, showMenu } from '$lib/Shared/ShellStore';
 	import Tab from '$lib/Components/Tab.svelte';
 	import CharacterStats from '$lib/Characters/Tabs/CharacterStats.svelte';
@@ -97,6 +97,5 @@
 				<Character {character} />
 			</Tab>
 		</TabPanel>
-	{/await}
-	<CharacterMenu slot="menu" on:character.selected={(e) => selectCharcter(e.detail)} />
+	{/await}	
 </Shell>

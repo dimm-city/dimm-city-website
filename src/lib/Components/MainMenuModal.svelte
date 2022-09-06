@@ -8,6 +8,12 @@
 	<div>
 		<Menu columns={3}>
 			<MenuItem
+				icon="bi bi-dashboard"
+				title="Dashboard"
+				url="/"
+				description="DCC Home Screen"
+			/>
+			<MenuItem
 				icon="bi bi-journal-code"
 				title="Founder Journals"
 				url="/journal-entries"

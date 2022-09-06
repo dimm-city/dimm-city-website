@@ -1,16 +1,11 @@
 <script lang="ts">
-	import Shell from '$lib/Components/Shell.svelte';
-	import Menu from '$lib/Components/Menu/Menu.svelte';
-	import MenuItem from '$lib/Components/Menu/MenuItem.svelte';
-	import { showMenu } from '$lib/Shared/ShellStore';
+	import Shell from '$lib/Components/NewShell.svelte';
 	import ContentPane from '$lib/Components/ContentPane.svelte';
 	import CharacterMenu from '$lib/Characters/Components/CharacterMenu.svelte';
-	$showMenu = true;
 </script>
 
-<Shell title="Citizens" showMenuButton={false}>
+<Shell title="Citizen Files" enableSearch="{true}">
 	<ContentPane>
-		<Menu />
+		<CharacterMenu />
 	</ContentPane>
-	<CharacterMenu slot="menu" />
 </Shell>
