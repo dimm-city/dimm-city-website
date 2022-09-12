@@ -5,7 +5,7 @@
 </script>
 
 <Shell title="Citizen Files" enableSearch="{true}">
-	<ContentPane>
+	<ContentPane padding={0}>
 		<CharacterMenu />
 	</ContentPane>
 </Shell>

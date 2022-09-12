@@ -5,7 +5,7 @@
 </script>
 
 <Shell title="Specialties" enableSearch={true}>
-	<ContentPane>
+	<ContentPane padding={0}>
 		<SpecialtyMenu />
 	</ContentPane>
 </Shell>

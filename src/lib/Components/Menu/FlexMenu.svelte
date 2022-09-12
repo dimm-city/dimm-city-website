@@ -20,16 +20,15 @@
 	.flex-menu {
 		display: flex;
 		flex-wrap: wrap;
-		margin: 0.5rem;
+		margin: 1rem;
 		min-width: 300px;
-		justify-content: center;
+		justify-content: space-evenly;
 	}
 	.flex-menu > div {
 		flex: 1 1 350px;
-		margin: 0.25rem;
+		margin: 0.5rem;
 		max-width: 500px;
         overflow: hidden;
-		margin-inline: 0.5rem;
 	}
 
 	.toolbar {
@@ -72,6 +71,9 @@
 		white-space: nowrap;
 	}
 
+	.title-container i.bi{
+		padding-right: 0.5rem;
+	}
 	.description {
 		margin-block: 0.25rem;
 		white-space: normal;
@@ -109,7 +111,7 @@
 					<MenuItem on:click={() => selectItem(item)} classes="small">
 						<div class="menu-item-header" style="">
 							<slot name="item-header" {item}>
-								<div class="title-container"><i class="bi {icon} text-light" />{item.name}</div>
+								<div class="title-container"><i class="bi {item.icon || icon} text-light" />{item.name}</div>
 							</slot>
 							<slot name="subtitle" {item}>
 								<div class="subtitle"></div>

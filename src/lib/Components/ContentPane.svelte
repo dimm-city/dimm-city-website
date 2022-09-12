@@ -69,6 +69,9 @@
 		overflow: hidden;
 		padding: 0 3rem;
 	}
+	.content-slot.padding-0{
+		padding: 0.5rem !important;
+	}
 	.content-slot.scrollable {
 		overflow-y: auto;
 	}

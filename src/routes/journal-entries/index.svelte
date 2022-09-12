@@ -5,7 +5,7 @@
 </script>
 
 <Shell title="Journal Entries" enableSearch={true}>
-	<ContentPane>
+	<ContentPane padding={0}>
 		<JournalEntriesMenu />
 	</ContentPane>
 </Shell>
