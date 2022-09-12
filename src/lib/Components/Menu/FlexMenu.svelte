@@ -1,11 +1,11 @@
-<script>
+<script lang="ts">
 	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
 	import MenuItem from '$lib/Components/Menu/MenuItem.svelte';
 	import { createEventDispatcher } from 'svelte';
-	export let query;
+	export let query: any = null; // new Promise();
 	export let data;
 	export let selectedItem = '';
-	export let icon = "bi-file-text";
+	export let icon = 'bi-file-text';
 
 	const dispather = createEventDispatcher();
 
@@ -28,7 +28,7 @@
 		flex: 1 1 350px;
 		margin: 0.5rem;
 		max-width: 500px;
-        overflow: hidden;
+		overflow: hidden;
 	}
 
 	.toolbar {
@@ -67,11 +67,11 @@
 	.menu-item-header .title-container {
 		max-width: 100ch;
 		text-overflow: ellipsis;
-        overflow: hidden;
+		overflow: hidden;
 		white-space: nowrap;
 	}
 
-	.title-container i.bi{
+	.title-container i.bi {
 		padding-right: 0.5rem;
 	}
 	.description {
@@ -96,7 +96,6 @@
 			max-width: 100%;
 		}
 	}
-   
 </style>
 
 <div class="flex-menu">
@@ -114,12 +113,12 @@
 								<div class="title-container"><i class="bi {item.icon || icon} text-light" />{item.name}</div>
 							</slot>
 							<slot name="subtitle" {item}>
-								<div class="subtitle"></div>
+								<div class="subtitle" />
 							</slot>
 						</div>
 						<div class="description">
 							<slot {item} name="description">
-								<small>{item.description}</small>
+								<small>{item.description || ''}</small>
 							</slot>
 						</div>
 						<slot name="item-toolbar" {item}>
