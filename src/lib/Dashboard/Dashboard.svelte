@@ -139,6 +139,6 @@
 		</div>
 	</div>
 	<div class="footer">
-		<a href="/system-map"><h3 class="small-menu-item" data-augmented-ui>&lt;system map&gt;</h3> </a>
+		<a href=""><h3 class="small-menu-item" data-augmented-ui>&lt;system map&gt;</h3> </a>
 	</div>
 </div>
