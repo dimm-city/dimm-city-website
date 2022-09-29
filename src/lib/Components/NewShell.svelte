@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
 	import ContentPane from './ContentPane.svelte';
 
 	import { Modals, closeModal, closeAllModals } from 'svelte-modals';
@@ -8,13 +8,23 @@
 	import { onMount } from 'svelte';
 	import Toolbar from './Toolbar.svelte';
 	import TopMenu from './TopMenu.svelte';
+	import { config } from '$lib/Shared/config.prod';
 
 	export let title;
 	export let fullscreen = false;
 	export let enableSearch = false;
 
 	onMount(async () => {
-		
+		if (config.googleKey > '') {
+			window.dataLayer = window.dataLayer || [];
+			function gtag() {
+				window.dataLayer.push(arguments);
+				console.log('dataLayer', window.dataLayer);
+			}
+			gtag('js', new Date());
+
+			gtag('config', config.googleKey);
+		}
 		closeAllModals();
 		// if(window.ethereum && window.ethereum.isConnected()){
 		// 	connect();
@@ -128,6 +138,7 @@
 	<meta name="description" content="" />
 	<meta name="twitter:image" content={$pageImage} />
 	<link rel="icon" type="image/x-icon" href="/assets/icons/shroom256.png" />
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-TJ2LB9K4M4"></script>
 	<link rel="preload" as="font" href="/assets/dimm-city.woff2" type="font/woff2" crossorigin="anonymous" />
 	<slot name="head" />
 </svelte:head>
@@ -146,6 +157,7 @@
 	{#if !fullscreen}
 		<TopMenu {title} {enableSearch} />
 	{/if}
+
 	<slot name="scripts" />
 </div>
 

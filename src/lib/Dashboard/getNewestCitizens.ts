@@ -70,6 +70,6 @@ export function getLatestCitizens() {
 			return {};
 		})
 		.catch((reason) => {
-			console.log('loadCharacters failed', reason);
+			console.log('getLatestCitizens failed', reason);
 		});
 }

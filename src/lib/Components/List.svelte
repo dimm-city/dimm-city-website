@@ -1,5 +1,5 @@
 <script lang="ts">
-	export let data;
+	export let data: Array<any>;
     export let maxHeight = "auto";
 </script>
 
@@ -35,7 +35,9 @@
 <div class="list" >
 	{#if data && data.length > 0}
 		{#each data as item}
-			<div class="list-item" data-augmented-ui>{item.name}</div>
+			<div class="list-item" data-augmented-ui>
+				<slot name="item" {item}>{item.name}</slot>
+			</div>
 		{/each}
 	{:else}
 		<div class="list-item" data-augmented-ui>No items found</div>

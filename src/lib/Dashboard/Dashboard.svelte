@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import List from '$lib/Components/List.svelte';
 	import FlexMenu from '$lib/Components/Menu/FlexMenu.svelte';
 	import { getLatestNews } from './getLatestNews';
@@ -9,30 +9,39 @@
 	let lastestNews = [];
 
 	let districts = [];
-	let locationQuery = getDistricts().then((d) => (districts = d));
+	getDistricts().then((d) => (districts = d));
 
 	let specialties = [];
-	let specialtyQuery = getSpecialties().then((d) => (specialties = d));
+	getSpecialties().then((d) => (specialties = d));
 
 	let citizens = [];
-	let citizenQuery = getLatestCitizens().then((d) => (citizens = d));
+	getLatestCitizens().then((d) => (citizens = d));
 </script>
 
 <style>
 	.container {
 		display: grid;
 		padding-inline: 1.5rem;
-
-		grid-template-columns: 1fr 1fr 1fr;
-		grid-template-rows: 0.6fr min-content 0.3fr;
+		grid-template-columns: 1fr;
+		grid-template-rows: 0.6fr * 0.3fr;
 		gap: 1em 1em;
 		grid-auto-flow: row;
 		grid-template-areas:
-			'hero hero hero'
-			'col1 col2 col3'
-			'footer footer footer';
+			'hero'
+			'col1'
+			'col2'
+			'col3'
+			'footer';
 	}
-
+	@media (min-width: 768px) {
+		.container {
+			grid-template-columns: 1fr 1fr 1fr;
+			grid-template-areas:
+				'hero hero hero'
+				'col1 col2 col3'
+				'footer footer footer';
+		}
+	}
 	.hero {
 		grid-area: hero;
 	}
@@ -77,6 +86,13 @@
 		--aug-inlay-bg: transparent;
 		background: #ffffff1e;
 	}
+	a {
+		color: var(--light);
+	}
+	a:hover,
+	a:focus {
+		color: var(--pink);
+	}
 </style>
 
 <div class="container">
@@ -90,27 +106,39 @@
 		</div>
 	</div>
 	<div class="col1 col" data-augmented-ui>
-		<h4>Citizens</h4>
+		<h4><a href="/citizens">Citizens</a></h4>
 		<hr />
 		<div class="list-container">
-			<List data={citizens} />
+			<List data={citizens}>
+				<div slot="item" let:item>
+					<a href="/citizens/{item.tokenId}">{item.name}</a>
+				</div>
+			</List>
 		</div>
 	</div>
 	<div class="col2 col" data-augmented-ui>
-		<h4>Specialties</h4>
+		<h4><a href="/specialties">Specialties</a></h4>
 		<hr />
 		<div class="list-container">
-			<List data={specialties} />
+			<List data={specialties}>
+				<div slot="item" let:item>
+					<a href="/specialties/{item.slug}">{item.name}</a>
+				</div>
+			</List>
 		</div>
 	</div>
 	<div class="col3 col" data-augmented-ui>
-		<h4>Locations</h4>
+		<h4><a href="/locations">Locations</a></h4>
 		<hr />
 		<div class="list-container">
-			<List data={districts} />
+			<List data={districts}>
+				<div slot="item" let:item>
+					<a href="/locations/{item.slug}">{item.name}</a>
+				</div>
+			</List>
 		</div>
 	</div>
 	<div class="footer">
-		<h3 class="small-menu-item" data-augmented-ui>&lt;system map&gt;</h3>
+		<a href="/system-map"><h3 class="small-menu-item" data-augmented-ui>&lt;system map&gt;</h3> </a>
 	</div>
 </div>
