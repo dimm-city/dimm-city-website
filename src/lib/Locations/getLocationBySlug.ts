@@ -1,5 +1,5 @@
 import { Location } from './Location';
-import { config } from '$lib/config';
+import { config } from '$lib/Shared/config';
 
 const getLocationBySlugQuery = `
   query getCharacterBySlug($slug: String!) {

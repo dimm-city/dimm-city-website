@@ -1,7 +1,9 @@
-import { config } from '../config';
-const getSpecialtiesQuery = `
+
+import type { ISummaryItem } from '$lib/Shared/ISummaryItem';
+import { config } from '$lib/Shared/config';
+export const getSpecialtiesQuery = `
 query {
-	specialties {    
+	specialties {
 		data {
 			id
 			attributes {
@@ -9,28 +11,13 @@ query {
 				name
 				description
 				shortDescription
-				skilltrees {
-					data {
-						attributes{
-						name
-						slug
-						abilities {
-							data {
-								attributes {
-									name
-									slug
-									}
-								}
-							}	
-						}
-					}
-				}			
+				imageUrl
 			}
 		}
 	}
 }`;
 
-export function loadSpecialties() {
+export async function getSpecialties() : Promise<ISummaryItem[]> {
 	return fetch(config.graphUrl, {
 		method: 'POST',
 		headers: {
@@ -50,17 +37,16 @@ export function loadSpecialties() {
 						id: i.id,
 						slug: i.attributes.slug,
 						name: i.attributes.name,
-						description:
-							i.attributes.shortDescription ?? i.attributes.description ?? 'no information on this subject...',
+						description: i.attributes.description ?? 'no information on this subject...',
+						shortDescription: i.attributes.shortDescription ?? 'no information on this subject...',
 						thumbnailUrl: i.attributes.mainImage?.data?.attributes?.previewUrl,
 						imageUrl: i.attributes.mainImage?.data?.attributes?.url
 					};
 				}).sort((a,b) => a.name > b.name ? 1 : -1);
-				
 			}
 			return [];
 		})
 		.catch((reason) => {
-			console.log('loadDistricts failed', reason);
+			console.log('loadSpecialties failed', reason);
 		});
 }

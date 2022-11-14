@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Tomorrow:400,700&display=swap');
-@import url('../../node_modules/augmented-ui/augmented-ui.min.css');
-@import url('../../node_modules/animate.css/animate.min.css');
+@import url('/node_modules/augmented-ui/augmented-ui.min.css');
+@import url('/node_modules/animate.css/animate.min.css');
 @import url('./variables.css');
 @import url('./controls.css');
 @import url('./menu.css');
@@ -30,18 +30,17 @@ body {
 	font-family: var(--main-font-family);
 }
 
-
 html {
-    height: fill-available;
-    height: -webkit-fill-available;
+	height: fill-available;
+	height: -webkit-fill-available;
 
 	background: url(/assets/bg/bg-04.jpg) center center / cover no-repeat,
 		linear-gradient(to bottom left, #3c1b49, #3d0a33);
 }
 body {
-    min-height: 100vh;
-    min-height: fill-available;
-    min-height: -webkit-fill-available;
+	min-height: 100vh;
+	min-height: fill-available;
+	min-height: -webkit-fill-available;
 }
 a {
 	text-decoration: none;
@@ -53,6 +52,17 @@ a:active {
 	color: var(--third-accent);
 	/* text-shadow: 1px 1px var(--secondary-accent); */
 	transition: all var(--transition-in-time) ease;
+}
+
+li > a {
+	display: block;
+	cursor: pointer;
+
+	color: var(--light);
+}
+li > a:hover,
+li > a:focus {
+	color: var(--pink);
 }
 
 /* https://css-tricks.com/custom-scrollbars-in-webkit/ */

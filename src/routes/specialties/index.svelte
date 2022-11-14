@@ -1,17 +1,11 @@
 <script lang="ts">
-	import Shell from '$lib/Shell.svelte';
-	import Menu from '$lib/Components/Menu/Menu.svelte';
-	import { showMenu } from '$lib/ShellStore';
+	import Shell from '$lib/Components/NewShell.svelte';
 	import ContentPane from '$lib/Components/ContentPane.svelte';
 	import SpecialtyMenu from '$lib/Specialties/SpecialtyMenu.svelte';
-	$showMenu = true;
 </script>
 
-<Shell title="Specialties" showMenuButton={false}>
-	<ContentPane>
-		<Menu />
-	</ContentPane>
-	<Menu slot="menu">
+<Shell title="Specialties" enableSearch={true}>
+	<ContentPane padding={0}>
 		<SpecialtyMenu />
-	</Menu>
+	</ContentPane>
 </Shell>

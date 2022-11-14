@@ -3,14 +3,11 @@
 </script>
 
 <script lang="ts">
-	import Shell from '$lib/Shell.svelte';
-	import MainMenu from '$lib/Components/Menu/MainMenu.svelte';
+	import Shell from '$lib/Components/NewShell.svelte';
 	import ContentPane from '$lib/Components/ContentPane.svelte';
-	import { showMenu } from '$lib/ShellStore';
-	$showMenu = false;
 </script>
 
-<Shell title="Depenedcies and Integrations" showMenuButton={true} showMainMenuButton={false}>
+<Shell title="Depenedcies and Integrations">
 	<ContentPane>
 		<h4 class="">Depenedcies and Integrations:</h4>
 		<ul class="unstyled-list">
@@ -29,5 +26,4 @@
             <li><a href="">Twine</a></li>
 		</ul>
 	</ContentPane>
-	<MainMenu slot="menu" />
 </Shell>

@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { loadCharacter } from '../../queries/getCharacterBySlug';
-	import { config } from '$lib/config';
-	import { characters, myCollection, showMenu } from '$lib/ShellStore';
+	import { loadCharacter } from '../getCharacterBySlug';
+	import { config } from '$lib/Shared/config';
+	import { characters, myCollection, showMenu } from '$lib/Shared/ShellStore';
 	import { openModal } from 'svelte-modals';
 	import AbilityModal from '../Components/AbilityModal.svelte';
 	import { Character } from '../Character';

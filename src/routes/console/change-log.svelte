@@ -3,15 +3,22 @@
 </script>
 
 <script lang="ts">
-	import Shell from '$lib/Shell.svelte';
+	import Shell from '$lib/Components/NewShell.svelte';
 	import MainMenu from '$lib/Components/Menu/MainMenu.svelte';
 	import ContentPane from '$lib/Components/ContentPane.svelte';
-	import { showMenu } from '$lib/ShellStore';
+	import { showMenu } from '$lib/Shared/ShellStore';
 	$showMenu = false;
 </script>
 
-<Shell title="Change Log" showMenuButton={true} showMainMenuButton={false}>
+<Shell title="Change Log">
 	<ContentPane>
+		<h4 class="">Dimm City Console v0.4.0</h4>
+		<ul class="unstyled-list">
+			<li><a href="/journal-entries">Journal entries data added</a></li>
+			<li><a href="/">Navigation improved</a></li>
+			<li><a href="/citizens">Citizens are now searchable</a></li>
+			<li><a href="/specialties">Specialties are now searchable</a></li>
+		</ul>
 		<h4 class="">Dimm City Console v0.3.0</h4>
 		<ul class="unstyled-list">
 			<li><a href="/locations">Location data added</a></li>
@@ -36,5 +43,4 @@
 			</li>
 		</ul>
 	</ContentPane>
-	<MainMenu slot="menu" />
 </Shell>

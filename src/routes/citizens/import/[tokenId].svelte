@@ -8,8 +8,8 @@
 	import CharacterMenu from '$lib/Characters/Components/CharacterMenu.svelte';
 	import ContentPane from '$lib/Components/ContentPane.svelte';
 	import Menu from '$lib/Components/Menu/Menu.svelte';
-	import Shell from '$lib/Shell.svelte';
-	import { showMenu } from '$lib/ShellStore';
+	import Shell from '$lib/Components/Shell.svelte';
+	import { showMenu } from '$lib/Shared/ShellStore';
 
 	$showMenu = false;
 	let tokenId = $page.params.tokenId;

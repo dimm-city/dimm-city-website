@@ -3,15 +3,14 @@
 </script>
 
 <script lang="ts">
-	import Shell from '$lib/Shell.svelte';
+	import Shell from '$lib/Components/NewShell.svelte';
 	import MainMenu from '$lib/Components/Menu/MainMenu.svelte';
 	import ContentPane from '$lib/Components/ContentPane.svelte';
-	import { characters, districts, showMenu, specialties } from '$lib/ShellStore';
-	import { config } from '$lib/config';
-	$showMenu = false;
+	import { characters, districts, specialties } from '$lib/Shared/ShellStore';
+	import { config } from '$lib/Shared/config';
 </script>
 
-<Shell title="Console Stats" showMenuButton={true} showMainMenuButton={false}>
+<Shell title="Console Stats">
 	<ContentPane>
 		<h4 class="">Console Stats:</h4>
 		<ul class="unstyled-list">
@@ -22,7 +21,8 @@
 			<li>Districts recorded: {$districts.length}</li>
 			<!-- <li>License: <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
                 CC-BY
-              </a></li> -->
+              </a>
+			</li> -->
 		</ul>
 
 		<h4>technologies, projects, and contributions</h4>

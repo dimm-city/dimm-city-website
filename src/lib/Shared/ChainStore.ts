@@ -2,11 +2,11 @@
 // import { BigNumber, Contract, type Signer } from 'ethers';
 
 import Web3Modal from 'web3modal';
-import { config } from '$lib/config';
+import { config } from '$lib/Shared/config';
 import { signer, signerAddress, connected, defaultEvmStores, chainId } from 'svelte-ethers-store';
 import { BigNumber, Contract } from 'ethers';
 import type { ContractContext } from 'src/contracts/DimmCityV1Base';
-import abiJson from '../contracts/DimmCityV1Base.json';
+import abiJson from '../../contracts/DimmCityV1Base.json';
 import { derived, get, writable, type Readable } from 'svelte/store';
 import { Web3Provider } from '@ethersproject/providers';
 import { getSessionValue, setSessionValue } from './StoreUtils';
@@ -25,7 +25,12 @@ export const contract: Readable<ContractContext> = derived(
 	}
 );
 
-chainId.subscribe((c) => contractConfig.set(config.releases.dcs1r1.networks.find((n) => n.chainId === c)));
+chainId.subscribe((c) => {
+	const record = config.releases.dcs1r1.networks.find((n) => n.chainId === c);
+	console.log('contract', c, record);
+
+	contractConfig.set(record);
+});
 
 const profile = writable<string>(getSessionValue('profile') ?? null);
 profile.subscribe((value) => setSessionValue('profile', value));
@@ -128,7 +133,7 @@ export async function getSporos(): Promise<any> {
 		const sporo = await get(contract).tokenOfOwnerByIndex(address, index);
 		const tokenId = sporo.toNumber();
 		const data = await downloadSporo(tokenId);
-		//if (data && data.id > -1) 
+		//if (data && data.id > -1)
 		tasks.push(data);
 	}
 

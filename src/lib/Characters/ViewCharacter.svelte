@@ -4,20 +4,18 @@
 
 <script>
 	import Character from '$lib/Characters/Tabs/Character.svelte';
-	import CharacterMenu from '$lib/Characters/Components/CharacterMenu.svelte';
-	import Menu from '$lib/Components/Menu/Menu.svelte';
-	import Shell from '$lib/Shell.svelte';
-	import { characters, pageImage, showMenu } from '$lib/ShellStore';
+	import Shell from '$lib/Components/NewShell.svelte';
+	import { characters, pageImage, showMenu } from '$lib/Shared/ShellStore';
 	import Tab from '$lib/Components/Tab.svelte';
 	import CharacterStats from '$lib/Characters/Tabs/CharacterStats.svelte';
-	import { loadCharacter } from '$lib/queries/getCharacterBySlug';
+	import { loadCharacter } from '$lib/Characters/getCharacterBySlug';
 	import { onMount } from 'svelte';
 	import CharacterBiography from '$lib/Characters/Tabs/CharacterBiography.svelte';
 	import TabPanel from '$lib/Components/TabPanel.svelte';
 	import Toolbar from '$lib/Components/Toolbar.svelte';
 	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
 	import Button from '$lib/Components/Button.svelte';
-	import { canEdit } from '$lib/queries/updateCharacter';
+	import { canEdit } from '$lib/Characters/updateCharacter';
 	import TwitterButton from '$lib/Components/TwitterButton.svelte';
 
 	$showMenu = false;
@@ -67,7 +65,12 @@
 				<!-- <Button on:click={() => tabs.setTab('sheet')} shape="square">
 					<i class="fade-in btn bi bi-gpu-card" />
 				</Button> -->
-				<TwitterButton text="Check out this Dimm City citizen file" hashTags="Sporos,DimmCity" shape="square" title="Share citizen file">
+				<TwitterButton
+					text="Check out this Dimm City citizen file"
+					hashTags="Sporos,DimmCity"
+					shape="square"
+					title="Share citizen file"
+				>
 					<i class="fade-in btn bi bi-share" />
 				</TwitterButton>
 				{#if isEditable}
@@ -92,8 +95,5 @@
 				<Character {character} />
 			</Tab>
 		</TabPanel>
-	{/await}
-	<Menu slot="menu">
-		<CharacterMenu on:character.selected={(e) => selectCharcter(e.detail)} />
-	</Menu>
+	{/await}	
 </Shell>

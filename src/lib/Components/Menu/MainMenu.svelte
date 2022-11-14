@@ -11,6 +11,7 @@
 	<MenuItem url="/specialties" icon="bi-code" title="Specialties" description="Documenting the true skills of the Sporos" />
 
 	<MenuItem icon="bi bi-journals" title="Historical Records" url="/history" description="History of Dimm City" />
+	<MenuItem icon="bi bi-journal-code" title="Founder Journals" url="/journal-entries" description="founder's journals" />
 
 	<!-- <MenuItem url="/console/man" icon="bi-info-circle" title="Op Manual" description="Operator's Console Manual" /> -->
 	<MenuItem

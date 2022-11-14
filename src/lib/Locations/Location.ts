@@ -1,11 +1,11 @@
-import type{  IArticle } from "../IArticle";
+import type { IArticle } from '../Shared/IArticle';
 export class Location implements IArticle {
-    /**
-     *
-     */
-    constructor() {        
-        this.name = "";
-    }
+	/**
+	 *
+	 */
+	constructor() {
+		this.name = '';
+	}
 	id: number;
 	name: string;
 	slug: string;
@@ -13,4 +13,7 @@ export class Location implements IArticle {
 	imageUrl: string;
 	videoUrl: string;
 	thumbnailUrl: string;
+	tags: string;
+	type: string;
+	author: string;
 }

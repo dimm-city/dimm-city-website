@@ -10,7 +10,7 @@
 <style>
 	input {
 		width: 100%;
-		padding: 0.75rem 1rem;
+		padding: 0.5rem 1rem;
 		background-color: rgba(17, 17, 17, 0.75);
 		border: 0;
 		color: var(--third-accent);
