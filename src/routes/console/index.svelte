@@ -21,7 +21,7 @@
 	let loadingTask: Promise<void>;
 	let selectedSporo = {} as any;
 	let tokenView;
-
+	let loaded = false;
 	$: tokenId = `${selectedSporo.release}-${selectedSporo.edition}`;
 
 	//$: contractConfig = config.releases.s1r1.networks.find((n) => n.chainId === $chainId);
@@ -36,7 +36,8 @@
 		}
 	});
 
-	$: if ($connected && $myCollection.length < 1) {
+	$: if ($connected && loaded == false && $myCollection.length < 1) {
+		loaded = true;
 		loadingTask = getSporos().then((data) => ($myCollection = data));
 	}
 

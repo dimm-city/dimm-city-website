@@ -1,11 +1,12 @@
 <script lang="ts">
 	import List from '$lib/Components/List.svelte';
-	import FlexMenu from '$lib/Components/Menu/FlexMenu.svelte';
-	import { getLatestNews } from './getLatestNews';
+	import { getDashboardEntries } from './getDashboardEntries';
 	import { getDistricts } from './getDistricts';
 	import { getSpecialties } from './getSpecialties';
 	import { getLatestCitizens } from './getNewestCitizens';
-	let newsQuery = getLatestNews().then((d) => (lastestNews = d));
+	import ListItemLink from '$lib/Components/ListItemLink.svelte';
+	import Hero from './Hero.svelte';
+	let newsQuery = getDashboardEntries().then((d) => (lastestNews = d));
 	let lastestNews = [];
 
 	let districts = [];
@@ -28,16 +29,18 @@
 		grid-auto-flow: row;
 		grid-template-areas:
 			'hero'
+			'ref'
 			'col1'
 			'col2'
 			'col3'
 			'footer';
 	}
-	@media (min-width: 768px) {
+	@media (min-width: 821px) {
 		.container {
 			grid-template-columns: 1fr 1fr 1fr;
 			grid-template-areas:
 				'hero hero hero'
+				'ref ref ref'
 				'col1 col2 col3'
 				'footer footer footer';
 		}
@@ -83,36 +86,51 @@
 			radial-gradient(circle at bottom left, var(--blue) 20px, transparent 30px);
 
 		--aug-inlay: initial;
-		--aug-inlay-bg: transparent;
-		background: #ffffff1e;
+		/* --aug-inlay-bg: transparent;
+		background: #ffffff00; */
+		--aug-inlay-bg: #05050552;
+		background: #0505051e;
 	}
 	a {
+		display: block;
 		color: var(--light);
 	}
-	a:hover,
-	a:focus {
+
+	.footer a {		
+		height: min-content;
+	}
+	.footer a:hover,
+	.footer a:focus {
 		color: var(--pink);
+		--aug-inlay-bg: transparent;
+		background: #050505b4;
+		transition: background 500ms;
+	}
+	h4 {
+		margin-bottom: 0.25rem;
 	}
 </style>
 
 <div class="container">
 	<div class="hero">
 		<div class="hero-title">
-			<h4>News</h4>
+			<h4>Founder's Notes</h4>
 			<hr />
 		</div>
 		<div class="hero-body">
-			<FlexMenu query={newsQuery} data={lastestNews} />
+			<Hero query={newsQuery} data={lastestNews} />
 		</div>
+	</div>
+	<div style="grid-area: ref;">
+		<h4>Dimm City Reference</h4>
+		<hr />
 	</div>
 	<div class="col1 col" data-augmented-ui>
 		<h4><a href="/citizens">Citizens</a></h4>
 		<hr />
 		<div class="list-container">
-			<List data={citizens}>
-				<div slot="item" let:item>
-					<a href="/citizens/{item.tokenId}">{item.name}</a>
-				</div>
+			<List data={citizens} viewAllLink="/citizens">
+				<ListItemLink slot="item" let:item url="/citizens/{item.tokenId}" text={item.name} />
 			</List>
 		</div>
 	</div>
@@ -120,10 +138,8 @@
 		<h4><a href="/specialties">Specialties</a></h4>
 		<hr />
 		<div class="list-container">
-			<List data={specialties}>
-				<div slot="item" let:item>
-					<a href="/specialties/{item.slug}">{item.name}</a>
-				</div>
+			<List data={specialties} viewAllLink="/specialties">
+				<ListItemLink slot="item" let:item url="/specialties/{item.slug}" text={item.name} />
 			</List>
 		</div>
 	</div>
@@ -131,14 +147,12 @@
 		<h4><a href="/locations">Locations</a></h4>
 		<hr />
 		<div class="list-container">
-			<List data={districts}>
-				<div slot="item" let:item>
-					<a href="/locations/{item.slug}">{item.name}</a>
-				</div>
+			<List data={districts} viewAllLink="/locations">
+				<ListItemLink slot="item" let:item url="/locations/{item.slug}" text={item.name} />
 			</List>
 		</div>
 	</div>
 	<div class="footer">
-		<a href=""><h3 class="small-menu-item" data-augmented-ui>&lt;system map&gt;</h3> </a>
+		<a href="/system-map" class="small-menu-item" data-augmented-ui>&lt;system map&gt;</a>
 	</div>
 </div>

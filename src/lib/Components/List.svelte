@@ -1,14 +1,20 @@
 <script lang="ts">
+	import ListItemLink from './ListItemLink.svelte';
+
 	export let data: Array<any>;
-    export let maxHeight = "auto";
+	export let maxHeight = 'auto';
+	export let maxItems = 5;
+	export let viewAllLink: String;
+
+	$: items = [...data.slice(0, maxItems)];
 </script>
 
 <style>
 	div.list {
 		display: flex;
 		flex-direction: column;
-		gap: 0.5rem;
-        margin-block: 1rem;
+		gap: 1rem;
+		margin-block: 1rem;
 	}
 	.list-item {
 		padding: 1rem;
@@ -30,15 +36,28 @@
 		--aug-inlay: initial;
 		--aug-inlay-bg: #ffffff1e;
 	}
+
+	.list-item:hover,
+	.list-item:focus {
+		color: var(--pink);
+		--aug-inlay-bg: transparent;
+		background: #050505b4;
+		transition: background 500ms;
+	}
 </style>
 
-<div class="list" >
-	{#if data && data.length > 0}
-		{#each data as item}
+<div class="list">
+	{#if items && items.length > 0}
+		{#each items as item}
 			<div class="list-item" data-augmented-ui>
 				<slot name="item" {item}>{item.name}</slot>
 			</div>
 		{/each}
+		{#if viewAllLink > ''}
+			<div class="list-item" data-augmented-ui>
+				<ListItemLink url={viewAllLink} text="View All" />
+			</div>
+		{/if}
 	{:else}
 		<div class="list-item" data-augmented-ui>No items found</div>
 	{/if}

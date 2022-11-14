@@ -44,10 +44,10 @@
 	let query;
 	onMount(() => {
 		query = new Promise(async (resolve) => {
-			if ($characters?.length < 1) {
+			// if ($characters?.length < 1 || !$searchText) {
 				$characters = await loadCharacters();
 				resolve($characters);
-			} else resolve($characters);
+			//} else resolve($characters);
 		});
 	});
 	$: filteredCharacters = filterAndSort($characters, $searchText);

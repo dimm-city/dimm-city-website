@@ -39,7 +39,7 @@
 				description="Documenting the true skills of the Sporos"
 			/>
 
-			<MenuItem icon="bi bi-journals" title="Historical Records" url="/history" description="History of Dimm City" />
+			<!-- <MenuItem icon="bi bi-journals" title="Historical Records" url="/history" description="History of Dimm City" /> -->
 
 			<!-- <MenuItem
 				on:mouseenter={() => updateText('manual')}
@@ -64,10 +64,12 @@
 			/>
 			<MenuItem
 				url="/console/stats"
-				icon="bi-diagram-3"
+				icon="bi-bar-chart"
 				title="System Stats"
 				description="Console information and diagnostics"
 			/>
+			<MenuItem icon="bi bi-diagram-3" title="System Map" url="/system-map" description="Map of Dimm City Console" />
+
 		</Menu>
 	</div>
 </ModalShell>
