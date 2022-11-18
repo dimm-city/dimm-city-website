@@ -21,7 +21,6 @@
 		float: left;
 		margin-inline-end: 0.75rem;
 		margin-block-end: 0.2rem;
-		/* color: rgba(255, 255, 255, 0.35) !important; */
 	}
 
 	.text-area {
@@ -35,6 +34,7 @@
 	@media (max-width: 745px) {
 		.main-image {
 			max-width: 80vw;
+			min-height: min-content;
 			height: auto;
 			margin-bottom: 1rem;
 			float: unset;

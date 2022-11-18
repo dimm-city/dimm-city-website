@@ -5,11 +5,11 @@
 	export let description = '';
 	export let disabled = false;
 	export let classes = '';
+	export let target = '_self';
 </script>
 
 <style>
-	.menu-item{
-
+	.menu-item {
 		background-color: rgba(33, 0, 43, 0.55);
 	}
 	.menu-item i {
@@ -19,7 +19,6 @@
 	/* .menu-item-container {
 		min-width: 50ch;
 	} */
-
 </style>
 
 <div on:mouseenter on:mouseleave class="menu-item-container">
@@ -33,7 +32,7 @@
 			</div>
 		</div>
 	{:else}
-		<a href={url} on:click class="fade-zoom-in" {disabled}>
+		<a href={url} on:click class="fade-zoom-in" {disabled} {target}>
 			<div class="menu-item {classes}" data-augmented-ui class:disabled>
 				<slot>
 					<p><i class={icon} />{title}</p>

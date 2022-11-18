@@ -51,6 +51,10 @@
 					slug: 'journal-entries',
 					children: await getJournalEntries()
 				},
+				{
+					name: 'Spores',
+					slug: 'spores',					
+				},
 				// {
 				// 	name: 'Historical Record',
 				// 	slug: 'history',

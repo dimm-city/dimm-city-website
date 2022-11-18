@@ -25,9 +25,10 @@
 		: $specialties;
 
 	function selectItem(item) {
-		selectedItem = item.slug;
-		document.location = '/specialties/' + item.slug;
-		return true;
+		console.log('select speciality', item);
+		selectedItem = item.detail.slug;
+		document.location = '/specialties/' + item.detail.slug;
+		return false;
 	}
 </script>
 
