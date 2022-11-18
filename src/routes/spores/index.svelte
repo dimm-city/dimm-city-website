@@ -102,7 +102,7 @@
 						</div>
 					</div>
 				</MenuItem>
-				<MenuItem
+				<!-- <MenuItem
 					url="https://files.dimm.city/spores/the-dark.pdf"
 					target="_blank"
 					icon="bi-map"
@@ -120,7 +120,7 @@
 						/>
 						<div class="content" />
 					</div>
-				</MenuItem>
+				</MenuItem> -->
 			</Menu>
 		</div>
 	</ContentPane>
