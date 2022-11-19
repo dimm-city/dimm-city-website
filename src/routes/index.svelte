@@ -4,7 +4,7 @@
 
 <script lang="ts">
 	import { config } from '$lib/Shared/config';
-	import Shell from '$lib/Components/NewShell.svelte';
+	import Shell from '$lib/Components/Shell.svelte';
 	import MainMenu from '$lib/Components/Menu/MainMenu.svelte';
 	import ContentPane from '$lib/Components/ContentPane.svelte';
 	import { showMenu } from '$lib/Shared/ShellStore';

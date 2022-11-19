@@ -4,7 +4,7 @@
 
 <script>
 	import Character from '$lib/Characters/Tabs/Character.svelte';
-	import Shell from '$lib/Components/NewShell.svelte';
+	import Shell from '$lib/Components/Shell.svelte';
 	import { characters, pageImage, showMenu } from '$lib/Shared/ShellStore';
 	import Tab from '$lib/Components/Tab.svelte';
 	import CharacterStats from '$lib/Characters/Tabs/CharacterStats.svelte';

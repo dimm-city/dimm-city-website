@@ -6,7 +6,7 @@
 	import { page } from '$app/stores';
 	import ImportCharacter from '$lib/Characters/ImportCharacter.svelte';
 	import ContentPane from '$lib/Components/ContentPane.svelte';
-	import Shell from '$lib/Components/NewShell.svelte';
+	import Shell from '$lib/Components/Shell.svelte';
     import { fullscreen } from "$lib/Shared/ShellStore";
 
 	$fullscreen = true;

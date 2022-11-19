@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Shell from '$lib/Components/NewShell.svelte';
+	import Shell from '$lib/Components/Shell.svelte';
 	import FlexMenu from '$lib/Components/Menu/FlexMenu.svelte';
 	import MenuItem from '$lib/Components/Menu/MenuItem.svelte';
 	import { getStories } from '$lib/Stories/Store';

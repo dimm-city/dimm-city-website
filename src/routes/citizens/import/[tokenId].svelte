@@ -8,7 +8,7 @@
 	import CharacterMenu from '$lib/Characters/Components/CharacterMenu.svelte';
 	import ContentPane from '$lib/Components/ContentPane.svelte';
 	import Menu from '$lib/Components/Menu/Menu.svelte';
-	import Shell from '$lib/Components/NewShell.svelte';
+	import Shell from '$lib/Components/Shell.svelte';
 	import { fullscreen } from '$lib/Shared/ShellStore';
 
 	$fullscreen = true;

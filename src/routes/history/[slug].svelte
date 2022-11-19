@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Shell from '$lib/Components/NewShell.svelte';
+	import Shell from '$lib/Components/Shell.svelte';
 	import StoryViewer from '$lib/Stories/StoryViewer.svelte';
 	import { page } from '$app/stores';
 	import ContentPane from '$lib/Components/ContentPane.svelte';

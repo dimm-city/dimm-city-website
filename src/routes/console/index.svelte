@@ -3,7 +3,7 @@
 </script>
 
 <script lang="ts">
-	import Shell from '$lib/Components/NewShell.svelte';
+	import Shell from '$lib/Components/Shell.svelte';
 	import { showMenu, myCollection } from '$lib/Shared/ShellStore';
 	import { provider, signer, signerAddress, connected, defaultEvmStores, chainId } from 'svelte-ethers-store';
 	import MenuItem from '$lib/Components/Menu/MenuItem.svelte';
