@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { config } from '../Shared/config';
 	import { loggedIn } from '../Shared/ChainStore';
-	import { searchText } from '../Shared/ShellStore';
+	import { searchText, fullscreen } from '../Shared/ShellStore';
 	import MainMenuModal from './MainMenuModal.svelte';
 	import { openModal } from 'svelte-modals';
 
@@ -136,6 +136,10 @@
 	.search-container > .aug-input > i.bi-search {
 		right: 1rem;
 	}
+
+	.fullscreen .top-panel-decoration{
+		display: none;
+	}
 	@media (max-width: 750px) {
 		.top-panel-decoration {
 			--aug-border-all: 0.25vh;
@@ -143,7 +147,7 @@
 	}
 </style>
 
-<div class="top-panel fade-in">
+<div class="top-panel fade-in" class:fullscreen={$fullscreen}>
 	<div
 		class="top-panel-decoration fade-in"
 		aria-hidden="true"

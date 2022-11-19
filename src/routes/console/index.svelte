@@ -17,6 +17,7 @@
 	import { ethers } from 'ethers';
 	import Thumbnail from '$lib/Components/Thumbnail.svelte';
 	import TextContainer from '$lib/Components/TextContainer.svelte';
+	import Button from '$lib/Components/Button.svelte';
 
 	let loadingTask: Promise<void>;
 	let selectedSporo = {} as any;
@@ -107,9 +108,10 @@
 <Shell title="Console">
 	<ContentPane padding={0}>
 		<div class="content-container">
-			{#if $connected && $signerAddress}
+			{#if $loggedIn}
 				<div class="fade-in">
 					<h2>Your Sporos</h2>
+					<Button url="/console/characters/create">Create new Sporo</Button>
 					{#await loadingTask}
 						<LoadingIndicator>
 							<span>Locating sporos...</span>

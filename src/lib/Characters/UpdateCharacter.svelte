@@ -4,7 +4,7 @@
 	import CharacterMenu from '$lib/Characters/Components/CharacterMenu.svelte';
 	import Menu from '$lib/Components/Menu/Menu.svelte';
 	import Shell from '$lib/Components/NewShell.svelte';
-	import { characters, showMenu, myCollection } from '$lib/Shared/ShellStore';
+	import { characters, showMenu, myCollection, fullscreen } from '$lib/Shared/ShellStore';
 	import Tab from '$lib/Components/Tab.svelte';
 	import CharacterStats from '$lib/Characters/Tabs/CharacterStats.svelte';
 	import { loadCharacter } from '$lib/Characters/getCharacterBySlug';
@@ -18,6 +18,7 @@
 	import { Character } from './Character';
 
 	$showMenu = false;
+	$fullscreen = true;
 	export let tokenId;
 	let isSaving = false;
 	let character: Character;
@@ -75,7 +76,7 @@
 	}
 </script>
 
-<Shell title="Update Citizen File" fullscreen={true}>
+<Shell title="Update Citizen File">
 	<div slot="content-toolbar">
 		{#await query then}
 			<Toolbar>

@@ -1,16 +1,9 @@
-<Shell title="Home" showMenuButton={true} showMainMenuButton={false}>
-	<ContentPane>
-		<div style="overflow: hidden; max-height: 100%"><D20 /></div>
-	</ContentPane>
-	<MainMenu slot="menu" />
-</Shell>
-
 <script context="module">
 	export const prerender = true;
 </script>
 
 <script lang="ts">
-	import Shell from '$lib/Components/Shell.svelte';
+	import Shell from '$lib/Components/NewShell.svelte';
 	import MainMenu from '$lib/Components/Menu/MainMenu.svelte';
 	import ContentPane from '$lib/Components/ContentPane.svelte';
 
@@ -19,3 +12,10 @@
 
 	$showMenu = false;
 </script>
+
+<Shell title="Home">
+	<ContentPane>
+		<div style="overflow: hidden; max-height: 100%"><D20 /></div>
+	</ContentPane>
+	<MainMenu slot="menu" />
+</Shell>

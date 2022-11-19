@@ -6,6 +6,7 @@ export const menuItems = writable([]);
 export const showMenu = writable(true);
 
 export const searchText = writable('');
+export const fullscreen = writable(false);
 
 export const myCollection = writable(getSessionValue('collection') ?? []);
 myCollection.subscribe((value) => setSessionValue('collection', value));
