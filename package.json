@@ -36,7 +36,7 @@
     "svelte": "^3.44.0",
     "svelte-adapter-azure-swa": "^0.6.0",
     "svelte-check": "^2.2.6",
-    "svelte-ethers-store": "^2.1.0",
+    "svelte-ethers-store": "^2.5.0",
     "svelte-preprocess": "^4.10.1",
     "svelte-step-wizard": "^0.0.2",
     "tslib": "^2.3.1",

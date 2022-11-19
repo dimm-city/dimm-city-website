@@ -122,6 +122,17 @@ export async function buyPack(numberToMint: number) {
 	console.log(balance.toString());
 }
 
+export async function createSporo() {
+	if (!get(connected)) await connect();
+	const _signer = get(signer);
+	const value = packCost; // packCost.mul(BigNumber.from(numberToMint));
+	await _contract.buyPack(await _signer.getAddress(), BigNumber.from(1), true, { value: value });
+
+	const balance = await _signer.getBalance();
+
+	console.log(balance.toString());
+}
+
 export async function getSporos(): Promise<any> {
 	if (!get(connected) || !get(contract)) return;
 

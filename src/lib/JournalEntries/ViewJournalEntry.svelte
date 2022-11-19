@@ -20,7 +20,7 @@
 </script>
 
 <Shell title="{model ? model.name : "Journal Entry"}">
-	<ContentPane padding={0} scrollable={true}>
+	<ContentPane padding={2} scrollable={true}>
 		{#if model}
 			<Article {model}>
 				<div slot="header">

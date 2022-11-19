@@ -18,7 +18,7 @@
 </script>
 
 <Shell title="Specialties">
-	<ContentPane padding={0} scrollable={true}>
+	<ContentPane padding={2} scrollable={true}>
 		{#if specialty}
 			<Article model={specialty} imageAug="tl-clip tr-clip-y br-clip bl-clip-y" />
 		{/if}

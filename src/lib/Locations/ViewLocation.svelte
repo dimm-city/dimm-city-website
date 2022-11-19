@@ -14,7 +14,7 @@
 </script>
 
 <Shell title={location.name}>
-	<ContentPane padding={0} scrollable={true}>
+	<ContentPane padding={2} scrollable={true}>
 		<div class="location">
 			<Article model={location} />
 		</div>

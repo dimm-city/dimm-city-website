@@ -4,6 +4,7 @@
 	import { marked } from 'marked';
 	export let model: IArticle;
 	export let imageAug = 'tl-clip tr-clip br-clip bl-clip border';
+	export let imageHeight= "";
 	let html = '';
 	$: html = model != null ? marked.parse(model.description || ' ') : '';
 </script>
@@ -11,8 +12,8 @@
 <style>
 	.article-grid {
 		display: grid;
-		padding: 3rem;
-		min-height: 100%;
+		/* padding: 3rem;
+		min-height: 100%; */
 		grid-template-rows: min-content max-content;
 	}
 
@@ -60,7 +61,7 @@
 		<div class="main-image">
 			<slot name="main-image">
 				<Image
-					height=""
+					height="{imageHeight}"
 					width=""
 					imageUrl={model.imageUrl}
 					title={model.name}

@@ -10,7 +10,7 @@
 	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
 	import { connect, loggedIn, sessionToken } from '$lib/Shared/ChainStore';
 	import { config } from '$lib/Shared/config';
-	import type { ISummaryItem } from '$lib/ISummaryItem';
+	import type { ISummaryItem } from '$lib/Shared/ISummaryItem';
 	export let tokenId;
 
 	let isSaving = false;

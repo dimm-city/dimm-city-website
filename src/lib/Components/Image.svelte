@@ -20,9 +20,13 @@
 		console.log('can play');
 	}
 	$: if (videoUrl) {
-		console.log(videoUrl);
+		console.log('video changed', videoUrl, video);
 		mediaUrl = videoUrl;
 		hasVideo = mediaUrl != null;
+		if (video) {
+			video.querySelector('source').src = mediaUrl;
+			video.load();
+		}
 	} else {
 		hasVideo = false;
 		mediaUrl = null;
@@ -93,9 +97,8 @@
 		loop
 		style="height: {height}; width: {width}"
 	>
-		{#if hasVideo}
-			<source src={mediaUrl} type="video/mp4" />
-		{/if}
+		<source src={mediaUrl} type="video/mp4" />
+
 		Your browser does not support the video tag.
 	</video>
 	{#if hasVideo == false}

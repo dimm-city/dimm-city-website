@@ -3,18 +3,15 @@
 </script>
 
 <script>
-	import { page } from '$app/stores';
-	import ImportCharacter from '$lib/Characters/ImportCharacter.svelte';
+	import CreateCharacter from '$lib/Characters/CreateCharacter.svelte';
 	import ContentPane from '$lib/Components/ContentPane.svelte';
 	import Shell from '$lib/Components/Shell.svelte';
-    import { fullscreen } from "$lib/Shared/ShellStore";
-
+	import { fullscreen } from '$lib/Shared/ShellStore';
 	$fullscreen = true;
-	let tokenId = $page.params.tokenId;
 </script>
 
 <Shell title="Create Character">
 	<ContentPane>
-		<ImportCharacter {tokenId} />
+		<CreateCharacter />
 	</ContentPane>
 </Shell>
