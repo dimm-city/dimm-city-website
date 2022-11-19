@@ -10,7 +10,7 @@
 	import { config } from '../Shared/config';
 	import { loggedIn } from '../Shared/ChainStore';
 	import Toolbar from '../Components/Toolbar.svelte';
-	import AccordionDivider from '../Components/AccordionDivider.svelte';
+	import AccordionDivider from './AccordionDivider.svelte';
 	export let title;
 	export let showMainMenuButton = true;
 	export let showMenuButton = true;
