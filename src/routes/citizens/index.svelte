@@ -4,7 +4,7 @@
 	import CharacterMenu from '$lib/Characters/Components/CharacterMenu.svelte';
 </script>
 
-<Shell title="Citizen Files" enableSearch="{true}">
+<Shell title="Citizen Files" enableSearch="{true}" fullscreen={false}>
 	<ContentPane padding={0}>
 		<CharacterMenu />
 	</ContentPane>

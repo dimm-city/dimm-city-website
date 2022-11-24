@@ -1,23 +1,35 @@
 <script lang="ts">
 	import { config } from '../Shared/config';
 	import { loggedIn } from '../Shared/ChainStore';
-	import { searchText, fullscreen } from '../Shared/ShellStore';
+	import { searchText } from '../Shared/ShellStore';
 	import MainMenuModal from './MainMenuModal.svelte';
 	import { openModal } from 'svelte-modals';
 
 	export let enableSearch = false;
 	export let title = '';
+	export let titleUrl = '';
 	function showModalMenu() {
 		openModal(MainMenuModal, { fullscreen: true });
 	}
 </script>
 
 <style>
-	h4{
+	h4 {
 		position: absolute;
 		color: var(--third-accent);
 		margin-top: 0px;
 	}
+	h4 a {
+		text-decoration: none;
+		color: var(--third-accent);
+	}
+	/* h4 a:hover,
+	h4 a:active {
+		color: var(--third-accent);
+		background-color: transparent;
+		transition: all var(--transition-in-time) ease;
+	} */
+
 	.top-panel {
 		--ds: drop-shadow(0 0 2vh var(--blue));
 		filter: var(--ds) var(--ds);
@@ -65,8 +77,8 @@
 		justify-content: space-between;
 	}
 
-	.top-panel button,
-	.top-panel a {
+	.top-panel button.panel-button,
+	.top-panel a.panel-button {
 		cursor: pointer;
 		border: none;
 		background: var(--pink);
@@ -137,7 +149,7 @@
 		right: 1rem;
 	}
 
-	.fullscreen .top-panel-decoration{
+	:global(.fullscreen .top-panel-decoration) {
 		display: none;
 	}
 	@media (max-width: 750px) {
@@ -147,7 +159,7 @@
 	}
 </style>
 
-<div class="top-panel fade-in" class:fullscreen={$fullscreen}>
+<div class="top-panel fade-in">
 	<div
 		class="top-panel-decoration fade-in"
 		aria-hidden="true"
@@ -156,11 +168,11 @@
 
 	<div class="version"><small>DCC v{config.version}</small></div>
 	<div class="global-toolbar">
-		<button on:click={showModalMenu} data-augmented-ui="all-hex border"
+		<button on:click={showModalMenu} class="panel-button" data-augmented-ui="all-hex border"
 			><i class="bi bi-menu-button" title="home screen" /></button
 		>
 
-		<a href="/console" data-augmented-ui="all-hex border" title="op console">
+		<a href="/console"  class="panel-button" data-augmented-ui="all-hex border" title="op console">
 			{#if $loggedIn}
 				<i class="bi bi-person-check-fill fade-in" />
 			{:else}
@@ -176,7 +188,7 @@
 				<i class="bi bi-search" />
 			</div>
 		{:else}
-			<h4>{title}</h4>
+			<h4><a href={titleUrl}>{title}</a></h4>
 		{/if}
 	</div>
 </div>

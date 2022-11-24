@@ -18,6 +18,7 @@
 	import Thumbnail from '$lib/Components/Thumbnail.svelte';
 	import TextContainer from '$lib/Components/TextContainer.svelte';
 	import Button from '$lib/Components/Button.svelte';
+	import LoggedInContainer from '$lib/Components/LoggedInContainer.svelte';
 
 	let loadingTask: Promise<void>;
 	let selectedSporo = {} as any;
@@ -108,7 +109,7 @@
 <Shell title="Console">
 	<ContentPane padding={0}>
 		<div class="content-container">
-			{#if $loggedIn}
+			<LoggedInContainer>
 				<div class="fade-in">
 					<h2>Your Sporos</h2>
 					<Button url="/console/characters/create">Create new Sporo</Button>
@@ -119,16 +120,15 @@
 					{:then}
 						<ul>
 							{#each $myCollection as sporo}
-								<li data-augmented-ui class="small-menu-item" on:click={() => showToken(sporo)}>
+								<li data-augmented-ui class="small-menu-item" on:click={() => showToken(sporo)}
+									on:keyup={() => console.log('check for enter key and open token')}>
 									{sporo.name} <small> {sporo.release}-{sporo.edition}</small>
 								</li>
 							{/each}
 						</ul>
 					{/await}
 				</div>
-			{:else}
-				<MenuItem on:click={connect}>Connect</MenuItem>
-			{/if}
+			</LoggedInContainer>
 		</div>
 	</ContentPane>
 </Shell>

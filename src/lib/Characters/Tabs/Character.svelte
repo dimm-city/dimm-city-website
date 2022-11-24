@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { loadCharacter } from '../getCharacterBySlug';
+	import { loadCharacter } from '../Queries/getCharacterBySlug';
 	import { config } from '$lib/Shared/config';
 	import { characters, myCollection, showMenu } from '$lib/Shared/ShellStore';
 	import { openModal } from 'svelte-modals';

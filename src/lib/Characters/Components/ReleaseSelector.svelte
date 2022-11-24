@@ -1,6 +1,8 @@
 <script lang="ts">
-	import { getCharacterReleases } from './getCharacterReleases';
-	import type { ICharacterRelease } from './IArticle';
+	import { getCharacterReleases } from '../Queries/getCharacterReleases';
+	import type { ICharacterRelease } from './ICharacterRelease';
+	import { defaultEvmStores, contracts, chainId } from 'svelte-ethers-store';
+
 	let releases = [];
 	getCharacterReleases().then((d) => (releases = d));
 	export let selectedRelease: ICharacterRelease = {
@@ -13,12 +15,23 @@
 		thumbnailUrl: '',
 		tags: '',
 		author: '',
-        config: {}
+		config: {}
 	};
+
+	let totalSupply;
+	$: if (selectedRelease?.id > 0) {
+		console.log(selectedRelease.config.address);
+		defaultEvmStores
+			.attachContract('selectedContract', selectedRelease.config.address, selectedRelease.config.abi)
+			.then((x) => {
+				if ($contracts.selectedContract) totalSupply = $contracts.selectedContract.totalSupply();
+				else console.log('no contract', $contracts.selectedContract, $chainId);
+			});
+	}
 </script>
 
-<select bind:value={selectedRelease}>
-    {#each releases as item}
-	<option value="{item}">{item.name}</option>
-    {/each}
+<select bind:value={selectedRelease} on:change>
+	{#each releases as item}
+		<option value={item}>{item.name}</option>
+	{/each}
 </select>

@@ -3,3 +3,26 @@
 	width: 100%;
 	height: 100%;
 } */
+
+.step-container {
+	height: 100%;
+	width: 100%;
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: auto 0.1fr;
+	padding: 1rem 0;
+}
+.step-container div:nth-child(1) {
+	min-height: max-content;
+	height: 100%;
+	width: 100%;
+	justify-content: space-between;
+	overflow-y: auto;
+}
+.button-row {
+	display: flex;
+	justify-content: space-between;
+}
+.step-container div:nth-child(1) .centered-container {
+	height: fit-content;
+}

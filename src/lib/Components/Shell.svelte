@@ -2,7 +2,7 @@
 	import ContentPane from './ContentPane.svelte';
 
 	import { Modals, closeModal, closeAllModals } from 'svelte-modals';
-	import { pageImage, fullscreen } from '../Shared/ShellStore';
+	import { pageImage, fullscreen as globalFullscreen } from '../Shared/ShellStore';
 	import '../styles/main.css';
 	import 'animate.css';
 	import { onMount } from 'svelte';
@@ -11,7 +11,8 @@
 	import { config } from '$lib/Shared/config.prod';
 
 	export let title;
-	//export let fullscreen = false; //$fullscreen;
+	export let titleUrl = null;
+	export let fullscreen = $globalFullscreen;
 	export let enableSearch = false;
 
 	onMount(async () => {
@@ -147,7 +148,7 @@
 	<slot name="head" />
 </svelte:head>
 
-<div class="main-container {title.toLowerCase()}" class:fullscreen={$fullscreen}>
+<div class="main-container {title.toLowerCase()}" class:fullscreen={fullscreen}>
 	<div class="content-panel animate__animated animate__backInUp">
 		<div class="content-panel-grid">
 			<div class="content-panel-content-row">
@@ -159,7 +160,7 @@
 		</div>
 	</div>
 	<div class="menu-container">
-		<TopMenu {title} {enableSearch} />
+		<TopMenu {title} {enableSearch} {titleUrl} />
 	</div>
 	<slot name="scripts" />
 </div>

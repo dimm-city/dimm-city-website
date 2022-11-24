@@ -2,7 +2,7 @@
 	import FlexMenu from '$lib/Components/Menu/FlexMenu.svelte';
 	import { characters, searchText, filterAndSort } from '$lib/Shared/ShellStore';
 	import { createEventDispatcher, onMount } from 'svelte';
-	import { getCharactersQuery } from '../getCharacters';
+	import { getCharactersQuery } from '../Queries/getCharacters';
 	import { config } from '../../Shared/config';
 
 	const dispatcher = createEventDispatcher();
@@ -50,6 +50,7 @@
 			//} else resolve($characters);
 		});
 	});
+	
 	$: filteredCharacters = filterAndSort($characters, $searchText);
 
 	function selectCharacter(e) {

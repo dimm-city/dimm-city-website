@@ -8,14 +8,14 @@
 	import { characters, pageImage, showMenu } from '$lib/Shared/ShellStore';
 	import Tab from '$lib/Components/Tab.svelte';
 	import CharacterStats from '$lib/Characters/Tabs/CharacterStats.svelte';
-	import { loadCharacter } from '$lib/Characters/getCharacterBySlug';
+	import { loadCharacter } from '$lib/Characters/Queries/getCharacterBySlug';
 	import { onMount } from 'svelte';
 	import CharacterBiography from '$lib/Characters/Tabs/CharacterBiography.svelte';
 	import TabPanel from '$lib/Components/TabPanel.svelte';
 	import Toolbar from '$lib/Components/Toolbar.svelte';
 	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
 	import Button from '$lib/Components/Button.svelte';
-	import { canEdit } from '$lib/Characters/updateCharacter';
+	import { canEdit } from '$lib/Characters/Queries/updateCharacter';
 	import TwitterButton from '$lib/Components/TwitterButton.svelte';
 
 	$showMenu = false;
@@ -52,7 +52,7 @@
 	}
 </script>
 
-<Shell title="Citizens">
+<Shell title="Citizens" titleUrl="/citizens" fullscreen={true}>
 	<div slot="content-toolbar">
 		{#await query then}
 			<Toolbar>

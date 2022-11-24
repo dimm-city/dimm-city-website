@@ -1,5 +1,5 @@
 import { config } from '$lib/Shared/config';
-import type { ICharacterRelease } from './IArticle';
+import type { ICharacterRelease } from '../Components/ICharacterRelease';
 
 export const getCharacterReleasesQuery = `
   query getCharacterReleases{
@@ -38,7 +38,7 @@ export function getCharacterReleases(): Promise<Array<ICharacterRelease>> {
 						{
 							id: 1,
 							name: 'DCS1R1: Rabbits',
-							slug: '',
+							slug: 'dcs1r1',
 							description: 'Cute and terrifying...',
 							imageUrl: 'https://files.dimm.city/assets/specialties/augmerc.png',
 							videoUrl: 'https://files.dimm.city/assets/specialties/augmerc.mp4',
@@ -956,7 +956,7 @@ export function getCharacterReleases(): Promise<Array<ICharacterRelease>> {
 						{
 							id: 2,
 							name: 'DCS2R1: Second Seed',
-							slug: '',
+							slug: 'dcs2r1',
 							description: "They're back and they're not happy...",
 							imageUrl: 'https://files.dimm.city/assets/specialties/technosorcerer.png',
 							videoUrl: 'https://files.dimm.city/assets/specialties/technosorcerer.mp4',

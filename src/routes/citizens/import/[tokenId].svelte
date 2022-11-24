@@ -9,13 +9,10 @@
 	import ContentPane from '$lib/Components/ContentPane.svelte';
 	import Menu from '$lib/Components/Menu/Menu.svelte';
 	import Shell from '$lib/Components/Shell.svelte';
-	import { fullscreen } from '$lib/Shared/ShellStore';
-
-	$fullscreen = true;
 	let tokenId = $page.params.tokenId;
 </script>
 
-<Shell title="Citizens">
+<Shell title="Citizens" fullscreen={true}>
 	<ContentPane>
 		<ImportCharacter {tokenId} />
 	</ContentPane>

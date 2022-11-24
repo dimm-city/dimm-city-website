@@ -4,21 +4,20 @@
 	import CharacterMenu from '$lib/Characters/Components/CharacterMenu.svelte';
 	import Menu from '$lib/Components/Menu/Menu.svelte';
 	import Shell from '$lib/Components/Shell.svelte';
-	import { characters, showMenu, myCollection, fullscreen } from '$lib/Shared/ShellStore';
+	import { characters, showMenu, myCollection } from '$lib/Shared/ShellStore';
 	import Tab from '$lib/Components/Tab.svelte';
 	import CharacterStats from '$lib/Characters/Tabs/CharacterStats.svelte';
-	import { loadCharacter } from '$lib/Characters/getCharacterBySlug';
+	import { loadCharacter } from '$lib/Characters/Queries/getCharacterBySlug';
 	import { onMount } from 'svelte';
 	import CharacterBiography from '$lib/Characters/Tabs/CharacterBiography.svelte';
 	import TabPanel from '$lib/Components/TabPanel.svelte';
 	import Toolbar from '$lib/Components/Toolbar.svelte';
 	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
 	import Button from '$lib/Components/Button.svelte';
-	import { canEdit, updateCharacter } from '$lib/Characters/updateCharacter';
+	import { canEdit, updateCharacter } from '$lib/Characters/Queries/updateCharacter';
 	import { Character } from './Character';
 
 	$showMenu = false;
-	$fullscreen = true;
 	export let tokenId;
 	let isSaving = false;
 	let character: Character;
@@ -76,7 +75,7 @@
 	}
 </script>
 
-<Shell title="Update Citizen File">
+<Shell title="Update Citizen File" fullscreen={true}>
 	<div slot="content-toolbar">
 		{#await query then}
 			<Toolbar>
