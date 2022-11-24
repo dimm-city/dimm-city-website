@@ -12,7 +12,7 @@
 
 	export let title;
 	export let titleUrl = null;
-	export let fullscreen = $globalFullscreen;
+	export let fullscreen = false;
 	export let enableSearch = false;
 
 	onMount(async () => {

@@ -20,7 +20,7 @@ import Dashboard from '$lib/Dashboard/Dashboard.svelte';
 	}
 </script>
 
-<Shell title="DCC Dashboard">
+<Shell title="DCC Dashboard" fullscreen={true}>
 	<ContentPane padding={0}>
 		<Dashboard />
 	</ContentPane>
