@@ -71,6 +71,25 @@ export interface IToken {
 	id: number;
 	tokenId: string;
 }
+export class Token implements IToken {
+	compiler: string;
+	release: string;
+	artist: string;
+	edition: number;
+	date: number;
+	name: string;
+	description: string;
+	dna: string;
+	animation_url: string;
+	attributes: IAttribute[];
+	image: string;
+	state: number;
+	thumbnail_uri: string;
+	fullresulotion_uri: string;
+	id: number;
+	tokenId: string;
+
+}
 export interface ICharacter {
 	//TODO: add to strapi
 	beliefs: string;

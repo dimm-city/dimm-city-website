@@ -11,7 +11,7 @@
 	import MenuItem from '$lib/Components/Menu/MenuItem.svelte';
 	import TextContainer from '$lib/Components/TextContainer.svelte';
 	import Menu from '$lib/Components/Menu/Menu.svelte';
-import Dashboard from '$lib/Dashboard/Dashboard.svelte';
+	import Dashboard from '$lib/Dashboard/Dashboard.svelte';
 	$showMenu = false;
 
 	let currentText = 'op-console';

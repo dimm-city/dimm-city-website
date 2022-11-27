@@ -16,7 +16,7 @@
 	let isSaving = false;
 
 	//ToDo: load token if not in local collection
-	let token = $myCollection.find((s) => s.release + '-' + s.edition == tokenId);
+	let token = $myCollection.find((s) => s.release.toLowerCase() + '-' + s.edition == tokenId.toLowerCase());
 
 	let character = new Character(token);
 	character.currentLocation = {
@@ -24,8 +24,9 @@
 	} as ISummaryItem;
 
 	function cancelImport() {
-		if (window.history.length > 0) window.history.back();
-		else window.location.href = '/console';
+		// if (window.history.length > 0) window.history.back();
+		// else 
+		window.location.href = '/console';
 	}
 	async function createCharacter(nextStep) {
 		isSaving = true;

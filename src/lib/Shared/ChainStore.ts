@@ -3,17 +3,41 @@
 
 import Web3Modal from 'web3modal';
 import { config } from '$lib/Shared/config';
-import { signer, signerAddress, connected, defaultEvmStores, chainId } from 'svelte-ethers-store';
+import { signer, signerAddress, connected, defaultEvmStores, chainId, contracts } from 'svelte-ethers-store';
 import { BigNumber, Contract } from 'ethers';
 import type { ContractContext } from 'src/contracts/DimmCityV1Base';
 import abiJson from '../../contracts/DimmCityV1Base.json';
 import { derived, get, writable, type Readable } from 'svelte/store';
 import { Web3Provider } from '@ethersproject/providers';
 import { getSessionValue, setSessionValue } from './StoreUtils';
+import { getCharacterReleases } from '$lib/Characters/Queries/getCharacterReleases';
 
 let packCost: BigNumber;
 let _contract: ContractContext;
 export const contractConfig = writable({} as any);
+
+let initialized = false;
+export async function initReleaseContracts() {
+	if (!initialized) {
+		const data = await getCharacterReleases();
+
+		await defaultEvmStores.setProvider();
+
+		data.forEach(async (release) => {
+			await defaultEvmStores.attachContract(release.slug, release.contractAddress, JSON.stringify(release.abi));
+		});
+		initialized = true;
+	}
+	// const contract = $contracts.selectedContract;
+	// totalSupply = await contract.totalSupply();
+}
+
+export function getReleaseContract(releaseKey: string) {
+	const contract = get(contracts)[releaseKey];
+	console.log('contract', contract);
+	return contract;
+}
+
 
 export const contract: Readable<ContractContext> = derived(
 	[connected, signer, contractConfig],

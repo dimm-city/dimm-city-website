@@ -4,19 +4,14 @@
 
 <script lang="ts">
 	import Shell from '$lib/Components/Shell.svelte';
-	import { showMenu, myCollection } from '$lib/Shared/ShellStore';
-	import { provider, signer, signerAddress, connected, defaultEvmStores, chainId } from 'svelte-ethers-store';
-	import MenuItem from '$lib/Components/Menu/MenuItem.svelte';
+	import { myCollection } from '$lib/Shared/ShellStore';
+	import { connected } from 'svelte-ethers-store';
 	import ContentPane from '$lib/Components/ContentPane.svelte';
 	import { onMount } from 'svelte';
-	import { connect, loggedIn, contract, getSporos, signMessage, sessionToken } from '$lib/Shared/ChainStore';
-	import Character from '$lib/Characters/Tabs/Character.svelte';
+	import { connect, loggedIn, getSporos } from '$lib/Shared/ChainStore';
 	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
 	import TokenViewModal from '$lib/Tokens/TokenViewModal.svelte';
 	import { openModal } from 'svelte-modals';
-	import { ethers } from 'ethers';
-	import Thumbnail from '$lib/Components/Thumbnail.svelte';
-	import TextContainer from '$lib/Components/TextContainer.svelte';
 	import Button from '$lib/Components/Button.svelte';
 	import LoggedInContainer from '$lib/Components/LoggedInContainer.svelte';
 
@@ -41,10 +36,6 @@
 	$: if ($connected && loaded == false && $myCollection.length < 1) {
 		loaded = true;
 		loadingTask = getSporos().then((data) => ($myCollection = data));
-	}
-
-	function viewSporos() {
-		selectedSporo = {};
 	}
 
 	function showToken(token: any) {
@@ -113,6 +104,7 @@
 				<div class="fade-in">
 					<h2>Your Sporos</h2>
 					<Button url="/console/characters/create">Create new Sporo</Button>
+					<!-- <Button on:click={() => loaded = false}>Refresh</Button> -->
 					{#await loadingTask}
 						<LoadingIndicator>
 							<span>Locating sporos...</span>
@@ -120,8 +112,12 @@
 					{:then}
 						<ul>
 							{#each $myCollection as sporo}
-								<li data-augmented-ui class="small-menu-item" on:click={() => showToken(sporo)}
-									on:keyup={() => console.log('check for enter key and open token')}>
+								<li
+									data-augmented-ui
+									class="small-menu-item"
+									on:click={() => showToken(sporo)}
+									on:keyup={() => console.log('check for enter key and open token')}
+								>
 									{sporo.name} <small> {sporo.release}-{sporo.edition}</small>
 								</li>
 							{/each}

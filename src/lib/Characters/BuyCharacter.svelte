@@ -2,18 +2,10 @@
 	import './Characters.css';
 	import { myCollection, districts } from '$lib/Shared/ShellStore';
 	import StepWizard from 'svelte-step-wizard';
-	import type { ICharacter, IToken } from './Character';
-	import CharacterBiography from './Tabs/CharacterBiography.svelte';
+	import { Token, type ICharacter, type IToken } from './Character';
 	import Button from '$lib/Components/Button.svelte';
 	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
-	import { connect, loggedIn, sessionToken } from '$lib/Shared/ChainStore';
-	import { config } from '$lib/Shared/config';
-	import type { ISummaryItem } from '$lib/Shared/ISummaryItem';
-	import Article from '$lib/Components/Article.svelte';
-	import type { IArticle } from '$lib/Shared/IArticle';
-	import ReleaseSelector from './Components/ReleaseSelector.svelte';
 	import type { ICharacterRelease } from './Components/ICharacterRelease';
-	import { defaultEvmStores, contracts, chainId } from 'svelte-ethers-store';
 	import { buyCharacter } from './Stores/CharacterStore';
 	import { getCharacterReleases } from './Queries/getCharacterReleases';
 	import { onMount } from 'svelte';
@@ -25,21 +17,13 @@
 
 	let token: IToken;
 	let character: ICharacter;
-	let totalSupply = 0;
-
 	let releases = [];
 	onMount(async () => {
 		const data = await getCharacterReleases();
 		releases = data;
 		selectedRelease = releases.find((r) => r.slug == releaseKey);
-		await defaultEvmStores.setProvider();
-		await defaultEvmStores.attachContract(
-			'selectedContract',
-			selectedRelease.config.address,
-			selectedRelease.config.abi
-		);
-		const contract = $contracts.selectedContract;
-		totalSupply = await contract.totalSupply();
+
+	
 	});
 
 	let selectedRelease: ICharacterRelease = {
@@ -52,7 +36,10 @@
 		thumbnailUrl: '',
 		tags: '',
 		author: '',
-		config: {}
+		contractAddress: '',
+		abi: undefined,
+		totalSupply: 0,
+		maxSupply: 0
 	};
 
 	function cancel() {
@@ -60,15 +47,14 @@
 		else window.location.href = '/console';
 	}
 	async function buy(nextStep) {
-		character = await buyCharacter(selectedRelease);
-		console.log('buy', character);
-
+		let tokenId = await buyCharacter(selectedRelease);
+		token = new Token();
+		token.id = tokenId;
+		token.tokenId = selectedRelease.slug + '-' + tokenId;
+		
+		console.log('buy', token);
 		nextStep();
 	}
-	// async function createCharacter(cb) {
-	// 	console.log('creating...');
-	// 	cb();
-	// }
 </script>
 
 <style>
@@ -101,20 +87,17 @@
 		<StepWizard.Step num={1} let:previousStep let:nextStep>
 			<div class="step-container fade-in">
 				<div>
-					<Article model={selectedRelease} imageHeight="300px" />
+					<!-- <Article model={selectedRelease} imageHeight="300px" /> -->
 					<small>
 						{#if selectedRelease?.id > 0}
-							{#await totalSupply}
-								<span>searching...</span>
-							{:then value}
-								<span>{value} sporos created in this release</span>
-							{/await}
+								<span>{selectedRelease.totalSupply} sporos created our of {selectedRelease.maxSupply} in this release</span>
+							
 						{/if}
 					</small>
 				</div>
 				<div class="button-row">
 					<Button on:click={cancel}>cancel</Button>
-					<Button on:click={() => buy(nextStep)}>continue</Button>
+					<Button on:click={() => buy(nextStep)}>create sporo</Button>
 				</div>
 			</div>
 		</StepWizard.Step>
@@ -158,14 +141,14 @@
 				</div>
 				<div class="button-row">
 					<!-- <Button on:click={previousStep}>Back</Button> -->
-					<Button on:click={cancel}>skip</Button>
+					<!-- <Button on:click={cancel}>skip</Button> -->
 					<!-- <Button on:click={() => }>Complete</Button> -->
-					<Button url={'/citizens/' + selectedRelease.slug + '-' + character.tokenId}>View Citizen File</Button>
 					<Button url="/console">Return to Op Console</Button>
+					<Button url={'/citizens/import/' + token.tokenId}>Create Citizen File</Button>
 				</div>
 			</div>
 		</StepWizard.Step>
-		<StepWizard.Step num={3} let:nextStep let:previousStep>
+		<!-- <StepWizard.Step num={3} let:nextStep let:previousStep>
 			<div class="step-container fade-in">
 				<div>
 					<h2>Profile Submitted</h2>
@@ -175,6 +158,6 @@
 					<Button url="/console">Return to Op Console</Button>
 				</div>
 			</div>
-		</StepWizard.Step>
+		</StepWizard.Step> -->
 	</StepWizard>
 </LoggedInContainer>

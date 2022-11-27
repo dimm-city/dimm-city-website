@@ -1,4 +1,4 @@
-import { sessionToken } from '$lib/Shared/ChainStore';
+import { getReleaseContract, sessionToken } from '$lib/Shared/ChainStore';
 import { config } from '$lib/Shared/config';
 import { ethers } from 'ethers';
 import { contracts, defaultEvmStores, signerAddress } from 'svelte-ethers-store';
@@ -11,7 +11,7 @@ export const abilities = writable([]);
 export const buyCharacter = async (selectedRelease: ICharacterRelease) => {
 	//await defaultEvmStores.setProvider();
 	//.then(async (x) => {
-	const contract = get(contracts).selectedContract;
+	const contract = getReleaseContract(selectedRelease.slug);
 	console.log('contract', contract);
 
 	const cost = await contract.getPackCost();
@@ -31,20 +31,22 @@ export const buyCharacter = async (selectedRelease: ICharacterRelease) => {
 	//ToDo: Get balanceOf, get new tokenIds
 
 	const tokenId = 35;
-	const character = await importTokenData(selectedRelease.slug, tokenId);
+	//const character = await importTokenData(selectedRelease.slug, tokenId);
 
-	return character;
+	//return character;
+	return tokenId;
 };
 
 async function importTokenData(release: string, tokenId: any) {
 	return await window
+		//.fetch(config.apiBaseUrl + '/sporos/import/' + release + '/' + tokenId, {
 		.fetch(config.apiBaseUrl + '/sporos/import/' + release + '/' + tokenId, {
 			method: 'POST',
 			headers: {
 				authorization: get(sessionToken),
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({ name: 'unknown citizen' })
+			body: JSON.stringify({ tokenId: tokenId, metadata: {} })
 		})
 		.then(async (res) => {
 			const { data, errors } = await res.json();
