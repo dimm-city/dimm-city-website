@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { config } from '$lib/Shared//config';
-	import { loggedIn } from '$lib/Shared/Stores/ChainStore';
+	import { loggedIn } from '$lib/Shared/Stores/UserStore';
 	import { searchText } from '$lib/Shared/Stores/ShellStore';
 	import MainMenuModal from './MainMenuModal.svelte';
 	import { openModal } from 'svelte-modals';

@@ -6,7 +6,7 @@
 	import CharacterBiography from './Components/Tabs/CharacterBiography.svelte';
 	import Button from '$lib/Shared/Components/Button.svelte';
 	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
-	import { connect, loggedIn, sessionToken } from '$lib/Shared/Stores/ChainStore';
+	import { connect, loggedIn, sessionToken } from '$lib/Shared/Stores/UserStore';
 	import { config } from '$lib/Shared/config';
 	import type { ISummaryItem } from '$lib/Shared/Models/ISummaryItem';
 	export let tokenId;

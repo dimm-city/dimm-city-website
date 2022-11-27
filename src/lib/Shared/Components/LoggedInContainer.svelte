@@ -1,6 +1,6 @@
 <script lang="ts">
 	import MenuItem from '$lib/Shared/Components/Menu/MenuItem.svelte';
-	import { connect, loggedIn,  sessionToken } from '$lib/Shared/Stores/ChainStore';
+	import { connect, loggedIn,  sessionToken } from '$lib/Shared/Stores/UserStore';
 </script>
 
 {#if $loggedIn && $sessionToken > ''}

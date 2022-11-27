@@ -8,7 +8,7 @@
 	import { connected } from 'svelte-ethers-store';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import { onMount } from 'svelte';
-	import { connect, loggedIn } from '$lib/Shared/Stores/ChainStore';
+	import { connect, loggedIn } from '$lib/Shared/Stores/UserStore';
 	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
 	import TokenViewModal from '$lib/Tokens/TokenViewModal.svelte';
 	import { openModal } from 'svelte-modals';
