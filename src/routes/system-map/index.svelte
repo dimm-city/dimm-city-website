@@ -20,16 +20,7 @@
 				{
 					name: 'Op Console',
 					slug: 'console',
-					children: [
-						{
-							name: 'Change Log',
-							slug: 'change-log'
-						},
-						{
-							name: 'System Stats',
-							slug: 'stats'
-						}
-					]
+					children: []
 				},
 				{
 					name: 'Citizen Files',
@@ -53,8 +44,26 @@
 				},
 				{
 					name: 'Spores',
-					slug: 'spores',					
+					slug: 'spores'
 				},
+				{
+					name: 'About',
+					slug: 'about',
+					children: [
+						{
+							name: 'Change Log',
+							slug: 'change-log'
+						},
+						{
+							name: 'System Stats',
+							slug: 'stats'
+						},
+						{
+							name: 'Depenedcies and Integrations',
+							slug: 'depenedcies'
+						}
+					]
+				}
 				// {
 				// 	name: 'Historical Record',
 				// 	slug: 'history',

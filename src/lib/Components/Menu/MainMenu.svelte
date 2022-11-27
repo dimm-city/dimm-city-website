@@ -21,13 +21,13 @@
 		description="Connect to your Operator's Console"
 	/>
 	<MenuItem
-		url="/console/change-log"
+		url="/about/change-log"
 		icon="bi-journal-check"
 		title="Change Log"
 		description="Latest changes to Dimm City Console"
 	/>
 	<MenuItem
-		url="/console/stats"
+		url="/about/stats"
 		icon="bi-diagram-3"
 		title="System Stats"
 		description="Console information and diagnostics"
