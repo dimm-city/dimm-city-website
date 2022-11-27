@@ -1,4 +1,4 @@
-import { Character } from '$lib/Characters/Character';
+import { Character } from '$lib/Characters/Models/Character';
 import { config } from '$lib/Shared/config';
 
 export const getCharacterBySlugQuery = `

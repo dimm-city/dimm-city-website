@@ -126,7 +126,7 @@
 								<!-- <a
                 target="_blank"
                 on:click|stopPropagation={() => true}
-                href="/citizens/print/{character.attributes.tokenId}"
+                href="/console/characters/print/{character.attributes.tokenId}"
             >
                 <i class="bi bi-printer" />
             </a> -->

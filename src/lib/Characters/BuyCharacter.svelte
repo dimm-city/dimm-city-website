@@ -2,28 +2,23 @@
 	import './Characters.css';
 	import { myCollection, districts } from '$lib/Shared/ShellStore';
 	import StepWizard from 'svelte-step-wizard';
-	import { Token, type ICharacter, type IToken } from './Character';
 	import Button from '$lib/Components/Button.svelte';
 	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
-	import type { ICharacterRelease } from './Components/ICharacterRelease';
-	import { buyCharacter } from './Stores/CharacterStore';
+	import type { ICharacterRelease } from './Models/ICharacterRelease';
 	import { getCharacterReleases } from './Queries/getCharacterReleases';
 	import { onMount } from 'svelte';
 	import LoggedInContainer from '$lib/Components/LoggedInContainer.svelte';
+	import { createSporo } from '$lib/Characters/Services/SporosService';
+	import type { IToken } from './Models/Character';
 
 	export let releaseKey: string;
-
 	let isSaving = false;
-
 	let token: IToken;
-	let character: ICharacter;
 	let releases = [];
 	onMount(async () => {
 		const data = await getCharacterReleases();
 		releases = data;
-		selectedRelease = releases.find((r) => r.slug == releaseKey);
-
-	
+		selectedRelease = releases.find((r) => r.slug == releaseKey);	
 	});
 
 	let selectedRelease: ICharacterRelease = {
@@ -39,7 +34,8 @@
 		contractAddress: '',
 		abi: undefined,
 		totalSupply: 0,
-		maxSupply: 0
+		maxSupply: 0,
+		metadataBaseUri: ''
 	};
 
 	function cancel() {
@@ -47,11 +43,7 @@
 		else window.location.href = '/console';
 	}
 	async function buy(nextStep) {
-		let tokenId = await buyCharacter(selectedRelease);
-		token = new Token();
-		token.id = tokenId;
-		token.tokenId = selectedRelease.slug + '-' + tokenId;
-		
+		token = await createSporo(selectedRelease);
 		console.log('buy', token);
 		nextStep();
 	}
@@ -144,7 +136,7 @@
 					<!-- <Button on:click={cancel}>skip</Button> -->
 					<!-- <Button on:click={() => }>Complete</Button> -->
 					<Button url="/console">Return to Op Console</Button>
-					<Button url={'/citizens/import/' + token.tokenId}>Create Citizen File</Button>
+					<Button url={'/console/characters/import/' + token.tokenId}>Create Citizen File</Button>
 				</div>
 			</div>
 		</StepWizard.Step>

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getCharacterReleases } from '../Queries/getCharacterReleases';
-	import type { ICharacterRelease } from './ICharacterRelease';
+	import type { ICharacterRelease } from '../Models/ICharacterRelease';
 	import { defaultEvmStores, contracts, chainId } from 'svelte-ethers-store';
 	import Article from '$lib/Components/Article.svelte';
 

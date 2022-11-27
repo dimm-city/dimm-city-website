@@ -1,21 +1,21 @@
 <script lang="ts">
 	//import { page } from '$app/stores';
-	import CharacterTab from '$lib/Characters/Tabs/Character.svelte';
+	import CharacterTab from '$lib/Characters/Components/Tabs/Character.svelte';
 	import CharacterMenu from '$lib/Characters/Components/CharacterMenu.svelte';
 	import Menu from '$lib/Components/Menu/Menu.svelte';
 	import Shell from '$lib/Components/Shell.svelte';
 	import { characters, showMenu, myCollection } from '$lib/Shared/ShellStore';
 	import Tab from '$lib/Components/Tab.svelte';
-	import CharacterStats from '$lib/Characters/Tabs/CharacterStats.svelte';
+	import CharacterStats from '$lib/Characters/Components/Tabs/CharacterStats.svelte';
 	import { loadCharacter } from '$lib/Characters/Queries/getCharacterBySlug';
 	import { onMount } from 'svelte';
-	import CharacterBiography from '$lib/Characters/Tabs/CharacterBiography.svelte';
+	import CharacterBiography from '$lib/Characters/Components/Tabs/CharacterBiography.svelte';
 	import TabPanel from '$lib/Components/TabPanel.svelte';
 	import Toolbar from '$lib/Components/Toolbar.svelte';
 	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
 	import Button from '$lib/Components/Button.svelte';
 	import { canEdit, updateCharacter } from '$lib/Characters/Queries/updateCharacter';
-	import { Character } from './Character';
+	import { Character } from './Models/Character';
 
 	$showMenu = false;
 	export let tokenId;

@@ -3,14 +3,14 @@
 </script>
 
 <script>
-	import Character from '$lib/Characters/Tabs/Character.svelte';
+	import Character from '$lib/Characters/Components/Tabs/Character.svelte';
 	import Shell from '$lib/Components/Shell.svelte';
 	import { characters, pageImage, showMenu } from '$lib/Shared/ShellStore';
 	import Tab from '$lib/Components/Tab.svelte';
-	import CharacterStats from '$lib/Characters/Tabs/CharacterStats.svelte';
+	import CharacterStats from '$lib/Characters/Components/Tabs/CharacterStats.svelte';
 	import { loadCharacter } from '$lib/Characters/Queries/getCharacterBySlug';
 	import { onMount } from 'svelte';
-	import CharacterBiography from '$lib/Characters/Tabs/CharacterBiography.svelte';
+	import CharacterBiography from '$lib/Characters/Components/Tabs/CharacterBiography.svelte';
 	import TabPanel from '$lib/Components/TabPanel.svelte';
 	import Toolbar from '$lib/Components/Toolbar.svelte';
 	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
@@ -74,7 +74,7 @@
 					<i class="fade-in btn bi bi-share" />
 				</TwitterButton>
 				{#if isEditable}
-					<Button url="/citizens/update/{character.tokenId}" shape="square" title="Edit citizen profile">
+					<Button url="/console/characters/update/{character.tokenId}" shape="square" title="Edit citizen profile">
 						<i class="fade-in btn bi bi-device-ssd" />
 					</Button>
 				{/if}

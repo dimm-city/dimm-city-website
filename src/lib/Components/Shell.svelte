@@ -9,7 +9,6 @@
 	import Toolbar from './Toolbar.svelte';
 	import TopMenu from './TopMenu.svelte';
 	import { config } from '$lib/Shared/config.prod';
-	import { initReleaseContracts } from '$lib/Shared/ChainStore';
 
 	export let title;
 	export let titleUrl = null;
@@ -17,12 +16,12 @@
 	export let enableSearch = false;
 
 	onMount(async () => {
-		initReleaseContracts();
 		if (config.googleKey > '') {
+			// @ts-ignore
 			window.dataLayer = window.dataLayer || [];
 			function gtag() {
+				// @ts-ignore
 				window.dataLayer.push(arguments);
-				console.log('dataLayer', window.dataLayer);
 			}
 			gtag('js', new Date());
 

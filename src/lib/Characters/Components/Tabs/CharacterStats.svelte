@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Input from '$lib/Components/Input.svelte';
 	import ProfileImage from '$lib/Characters/Components/ProfileImage.svelte';
-	import { Character } from '../Character';
+	import { Character } from '../../Models/Character';
 	export let character: Character = new Character();
 	export let readonly = true;
 	export let title = 'Stats';

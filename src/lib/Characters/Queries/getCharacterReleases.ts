@@ -1,5 +1,5 @@
 import { config } from '$lib/Shared/config';
-import type { ICharacterRelease } from '../Components/ICharacterRelease';
+import type { ICharacterRelease } from '../Models/ICharacterRelease';
 
 export const getCharacterReleasesQuery = `
 	query getCharacterReleases{
@@ -19,14 +19,15 @@ export const getCharacterReleasesQuery = `
 			imageUrl
 			videoUrl
 			thumbnailUrl
+			metadataBaseUri
 			tags
 			authors {
-			data{
-				attributes {					
-				address
+				data{
+					attributes {					
+					address
+					}
+					}
 				}
-				}
-			}
 			}
 		}
 		}

@@ -8,26 +8,21 @@
 	import { connected } from 'svelte-ethers-store';
 	import ContentPane from '$lib/Components/ContentPane.svelte';
 	import { onMount } from 'svelte';
-	import { connect, loggedIn, getSporos } from '$lib/Shared/ChainStore';
+	import { connect, loggedIn } from '$lib/Shared/ChainStore';
 	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
 	import TokenViewModal from '$lib/Tokens/TokenViewModal.svelte';
 	import { openModal } from 'svelte-modals';
 	import Button from '$lib/Components/Button.svelte';
 	import LoggedInContainer from '$lib/Components/LoggedInContainer.svelte';
+	import { getSporos } from '$lib/Characters/Services/SporosService';
+	import type { IToken } from '$lib/Characters/Models/Character';
 
-	let loadingTask: Promise<void>;
-	let selectedSporo = {} as any;
-	let tokenView;
+	let loadingTask: Promise<IToken[]>;
+	let selectedSporo = {} as IToken;
 	let loaded = false;
 	$: tokenId = `${selectedSporo.release}-${selectedSporo.edition}`;
 
-	//$: contractConfig = config.releases.s1r1.networks.find((n) => n.chainId === $chainId);
-	//$: network = $connected ? $provider.getNetwork() : ({} as any);
-	//$: contract = $connected ? new Contract(contractConfig.address, abiJson.abi, $signer) as unknown as ContractContext : null;
-	//$: loggedIn = $connected && $signerAddress;
 	onMount(() => {
-		// add a test to return in SSR context
-		// defaultEvmStores.setProvider();
 		if (window.ethereum && $loggedIn && !$connected) {
 			connect();
 		}

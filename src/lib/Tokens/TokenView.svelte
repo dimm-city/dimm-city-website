@@ -128,7 +128,7 @@
 						<div>File</div></a
 					>
 				{:else}
-					<a href="/citizens/import/{data.release}-{data.edition}"
+					<a href="/console/characters/import/{data.release}-{data.edition}"
 						><i class="btn bi bi-person-badge" />
 						<div>File</div></a
 					>

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Image from '$lib/Components/Image.svelte';
 	import { districts } from '$lib/Shared/ShellStore';
-	import { getDistricts } from '../../Locations/getDistricts';
+	import { getDistricts } from '$lib/Locations/getDistricts';
 	import { onMount } from 'svelte';
 
 	$: selectedItem = $districts.find((l) => l.id == value || l.slug == value);

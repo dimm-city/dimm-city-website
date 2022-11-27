@@ -1,60 +1,8 @@
-// import { Web3Provider, type Network } from '@ethersproject/providers';
-// import { BigNumber, Contract, type Signer } from 'ethers';
-
 import Web3Modal from 'web3modal';
-import { config } from '$lib/Shared/config';
-import { signer, signerAddress, connected, defaultEvmStores, chainId, contracts } from 'svelte-ethers-store';
-import { BigNumber, Contract } from 'ethers';
-import type { ContractContext } from 'src/contracts/DimmCityV1Base';
-import abiJson from '../../contracts/DimmCityV1Base.json';
+import { signerAddress, connected, defaultEvmStores } from 'svelte-ethers-store';
 import { derived, get, writable, type Readable } from 'svelte/store';
 import { Web3Provider } from '@ethersproject/providers';
 import { getSessionValue, setSessionValue } from './StoreUtils';
-import { getCharacterReleases } from '$lib/Characters/Queries/getCharacterReleases';
-
-let packCost: BigNumber;
-let _contract: ContractContext;
-export const contractConfig = writable({} as any);
-
-let initialized = false;
-export async function initReleaseContracts() {
-	if (!initialized) {
-		const data = await getCharacterReleases();
-
-		await defaultEvmStores.setProvider();
-
-		data.forEach(async (release) => {
-			await defaultEvmStores.attachContract(release.slug, release.contractAddress, JSON.stringify(release.abi));
-		});
-		initialized = true;
-	}
-	// const contract = $contracts.selectedContract;
-	// totalSupply = await contract.totalSupply();
-}
-
-export function getReleaseContract(releaseKey: string) {
-	const contract = get(contracts)[releaseKey];
-	console.log('contract', contract);
-	return contract;
-}
-
-
-export const contract: Readable<ContractContext> = derived(
-	[connected, signer, contractConfig],
-	([$connected, $signer, $contractConfig], set) => {
-		if ($connected) {
-			_contract = new Contract($contractConfig.address, abiJson.abi, $signer) as unknown as ContractContext;
-			set(_contract);
-		} else set(null);
-	}
-);
-
-chainId.subscribe((c) => {
-	const record = config.releases.dcs1r1.networks.find((n) => n.chainId === c);
-	console.log('contract', c, record);
-
-	contractConfig.set(record);
-});
 
 const profile = writable<string>(getSessionValue('profile') ?? null);
 profile.subscribe((value) => setSessionValue('profile', value));
@@ -95,96 +43,9 @@ export async function connect() {
 
 	const instance = await web3Modal.connect();
 	defaultEvmStores.setProvider(new Web3Provider(instance));
-
-	// _provider = new Web3Provider(instance);
-	// provider.set(_provider);
-
-	// window.ethereum.on('chainChanged', (_chainId) => {
-	// 	console.log(_chainId);
-	// 	window.location.reload();
-	// });
-	//await updateDetails();
 }
-
-// export async function updateDetails() {
-// 	_signer = _provider.getSigner();
-// 	_selectedAddress = await _signer.getAddress();
-// 	_network = await _provider.getNetwork();
-
-// 	signer.set(_signer);
-// 	address.set(_selectedAddress);
-// 	network.set(_network);
-
-// 	contractConfig = config.releases.s1r1.networks.find((n) => n.chainId === _network.chainId);
-
-// 	contract = new Contract(contractConfig.address, abiJson.abi, _signer) as unknown as ContractContext;
-// }
 
 export async function signMessage(message: string) {
 	const _signer = get(defaultEvmStores.signer);
-
 	return await _signer.signMessage(message);
-}
-
-export async function getDetails() {
-	if (!get(connected)) await connect();
-	const phase = await _contract.ReleasePhase();
-	const cost = await _contract.getPackCost();
-	console.log(phase, cost.toString());
-}
-
-export const getNumberSporos = async () => (await _contract.balanceOf(get(signerAddress))).toNumber();
-
-export async function buyPack(numberToMint: number) {
-	if (!get(connected)) await connect();
-	const _signer = get(signer);
-	const value = packCost.mul(BigNumber.from(numberToMint));
-	await _contract.buyPack(await _signer.getAddress(), BigNumber.from(numberToMint), true, { value: value });
-
-	const balance = await _signer.getBalance();
-
-	console.log(balance.toString());
-}
-
-export async function createSporo() {
-	if (!get(connected)) await connect();
-	const _signer = get(signer);
-	const value = packCost; // packCost.mul(BigNumber.from(numberToMint));
-	await _contract.buyPack(await _signer.getAddress(), BigNumber.from(1), true, { value: value });
-
-	const balance = await _signer.getBalance();
-
-	console.log(balance.toString());
-}
-
-export async function getSporos(): Promise<any> {
-	if (!get(connected) || !get(contract)) return;
-
-	const address = get(signerAddress);
-	const number = (await get(contract).balanceOf(address)).toNumber();
-
-	const tasks = new Array<Promise<any>>();
-	for (let index = 0; index < number; index++) {
-		const sporo = await get(contract).tokenOfOwnerByIndex(address, index);
-		const tokenId = sporo.toNumber();
-		const data = await downloadSporo(tokenId);
-		//if (data && data.id > -1)
-		tasks.push(data);
-	}
-
-	return Promise.all(tasks).then((sporos) => sporos);
-}
-
-export async function downloadSporo(tokenId: number): Promise<any> {
-	let json = {};
-	try {
-		const response = await fetch(`${get(contractConfig).metadataBaseUri}/${tokenId}.json`);
-
-		if (response.ok) {
-			json = await response.json();
-		}
-	} catch (error) {
-		console.error(error);
-	}
-	return json;
 }

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Character } from '$lib/Characters/Character';
+	import type { Character } from '$lib/Characters/Models/Character';
 	import Image from '../../Components./../Components/Image.svelte';
 
 	export let character: Character;
