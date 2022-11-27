@@ -3,8 +3,8 @@
 	import ProfileImage from '$lib/Characters/Components/ProfileImage.svelte';
 	import Textarea from '$lib/Shared/Components/Textarea.svelte';
 	import TextContainer from '$lib/Shared/Components/TextContainer.svelte';
-	import { Character } from '../../Models/Character';
-	export let character: Character = new Character();
+	import { Character, type ICharacter } from '../../Models/Character';
+	export let character: ICharacter = new Character();
 	export let readonly = true;
 	export let title = 'Biography';
 </script>

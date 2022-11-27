@@ -1,7 +1,7 @@
 <script>
 	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
 	import MenuItem from '$lib/Shared/Components/Menu/MenuItem.svelte';
-	import { districts } from '$lib/Shared/Stores/ShellStore';
+	import { districts } from './LocationStore';
 	import { createEventDispatcher, onMount } from 'svelte';
 	import { getDistricts } from './getDistricts';
 

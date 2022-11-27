@@ -1,10 +1,12 @@
 <script lang="ts">
 	import FlexMenu from '$lib/Shared/Components/Menu/FlexMenu.svelte';
-	import { characters, searchText, filterAndSort } from '$lib/Shared/Stores/ShellStore';
+	import { searchText } from '$lib/Shared/Stores/ShellStore';
 	import { createEventDispatcher, onMount } from 'svelte';
 	import { getCharactersQuery } from '../Queries/getCharacters';
 	import { config } from '$lib/Shared/config';
 	import type { ICharacter } from '../Models/Character';
+	import { characters } from '../CharacterStore';
+	import { filterAndSort } from '$lib/Shared/Stores/StoreUtils';
 
 	const dispatcher = createEventDispatcher();
 	

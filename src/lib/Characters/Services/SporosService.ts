@@ -5,8 +5,8 @@ import { connected, contracts, defaultEvmStores, signerAddress } from 'svelte-et
 import { get } from 'svelte/store';
 import { sessionToken } from '$lib/Shared/Stores/ChainStore';
 import { config } from '$lib/Shared/config';
-import { myCollection } from '$lib/Shared/Stores/ShellStore';
 import type { ICharacterRelease } from '$lib/Characters/Models/ICharacterRelease';
+import { myCharacters } from '../CharacterStore';
 let initialized = false;
 async function initReleaseContracts() {
 	if (!initialized) {
@@ -97,7 +97,7 @@ export async function getSporos(): Promise<IToken[]> {
 	return Promise.all(tasks).then((sporos) => sporos);
 }
 
-async function createCitizenFile(release: string, tokenId: any) {
+async function createCitizenFile(release: string, tokenId: string) {
 	return await window
 		//.fetch(config.apiBaseUrl + '/sporos/import/' + release + '/' + tokenId, {
 		.fetch(`${config.apiBaseUrl}/sporos/import/${release}/${tokenId}`, {
@@ -115,7 +115,7 @@ async function createCitizenFile(release: string, tokenId: any) {
 				// token.name = character.name;
 				// token.description = character.vibe;
 				// token.hasCharacter = true;
-				myCollection.set([]);
+				myCharacters.set([]);
 				// nextStep();
 				return data;
 			} else {

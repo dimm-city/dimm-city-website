@@ -1,6 +1,5 @@
 <script lang="ts">
 	import './Characters.css';
-	import { myCollection, districts } from '$lib/Shared/Stores/ShellStore';
 	import StepWizard from 'svelte-step-wizard';
 	import Button from '$lib/Shared/Components/Button.svelte';
 	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';

@@ -1,5 +1,8 @@
 import { browser } from '$app/env';
 
+export function getExpiryTime(): number {
+	return new Date(new Date().getTime() + 60 * 1000).getTime();
+}
 export function getSessionValue(key: string) {
 	if (browser && sessionStorage) {
 		const value = JSON.parse(sessionStorage.getItem(key));
@@ -24,7 +27,7 @@ export function getLocalValue(key: string) {
 			return null;
 		}
 		console.log('found data in cache', key);
-		
+
 		return value ? value.data : null;
 	}
 	return null;
@@ -36,3 +39,14 @@ export function setLocalValue(key: string, data: any, expires: number) {
 		else localStorage.setItem(key, JSON.stringify(data));
 	}
 }
+
+export const filterAndSort = (items, text) => {
+	return sortByName(items.filter((c) => c.name.toLowerCase().indexOf(text.toLowerCase()) > -1));
+};
+
+const sortByName = (items) => {
+	return items.sort((a, b) => {
+		if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+		else return -1;
+	});
+};

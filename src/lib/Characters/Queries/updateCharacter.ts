@@ -1,8 +1,8 @@
 import { sessionToken } from '$lib/Shared/Stores/ChainStore';
-import type { Character, ICharacter } from '$lib/Characters/Models/Character';
+import type { ICharacter } from '$lib/Characters/Models/Character';
 import { config } from '$lib/Shared/config';
-import { myCollection, characters } from '$lib/Shared/Stores/ShellStore';
 import { get } from 'svelte/store';
+import { characters, myCharacters } from '../CharacterStore';
 
 export async function canEdit(tokenId: string): Promise<boolean> {
 	return await window
@@ -52,7 +52,7 @@ export async function updateCharacter(character: ICharacter) {
 				console.assert(data != null);
 				console.log('finding token');
 
-				const token = get(myCollection).find((t) => t.release + '-' + t.edition == character.tokenId.toUpperCase());
+				const token = get(myCharacters).find((t) => t.release + '-' + t.edition == character.tokenId.toUpperCase());
 
 				if (token != null) {
 					console.log('updating local token');
@@ -60,11 +60,11 @@ export async function updateCharacter(character: ICharacter) {
 					token.name = character.name;
 					token.description = character.vibe;
 					token.hasCharacter = true;
-					myCollection.update(
-						($myCollection) =>
-							($myCollection = [
+					myCharacters.update(
+						($myCharacters) =>
+							($myCharacters = [
 								token,
-								...$myCollection.filter((s) => s.release + '-' + s.edition != character.tokenId.toUpperCase())
+								...$myCharacters.filter((s) => s.release + '-' + s.edition != character.tokenId.toUpperCase())
 							])
 					);
 				} else {

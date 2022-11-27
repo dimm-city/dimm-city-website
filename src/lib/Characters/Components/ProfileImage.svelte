@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type { Character } from '$lib/Characters/Models/Character';
+	import type { ICharacter } from '$lib/Characters/Models/Character';
 	import Image from '$lib/Shared/Components/Image.svelte';
 
-	export let character: Character;
+	export let character: ICharacter;
 	$: imageUrl =
 		character.thumbnailImage ||
 		character.imageUrl ||

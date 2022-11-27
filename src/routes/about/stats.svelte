@@ -5,8 +5,10 @@
 <script lang="ts">
 	import Shell from '$lib/Shared/Components/Shell.svelte';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
-	import { characters, districts, specialties } from '$lib/Shared/Stores/ShellStore';
+	import { districts } from '$lib/Locations/LocationStore';
 	import { config } from '$lib/Shared/config';
+	import { characters } from '$lib/Characters/CharacterStore';
+	import { specialties } from '$lib/Specialties/SpecialtyStore';
 </script>
 
 <Shell title="Console Stats">

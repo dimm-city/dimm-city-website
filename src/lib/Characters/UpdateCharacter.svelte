@@ -1,7 +1,7 @@
 <script lang="ts">
 	import CharacterTab from '$lib/Characters/Components/Tabs/Character.svelte';
 	import Shell from '$lib/Shared/Components/Shell.svelte';
-	import { characters } from '$lib/Shared/Stores/ShellStore';
+	import { characters } from './CharacterStore';
 	import Tab from '$lib/Shared/Components/Tab.svelte';
 	import CharacterStats from '$lib/Characters/Components/Tabs/CharacterStats.svelte';
 	import { loadCharacter } from '$lib/Characters/Queries/getCharacterBySlug';

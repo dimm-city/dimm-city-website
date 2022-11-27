@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { myCollection, districts } from '$lib/Shared/Stores/ShellStore';
 	import CharacterStats from './Components/Tabs/CharacterStats.svelte';
 	import StepWizard from 'svelte-step-wizard';
 	import { Character } from './Models/Character';
+	import { myCharacters } from './CharacterStore';
 	import CharacterBiography from './Components/Tabs/CharacterBiography.svelte';
 	import Button from '$lib/Shared/Components/Button.svelte';
 	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
@@ -14,7 +14,7 @@
 	let isSaving = false;
 
 	//ToDo: load token if not in local collection
-	let token = $myCollection.find((s) => s.release.toLowerCase() + '-' + s.edition == tokenId.toLowerCase());
+	let token = $myCharacters.find((s) => s.release.toLowerCase() + '-' + s.edition == tokenId.toLowerCase());
 
 	let character = new Character(token);
 	character.currentLocation = {
@@ -54,7 +54,7 @@
 					token.name = character.name;
 					token.description = character.vibe;
 					token.hasCharacter = true;
-					$myCollection = [token, ...$myCollection.filter((s) => s.release + '-' + s.edition != tokenId)];
+					$myCharacters = [token, ...$myCharacters.filter((s) => s.release + '-' + s.edition != tokenId)];
 
 					nextStep();
 				} else {

@@ -2,15 +2,14 @@
 	import Image from '$lib/Shared/Components/Image.svelte';
 	import { getSpecialties } from '$lib/Specialties/getSpecialties';
 	import { onMount } from 'svelte';
-	import { specialties } from '$lib/Shared/Stores/ShellStore';
 
 	export let character;
-	$: items = $specialties;
+	$: items = [];
 	$: selectedItem = items.find((l) => character.specialties.some((r) => r && r.slug == l.slug));
 
 	onMount(async () => {
 		if (items.length < 1) {
-			$specialties = await getSpecialties();
+			items = await getSpecialties();
 		}
 	});
 

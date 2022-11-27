@@ -5,7 +5,7 @@
 <script>
 	import Character from '$lib/Characters/Components/Tabs/Character.svelte';
 	import Shell from '$lib/Shared/Components/Shell.svelte';
-	import { characters, pageImage } from '$lib/Shared/Stores/ShellStore';
+	import {  pageImage } from '$lib/Shared/Stores/ShellStore';
 	import Tab from '$lib/Shared/Components/Tab.svelte';
 	import CharacterStats from '$lib/Characters/Components/Tabs/CharacterStats.svelte';
 	import { loadCharacter } from '$lib/Characters/Queries/getCharacterBySlug';
@@ -17,6 +17,7 @@
 	import Button from '$lib/Shared/Components/Button.svelte';
 	import { canEdit } from '$lib/Characters/Queries/updateCharacter';
 	import TwitterButton from '$lib/Shared/Components/TwitterButton.svelte';
+	import { characters } from './CharacterStore';
 
 	export let tokenId; // = $page.params.tokenId;
 	let character;
