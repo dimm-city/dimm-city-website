@@ -71,6 +71,7 @@ export interface IToken {
 	fullresulotion_uri: string;
 	id: number;
 	tokenId: string;
+	hasCharacter: boolean;
 }
 export class Token implements IToken {
 	compiler: string;
@@ -89,6 +90,7 @@ export class Token implements IToken {
 	fullresulotion_uri: string;
 	id: number;
 	tokenId: string;
+	hasCharacter = false;
 }
 export interface ICharacter {
 	//TODO: add to strapi

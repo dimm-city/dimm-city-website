@@ -1,4 +1,4 @@
-import { Token, type IToken } from '$lib/Characters/Models/Character';
+import { Token, type ICharacter, type IToken } from '$lib/Characters/Models/Character';
 import { getCharacterReleases } from '$lib/Characters/Queries/getCharacterReleases';
 import type { BigNumber } from 'ethers';
 import { connected, contracts, defaultEvmStores, signerAddress } from 'svelte-ethers-store';
@@ -6,7 +6,7 @@ import { get } from 'svelte/store';
 import { sessionToken } from '$lib/Shared/Stores/UserStore';
 import { config } from '$lib/Shared/config';
 import type { ICharacterRelease } from '$lib/Characters/Models/ICharacterRelease';
-import { myCharacters } from '../CharacterStore';
+import { myCharacterTokens } from '../CharacterStore';
 let initialized = false;
 async function initReleaseContracts() {
 	if (!initialized) {
@@ -97,16 +97,16 @@ export async function getSporos(): Promise<IToken[]> {
 	return Promise.all(tasks).then((sporos) => sporos);
 }
 
-async function createCitizenFile(release: string, tokenId: string) {
+export async function createCitizenFile(character: ICharacter) {
 	return await window
 		//.fetch(config.apiBaseUrl + '/sporos/import/' + release + '/' + tokenId, {
-		.fetch(`${config.apiBaseUrl}/sporos/import/${release}/${tokenId}`, {
+		.fetch(`${config.apiBaseUrl}/sporos/import/${character.token.release}/${character.token.edition}`, {
 			method: 'POST',
 			headers: {
 				authorization: get(sessionToken),
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({ tokenId: tokenId, metadata: {} })
+			body: JSON.stringify(character)
 		})
 		.then(async (res) => {
 			const { data, errors } = await res.json();
@@ -115,18 +115,18 @@ async function createCitizenFile(release: string, tokenId: string) {
 				// token.name = character.name;
 				// token.description = character.vibe;
 				// token.hasCharacter = true;
-				myCharacters.set([]);
+				myCharacterTokens.set([]);
 				// nextStep();
 				return data;
 			} else {
 				//TODO: display error
 				console.warn('Problem encountered while importing token data', errors);
-				return { tokenId };
+				return null;
 			}
 			// isSaving = false;
 		})
 		.catch((reason) => {
 			console.log('could not create character', reason);
-			return { tokenId };
+			return null;
 		});
 }

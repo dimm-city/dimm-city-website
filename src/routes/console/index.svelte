@@ -4,7 +4,7 @@
 
 <script lang="ts">
 	import Shell from '$lib/Shared/Components/Shell.svelte';
-	import { myCharacters } from '$lib/Characters/CharacterStore';
+	import { myCharacterTokens } from '$lib/Characters/CharacterStore';
 	import { connected } from 'svelte-ethers-store';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import { onMount } from 'svelte';
@@ -28,9 +28,9 @@
 		}
 	});
 
-	$: if ($connected && loaded == false && $myCharacters.length < 1) {
+	$: if ($connected && loaded == false && $myCharacterTokens.length < 1) {
 		loaded = true;
-		loadingTask = getSporos().then((data) => ($myCharacters = data));
+		loadingTask = getSporos().then((data) => ($myCharacterTokens = data));
 	}
 
 	function showToken(token: any) {
@@ -106,7 +106,7 @@
 						</LoadingIndicator>
 					{:then}
 						<ul>
-							{#each $myCharacters as sporo}
+							{#each $myCharacterTokens as sporo}
 								<li
 									data-augmented-ui
 									class="small-menu-item"
