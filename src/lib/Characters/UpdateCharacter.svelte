@@ -1,8 +1,5 @@
 <script lang="ts">
-	//import { page } from '$app/stores';
 	import CharacterTab from '$lib/Characters/Components/Tabs/Character.svelte';
-	import CharacterMenu from '$lib/Characters/Components/CharacterMenu.svelte';
-	import Menu from '$lib/Components/Menu/Menu.svelte';
 	import Shell from '$lib/Components/Shell.svelte';
 	import { characters, showMenu, myCollection } from '$lib/Shared/ShellStore';
 	import Tab from '$lib/Components/Tab.svelte';

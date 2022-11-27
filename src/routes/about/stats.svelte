@@ -4,7 +4,6 @@
 
 <script lang="ts">
 	import Shell from '$lib/Components/Shell.svelte';
-	import MainMenu from '$lib/Components/Menu/MainMenu.svelte';
 	import ContentPane from '$lib/Components/ContentPane.svelte';
 	import { characters, districts, specialties } from '$lib/Shared/ShellStore';
 	import { config } from '$lib/Shared/config';
@@ -43,5 +42,4 @@
 			<li><a href="http://www.twinery.org/">Twine</a></li>
 		</ul>
 	</ContentPane>
-	<MainMenu slot="menu" />
 </Shell>

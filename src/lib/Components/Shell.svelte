@@ -1,12 +1,14 @@
 <script>
+// @ts-nocheck
+
+
 	import ContentPane from './ContentPane.svelte';
 
 	import { Modals, closeModal, closeAllModals } from 'svelte-modals';
-	import { pageImage, fullscreen as globalFullscreen } from '../Shared/ShellStore';
+	import { pageImage} from '../Shared/ShellStore';
 	import '../styles/main.css';
 	import 'animate.css';
 	import { onMount } from 'svelte';
-	import Toolbar from './Toolbar.svelte';
 	import TopMenu from './TopMenu.svelte';
 	import { config } from '$lib/Shared/config.prod';
 
@@ -27,16 +29,7 @@
 
 			gtag('config', config.googleKey);
 		}
-		closeAllModals();
-		// if(window.ethereum && window.ethereum.isConnected()){
-		// 	connect();
-		// }
-		// window.ethereum.on('connect', (connectInfo) => {
-		// 	connect();
-		// });
-		// window.ethereum.on('disconnect', (error) => {
-		// 	disconnect();
-		// });
+		closeAllModals();		
 	});
 </script>
 
@@ -172,6 +165,7 @@
 		class="backdrop fade-in"
 		on:introstart
 		on:outroend
+		on:keyup
 		on:click={() => {
 			closeModal();
 		}}

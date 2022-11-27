@@ -3,12 +3,9 @@
 </script>
 
 <script lang="ts">
-	import { config } from '$lib/Shared/config';
 	import Shell from '$lib/Components/Shell.svelte';
 	import Image from '$lib/Components/Image.svelte';
-	import MainMenu from '$lib/Components/Menu/MainMenu.svelte';
 	import ContentPane from '$lib/Components/ContentPane.svelte';
-	import { showMenu } from '$lib/Shared/ShellStore';
 	import MenuItem from '$lib/Components/Menu/MenuItem.svelte';
 	import TextContainer from '$lib/Components/TextContainer.svelte';
 	import Menu from '$lib/Components/Menu/Menu.svelte';
@@ -124,5 +121,4 @@
 			</Menu>
 		</div>
 	</ContentPane>
-	<MainMenu slot="menu" />
 </Shell>

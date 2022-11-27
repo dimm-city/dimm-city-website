@@ -4,7 +4,6 @@
 
 <script lang="ts">
 	import Shell from '$lib/Components/Shell.svelte';
-	import MainMenu from '$lib/Components/Menu/MainMenu.svelte';
 	import ContentPane from '$lib/Components/ContentPane.svelte';
 	import { showMenu } from '$lib/Shared/ShellStore';
 	$showMenu = false;

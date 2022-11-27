@@ -1,6 +1,6 @@
 <script>
-	import Menu from './Menu/Menu.svelte';
-	import MenuItem from './Menu/MenuItem.svelte';
+	import Menu from '../Components/Menu/Menu.svelte';
+	import MenuItem from '../Components/Menu/MenuItem.svelte';
 	import { searchText } from '../Shared/ShellStore';
 </script>
 

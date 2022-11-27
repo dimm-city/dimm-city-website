@@ -1,7 +1,8 @@
 <script lang="ts">
-	import MenuPanel from '../Components/Menu/MenuPanel.svelte';
+	// @ts-nocheck
+	import MenuPanel from './MenuPanel.svelte';
 	import ContentPane from '../Components/ContentPane.svelte';
-	import MainMenu from '../Components/Menu/MainMenu.svelte';
+	import MainMenu from './MainMenu.svelte';
 	import { Modals, closeModal, closeAllModals } from 'svelte-modals';
 	import { pageImage, showMenu } from '../Shared/ShellStore';
 	import '../styles/main.css';
