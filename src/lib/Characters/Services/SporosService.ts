@@ -3,7 +3,7 @@ import { getCharacterReleases } from '$lib/Characters/Queries/getCharacterReleas
 import type { BigNumber } from 'ethers';
 import { connected, contracts, defaultEvmStores, signerAddress } from 'svelte-ethers-store';
 import { get } from 'svelte/store';
-import { sessionToken } from '$lib/Shared/Stores/ChainStore';
+import { sessionToken } from '$lib/Shared/Stores/UserStore';
 import { config } from '$lib/Shared/config';
 import type { ICharacterRelease } from '$lib/Characters/Models/ICharacterRelease';
 import { myCharacters } from '../CharacterStore';
