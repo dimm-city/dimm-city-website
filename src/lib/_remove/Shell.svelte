@@ -1,16 +1,16 @@
 <script lang="ts">
 	// @ts-nocheck
 	import MenuPanel from './MenuPanel.svelte';
-	import ContentPane from '../Components/ContentPane.svelte';
+	import ContentPane from '../Shared/Components/ContentPane.svelte';
 	import MainMenu from './MainMenu.svelte';
 	import { Modals, closeModal, closeAllModals } from 'svelte-modals';
-	import { pageImage, showMenu } from '../Shared/ShellStore';
+	import { pageImage, showMenu } from '../Shared/Stores/ShellStore';
 	import '../styles/main.css';
 	import 'animate.css';
 	import { onMount } from 'svelte';
 	import { config } from '../Shared/config';
-	import { loggedIn } from '../Shared/ChainStore';
-	import Toolbar from '../Components/Toolbar.svelte';
+	import { loggedIn } from '../Shared/Stores/ChainStore';
+	import Toolbar from '../Shared/Components/Toolbar.svelte';
 	import AccordionDivider from './AccordionDivider.svelte';
 	export let title;
 	export let showMainMenuButton = true;

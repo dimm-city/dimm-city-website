@@ -1,6 +1,6 @@
 <script>
-	import Menu from '../Components/Menu/Menu.svelte';
-	import MenuItem from '../Components/Menu/MenuItem.svelte';
+	import Menu from '../Shared/Components/Menu/Menu.svelte';
+	import MenuItem from '../Shared/Components/Menu/MenuItem.svelte';
 </script>
 
 <Menu>

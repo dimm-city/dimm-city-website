@@ -1,14 +1,14 @@
 <script lang="ts">
-	import { myCollection, districts } from '$lib/Shared/ShellStore';
+	import { myCollection, districts } from '$lib/Shared/Stores/ShellStore';
 	import CharacterStats from './Components/Tabs/CharacterStats.svelte';
 	import StepWizard from 'svelte-step-wizard';
 	import { Character } from './Models/Character';
 	import CharacterBiography from './Components/Tabs/CharacterBiography.svelte';
-	import Button from '$lib/Components/Button.svelte';
-	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
-	import { connect, loggedIn, sessionToken } from '$lib/Shared/ChainStore';
+	import Button from '$lib/Shared/Components/Button.svelte';
+	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
+	import { connect, loggedIn, sessionToken } from '$lib/Shared/Stores/ChainStore';
 	import { config } from '$lib/Shared/config';
-	import type { ISummaryItem } from '$lib/Shared/ISummaryItem';
+	import type { ISummaryItem } from '$lib/Shared/Models/ISummaryItem';
 	export let tokenId;
 
 	let isSaving = false;

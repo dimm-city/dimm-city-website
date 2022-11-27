@@ -3,11 +3,9 @@
 </script>
 
 <script lang="ts">
-	import Shell from '$lib/Components/Shell.svelte';
-	import ContentPane from '$lib/Components/ContentPane.svelte';
-	import { showMenu } from '$lib/Shared/ShellStore';
+	import Shell from '$lib/Shared/Components/Shell.svelte';
+	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import Dashboard from '$lib/Dashboard/Dashboard.svelte';
-	$showMenu = false;
 </script>
 
 <Shell title="DCC Dashboard" fullscreen={true}>

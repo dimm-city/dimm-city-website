@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { config } from '../Shared/config';
-	import { loggedIn } from '../Shared/ChainStore';
-	import { searchText } from '../Shared/ShellStore';
+	import { config } from '$lib/Shared//config';
+	import { loggedIn } from '$lib/Shared/Stores/ChainStore';
+	import { searchText } from '$lib/Shared/Stores/ShellStore';
 	import MainMenuModal from './MainMenuModal.svelte';
 	import { openModal } from 'svelte-modals';
 

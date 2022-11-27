@@ -5,12 +5,12 @@
 	import ContentPane from './ContentPane.svelte';
 
 	import { Modals, closeModal, closeAllModals } from 'svelte-modals';
-	import { pageImage} from '../Shared/ShellStore';
-	import '../styles/main.css';
+	import { pageImage} from '$lib/Shared/Stores/ShellStore';
+	import '$lib/Shared/Styles/main.css';
 	import 'animate.css';
 	import { onMount } from 'svelte';
 	import TopMenu from './TopMenu.svelte';
-	import { config } from '$lib/Shared/config.prod';
+	import { config } from '$lib/Shared/config';
 
 	export let title;
 	export let titleUrl = null;

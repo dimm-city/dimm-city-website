@@ -1,6 +1,6 @@
 <script>
-	import FlexMenu from '$lib/Components/Menu/FlexMenu.svelte';
-	import { filterAndSort, specialties, searchText } from '$lib/Shared/ShellStore';
+	import FlexMenu from '$lib/Shared/Components/Menu/FlexMenu.svelte';
+	import { filterAndSort, specialties, searchText } from '$lib/Shared/Stores/ShellStore';
 	import { onMount } from 'svelte';
 	import { getSpecialties } from './getSpecialties';
 

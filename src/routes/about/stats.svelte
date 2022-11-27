@@ -3,9 +3,9 @@
 </script>
 
 <script lang="ts">
-	import Shell from '$lib/Components/Shell.svelte';
-	import ContentPane from '$lib/Components/ContentPane.svelte';
-	import { characters, districts, specialties } from '$lib/Shared/ShellStore';
+	import Shell from '$lib/Shared/Components/Shell.svelte';
+	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
+	import { characters, districts, specialties } from '$lib/Shared/Stores/ShellStore';
 	import { config } from '$lib/Shared/config';
 </script>
 

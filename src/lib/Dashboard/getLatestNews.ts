@@ -1,5 +1,5 @@
 
-import type { ISummaryItem } from '$lib/Shared/ISummaryItem';
+import type { ISummaryItem } from '$lib/Shared/Models/ISummaryItem';
 import { config } from '$lib/Shared/config';
 export const getJournalEntriesQuery = `
 query {

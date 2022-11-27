@@ -1,6 +1,6 @@
-import { config as prod } from './config.prod';
-import { config as staging } from './config.staging';
-import { config as dev } from './config.dev';
+import { config as prod } from './Config/config.prod';
+import { config as staging } from './Config/config.staging';
+import { config as dev } from './Config/config.dev';
 import { browser } from '$app/env';
 
 export const config = getCurrentConfig();

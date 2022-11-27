@@ -1,7 +1,7 @@
 <script lang="ts">
-	import Button from '$lib/Components/Button.svelte';
-	import Image from '$lib/Components/Image.svelte';
-	import Toolbar from '$lib/Components/Toolbar.svelte';
+	import Button from '$lib/Shared/Components/Button.svelte';
+	import Image from '$lib/Shared/Components/Image.svelte';
+	import Toolbar from '$lib/Shared/Components/Toolbar.svelte';
 	
 	export let data;
 	function getAttributeValue(attribKey) {

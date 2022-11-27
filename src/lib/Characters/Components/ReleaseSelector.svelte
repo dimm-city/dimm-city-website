@@ -2,7 +2,7 @@
 	import { getCharacterReleases } from '../Queries/getCharacterReleases';
 	import type { ICharacterRelease } from '../Models/ICharacterRelease';
 	import { defaultEvmStores, contracts, chainId } from 'svelte-ethers-store';
-	import Article from '$lib/Components/Article.svelte';
+	import Article from '$lib/Shared/Components/Article.svelte';
 
 	let releases = [];
 	getCharacterReleases().then((d) => (releases = d));

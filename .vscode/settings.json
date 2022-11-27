@@ -19,6 +19,7 @@
         "Dimm",
         "ethersproject",
         "sporo",
-        "Sporos"
+        "Sporos",
+        "strapi"
     ]
 }

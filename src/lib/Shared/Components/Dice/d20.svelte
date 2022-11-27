@@ -259,6 +259,7 @@
 		class:rolling
 		data-face={face}
 		on:click={roll}
+		on:keyup={roll}
 		disabled={rolling}
 		class:animate__tada={face == 20}
 	>

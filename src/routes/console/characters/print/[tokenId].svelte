@@ -1,5 +1,7 @@
 <script>
-    import '$lib/styles/print.css';
+// @ts-nocheck
+
+    import '$lib/Shared/Styles/print.css';
 </script>
 <svelte:head>
 	<meta charset="UTF-8" />

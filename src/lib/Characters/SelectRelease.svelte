@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Button from '$lib/Components/Button.svelte';
-	import LoggedInContainer from '$lib/Components/LoggedInContainer.svelte';
+	import Button from '$lib/Shared/Components/Button.svelte';
+	import LoggedInContainer from '$lib/Shared/Components/LoggedInContainer.svelte';
 	import ReleaseSelector from './Components/ReleaseSelector.svelte';
 
 	let selectedRelease;

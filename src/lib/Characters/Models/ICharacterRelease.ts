@@ -1,4 +1,4 @@
-import type { IArticle } from '$lib/Shared/IArticle';
+import type { IArticle } from '$lib/Shared/Models/IArticle';
 
 export interface ICharacterRelease extends IArticle {
 	metadataBaseUri: string;

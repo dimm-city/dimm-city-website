@@ -3,12 +3,12 @@
 </script>
 
 <script lang="ts">
-	import Shell from '$lib/Components/Shell.svelte';
-	import Image from '$lib/Components/Image.svelte';
-	import ContentPane from '$lib/Components/ContentPane.svelte';
-	import MenuItem from '$lib/Components/Menu/MenuItem.svelte';
-	import TextContainer from '$lib/Components/TextContainer.svelte';
-	import Menu from '$lib/Components/Menu/Menu.svelte';
+	import Shell from '$lib/Shared/Components/Shell.svelte';
+	import Image from '$lib/Shared/Components/Image.svelte';
+	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
+	import MenuItem from '$lib/Shared/Components/Menu/MenuItem.svelte';
+	import TextContainer from '$lib/Shared/Components/TextContainer.svelte';
+	import Menu from '$lib/Shared/Components/Menu/Menu.svelte';
 </script>
 
 <style>

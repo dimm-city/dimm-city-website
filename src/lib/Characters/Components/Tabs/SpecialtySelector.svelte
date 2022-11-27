@@ -1,8 +1,8 @@
 <script lang="ts">
-	import Image from '$lib/Components/Image.svelte';
+	import Image from '$lib/Shared/Components/Image.svelte';
 	import { getSpecialties } from '$lib/Specialties/getSpecialties';
 	import { onMount } from 'svelte';
-	import { specialties } from '$lib/Shared/ShellStore';
+	import { specialties } from '$lib/Shared/Stores/ShellStore';
 
 	export let character;
 	$: items = $specialties;

@@ -1,4 +1,4 @@
-import type { ISummaryItem } from "$lib/Shared/ISummaryItem";
+import type { ISummaryItem } from '$lib/Shared/Models/ISummaryItem';
 
 export class Character implements ICharacter {
 	constructor(token: IToken = null) {
@@ -9,6 +9,7 @@ export class Character implements ICharacter {
 	name: string;
 	tokenId: string;
 	token: IToken;
+	loaded = false;
 	age: number;
 	height: number;
 	weight: number;
@@ -88,7 +89,6 @@ export class Token implements IToken {
 	fullresulotion_uri: string;
 	id: number;
 	tokenId: string;
-
 }
 export interface ICharacter {
 	//TODO: add to strapi
@@ -97,6 +97,7 @@ export interface ICharacter {
 	dreams: string;
 	backstory: string;
 	token: IToken;
+	loaded: boolean;
 
 	//-----//
 	id: number;

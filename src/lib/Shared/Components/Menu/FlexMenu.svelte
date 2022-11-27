@@ -1,9 +1,9 @@
 <script lang="ts">
-	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
-	import MenuItem from '$lib/Components/Menu/MenuItem.svelte';
+	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
+	import MenuItem from '$lib/Shared/Components/Menu/MenuItem.svelte';
 	import { createEventDispatcher } from 'svelte';
 	export let query: any = null; // new Promise();
-	export let data;
+	export let data: any[];
 	export let selectedItem = '';
 	export let icon = 'bi-file-text';
 

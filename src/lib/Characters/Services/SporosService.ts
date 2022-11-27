@@ -1,12 +1,12 @@
-import type { IToken } from '$lib/Characters/Character';
-import type { ICharacterRelease } from '$lib/Characters/Components/ICharacterRelease';
+import { Token, type IToken } from '$lib/Characters/Models/Character';
 import { getCharacterReleases } from '$lib/Characters/Queries/getCharacterReleases';
 import type { BigNumber } from 'ethers';
 import { connected, contracts, defaultEvmStores, signerAddress } from 'svelte-ethers-store';
 import { get } from 'svelte/store';
-import { sessionToken } from '../../Shared/ChainStore';
-import { config } from '../../Shared/config';
-import { myCollection } from '../../Shared/ShellStore';
+import { sessionToken } from '$lib/Shared/Stores/ChainStore';
+import { config } from '$lib/Shared/config';
+import { myCollection } from '$lib/Shared/Stores/ShellStore';
+import type { ICharacterRelease } from '$lib/Characters/Models/ICharacterRelease';
 let initialized = false;
 async function initReleaseContracts() {
 	if (!initialized) {
@@ -31,7 +31,7 @@ async function getReleaseContract(releaseKey: string) {
 }
 
 async function downloadSporo(tokenId: number, release: ICharacterRelease): Promise<IToken> {
-	let json: IToken = {};
+	let json: IToken = new Token();
 	try {
 		const response = await fetch(`${release.metadataBaseUri}/${tokenId}.json`);
 

@@ -3,7 +3,7 @@
 </ModalShell>
 
 <script>
-	import ModalShell from '$lib/Components/ModalShell.svelte';
+	import ModalShell from '$lib/Shared/Components/ModalShell.svelte';
 	import D20 from './d20.svelte';
 
 	export let color = 'white';

@@ -1,7 +1,7 @@
 <script>
-	import Menu from '../Components/Menu/Menu.svelte';
-	import MenuItem from '../Components/Menu/MenuItem.svelte';
-	import { searchText } from '../Shared/ShellStore';
+	import Menu from '../Shared/Components/Menu/Menu.svelte';
+	import MenuItem from '../Shared/Components/Menu/MenuItem.svelte';
+	import { searchText } from '../Shared/Stores/ShellStore';
 </script>
 
 <h4>Searching for: {$searchText}</h4>

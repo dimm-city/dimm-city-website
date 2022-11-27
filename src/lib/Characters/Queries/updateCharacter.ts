@@ -1,7 +1,7 @@
-import { sessionToken } from '$lib/Shared/ChainStore';
-import type { Character } from '$lib/Characters/Character';
+import { sessionToken } from '$lib/Shared/Stores/ChainStore';
+import type { Character, ICharacter } from '$lib/Characters/Models/Character';
 import { config } from '$lib/Shared/config';
-import { myCollection, characters } from '$lib/Shared/ShellStore';
+import { myCollection, characters } from '$lib/Shared/Stores/ShellStore';
 import { get } from 'svelte/store';
 
 export async function canEdit(tokenId: string): Promise<boolean> {
@@ -30,7 +30,7 @@ export async function canEdit(tokenId: string): Promise<boolean> {
 		});
 }
 
-export async function updateCharacter(character: Character) {
+export async function updateCharacter(character: ICharacter) {
 	const importData = JSON.parse(JSON.stringify(character));
 	//importData.slug = character.name.replace(' ', '-');
 	// importData.currentLocation = character.currentLocation.id;

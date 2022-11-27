@@ -1,7 +1,7 @@
 <script lang="ts">
-	import FlexMenu from '$lib/Components/Menu/FlexMenu.svelte';
+	import FlexMenu from '$lib/Shared/Components/Menu/FlexMenu.svelte';
 	import { formatDate } from '$lib/Shared/FormatFunctions';
-	import { searchText, filterAndSort } from '$lib/Shared/ShellStore';
+	import { searchText, filterAndSort } from '$lib/Shared/Stores/ShellStore';
 	import { onMount } from 'svelte';
 	import { getJournalEntries } from './getJournalEntries';
 	import { JournalEntry } from './JournalEntry';

@@ -1,7 +1,7 @@
 <script>
-	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
-	import MenuItem from '$lib/Components/Menu/MenuItem.svelte';
-	import { districts, showMenu } from '$lib/Shared/ShellStore';
+	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
+	import MenuItem from '$lib/Shared/Components/Menu/MenuItem.svelte';
+	import { districts } from '$lib/Shared/Stores/ShellStore';
 	import { createEventDispatcher, onMount } from 'svelte';
 	import { getDistricts } from './getDistricts';
 
@@ -21,7 +21,6 @@
 	});
 	function selectItem(item) {
 		selectedItem = item.slug;
-		$showMenu = false;
 		return true;
 	}
 </script>

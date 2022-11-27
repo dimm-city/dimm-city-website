@@ -28,8 +28,8 @@
 </ModalShell>
 
 <script lang="ts">
-	import ModalShell from '../../Components/ModalShell.svelte';
-	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
+	import ModalShell from '$lib/Shared/Components/ModalShell.svelte';
+	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
 	import markdownit from 'markdown-it';
 
 	export let data: any = {};

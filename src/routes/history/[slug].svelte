@@ -1,8 +1,8 @@
 <script lang="ts">
-	import Shell from '$lib/Components/Shell.svelte';
+	import Shell from '$lib/Shared/Components/Shell.svelte';
 	import StoryViewer from '$lib/Stories/StoryViewer.svelte';
 	import { page } from '$app/stores';
-	import ContentPane from '$lib/Components/ContentPane.svelte';
+	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 
 	const defaultStory = `/stories/${$page.params.slug || 'none'}.html`;
 	let viewer;

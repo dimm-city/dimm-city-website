@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Input from '$lib/Components/Input.svelte';
+	import Input from '$lib/Shared/Components/Input.svelte';
 	import ProfileImage from '$lib/Characters/Components/ProfileImage.svelte';
 	import { Character } from '../../Models/Character';
 	export let character: Character = new Character();

@@ -1,12 +1,9 @@
 import { writable, derived } from 'svelte/store';
-import type { ISummaryItem } from './ISummaryItem';
-import { getLocalValue, getSessionValue, setLocalValue, setSessionValue } from './StoreUtils';
-
-export const menuItems = writable([]);
-export const showMenu = writable(true);
+import type { ISummaryItem } from '$lib/Shared/Models/ISummaryItem';
+import { getLocalValue, getSessionValue, setLocalValue, setSessionValue } from '$lib/Shared/Stores/StoreUtils';
+import type { ICharacter } from '$lib/Characters/Models/Character';
 
 export const searchText = writable('');
-export const fullscreen = writable(false);
 
 export const myCollection = writable(getSessionValue('collection') ?? []);
 myCollection.subscribe((value) => setSessionValue('collection', value));
@@ -14,7 +11,7 @@ myCollection.subscribe((value) => setSessionValue('collection', value));
 export const specialties = writable(getLocalValue('specialties') ?? []);
 specialties.subscribe((value) => setLocalValue('specialties', value, getExpiryTime()));
 
-export const characters = writable(getLocalValue('characters') ?? []);
+export const characters = writable<ICharacter[]>(getLocalValue('characters') ?? []);
 characters.subscribe((value) => setLocalValue('characters', value, getExpiryTime()));
 
 export const filteredCharacters = derived([characters, searchText], ([$characters, $searchText]) => {

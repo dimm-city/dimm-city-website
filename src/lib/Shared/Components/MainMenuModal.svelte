@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ModalShell from '$lib/Components/ModalShell.svelte';
+	import ModalShell from '$lib/Shared/Components/ModalShell.svelte';
 	import Menu from './Menu/Menu.svelte';
 	import MenuItem from './Menu/MenuItem.svelte';
 </script>

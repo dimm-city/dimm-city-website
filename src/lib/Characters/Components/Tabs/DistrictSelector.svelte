@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Image from '$lib/Components/Image.svelte';
-	import { districts } from '$lib/Shared/ShellStore';
+	import Image from '$lib/Shared/Components/Image.svelte';
+	import { districts } from '$lib/Shared/Stores/ShellStore';
 	import { getDistricts } from '$lib/Locations/getDistricts';
 	import { onMount } from 'svelte';
 

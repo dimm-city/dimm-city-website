@@ -1,9 +1,9 @@
 <script lang="ts">
-	import Shell from '$lib/Components/Shell.svelte';
-	import FlexMenu from '$lib/Components/Menu/FlexMenu.svelte';
-	import MenuItem from '$lib/Components/Menu/MenuItem.svelte';
+	import Shell from '$lib/Shared/Components/Shell.svelte';
+	import FlexMenu from '$lib/Shared/Components/Menu/FlexMenu.svelte';
+	import MenuItem from '$lib/Shared/Components/Menu/MenuItem.svelte';
 	import { getStories } from '$lib/Stories/Store';
-	import ContentPane from '$lib/Components/ContentPane.svelte';
+	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import { onMount } from 'svelte';
 	const loadStories = getStories();
 	let stories;

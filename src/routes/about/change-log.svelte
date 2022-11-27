@@ -3,10 +3,8 @@
 </script>
 
 <script lang="ts">
-	import Shell from '$lib/Components/Shell.svelte';
-	import ContentPane from '$lib/Components/ContentPane.svelte';
-	import { showMenu } from '$lib/Shared/ShellStore';
-	$showMenu = false;
+	import Shell from '$lib/Shared/Components/Shell.svelte';
+	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 </script>
 
 <Shell title="Change Log">

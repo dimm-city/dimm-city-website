@@ -1,4 +1,4 @@
-import type{  IArticle } from "../Shared/IArticle";
+import type{  IArticle } from "$lib/Shared/Models/IArticle";
 export class Specialty implements IArticle {
     /**
      *

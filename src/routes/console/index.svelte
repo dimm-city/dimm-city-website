@@ -3,17 +3,17 @@
 </script>
 
 <script lang="ts">
-	import Shell from '$lib/Components/Shell.svelte';
-	import { myCollection } from '$lib/Shared/ShellStore';
+	import Shell from '$lib/Shared/Components/Shell.svelte';
+	import { myCollection } from '$lib/Shared/Stores/ShellStore';
 	import { connected } from 'svelte-ethers-store';
-	import ContentPane from '$lib/Components/ContentPane.svelte';
+	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import { onMount } from 'svelte';
-	import { connect, loggedIn } from '$lib/Shared/ChainStore';
-	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
+	import { connect, loggedIn } from '$lib/Shared/Stores/ChainStore';
+	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
 	import TokenViewModal from '$lib/Tokens/TokenViewModal.svelte';
 	import { openModal } from 'svelte-modals';
-	import Button from '$lib/Components/Button.svelte';
-	import LoggedInContainer from '$lib/Components/LoggedInContainer.svelte';
+	import Button from '$lib/Shared/Components/Button.svelte';
+	import LoggedInContainer from '$lib/Shared/Components/LoggedInContainer.svelte';
 	import { getSporos } from '$lib/Characters/Services/SporosService';
 	import type { IToken } from '$lib/Characters/Models/Character';
 

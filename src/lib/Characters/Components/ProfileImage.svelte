@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Character } from '$lib/Characters/Models/Character';
-	import Image from '../../Components./../Components/Image.svelte';
+	import Image from '$lib/Shared/Components/Image.svelte';
 
 	export let character: Character;
 	$: imageUrl =

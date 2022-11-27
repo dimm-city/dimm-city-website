@@ -1,10 +1,10 @@
 <script lang="ts">
-	import List from '$lib/Components/List.svelte';
+	import List from '$lib/Shared/Components/List.svelte';
 	import { getDashboardEntries } from './getDashboardEntries';
 	import { getDistricts } from './getDistricts';
 	import { getSpecialties } from './getSpecialties';
 	import { getLatestCitizens } from './getNewestCitizens';
-	import ListItemLink from '$lib/Components/ListItemLink.svelte';
+	import ListItemLink from '$lib/Shared/Components/ListItemLink.svelte';
 	import Hero from './Hero.svelte';
 	let newsQuery = getDashboardEntries().then((d) => (lastestNews = d));
 	let lastestNews = [];

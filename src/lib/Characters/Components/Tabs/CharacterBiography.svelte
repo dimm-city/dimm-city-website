@@ -1,8 +1,8 @@
 <script lang="ts">
-	import Input from '$lib/Components/Input.svelte';
+	import Input from '$lib/Shared/Components/Input.svelte';
 	import ProfileImage from '$lib/Characters/Components/ProfileImage.svelte';
-	import Textarea from '$lib/Components/Textarea.svelte';
-	import TextContainer from '$lib/Components/TextContainer.svelte';
+	import Textarea from '$lib/Shared/Components/Textarea.svelte';
+	import TextContainer from '$lib/Shared/Components/TextContainer.svelte';
 	import { Character } from '../../Models/Character';
 	export let character: Character = new Character();
 	export let readonly = true;

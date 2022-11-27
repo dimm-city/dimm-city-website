@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Image from '$lib/Components/Image.svelte';
-	import type { IArticle } from '$lib/Shared/IArticle';
+	import Image from '$lib/Shared/Components/Image.svelte';
+	import type { IArticle } from '$lib/Shared/Models/IArticle';
 	import { marked } from 'marked';
 	export let model: IArticle;
 	export let imageAug = 'tl-clip tr-clip br-clip bl-clip border';

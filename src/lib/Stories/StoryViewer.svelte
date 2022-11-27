@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { showMenu } from '$lib/Shared/ShellStore';
 	import { onMount } from 'svelte';
 	export let story = '';
 	export function selectStory(story) {
@@ -15,13 +14,11 @@
 	}
 
 	function exitStory() {
-		$showMenu = true;
+		document.location = '/history'
 	}
 
 	function storyLoaded() {
-		console.log('story loaded');
 		if (!story.includes('none')) {
-			$showMenu = false;
 		}
 	}
 </script>

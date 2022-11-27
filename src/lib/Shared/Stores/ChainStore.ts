@@ -2,7 +2,7 @@ import Web3Modal from 'web3modal';
 import { signerAddress, connected, defaultEvmStores } from 'svelte-ethers-store';
 import { derived, get, writable, type Readable } from 'svelte/store';
 import { Web3Provider } from '@ethersproject/providers';
-import { getSessionValue, setSessionValue } from './StoreUtils';
+import { getSessionValue, setSessionValue } from '$lib/Shared/Stores/StoreUtils';
 
 const profile = writable<string>(getSessionValue('profile') ?? null);
 profile.subscribe((value) => setSessionValue('profile', value));
