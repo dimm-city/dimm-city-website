@@ -20,7 +20,7 @@
 	.flex-menu {
 		display: flex;
 		flex-wrap: wrap;
-		margin: 1rem;
+		margin-block: 1.5rem;
 		min-width: 300px;
 		justify-content: space-evenly;
 	}
@@ -47,10 +47,8 @@
 		transition: color 500ms ease-in-out;
 	}
 
-	.item-container {
-		margin-bottom: 5em;
-		width: 100%;
-	}
+	
+	
 
 	.subtitle {
 		min-width: min-content;
@@ -107,7 +105,7 @@
 		{#if data != null}
 			{#each data as item}
 				<div class="flex-menu-item">
-					<MenuItem on:click={() => selectItem(item)} classes="small">
+					<MenuItem on:click={() => selectItem(item)} classes="small" url={item.url}>
 						<div class="menu-item-header" style="">
 							<slot name="item-header" {item}>
 								<div class="title-container"><i class="bi {item.icon || icon} text-light" />{item.name}</div>
