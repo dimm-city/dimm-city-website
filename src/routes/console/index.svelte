@@ -3,46 +3,34 @@
 </script>
 
 <script lang="ts">
-	import Shell from '$lib/Components/NewShell.svelte';
-	import { showMenu, myCollection } from '$lib/Shared/ShellStore';
-	import { provider, signer, signerAddress, connected, defaultEvmStores, chainId } from 'svelte-ethers-store';
-	import MenuItem from '$lib/Components/Menu/MenuItem.svelte';
-	import ContentPane from '$lib/Components/ContentPane.svelte';
+	import Shell from '$lib/Shared/Components/Shell.svelte';
+	import { myCharacterTokens } from '$lib/Characters/CharacterStore';
+	import { connected } from 'svelte-ethers-store';
+	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import { onMount } from 'svelte';
-	import { connect, loggedIn, contract, getSporos, signMessage, sessionToken } from '$lib/Shared/ChainStore';
-	import Character from '$lib/Characters/Tabs/Character.svelte';
-	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
+	import { connect, loggedIn } from '$lib/Shared/Stores/UserStore';
+	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
 	import TokenViewModal from '$lib/Tokens/TokenViewModal.svelte';
 	import { openModal } from 'svelte-modals';
-	import { ethers } from 'ethers';
-	import Thumbnail from '$lib/Components/Thumbnail.svelte';
-	import TextContainer from '$lib/Components/TextContainer.svelte';
+	import Button from '$lib/Shared/Components/Button.svelte';
+	import LoggedInContainer from '$lib/Shared/Components/LoggedInContainer.svelte';
+	import { getSporos } from '$lib/Characters/Services/SporosService';
+	import type { IToken } from '$lib/Characters/Models/Character';
 
-	let loadingTask: Promise<void>;
-	let selectedSporo = {} as any;
-	let tokenView;
+	let loadingTask: Promise<IToken[]>;
+	let selectedSporo = {} as IToken;
 	let loaded = false;
 	$: tokenId = `${selectedSporo.release}-${selectedSporo.edition}`;
 
-	//$: contractConfig = config.releases.s1r1.networks.find((n) => n.chainId === $chainId);
-	//$: network = $connected ? $provider.getNetwork() : ({} as any);
-	//$: contract = $connected ? new Contract(contractConfig.address, abiJson.abi, $signer) as unknown as ContractContext : null;
-	//$: loggedIn = $connected && $signerAddress;
 	onMount(() => {
-		// add a test to return in SSR context
-		// defaultEvmStores.setProvider();
 		if (window.ethereum && $loggedIn && !$connected) {
 			connect();
 		}
 	});
 
-	$: if ($connected && loaded == false && $myCollection.length < 1) {
+	$: if ($connected && loaded == false && $myCharacterTokens.length < 1) {
 		loaded = true;
-		loadingTask = getSporos().then((data) => ($myCollection = data));
-	}
-
-	function viewSporos() {
-		selectedSporo = {};
+		loadingTask = getSporos().then((data) => ($myCharacterTokens = data));
 	}
 
 	function showToken(token: any) {
@@ -107,26 +95,31 @@
 <Shell title="Console">
 	<ContentPane padding={0}>
 		<div class="content-container">
-			{#if $connected && $signerAddress}
+			<LoggedInContainer>
 				<div class="fade-in">
 					<h2>Your Sporos</h2>
+					<!-- <Button url="/console/characters/create">Create new Sporo</Button> -->
+					<!-- <Button on:click={() => loaded = false}>Refresh</Button> -->
 					{#await loadingTask}
 						<LoadingIndicator>
 							<span>Locating sporos...</span>
 						</LoadingIndicator>
 					{:then}
 						<ul>
-							{#each $myCollection as sporo}
-								<li data-augmented-ui class="small-menu-item" on:click={() => showToken(sporo)}>
+							{#each $myCharacterTokens as sporo}
+								<li
+									data-augmented-ui
+									class="small-menu-item"
+									on:click={() => showToken(sporo)}
+									on:keyup={() => console.log('check for enter key and open token')}
+								>
 									{sporo.name} <small> {sporo.release}-{sporo.edition}</small>
 								</li>
 							{/each}
 						</ul>
 					{/await}
 				</div>
-			{:else}
-				<MenuItem on:click={connect}>Connect</MenuItem>
-			{/if}
+			</LoggedInContainer>
 		</div>
 	</ContentPane>
 </Shell>

@@ -1,16 +1,10 @@
 <script lang="ts">
 	import './specialties.css';
-	import Shell from '$lib/Components/Shell.svelte';
-	import { showMenu } from '$lib/Shared/ShellStore';
-	import ContentPane from '$lib/Components/ContentPane.svelte';
-	import Menu from '$lib/Components/Menu/Menu.svelte';
-	import { onMount } from 'svelte';
+	import Shell from '$lib/Shared/Components/Shell.svelte';
+	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import { getSpecialty } from './getSpecialtyBySlug';
-	import Article from '$lib/Components/Article.svelte';
-	import SpecialtyMenu from './SpecialtyMenu.svelte';
-	import { Specialty } from './Specialty';
+	import Article from '$lib/Shared/Components/Article.svelte';
 	export let slug;
-	$showMenu = false;
 	let specialty = null;
 
 	$: if (slug > '') {
@@ -19,13 +13,10 @@
 	}
 </script>
 
-<Shell title="Specialties">
-	<ContentPane padding={0} scrollable={true}>
+<Shell title="Specialties" titleUrl="/specialties">
+	<ContentPane padding={2} scrollable={true}>
 		{#if specialty}
 			<Article model={specialty} imageAug="tl-clip tr-clip-y br-clip bl-clip-y" />
 		{/if}
 	</ContentPane>
-	<Menu slot="menu">
-		<SpecialtyMenu bind:selectedItem={slug} />
-	</Menu>
 </Shell>

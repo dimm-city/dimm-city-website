@@ -1,8 +1,8 @@
 <script lang="ts">
-	import Shell from '$lib/Components/NewShell.svelte';
-	import ContentPane from '$lib/Components/ContentPane.svelte';
-	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
-	import { searchText } from '$lib/Shared/ShellStore';
+	import Shell from '$lib/Shared/Components/Shell.svelte';
+	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
+	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
+	import { searchText } from '$lib/Shared/Stores/ShellStore';
 	import List from './List.svelte';
 	import { getDistricts } from '$lib/Dashboard/getDistricts';
 	import { getSpecialties } from '$lib/Dashboard/getSpecialties';
@@ -20,16 +20,7 @@
 				{
 					name: 'Op Console',
 					slug: 'console',
-					children: [
-						{
-							name: 'Change Log',
-							slug: 'change-log'
-						},
-						{
-							name: 'System Stats',
-							slug: 'stats'
-						}
-					]
+					children: []
 				},
 				{
 					name: 'Citizen Files',
@@ -53,8 +44,26 @@
 				},
 				{
 					name: 'Spores',
-					slug: 'spores',					
+					slug: 'spores'
 				},
+				{
+					name: 'About',
+					slug: 'about',
+					children: [
+						{
+							name: 'Change Log',
+							slug: 'change-log'
+						},
+						{
+							name: 'System Stats',
+							slug: 'stats'
+						},
+						{
+							name: 'Depenedcies and Integrations',
+							slug: 'depenedcies'
+						}
+					]
+				}
 				// {
 				// 	name: 'Historical Record',
 				// 	slug: 'history',

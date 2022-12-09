@@ -1,8 +1,9 @@
 <script>
-	import FlexMenu from '$lib/Components/Menu/FlexMenu.svelte';
-	import { filterAndSort, specialties, searchText } from '$lib/Shared/ShellStore';
+	import FlexMenu from '$lib/Shared/Components/Menu/FlexMenu.svelte';
+	import { searchText } from '$lib/Shared/Stores/ShellStore';
 	import { onMount } from 'svelte';
 	import { getSpecialties } from './getSpecialties';
+	import { specialties } from './SpecialtyStore';
 
 	export let selectedItem = '';
 
@@ -37,31 +38,3 @@
 		<small>{item.shortDescription}</small>
 	</div>
 </FlexMenu>
-
-<!-- 
-{#await query}
-	<LoadingIndicator>
-		<div>Loading location data...</div>
-	</LoadingIndicator>
-{:then}
-	{#if $specialties != null}
-		{#each $specialties as item}
-			<MenuItem url="/specialties/{item.slug}" on:click={selectItem}>
-				<p><i class="bi bi-person text-light" />{item.name}</p>
-				<small>
-					{#if item.description}
-						<div />
-					{:else}
-						<div>Unknown specialty</div>
-					{/if}
-				</small>
-
-				<div class="toolbar">
-				</div>
-			</MenuItem>
-		{/each}
-		<div class="item-container">&nbsp;</div>
-	{/if}
-{:catch e}
-	<div>{e}</div>
-{/await} -->

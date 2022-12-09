@@ -3,22 +3,22 @@
 </script>
 
 <script>
-	import Character from '$lib/Characters/Tabs/Character.svelte';
-	import Shell from '$lib/Components/NewShell.svelte';
-	import { characters, pageImage, showMenu } from '$lib/Shared/ShellStore';
-	import Tab from '$lib/Components/Tab.svelte';
-	import CharacterStats from '$lib/Characters/Tabs/CharacterStats.svelte';
-	import { loadCharacter } from '$lib/Characters/getCharacterBySlug';
+	import Character from '$lib/Characters/Components/Tabs/Character.svelte';
+	import Shell from '$lib/Shared/Components/Shell.svelte';
+	import {  pageImage } from '$lib/Shared/Stores/ShellStore';
+	import Tab from '$lib/Shared/Components/Tab.svelte';
+	import CharacterStats from '$lib/Characters/Components/Tabs/CharacterStats.svelte';
+	import { loadCharacter } from '$lib/Characters/Queries/getCharacterBySlug';
 	import { onMount } from 'svelte';
-	import CharacterBiography from '$lib/Characters/Tabs/CharacterBiography.svelte';
-	import TabPanel from '$lib/Components/TabPanel.svelte';
-	import Toolbar from '$lib/Components/Toolbar.svelte';
-	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
-	import Button from '$lib/Components/Button.svelte';
-	import { canEdit } from '$lib/Characters/updateCharacter';
-	import TwitterButton from '$lib/Components/TwitterButton.svelte';
+	import CharacterBiography from '$lib/Characters/Components/Tabs/CharacterBiography.svelte';
+	import TabPanel from '$lib/Shared/Components/TabPanel.svelte';
+	import Toolbar from '$lib/Shared/Components/Toolbar.svelte';
+	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
+	import Button from '$lib/Shared/Components/Button.svelte';
+	import { canEdit } from '$lib/Characters/Queries/updateCharacter';
+	import TwitterButton from '$lib/Shared/Components/TwitterButton.svelte';
+	import { characters } from './CharacterStore';
 
-	$showMenu = false;
 	export let tokenId; // = $page.params.tokenId;
 	let character;
 	let query = new Promise(() => {});
@@ -38,21 +38,10 @@
 			query = new Promise((resolve) => resolve());
 		}
 	});
-	async function selectCharcter(id) {
-		tokenId = id;
 
-		canEdit(tokenId).then((data) => {
-			isEditable = data;
-		});
-		query = loadCharacter(tokenId).then((c) => {
-			character = c;
-			$characters = [c, ...$characters.filter((l) => l.id != c.id)];
-		});
-		$showMenu = false;
-	}
 </script>
 
-<Shell title="Citizens">
+<Shell title="Citizens" titleUrl="/citizens" fullscreen={true}>
 	<div slot="content-toolbar">
 		{#await query then}
 			<Toolbar>
@@ -74,7 +63,7 @@
 					<i class="fade-in btn bi bi-share" />
 				</TwitterButton>
 				{#if isEditable}
-					<Button url="/citizens/update/{character.tokenId}" shape="square" title="Edit citizen profile">
+					<Button url="/console/characters/update/{character.tokenId}" shape="square" title="Edit citizen profile">
 						<i class="fade-in btn bi bi-device-ssd" />
 					</Button>
 				{/if}

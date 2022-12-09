@@ -1,26 +1,22 @@
 <script lang="ts">
-	//import { page } from '$app/stores';
-	import CharacterTab from '$lib/Characters/Tabs/Character.svelte';
-	import CharacterMenu from '$lib/Characters/Components/CharacterMenu.svelte';
-	import Menu from '$lib/Components/Menu/Menu.svelte';
-	import Shell from '$lib/Components/NewShell.svelte';
-	import { characters, showMenu, myCollection } from '$lib/Shared/ShellStore';
-	import Tab from '$lib/Components/Tab.svelte';
-	import CharacterStats from '$lib/Characters/Tabs/CharacterStats.svelte';
-	import { loadCharacter } from '$lib/Characters/getCharacterBySlug';
+	import CharacterTab from '$lib/Characters/Components/Tabs/Character.svelte';
+	import Shell from '$lib/Shared/Components/Shell.svelte';
+	import { characters } from './CharacterStore';
+	import Tab from '$lib/Shared/Components/Tab.svelte';
+	import CharacterStats from '$lib/Characters/Components/Tabs/CharacterStats.svelte';
+	import { loadCharacter } from '$lib/Characters/Queries/getCharacterBySlug';
 	import { onMount } from 'svelte';
-	import CharacterBiography from '$lib/Characters/Tabs/CharacterBiography.svelte';
-	import TabPanel from '$lib/Components/TabPanel.svelte';
-	import Toolbar from '$lib/Components/Toolbar.svelte';
-	import LoadingIndicator from '$lib/Components/LoadingIndicator.svelte';
-	import Button from '$lib/Components/Button.svelte';
-	import { canEdit, updateCharacter } from '$lib/Characters/updateCharacter';
-	import { Character } from './Character';
+	import CharacterBiography from '$lib/Characters/Components/Tabs/CharacterBiography.svelte';
+	import TabPanel from '$lib/Shared/Components/TabPanel.svelte';
+	import Toolbar from '$lib/Shared/Components/Toolbar.svelte';
+	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
+	import Button from '$lib/Shared/Components/Button.svelte';
+	import { canEdit, updateCharacter } from '$lib/Characters/Queries/updateCharacter';
+	import { Character, type ICharacter } from './Models/Character';
 
-	$showMenu = false;
 	export let tokenId;
 	let isSaving = false;
-	let character: Character;
+	let character: ICharacter;
 	let query = new Promise(() => {});
 	let tabs;
 	onMount(async () => {
@@ -37,15 +33,7 @@
 			query = new Promise((resolve) => resolve(new Character()));
 		}
 	});
-	async function selectCharcter(id) {
-		tokenId = id;
-		query = loadCharacter(tokenId).then((c) => {
-			character = c;
-			$characters = [c, ...$characters.filter((l) => l.id != c.id)];
-		});
-		$showMenu = false;
-	}
-
+	
 	async function save() {
 		isSaving = true;
 		query = updateCharacter(character)
