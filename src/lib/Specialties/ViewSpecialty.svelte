@@ -13,7 +13,7 @@
 	}
 </script>
 
-<Shell title="Specialties">
+<Shell title="Specialties" titleUrl="/specialties">
 	<ContentPane padding={2} scrollable={true}>
 		{#if specialty}
 			<Article model={specialty} imageAug="tl-clip tr-clip-y br-clip bl-clip-y" />

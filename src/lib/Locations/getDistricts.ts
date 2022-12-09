@@ -1,4 +1,3 @@
-
 import type { ISummaryItem } from '$lib/Shared/Models/ISummaryItem';
 import { config } from '$lib/Shared/config';
 export const getDistrictsQuery = `
@@ -11,20 +10,14 @@ query {
 				name
 				description
 				shortDescription
-				mainImage {
-					data {
-						attributes {
-							url
-							previewUrl
-						}
-					}
-				}
+				imageUrl
+				thumbnailUrl
 			}
 		}
 	}
 }`;
 
-export async function getDistricts() : Promise<ISummaryItem[]> {
+export async function getDistricts(): Promise<ISummaryItem[]> {
 	return fetch(config.graphUrl, {
 		method: 'POST',
 		headers: {
@@ -39,20 +32,17 @@ export async function getDistricts() : Promise<ISummaryItem[]> {
 			if (response.ok) {
 				const json = await response.json();
 
-				return json.data.locations.data.map((i) => {
-					return {
-						id: i.id,
-						slug: i.attributes.slug,
-						name: i.attributes.name,
-						description: i.attributes.description ?? 'no information on this subject...',
-						thumbnailUrl: i.attributes.mainImage?.data?.attributes?.previewUrl,
-						imageUrl: i.attributes.mainImage?.data?.attributes?.url
-					};
-				}).sort((a,b) => a.name > b.name ? 1 : -1);
+				return json.data.locations.data
+					.map((i) => {
+						const item = { ...i.attributes };
+						item.id = i.id;
+						return item;
+					})
+					.sort((a, b) => (a.name > b.name ? 1 : -1));
 			}
 			return [];
 		})
 		.catch((reason) => {
-			console.log('loadDistricts failed', reason);
+			console.log('getDistricts failed', reason);
 		});
 }

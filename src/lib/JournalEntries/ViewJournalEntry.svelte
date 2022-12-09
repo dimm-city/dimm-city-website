@@ -16,7 +16,7 @@
 	}
 </script>
 
-<Shell title="{model ? model.name : "Journal Entry"}">
+<Shell title="Journal Entries" titleUrl="/journal-entries">
 	<ContentPane padding={2} scrollable={true}>
 		{#if model}
 			<Article {model}>

@@ -5,7 +5,7 @@
 </script>
 
 <Shell title="Locations">
-	<ContentPane>
+	<ContentPane padding={0}>
 		<LocationsMenu />
 	</ContentPane>
 </Shell>

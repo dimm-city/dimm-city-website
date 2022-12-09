@@ -13,7 +13,7 @@
 	}
 </script>
 
-<Shell title={location.name}>
+<Shell title="Locations" titleUrl="/locations">
 	<ContentPane padding={2} scrollable={true}>
 		<div class="location">
 			<Article model={location} />
