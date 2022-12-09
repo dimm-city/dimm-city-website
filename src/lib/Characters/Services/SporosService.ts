@@ -17,6 +17,8 @@ async function initReleaseContracts() {
 		data.forEach(async (release) => {
 			await defaultEvmStores.attachContract(release.slug, release.contractAddress, JSON.stringify(release.abi));
 		});
+
+		console.log('release contracts initialized', data);
 		initialized = true;
 	}
 	// const contract = $contracts.selectedContract;
@@ -36,7 +38,7 @@ async function downloadSporo(tokenId: number, release: ICharacterRelease): Promi
 		const response = await fetch(`${release.metadataBaseUri}/${tokenId}.json`);
 
 		if (response.ok) {
-			json = await response.json() as IToken;
+			json = (await response.json()) as IToken;
 		}
 	} catch (error) {
 		console.error(error);
@@ -50,8 +52,8 @@ async function downloadSporo(tokenId: number, release: ICharacterRelease): Promi
 export async function createSporo(release: ICharacterRelease): Promise<IToken> {
 	const contract = await getReleaseContract(release.slug);
 	const cost = await contract.getPackCost();
-	const totalSupply = await contract.totalSupply() as BigNumber;
-	const maxSupply = await contract.MaxSupply() as BigNumber;
+	const totalSupply = (await contract.totalSupply()) as BigNumber;
+	const maxSupply = (await contract.MaxSupply()) as BigNumber;
 
 	if (totalSupply.gte(maxSupply)) throw new Error('This release is currently sold out.');
 
@@ -69,32 +71,35 @@ export async function createSporo(release: ICharacterRelease): Promise<IToken> {
 
 	const tokenId = 35;
 	console.log('downloading new token');
-	
+
 	return await downloadSporo(tokenId, release);
 }
 
 export async function getSporos(): Promise<IToken[]> {
 	if (!get(connected) || !get(contracts)) return;
+	await initReleaseContracts();
 
 	const releases = await getCharacterReleases();
-
-	const tasks = new Array<Promise<IToken>>();
 	const address = get(signerAddress);
-
-	releases.forEach(async (release) => {
+	const output = new Array<IToken>();
+	for (let index = 0; index < releases.length; index++) {
+		const release = releases[index];
+			
 		const contract = get(contracts)[release.slug];
 
-		const number = (await contract.balanceOf(address)).toNumber();
+		console.log('getting balance for ', address, contract.provider);
+
+		const balance = await contract.balanceOf(address);
+		const number = balance.toNumber();
 		for (let index = 0; index < number; index++) {
 			const sporo = await contract.tokenOfOwnerByIndex(address, index);
 			const tokenId = sporo.toNumber();
-			const data = downloadSporo(tokenId, release);
-			//if (data && data.id > -1)
-			tasks.push(data);
+			const data = await downloadSporo(tokenId, release);
+			output.push(data);
 		}
-	});
+	}
 
-	return Promise.all(tasks).then((sporos) => sporos);
+	return output;
 }
 
 export async function createCitizenFile(character: ICharacter) {

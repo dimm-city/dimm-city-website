@@ -23,7 +23,7 @@ export const getCharacterReleasesQuery = `
 			tags
 			authors {
 				data{
-					attributes {					
+					attributes {
 					address
 					}
 					}

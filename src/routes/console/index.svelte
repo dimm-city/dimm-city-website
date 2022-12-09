@@ -98,7 +98,7 @@
 			<LoggedInContainer>
 				<div class="fade-in">
 					<h2>Your Sporos</h2>
-					<Button url="/console/characters/create">Create new Sporo</Button>
+					<!-- <Button url="/console/characters/create">Create new Sporo</Button> -->
 					<!-- <Button on:click={() => loaded = false}>Refresh</Button> -->
 					{#await loadingTask}
 						<LoadingIndicator>
