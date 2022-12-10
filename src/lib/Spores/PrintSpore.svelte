@@ -6,11 +6,15 @@
 	import DreamMasterPanel from './Components/DreamMasterPanel.svelte';
 	import FrontCoverPanel from './Components/FrontCoverPanel.svelte';
 	import { getSpore } from '$lib/Spores/Queries/getSpore';
+	import { pageTitle } from "$lib/Shared/Stores/ShellStore";
 	import { Spore } from './Spore';
 	export let slug: string;
 	let spore: Spore = new Spore();
 	if (slug > '') {
-		getSpore(slug).then((s) => (spore = s));
+		getSpore(slug).then((s) => {
+			spore = s;
+			$pageTitle = `Print ${spore.name} Spore`;
+		});
 	}
 </script>
 

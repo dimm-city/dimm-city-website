@@ -1,3 +1,7 @@
+<script context="module">
+	export const prerender = false;
+</script>
+
 <script lang="ts">
 	import { page } from '$app/stores';
 	import Shell from '$lib/Shared/Components/Shell.svelte';

@@ -1,19 +1,14 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import type { Spore } from '../Spore';
 	export let spore: Spore;
-
-	onMount(() => {
-		document.documentElement.style.setProperty(
-			'--cover-image',
-			`url('${spore.imageUrl ?? '/assets/imgs/the-archive-district.png'}')`
-		);
-		// document.documentElement.style.setProperty('--front-cover-margin-top', '2in');
-	});
+	let panel: HTMLElement;	
+	$: if (spore && panel) {
+		panel.style.setProperty('--cover-image', `url('${spore.imageUrl ?? '/assets/imgs/the-archive-district.png'}')`);
+	}
 </script>
 
 <style>
-	.front-cover::before {
+	.image {
 		content: ' ';
 		display: block;
 		position: absolute;
@@ -32,7 +27,8 @@
 	}
 </style>
 
-<div class="panel front-cover" data-augmented-ui>
+<div class="panel front-cover" data-augmented-ui bind:this={panel}>
+	<div class="image" />
 	<div class="container" data-update>
 		<h1>{spore.name}</h1>
 		<h3>{spore.subtitle}</h3>

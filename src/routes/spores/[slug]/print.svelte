@@ -1,3 +1,7 @@
+<script context="module">
+	export const prerender = false;
+</script>
+
 <script lang="ts">
 	import PrintShell from '$lib/Spores/Components/PrintShell.svelte';
 	import { page } from '$app/stores';

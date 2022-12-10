@@ -3,16 +3,16 @@
 	import DicePanel from './Components/DicePanel.svelte';
 	import DreamGuidePanel from './Components/DreamGuidePanel.svelte';
 	import DreamMasterPanel from './Components/DreamMasterPanel.svelte';
-	import FrontCoverPanel from './Components/FrontCoverPanel.svelte';
 	import { getSpore } from '$lib/Spores/Queries/getSpore';
 	import { Spore } from './Spore';
 	import Button from '$lib/Shared/Components/Button.svelte';
+	import { pageTitle } from "$lib/Shared/Stores/ShellStore";
 	export let slug: string;
 	let spore: Spore = new Spore();
 	if (slug > '') {
 		getSpore(slug).then((s) => {
 			spore = s;
-			console.log(spore);
+			$pageTitle = `${spore.name} Spore`;
 		});
 	}
 </script>
@@ -21,7 +21,7 @@
 	:global(.print-only) {
 		display: none;
 	}
-	.toolbar{
+	.toolbar {
 		display: flex;
 		justify-content: flex-end;
 	}
@@ -33,7 +33,13 @@
 	</div>
 
 	<div class="col front">
-		<FrontCoverPanel {spore} />
+		<div class="panel front-cover" data-augmented-ui>
+			<div class="container" data-update>
+				<h1>{spore.name}</h1>
+				<h3>{spore.subtitle}</h3>
+				{@html spore.introduction}
+			</div>
+		</div>
 	</div>
 	<div class="col dream-guide">
 		<hr />
