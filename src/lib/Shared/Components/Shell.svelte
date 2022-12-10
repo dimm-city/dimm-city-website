@@ -1,11 +1,10 @@
 <script>
-// @ts-nocheck
-
+	// @ts-nocheck
 
 	import ContentPane from './ContentPane.svelte';
 
 	import { Modals, closeModal, closeAllModals } from 'svelte-modals';
-	import { pageImage, pageTitle} from '$lib/Shared/Stores/ShellStore';
+	import { pageImage, pageTitle } from '$lib/Shared/Stores/ShellStore';
 	import '$lib/Shared/Styles/main.css';
 	import 'animate.css';
 	import { onMount } from 'svelte';
@@ -18,6 +17,8 @@
 	export let enableSearch = false;
 
 	onMount(async () => {
+		$pageTitle = title;
+
 		if (config.googleKey > '') {
 			// @ts-ignore
 			window.dataLayer = window.dataLayer || [];
@@ -29,7 +30,7 @@
 
 			gtag('config', config.googleKey);
 		}
-		closeAllModals();		
+		closeAllModals();
 	});
 </script>
 
@@ -142,7 +143,7 @@
 	<slot name="head" />
 </svelte:head>
 
-<div class="main-container {title.toLowerCase()}" class:fullscreen={fullscreen}>
+<div class="main-container {title.toLowerCase()}" class:fullscreen>
 	<div class="content-panel animate__animated animate__backInUp">
 		<div class="content-panel-grid">
 			<div class="content-panel-content-row">
