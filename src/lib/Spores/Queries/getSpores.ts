@@ -1,12 +1,9 @@
-<script lang="ts">
-	import ViewSpore from '$lib/Spores/ViewSpore.svelte';
-	import { Spore } from '$lib/Spores/Spore';
-	import PrintShell from '$lib/Spores/PrintShell.svelte';
-	import { page } from '$app/stores';
-	import { getSporos } from '$lib/Characters/Services/SporosService';
-	export let slug;
-	let spore: Spore = new Spore();
-	spore.name = $page.params.slug;
+import { Spore } from '../Spore';
+
+export async function getSpores(): Promise<Array<Spore>> {
+	const spore: Spore = new Spore();
+	spore.slug = 'the-dark';
+	spore.name = 'The Dark';
 	spore.introduction = 'some stuff here';
 	spore.subtitle = 'A Dimm City District';
 	spore.villains = [
@@ -41,14 +38,5 @@
 		'the city infrastructure is suffering because of the mental absence of the citizens',
 		'their control of the horde of minions they created is slipping'
 	];
-	$: if (slug > '') {
-		// specialty = null;
-		// getSpecialty(slug).then((s) => (specialty = s));
-	}
-</script>
-
-<PrintShell>
-	{#if spore}
-		<ViewSpore {spore} />
-	{/if}
-</PrintShell>
+	return [spore];
+}

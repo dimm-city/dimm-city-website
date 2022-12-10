@@ -5,11 +5,14 @@
 	import DreamGuidePanel from './Components/DreamGuidePanel.svelte';
 	import DreamMasterPanel from './Components/DreamMasterPanel.svelte';
 	import FrontCoverPanel from './Components/FrontCoverPanel.svelte';
-	import type { Spore } from './Spore';
-	export let spore: Spore;
+	import { getSpore } from '$lib/Spores/Queries/getSpore';
+	import { Spore } from './Spore';
+	export let slug: string;
+	let spore: Spore = new Spore();
+	if (slug > '') {
+		getSpore(slug).then((s) => (spore = s));
+	}
 </script>
-
-
 
 <section class="page">
 	<div class="col dream-guide">

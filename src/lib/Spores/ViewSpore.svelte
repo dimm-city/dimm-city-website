@@ -1,35 +1,53 @@
 <script lang="ts">
-	import BackCoverPanel from './Components/BackCoverPanel.svelte';
 	import CharacterPanel from './Components/CharacterPanel.svelte';
 	import DicePanel from './Components/DicePanel.svelte';
 	import DreamGuidePanel from './Components/DreamGuidePanel.svelte';
 	import DreamMasterPanel from './Components/DreamMasterPanel.svelte';
 	import FrontCoverPanel from './Components/FrontCoverPanel.svelte';
-	import type { Spore } from './Spore';
-	export let spore: Spore;
+	import { getSpore } from '$lib/Spores/Queries/getSpore';
+	import { Spore } from './Spore';
+	import Button from '$lib/Shared/Components/Button.svelte';
+	export let slug: string;
+	let spore: Spore = new Spore();
+	if (slug > '') {
+		getSpore(slug).then((s) => {
+			spore = s;
+			console.log(spore);
+		});
+	}
 </script>
 
-<div>
-	<section class="page">
-		<div class="col dream-guide">
-			<DreamGuidePanel {spore} />
-		</div>
-		<div class="col back">
-			<BackCoverPanel />
-		</div>
-		<div class="col front">
-			<FrontCoverPanel {spore} />
-		</div>
-	</section>
-	<section class="page">
-		<div class="col character">
-			<CharacterPanel />
-		</div>
-		<div class="col dice">
-			<DicePanel />
-		</div>
-		<div class="col dream-master">
-			<DreamMasterPanel {spore} />
-		</div>
-	</section>
-</div>
+<style>
+	:global(.print-only) {
+		display: none;
+	}
+	.toolbar{
+		display: flex;
+		justify-content: flex-end;
+	}
+</style>
+
+{#if spore}
+	<div class="toolbar">
+		<Button target="_blank" url={'/spores/' + spore.slug + '/print'}>Print</Button>
+	</div>
+
+	<div class="col front">
+		<FrontCoverPanel {spore} />
+	</div>
+	<div class="col dream-guide">
+		<hr />
+		<DreamGuidePanel {spore} />
+	</div>
+	<div class="col character">
+		<CharacterPanel />
+	</div>
+	<div class="col dice">
+		<hr />
+		<DicePanel />
+	</div>
+	<div class="col dream-master">
+		<hr />
+		<DreamMasterPanel {spore} />
+	</div>
+{/if}

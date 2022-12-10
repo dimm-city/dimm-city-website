@@ -1,210 +1,213 @@
-@import "https://fonts.googleapis.com/css?family=Tomorrow:400,700&display=swap";
+@import 'https://fonts.googleapis.com/css?family=Tomorrow:400,700&display=swap';
 
 @import url(https://unpkg.com/augmented-ui@2/augmented-ui.min.css);
 :root {
-  --font-color: #fd1cf2;
-  --background-color-light: rgb(0, 50, 94);
-  --background-color-dark: rgb(0, 24, 44);
-  --background-color-black: rgb(0, 0, 0);
-  --cover-image: url("");
-  --front-cover-margin-top: 3.5in;
+	--font-color: #fd1cf2;
+	--background-color-light: rgb(0, 50, 94);
+	--background-color-dark: rgb(0, 24, 44);
+	--background-color-black: rgb(0, 0, 0);
+	--cover-image: url('');
+	--front-cover-margin-top: 3.5in;
 }
 :root {
-  --font-family: "dimm-city", "Tomorrow", "Droid Sans Mono", "Comfortaa",
-    cursive, Nunito, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-    Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji,
-    Segoe UI Symbol, Noto Color Emoji;
+	--font-family: 'dimm-city', 'Tomorrow', 'Droid Sans Mono', 'Comfortaa', cursive, Nunito, -apple-system,
+		BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji,
+		Segoe UI Symbol, Noto Color Emoji;
 
-  --font-size: 9pt;
-  --board-border: 1px var(--font-color) solid;
+	--font-size: 9pt;
+	--board-border: 1px var(--font-color) solid;
 }
 body {
-  font-family: var(--font-family);
-  font-size: var(--font-size);
-  color: var(--font-color);
-  background: rgb(0, 34, 63);
-  background: linear-gradient(
-    180deg,
-    var(--background-color-black) 0%,
-    var(--background-color-black) 15%,
-    var(--background-color-light) 30%,
-    var(--background-color-light) 49.8%,
-    var(--background-color-black) 49.8%,
-    var(--background-color-light) 80%,
-    var(--background-color-light) 100%
-  );
+	font-family: var(--font-family);
+	font-size: var(--font-size);
+	color: var(--font-color);
+	background: rgb(0, 34, 63);
+	background: linear-gradient(
+		180deg,
+		var(--background-color-black) 0%,
+		var(--background-color-black) 15%,
+		var(--background-color-light) 30%,
+		var(--background-color-light) 49.8%,
+		var(--background-color-black) 49.8%,
+		var(--background-color-light) 80%,
+		var(--background-color-light) 100%
+	);
 }
 
 hr {
-  border-width: 1px;
-  border-color: var(--font-color);
-  border-style: solid;
+	border-width: 1px;
+	border-color: var(--font-color);
+	border-style: solid;
 }
 body.bw {
-  color: black;
-  background-color: white;
+	color: black;
+	background-color: white;
 }
 
-/* body.bw img{
-  display: none;
-} */
-
+.print-only {
+	display: none;
+}
+@media print {
+	.print-only {
+		display: inherit;
+	}
+}
 .panel {
-  padding: 0.15in;
-  border: none;
-  --aug-border-all: 3px;
-  --aug-border: initial;
-  --aug-clip-tl1: initial;
-  --aug-clip-tr1: initial;
-  --aug-clip-br1: initial;
-  --aug-clip-bl1: initial;
+	padding: 0.15in;
+	border: none;
+	--aug-border-all: 3px;
+	--aug-border: initial;
+	--aug-clip-tl1: initial;
+	--aug-clip-tr1: initial;
+	--aug-clip-br1: initial;
+	--aug-clip-bl1: initial;
 }
 .panel.inside-right {
-  display: grid;
+	display: grid;
 }
 
 .panel h1,
 .panel h2,
 .panel h3 {
-  display: block;
-  width: 100%;
-  margin: 0;
-  margin-block: 0in;
+	display: block;
+	width: 100%;
+	margin: 0;
+	margin-block: 0in;
 }
 .panel h2 {
-  margin-bottom: 0.1in;
+	margin-bottom: 0.1in;
 }
 h1 {
-  font-size: 16pt;
+	font-size: 16pt;
 }
 h1 small {
-  font-size: 9pt;
+	font-size: 9pt;
 }
 h2 {
-  font-size: 10pt;
+	font-size: 10pt;
 }
 h3 {
-  font-size: var(--font-size);
+	font-size: var(--font-size);
 }
 p {
-  line-height: 1.25em;
-  margin-block-start: 0;
+	line-height: 1.25em;
+	margin-block-start: 0;
 }
 p:first-of-type,
 .table {
-  margin-block-start: 1em;
+	margin-block-start: 1em;
 }
 ol {
-  margin: 0;
-  margin-top: 0.05in;
-  padding-left: 0.1in;
+	margin: 0;
+	margin-top: 0.05in;
+	padding-left: 0.1in;
 }
 ul {
-  margin: 0;
-  padding-left: 0.08in;
-  list-style-type: "> ";
+	margin: 0;
+	padding-left: 0.08in;
+	list-style-type: '> ';
 }
 li {
-  margin-bottom: 0.05in;
-  line-height: 1.25em;
+	margin-bottom: 0.05in;
+	line-height: 1.25em;
 }
 
 .back-cover .container {
-  display: flex;
-  height: 100%;
-  align-items: start;
-  flex-direction: column;
+	display: flex;
+	height: 100%;
+	align-items: start;
+	flex-direction: column;
 }
 
 .license {
-  display: flex;
-  height: 100%;
-  width: 100%;
-  justify-content: space-between;
-  align-items: end;
-  /* font-size: 7pt; */
-  /* justify-self: end; */
+	display: flex;
+	height: 100%;
+	width: 100%;
+	justify-content: space-between;
+	align-items: end;
+	/* font-size: 7pt; */
+	/* justify-self: end; */
 }
 .license h2 {
-  margin: 0;
+	margin: 0;
 }
 .license h2:last-of-type {
-  margin: 0;
-  text-align: end;
+	margin: 0;
+	text-align: end;
 }
 .license a {
-  text-decoration: none;
-  color: var(--font-color);
+	text-decoration: none;
+	color: var(--font-color);
 }
 
 .front-cover::before {
-  content: " ";
-  display: block;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-image: var(--cover-image);
-  background-position: top;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-clip: content-box;
-  background-blend-mode: overlay;
-  opacity: 1;
-  z-index: -1;
+	content: ' ';
+	display: block;
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-image: var(--cover-image);
+	background-position: top;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-clip: content-box;
+	background-blend-mode: overlay;
+	opacity: 1;
+	z-index: -1;
 }
 
 .front-cover .container {
-  margin-top: var(--front-cover-margin-top);
+	margin-top: var(--front-cover-margin-top);
 }
 
 .back-cover::before {
-  content: " ";
-  display: block;
-  position: absolute;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url("/assets/imgs/qr-spores-shroom.png");
-  background-position: bottom;
-  background-size: 2in;
-  background-repeat: no-repeat;
-  background-clip: content-box;
-  background-blend-mode: overlay;
-  opacity: 1;
-  z-index: -1;
+	content: ' ';
+	display: block;
+	position: absolute;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-image: url('/assets/imgs/qr-spores-shroom.png');
+	background-position: bottom;
+	background-size: 2in;
+	background-repeat: no-repeat;
+	background-clip: content-box;
+	background-blend-mode: overlay;
+	opacity: 1;
+	z-index: -1;
 }
 
 .inside-center::before {
-  content: " ";
-  display: block;
-  position: absolute;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url("/assets/imgs/dice.png");
-  background-position: bottom right;
-  background-size: 2.8in;
-  background-repeat: no-repeat;
-  background-clip: content-box;
-  background-blend-mode: overlay;
-  opacity: 1;
-  z-index: -1;
+	content: ' ';
+	display: block;
+	position: absolute;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-image: url('/assets/imgs/dice.png');
+	background-position: bottom right;
+	background-size: 2.8in;
+	background-repeat: no-repeat;
+	background-clip: content-box;
+	background-blend-mode: overlay;
+	opacity: 1;
+	z-index: -1;
 }
 
 .inside-right::before {
-  content: " ";
-  display: none;
-  position: absolute;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  /* background-image: url("inside-right.png"); */
-  background-position: bottom right;
-  background-size: 0.95in;
-  background-repeat: no-repeat;
-  background-clip: content-box;
-  background-blend-mode: overlay;
-  z-index: -1;
+	content: ' ';
+	display: none;
+	position: absolute;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	/* background-image: url("inside-right.png"); */
+	background-position: bottom right;
+	background-size: 0.95in;
+	background-repeat: no-repeat;
+	background-clip: content-box;
+	background-blend-mode: overlay;
+	z-index: -1;
 }
