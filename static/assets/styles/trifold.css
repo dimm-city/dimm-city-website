@@ -1,0 +1,35 @@
+html,
+body {
+	padding: 0;
+	margin: 0;
+}
+.page {
+	height: 8.5in;
+	width: 11in;
+	display: grid;
+	gap: 0in;
+	padding: 0in;
+	break-after: always;
+}
+.page:nth-child(even) {
+	grid-template-columns: 3.625in 3.688in 3.688in;
+}
+.page:nth-child(odd) {
+	grid-template-columns: 3.688in 3.688in 3.625in;
+}
+.col {
+	padding: 0.1in;
+	padding-bottom: 0in;
+	height: 8in;
+}
+
+.panel {
+	height: 100%;
+	border: black thin solid;
+	padding-inline: 0.1in;
+	overflow: hidden;
+}
+
+.panel .container {
+	padding-inline: 0.15in;
+}
