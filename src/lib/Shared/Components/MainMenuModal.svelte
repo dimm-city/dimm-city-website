@@ -49,6 +49,12 @@
 				title="Op Manual"
 				description="Operator's Console Manual"
 			/> -->
+				<MenuItem
+				url="/spores"
+				icon="bi-hypnotize"
+				title="Spores"
+				description="Dreams of Dimm City"
+			/>
 			<MenuItem
 				url="/console"
 				icon="bi-person-workspace"
@@ -56,12 +62,7 @@
 				description="Connect to your Operator's Console"
 			/>
 
-			<MenuItem
-				url="/about/change-log"
-				icon="bi-journal-check"
-				title="Change Log"
-				description="Latest changes to Dimm City Console"
-			/>
+		
 			<MenuItem
 				url="/about/stats"
 				icon="bi-bar-chart"

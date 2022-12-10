@@ -1,4 +1,4 @@
-export class Spore {
+export class Spore {	
 	name: string;
     subtitle: string;
 	slug: string;

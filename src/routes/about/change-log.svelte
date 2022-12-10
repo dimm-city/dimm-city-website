@@ -9,6 +9,10 @@
 
 <Shell title="Change Log">
 	<ContentPane>
+		<h4 class="">Dimm City Console v0.5.0</h4>
+		<ul class="unstyled-list">
+			<li><a href="/spores">Dimm City spores now available</a></li>
+		</ul>
 		<h4 class="">Dimm City Console v0.4.0</h4>
 		<ul class="unstyled-list">
 			<li><a href="/journal-entries">Journal entries data added</a></li>
@@ -28,7 +32,6 @@
 			<li><a href="/citizens">Additional Citizen Data</a></li>
 			<li><a href="/history/prologue-scene-2">More Historical Data Extracted</a></li>
 		</ul>
-		<div style="height: 1rem;" />
 		<h4 class="">Dimm City Console v0.1.0</h4>
 		<ul class="unstyled-list">
 			<li>

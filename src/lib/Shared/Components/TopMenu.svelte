@@ -8,6 +8,7 @@
 	export let enableSearch = false;
 	export let title = '';
 	export let titleUrl = '';
+	export let fullscreen = false;
 	function showModalMenu() {
 		openModal(MainMenuModal, { fullscreen: true });
 	}
@@ -109,6 +110,7 @@
 		transition: all var(--transition-in-time);
 		font-size: 0.75rem;
 	}
+	
 	.global-toolbar i {
 		margin: 0;
 		font-size: 1.5rem;
@@ -166,7 +168,9 @@
 		data-augmented-ui="tl-clip l-clip t-clip-x b-clip-x tr-clip r-clip bl-clip br-clip"
 	/>
 
+	{#if !fullscreen}
 	<div class="version"><small>DCC v{config.version}</small></div>
+	{/if}
 	<div class="global-toolbar">
 		<button on:click={showModalMenu} class="panel-button" data-augmented-ui="all-hex border"
 			><i class="bi bi-menu-button" title="home screen" /></button

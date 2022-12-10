@@ -5,7 +5,7 @@
 	import ContentPane from './ContentPane.svelte';
 
 	import { Modals, closeModal, closeAllModals } from 'svelte-modals';
-	import { pageImage} from '$lib/Shared/Stores/ShellStore';
+	import { pageImage, pageTitle} from '$lib/Shared/Stores/ShellStore';
 	import '$lib/Shared/Styles/main.css';
 	import 'animate.css';
 	import { onMount } from 'svelte';
@@ -133,7 +133,7 @@
 	<meta charset="UTF-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=false" />
-	<title>{title} - Dimm City</title>
+	<title>{$pageTitle ?? title} - Dimm City</title>
 	<meta name="description" content="" />
 	<meta name="twitter:image" content={$pageImage} />
 	<link rel="icon" type="image/x-icon" href="/assets/icons/shroom256.png" />
@@ -154,7 +154,7 @@
 		</div>
 	</div>
 	<div class="menu-container">
-		<TopMenu {title} {enableSearch} {titleUrl} />
+		<TopMenu {title} {enableSearch} {titleUrl} {fullscreen} />
 	</div>
 	<slot name="scripts" />
 </div>

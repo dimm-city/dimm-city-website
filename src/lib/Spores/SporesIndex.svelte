@@ -6,15 +6,9 @@
 	import Shell from '$lib/Shared/Components/Shell.svelte';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import FlexMenu from '$lib/Shared/Components/Menu/FlexMenu.svelte';
-
-	const spores = [
-		{
-			name: 'the dark',
-			url: 'https://files.dimm.city/spores/the-dark.pdf',
-			description:
-				'To view The Dark from above is to see a spiral of main city streets intersected by anarchy on the outskirts and moderate uniformity as one gets closer to the bottom. I say, you would see because the skyscrapers filled center of this part of Dimm City is pitched black to the naked eye.'
-		}
-	];
+	import { getSpores } from './Queries/getSpores';
+	let spores;
+	getSpores().then((s) => (spores = s));
 </script>
 
 <style>

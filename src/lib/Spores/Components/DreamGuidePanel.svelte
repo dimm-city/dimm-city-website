@@ -1,8 +1,13 @@
 <script lang="ts">
 	import type { Spore } from '../Spore';
-
 	export let spore: Spore;
 </script>
+
+<style>
+	ul {
+		list-style-type: '> ';
+	}
+</style>
 
 <div class="panel inside-fold" data-augmented-ui>
 	<div class="container">
@@ -31,7 +36,7 @@
 				plan or join in the mayhem to gain a bit of the power for yourselves?
 			</p>
 			<p>
-				<strong>DM Note:</strong> encourage creativey and different ways of overcoming the situation. Have fun guiding them
+				<strong>DM Note:</strong> encourage creativity and different ways of overcoming the situation. Have fun guiding them
 				through what you planned, but be flexible enough to incorporate their ideas into collective story you are creating
 				together. Here are some ideas to use depending on the scenario selected above:
 			</p>
@@ -41,7 +46,7 @@
 				{/each}
 			</ul>
 			<hr />
-			<h1>
+			<h1 class="print-only">
 				<small>for more rules, lore, and misc. debris<br /></small>
 				goto: dimm.city/spores
 			</h1>
