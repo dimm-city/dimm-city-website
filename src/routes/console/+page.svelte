@@ -1,7 +1,5 @@
 <script lang="ts">
 	import Shell from '$lib/Shared/Components/Shell.svelte';
-	import { myCharacterTokens } from '$lib/Characters/CharacterStore';
-	import { connected } from 'svelte-ethers-store';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import { onMount } from 'svelte';
 	import { connect, loggedIn } from '$lib/Shared/Stores/UserStore';

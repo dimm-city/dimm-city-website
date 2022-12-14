@@ -45,7 +45,7 @@
 		min-height: 100%;
 		width: 100%;
 		aspect-ratio: 16 / 9;
-		overflow: hidden;
+		overflow: hidden;		
 	}
 	.content-container.full-size {
 		aspect-ratio: unset;
