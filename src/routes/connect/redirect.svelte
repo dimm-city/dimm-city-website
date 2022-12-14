@@ -10,7 +10,13 @@
 	const token = $page.url.searchParams.get('access_token');
 	console.log(token);
 
-	fetch(config.apiBaseUrl + '/auth/reddit/callback?access_token=' + token).then(async (callback) => {
+	
+
+	onMount(() => {
+		if ($jwt && $profile) {
+			document.location = '/console';
+		}
+		fetch(config.apiBaseUrl + '/auth/reddit/callback?access_token=' + token).then(async (callback) => {
 		const cbData = await callback.json();
 		console.log(cbData);
 		$jwt = cbData.jwt;
@@ -26,10 +32,5 @@
 		}
 		});
 	});
-
-	onMount(() => {
-		if ($jwt && $profile) {
-			document.location = '/console';
-		}
 	});
 </script>
