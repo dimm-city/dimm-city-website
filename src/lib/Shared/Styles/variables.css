@@ -15,11 +15,15 @@
 	--blue-accent: var(--blue);
 	--primary-accent: var(--blue-accent);
 	--secondary-accent: #c643ff;
+	--secondary-accent-muted: #c743ffad;
 	/* #ff8300; */
 	--third-accent: #ff15cb;
 	--fourth-accent: #f8be00dc;
 	--disabled-color: rgb(196, 192, 192);
 	--disabled-color-dark: rgb(75, 75, 75);
+
+	--page-background-color: #02307ab4;
+	--page-background: linear-gradient(-45deg, var(--dark), var(--page-background-color), var(--translucent-dark), var(--page-background-color));
 
 	--easing: 0.75s ease-in-out;
 	--quick-in: 0.5s ease-in;
@@ -32,8 +36,29 @@
 
 	--divider-height: 8vh;
 
+	--content-container-filter: drop-shadow(0 0 2vh var(--dark));
+	--content-container-background: var(--translucent-dark);
+
+	--content-decoration-ds: drop-shadow(0 1px 0.1rem var(--pink));
+	--content-decoration-filter: var(--content-decoration-ds);
+	--content-decoration-aug-size: 0.1rem;
+	--content-decoration-aug-color: var(--pink);
+
 	--button-aug-border-bg: radial-gradient(circle at top left, var(--pink) 40px, transparent 50px),
 		radial-gradient(circle at top right, var(--blue) 20px, transparent 30px),
 		radial-gradient(circle at bottom right, var(--pink) 40px, transparent 50px),
 		radial-gradient(circle at bottom left, var(--blue) 20px, transparent 30px);
+}
+
+
+@keyframes background-gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
 }

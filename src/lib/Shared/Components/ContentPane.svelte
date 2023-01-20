@@ -11,8 +11,7 @@
 		bottom: 0;
 		left: 0;
 		right: 0;
-		--ds: drop-shadow(0 0 0.3rem var(--pink));
-		filter: var(--ds) var(--ds);
+		filter: var(--content-decoration-filter) ;
 		pointer-events: none;
 	}
 	.augmented-content-decoration {
@@ -23,8 +22,8 @@
 		right: 0;
 		pointer-events: none;
 		--aug-border: initial;
-		--aug-border-all: 0.2rem;
-		--aug-border-bg: var(--blue);
+		--aug-border-all: var(--content-decoration-aug-size);
+		--aug-border-bg: var(--content-decoration-aug-color);
 	}
 	.augmented-content-decoration,
 	.content-container .content-wrapper {
@@ -57,8 +56,8 @@
 		height: 100%;
 		margin: auto;
 		overflow: hidden;
-		filter: drop-shadow(0 0 2vh var(--pink));
-		background: rgb(17 17 17 / 0.75);
+		filter: var(--content-container-filter);
+		background: var(--content-container-background); 
 		color: var(--light);
 		scrollbar-color: var(--third-accent) var(--secondary-accent);
 		scrollbar-width: thin;
