@@ -1,6 +1,6 @@
 {
   "name": "dimm.city",
-  "version": "0.2.2",
+  "version": "0.5.1",
   "engines": {
     "npm": ">=7.0.0",
     "node": ">=16.7.0"

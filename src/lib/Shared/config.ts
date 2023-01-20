@@ -14,7 +14,7 @@ function getCurrentConfig() {
 	if (output.googleKey <= '') {
 		output.googleKey = 'testing';
 	}
-	output.version = '0.5.0';
+	output.version = '0.5.1';
 
 
 	return output;

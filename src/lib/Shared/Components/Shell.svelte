@@ -35,7 +35,8 @@
 </script>
 
 <style>
-	.backdrop {
+	.backdrop,
+	.page-background {
 		position: fixed;
 		top: 0;
 		bottom: 0;
@@ -45,6 +46,10 @@
 		--transition-in-delay: 50ms;
 		--transition-in-duration: 1s;
 		filter: blur(10rem);
+	}
+	.page-background {
+		background: rgb(62, 106, 179);
+		background: radial-gradient(circle, rgba(62, 106, 179, 0.8) 0%, rgba(0, 0, 0, 1) 100%);
 	}
 	.main-container {
 		position: absolute;
@@ -142,7 +147,7 @@
 	<link rel="preload" as="font" href="/assets/dimm-city.woff2" type="font/woff2" crossorigin="anonymous" />
 	<slot name="head" />
 </svelte:head>
-
+<div class="page-background" />
 <div class="main-container {title.toLowerCase()}" class:fullscreen>
 	<div class="content-panel animate__animated animate__backInUp">
 		<div class="content-panel-grid">

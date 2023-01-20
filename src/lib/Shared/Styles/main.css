@@ -33,15 +33,16 @@ body {
 html {
 	height: fill-available;
 	height: -webkit-fill-available;
-
-	background: url(/assets/bg/bg-04.jpg) center center / cover no-repeat,
-		linear-gradient(to bottom left, #3c1b49, #3d0a33);
+	background: rgb(0, 0, 0);
+	/* background: url(/assets/bg/bg-04.jpg) center center / cover no-repeat,
+		linear-gradient(to bottom left, #3c1b49, #3d0a33); */
 }
 body {
 	min-height: 100vh;
 	min-height: fill-available;
 	min-height: -webkit-fill-available;
 }
+
 a {
 	text-decoration: none;
 	color: var(--primary-accent);
