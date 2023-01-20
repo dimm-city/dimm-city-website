@@ -150,7 +150,7 @@
 	<link rel="preload" as="font" href="/assets/dimm-city.woff2" type="font/woff2" crossorigin="anonymous" />
 	<slot name="head" />
 </svelte:head>
-<div class="page-background animate__animated animate__slower animate__pulse animate__infinite" />
+<div class="page-background" />
 <div class="main-container {title.toLowerCase()}" class:fullscreen>
 	<div class="content-panel animate__animated animate__backInUp">
 		<div class="content-panel-grid">
