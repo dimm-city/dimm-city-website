@@ -1,4 +1,4 @@
-import { sessionToken } from '$lib/Shared/Stores/UserStore';
+import { sessionToken } from '$lib/Shared/Stores/ContractsStore';
 import type { ICharacter } from '$lib/Characters/Models/Character';
 import { config } from '$lib/Shared/config';
 import { get } from 'svelte/store';
