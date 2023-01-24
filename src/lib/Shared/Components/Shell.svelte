@@ -61,21 +61,23 @@
 		left: 0;
 		background: linear-gradient(
 			33deg,
-			var(--dark),
 			var(--primary-accent),
 			var(--primary-accent),
 			var(--dark),
 			var(--dark),
+			var(--dark),
 			var(--secondary-accent-muted),
-			var(--secondary-accent-muted),
-			var(--dark)
+			var(--secondary-accent-muted)
 		);
-		background-size: calc(100vh * 3) calc(100vw * 3);
+		background-size: calc(100vh * 1.9) calc(100vw * 1.9);
 
 		--bg-animation-duration: 30s;
-		-webkit-animation: background-gradient var(--bg-animation-duration) cubic-bezier(0.375, 0.5, 0.32, 0.9) infinite alternate-reverse;
-		-moz-animation: background-gradient var(--bg-animation-duration) cubic-bezier(0.375, 0.5, 0.32, 0.9) infinite alternate-reverse;
-		animation: background-gradient var(--bg-animation-duration) cubic-bezier(0.375, 0.5, 0.32, 0.9) infinite alternate-reverse;
+		-webkit-animation: background-gradient var(--bg-animation-duration) cubic-bezier(0.375, 0.5, 0.32, 0.9) infinite
+			alternate-reverse;
+		-moz-animation: background-gradient var(--bg-animation-duration) cubic-bezier(0.375, 0.5, 0.32, 0.9) infinite
+			alternate-reverse;
+		animation: background-gradient var(--bg-animation-duration) cubic-bezier(0.375, 0.5, 0.32, 0.9) infinite
+			alternate-reverse;
 	}
 
 	.main-container {
@@ -147,8 +149,8 @@
 	}
 
 	@media (max-width: 750px) {
-		.page-background{
-			
+		.page-background {
+			background-size: calc(100vh * 2.5) calc(100vw * 2.3);
 		}
 		.main-container {
 			width: 99vw;

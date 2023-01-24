@@ -61,9 +61,9 @@
     100%{background-position:94% 0%}
 }
 @keyframes background-gradient {
-    0%{background-position:94% 0%}
+    0%{background-position:80% 0%}
     50%{background-position:7% 100%}
-    100%{background-position:94% 0%}
+    100%{background-position:80% 0%}
 }
 /* 
 @keyframes background-gradient {
