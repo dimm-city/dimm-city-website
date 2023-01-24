@@ -50,7 +50,22 @@
 		radial-gradient(circle at bottom left, var(--blue) 20px, transparent 30px);
 }
 
-
+@-webkit-keyframes background-gradient {
+    0%{background-position:94% 0%}
+    50%{background-position:7% 100%}
+    100%{background-position:94% 0%}
+}
+@-moz-keyframes background-gradient {
+    0%{background-position:94% 0%}
+    50%{background-position:7% 100%}
+    100%{background-position:94% 0%}
+}
+@keyframes background-gradient {
+    0%{background-position:94% 0%}
+    50%{background-position:7% 100%}
+    100%{background-position:94% 0%}
+}
+/* 
 @keyframes background-gradient {
 	0% {
 		background-position: 0% 50%;
@@ -61,4 +76,4 @@
 	100% {
 		background-position: 0% 50%;
 	}
-}
+} */
