@@ -128,10 +128,10 @@
 						<div>File</div></a
 					>
 				{:else}
-					<a href="/console/characters/import/{data.release}-{data.edition}"
+					<!-- <a href="/console/characters/import/{data.release}-{data.edition}"
 						><i class="btn bi bi-person-badge" />
 						<div>File</div></a
-					>
+					> -->
 				{/if}
 			</Button>
 			<Button shape="square">

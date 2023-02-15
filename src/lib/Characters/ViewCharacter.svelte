@@ -62,7 +62,7 @@
 				>
 					<i class="fade-in btn bi bi-share" />
 				</TwitterButton>
-				{#if isEditable}
+				{#if isEditable && 1 == 0 }
 					<Button url="/console/characters/update/{character.tokenId}" shape="square" title="Edit citizen profile">
 						<i class="fade-in btn bi bi-device-ssd" />
 					</Button>
