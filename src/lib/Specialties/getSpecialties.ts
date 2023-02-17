@@ -47,6 +47,6 @@ export async function getSpecialties() : Promise<ISummaryItem[]> {
 			return [];
 		})
 		.catch((reason) => {
-			console.log('loadSpecialties failed', reason);
+			console.log('getSpecialties failed', reason);
 		});
 }
