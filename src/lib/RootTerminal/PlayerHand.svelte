@@ -12,6 +12,7 @@
   .card-container {
     overflow-x: auto;
     width: 100%;
+    
   }
   .card-grid {
     display: flex;

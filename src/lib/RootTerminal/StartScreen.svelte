@@ -6,7 +6,7 @@
 	import { Deck } from './model/Deck';
 
 	let player = $gameState.player;
-	let playersKit = new RootKit(5, 'external', [...new Deck().cards.slice(0, 5)]);
+	let playersKit = new RootKit(7, 'external', [...new Deck().cards.sort((a, b) => Math.random() - 0.5).slice(0, 7)]);
 	let opponent = new ComputerPlayer('root');
 	let minSlots = 1;
 	let maxSlots = 7;
@@ -34,6 +34,6 @@
 <div class="start-container">
 	<h4>Please enter your name:</h4>
 	<input data-augmented-ui class="aug-input" type="text" placeholder="Your name" bind:value={player.name} />
-	
+
 	<button data-augmented-ui class="aug-button" on:click={() => start()}>connect</button>
 </div>

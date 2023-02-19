@@ -13,19 +13,21 @@ export class ComputerPlayer extends Player {
 		if (type == 'cybernetic') {
 			maxSlots = 3;
 		}
-		
-        minSlots = minSlots > maxSlots ? maxSlots : minSlots;
+
+		minSlots = minSlots > maxSlots ? maxSlots : minSlots;
 
 		const slots = Math.floor(rand * (maxSlots - minSlots + 1)) + minSlots;
 		const kit = new RootKit(slots, type);
-        while (kit.cards.length < slots) {
-            let randomIndex = Math.floor(Math.random() * this.deck.cards.length);
-            if (!kit.cards.includes(this.deck.cards[randomIndex])) {
-              kit.cards.push(this.deck.cards[randomIndex]);
-            }
-          }
+		while (kit.cards.length < slots) {
+			let randomIndex = Math.floor(Math.random() * this.deck.cards.length);
+			const currentCard = this.deck.cards[randomIndex];
+			if (!kit.cards.includes(currentCard) 
+                && (currentCard.kitType == kit.type || currentCard.kitType == 'any')) {
+				kit.cards.push(this.deck.cards[randomIndex]);
+			}
+		}
 		this.rootKit = kit;
-        this.hitPoints = this.rootKit.getHitPoints();
+		this.hitPoints = this.rootKit.getHitPoints();
 		this.selectCardRandomly();
 	}
 

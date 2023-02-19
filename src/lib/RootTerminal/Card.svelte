@@ -43,6 +43,7 @@
   }
 
   .card-description {
+    content: '';
     font-size: 0.8rem;
     color: #ccc;
     overflow-y: hidden;
@@ -75,8 +76,8 @@
     <div class="card-title" data-augmented-ui="">
       {card.name}
     </div>
-    <div class="card-type" data-augmented-ui="">{card.type}</div>
-    <div class="card-description" data-augmented-ui="">
+    <div class="card-type" data-augmented-ui>{card.type}</div>
+    <div class="card-description">
       {card.description}
     </div>
     <div class="card-footer">

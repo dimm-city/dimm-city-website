@@ -5,6 +5,7 @@ export class Card {
         this.id = id;
         this.name = name;
         this.type = type;
+        this.kitType = "any";
         this.attack = attack;
         this.defense = defense;
         this.description = description;
