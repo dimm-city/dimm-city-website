@@ -1,10 +1,11 @@
+import { Deck } from './Deck';
 import { Player } from './Player';
 import { RootKit } from './RootKit';
 
 export class ComputerPlayer extends Player {
 	constructor(name) {
 		super(name ?? 'undefined');
-
+		this.deck = new Deck();
 		this.selectCardRandomly();
 	}
 	configureRootkit(minSlots = 1, maxSlots = 7, type = 'external') {

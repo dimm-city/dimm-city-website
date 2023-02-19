@@ -1,7 +1,6 @@
 <script>
 	import Card from './Card.svelte';
 	import { gameState } from './model/Game';
-	export let disabled = false;
 </script>
 
 <style>
@@ -12,8 +11,7 @@
 	.card-display {
 		display: grid;
 		grid-auto-flow: column;
-		gap: 2rem;
-		width: 50%;
+		gap: 3rem;
 		justify-self: center;
 	}
 

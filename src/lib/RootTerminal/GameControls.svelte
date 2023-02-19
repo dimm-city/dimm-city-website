@@ -10,6 +10,10 @@
 		gap: 5rem;
 		margin-block: 1.5rem;
 	}
+  button{
+    font-size: 1.5rem;
+		padding: 0.5rem 1rem;
+  }
 </style>
 
 <div class="game-controls">

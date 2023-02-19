@@ -7,7 +7,6 @@ export class Player {
 		this.name = name ?? '';
 		this.rootKit = rootKit;
 		this.hitPoints = this.rootKit.getHitPoints();
-		this.deck = new Deck();
 		this.selectedCard = null;
 	}
 

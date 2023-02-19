@@ -8,6 +8,7 @@
     aspect-ratio: 9/16;
     min-width: 10rem;
     max-width: 20rem;
+    min-height: 100%;
     display: flex;
     background-color: #1c1c1c;
     background-image: url("/card-bg.png");
