@@ -10,10 +10,10 @@
 		gap: 5rem;
 		margin-block: 1.5rem;
 	}
-  button{
-    font-size: 1.5rem;
+	button {
+		font-size: 1.5rem;
 		padding: 0.5rem 1rem;
-  }
+	}
 </style>
 
 <div class="game-controls">
@@ -24,8 +24,13 @@
 			data-augmented-ui
 			class="aug-button"
 			disabled={disabled || $gameState.player.selectedCard == null}
-			on:click={() => gameState.playTurn()}>
-			execute script
+			on:click={() => gameState.playTurn()}
+		>
+			{#if $gameState.player.selectedCard}
+				execute {$gameState.player.selectedCard.name}
+			{:else}
+				select script
+			{/if}
 		</button>
 	{:else if $gameState.currentState === states.SHOW_CARDS}
 		<button data-augmented-ui {disabled} class="aug-button" on:click={() => gameState.nextRound()}> continue </button>

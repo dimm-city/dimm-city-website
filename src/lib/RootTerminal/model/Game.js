@@ -11,7 +11,7 @@ export const states = {
   GAME_OVER: "game_over",
 };
 // Define the game state
-const gameStore = writable(new GameState(new Player(), new ComputerPlayer()));
+const gameStore = writable(new GameState(null, null));
 
 // Define the play turn function
 async function playTurn() {

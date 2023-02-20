@@ -1,4 +1,3 @@
-import { Deck } from './Deck';
 import { RootKit } from './RootKit';
 
 // Define a player class

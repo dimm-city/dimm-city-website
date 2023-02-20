@@ -6,7 +6,7 @@
 	import SpecialtyMenu from '$lib/Specialties/SpecialtyMenu.svelte';
 </script>
 
-<Shell title="Root Terminal v0.0.1">
+<Shell title="Dimm City: Cyberwar">
 	<ContentPane>		
         <Game />
 	</ContentPane>

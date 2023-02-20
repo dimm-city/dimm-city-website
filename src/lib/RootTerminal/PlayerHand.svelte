@@ -5,10 +5,6 @@
 </script>
 
 <style>
-  .selected {
-    color: red;
-  }
-
   .card-container {
     overflow-x: auto;
     width: 100%;
@@ -49,7 +45,7 @@
         class:disabled="{disabled}"
         class:selected="{card === $gameState.player.selectedCard}"
         on:click="{() => gameState.selectCard(card)}">
-        <Card card="{card}" />
+        <Card card="{card}" selected="{card === $gameState.player.selectedCard}"/>
       </div>
     {/each}
   </div>

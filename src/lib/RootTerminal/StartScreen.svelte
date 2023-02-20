@@ -2,20 +2,25 @@
 	import { gameState } from './model/Game';
 	import '$lib/Shared/Styles/controls.css';
 	import { ComputerPlayer } from './model/ComputerPlayer';
-	import { RootKit } from './model/RootKit';
+	import { kit_types, RootKit } from './model/RootKit';
 	import { Deck } from './model/Deck';
+	import { ComputerPlayerSettings } from './model/ComputerPlayerSettings';
+	import { Player } from './model/Player';
 
-	let player = $gameState.player;
-	let playersKit = new RootKit(7, 'external', [...new Deck().cards.sort((a, b) => Math.random() - 0.5).slice(0, 7)]);
-	let opponent = new ComputerPlayer('root');
-	let minSlots = 1;
-	let maxSlots = 7;
-	let kitType = 'external';
+	let availableCards = [...new Deck().cards];
+
+	let opponentSettings = new ComputerPlayerSettings(availableCards);
+	let playersKit = new RootKit(4, kit_types.EXTERNAL, []);
+
+	let player = $gameState.player ?? new Player("Player 1", playersKit);
+	let opponent =  $gameState.opponent ?? new ComputerPlayer('root', opponentSettings);
+
 
 	function start() {
+		playersKit.cards = availableCards.sort((a, b) => Math.random() - 0.5).slice(0, playersKit.slots)
 		player.rootKit = playersKit;
 		player.hitPoints = playersKit.getHitPoints();
-		opponent.configureRootkit(minSlots, maxSlots, kitType);
+		opponent = new ComputerPlayer(opponent.name, opponentSettings);
 		gameState.startGame(player, opponent);
 	}
 </script>
@@ -34,6 +39,12 @@
 <div class="start-container">
 	<h4>Please enter your name:</h4>
 	<input data-augmented-ui class="aug-input" type="text" placeholder="Your name" bind:value={player.name} />
-
+	<input data-augmented-ui class="aug-input" type="text" placeholder="Slots" bind:value={playersKit.slots} />
+	<hr />
+	<h4>Opponent: {opponent?.name}</h4>
+	<!-- <RangeSlider range pushy values={[opponentSettings.minSlots,opponentSettings.maxSlots]} /> -->
+	<input data-augmented-ui class="aug-input" type="text" placeholder="Max Slots" bind:value={opponentSettings.maxSlots} />
+	<input data-augmented-ui class="aug-input" type="text" placeholder="Max Attack" bind:value={opponentSettings.maxAttack} />
+	<input data-augmented-ui class="aug-input" type="text" placeholder="Max Defense" bind:value={opponentSettings.maxDefense} />
 	<button data-augmented-ui class="aug-button" on:click={() => start()}>connect</button>
 </div>
