@@ -3,13 +3,12 @@
 	import '$lib/Shared/Styles/controls.css';
 	import { ComputerPlayer } from './model/ComputerPlayer';
 	import { kit_types, RootKit } from './model/RootKit';
-	import { Deck } from './model/Deck';
 	import { ComputerPlayerSettings } from './model/ComputerPlayerSettings';
 	import { Player } from './model/Player';
 
-	let availableCards = [...new Deck().cards];
 
-	let opponentSettings = new ComputerPlayerSettings(availableCards);
+
+	let opponentSettings = new ComputerPlayerSettings($gameState.availableCards);
 	let playersKit = new RootKit(4, kit_types.EXTERNAL, []);
 
 	let player = $gameState.player ?? new Player("Player 1", playersKit);
@@ -17,7 +16,8 @@
 
 
 	function start() {
-		playersKit.cards = availableCards.sort((a, b) => Math.random() - 0.5).slice(0, playersKit.slots)
+		console.log(($gameState.availableCards));
+		playersKit.cards = $gameState.availableCards.sort((a, b) => Math.random() - 0.5).slice(0, playersKit.slots)
 		player.rootKit = playersKit;
 		player.hitPoints = playersKit.getHitPoints();
 		opponent = new ComputerPlayer(opponent.name, opponentSettings);

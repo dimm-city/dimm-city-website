@@ -1,8 +1,8 @@
 // Define the possible cards
 
 export class Card {
-    constructor(id, type, name, attack, defense, description = "") {
-        this.id = id;
+    constructor(slug, type, name, attack, defense, description = "") {
+        this.slug = slug;
         this.name = name;
         this.type = type;
         this.kitType = "any";
@@ -11,3 +11,6 @@ export class Card {
         this.description = description;
     }
 }
+
+
+

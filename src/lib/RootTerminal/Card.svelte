@@ -28,7 +28,8 @@
 	}
 
 	.card-title {
-		font-size: 1rem;
+		font-size: clamp(.5rem,1rem,.7rem);
+		white-space: nowrap;
 		font-weight: bold;
 		text-align: center;
 		align-self: center;

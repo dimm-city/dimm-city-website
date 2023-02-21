@@ -22,7 +22,8 @@
 		gap: 3rem;
 	}
 	button {
-		font-size: 1.5rem;
+		font-size: clamp(0.8rem, 1.5rem, 1rem);
+		white-space: nowrap;
 		padding: 0.5rem 1rem;
 	}
 </style>

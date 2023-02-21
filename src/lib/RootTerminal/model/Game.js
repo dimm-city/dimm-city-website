@@ -1,7 +1,7 @@
 import { writable, get } from "svelte/store";
-import { ComputerPlayer } from "./ComputerPlayer";
+import { Card } from "./Card";
 import { GameState } from "./GameState";
-import { Player } from "./Player";
+import cards from "./cyberwar-cards.json";
 
 export const states = {
   START_SCREEN: "start_screen",
@@ -11,7 +11,10 @@ export const states = {
   GAME_OVER: "game_over",
 };
 // Define the game state
-const gameStore = writable(new GameState(null, null));
+let availableCards = cards.map(c => new Card(c.slug, c.type, c.name, c.attack, c.defense, c.description));
+const initialState = new GameState(null, null);
+initialState.availableCards = availableCards;
+const gameStore = writable(initialState);
 
 // Define the play turn function
 async function playTurn() {
@@ -60,6 +63,16 @@ async function nextRound() {
   }
 }
 
+async function loadAvailableCards() {
+  const response = await fetch('/assets/data/cyberwar-cards.json');
+  if(response.ok){
+    const cards = await response.json();
+    availableCards = cards.map(c => new Card(c.slug, c.type, c.name, c.attack, c.defense, c.description));
+  }
+  availableCards = [];
+}
+
+
 export const gameState = {
   subscribe: gameStore.subscribe,
   startGame(player, opponent) {
@@ -70,8 +83,9 @@ export const gameState = {
       return state;
     });
   },
-  startNewGame() {
+  async startNewGame() {
     gameStore.update((state) => {
+      state.availableCards = availableCards;
       state.currentState = states.START_SCREEN;
       return state;
     });
@@ -90,6 +104,7 @@ export const gameState = {
     gameStore.update((state) => {
       state = new GameState(state.player, state.opponent);
       state.player.resetHitPoints();
+      state.player.selectCard = null;
       state.opponent.resetHitPoints();
       state.currentState = states.SELECT_CARD;
       return state;
