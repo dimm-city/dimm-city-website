@@ -10,6 +10,7 @@
 	});
 
 	function selectCard(card) {
+		console.log('select', card);
 		if (selectedCards.includes(card)) {
 			selectedCards = selectedCards.filter((c) => c !== card);
 		} else {
@@ -17,7 +18,7 @@
 		}
 	}
 
-	$: cardsList = availableCards.filter((c) => !selectedCards.includes(c));
+	$: cardsList = availableCards; //.filter((c) => !selectedCards.includes(c));
 </script>
 
 <style>
@@ -28,7 +29,7 @@
 		gap: 0.5rem;
 	}
 </style>
-
+<h4>{selectedCards.length} scripts selected</h4>
 <div class="card-selector">
 	{#each cardsList as card}
 		<Card {card} selected={selectedCards.includes(card)} on:click={() => selectCard(card)} />

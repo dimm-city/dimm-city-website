@@ -74,6 +74,8 @@
 </style>
 
 <div
+	on:click
+	on:keyup
 	class="card"
 	class:selected
 	data-augmented-ui="br-clip bl-clip tr-clip tl-2-clip-x"

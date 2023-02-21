@@ -63,15 +63,6 @@ async function nextRound() {
   }
 }
 
-async function loadAvailableCards() {
-  const response = await fetch('/assets/data/cyberwar-cards.json');
-  if(response.ok){
-    const cards = await response.json();
-    availableCards = cards.map(c => new Card(c.slug, c.type, c.name, c.attack, c.defense, c.description));
-  }
-  availableCards = [];
-}
-
 
 export const gameState = {
   subscribe: gameStore.subscribe,
