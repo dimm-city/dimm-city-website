@@ -40,10 +40,20 @@
 			<div class="fade-in">
 				<h3>We apologize but the console connection is temporarily down.</h3>
 				<p>
-					The founders are hard at work to reestablish a connection to the ether. Once the
-					connection is stable the console will be back online. We appreciate your patience while we work 
-					through this system glitch.
+					The founders are hard at work to improve the console's backend connection to the ether.
+					The improved connectivity will allow us to provide several enhancements to the console. We
+					appreciate your patience while we implement the new tech. Keep an eye on our <a
+						href="https://www.reddit.com/r/DimmCityRPG/"
+						target="_blank">comm channel</a
+					>
+					to get notified when the console is back online.
 				</p>
+				<p>
+					In the meantime, please feel free to practice your hacking skills in our new <a
+						href="/tools/cyberwar">cyberwar simulator</a
+					>. Let us know what you think in the comm channel.
+				</p>
+				<p>- founder3</p>
 				<!-- <h2>Your Sporos</h2>
 					{#await loadingTask}
 						<LoadingIndicator>
