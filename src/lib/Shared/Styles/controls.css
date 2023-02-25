@@ -24,6 +24,7 @@ i.btn {
 
 hr {
 	border-color: var(--third-accent);
+	width: 100%;
 }
 
 input {

@@ -131,26 +131,7 @@
 </script>
 
 <style>
-	:global(li > ul) {
-		list-style-type: none;
-		margin-top: 0.5rem;
-	}
-	:global(ul li) {
-		position: relative;
-		list-style-type: none;
-		padding-left: 1rem;
-		margin-bottom: 0.5rem;
-	}
-	:global(ul li:before) {
-		content: '>';
-		display: block;
-		position: absolute;
-		color: var(--third-accent);
-		left: 0;
-		top: -2px;
-		width: 5px;
-		height: 11px;
-	}
+
 </style>
 
 <Shell title="System Map" enableSearch={false}>

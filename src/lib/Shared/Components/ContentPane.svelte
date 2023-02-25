@@ -52,7 +52,7 @@
 	}
 	.content-container .content-wrapper {
 		display: block;
-		width: 99%;
+		width: 100%;
 		height: 100%;
 		margin: auto;
 		overflow: hidden;
@@ -94,6 +94,10 @@
 	}
 
 	@media (max-width: 750px) {
+
+		.content-slot {
+			overflow-y: auto;
+		}
 		.augmented-content-decoration {
 			--aug-border-all: 0.25vh;
 		}
