@@ -8,7 +8,10 @@ const config = {
 	preprocess: vitePreprocess(),
 
 	kit: {
-		adapter: azure()
+		adapter: azure({
+			pages: "build",
+			
+		})
 	}
 };
 

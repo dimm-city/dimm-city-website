@@ -15,23 +15,59 @@
 	let loadingTask: Promise<IToken[]>;
 	let selectedSporo = {} as IToken;
 	let loaded = false;
-	$: tokenId = `${selectedSporo.release}-${selectedSporo.edition}`;
+	// $: tokenId = `${selectedSporo.release}-${selectedSporo.edition}`;
 
-	onMount(() => {
-		if (window.ethereum && $loggedIn && !$connected) {
-			connect();
-		}
-	});
+	// onMount(() => {
+	// 	if (window.ethereum && $loggedIn && !$connected) {
+	// 		connect();
+	// 	}
+	// });
 
-	$: if ($connected && loaded == false && $myCharacterTokens.length < 1) {
-		loaded = true;
-		loadingTask = getSporos().then((data) => ($myCharacterTokens = data ?? []));
-	}
+	// $: if ($connected && loaded == false && $myCharacterTokens.length < 1) {
+	// 	loaded = true;
+	// 	loadingTask = getSporos().then((data) => ($myCharacterTokens = data ?? []));
+	// }
 
 	function showToken(token: any) {
 		openModal(TokenViewModal, { data: token });
 	}
 </script>
+
+<Shell title="Console">
+	<ContentPane padding={0}>
+		<div class="content-container">
+			<!-- <LoggedInContainer> -->
+			<div class="fade-in">
+				<h3>We apologize but the console connection is temporarily down.</h3>
+				<p>
+					The founders are hard at work to reestablish a connection to the ether. Once the
+					connection is stable the console will be back online. We appreciate your patience while we work 
+					through this system glitch.
+				</p>
+				<!-- <h2>Your Sporos</h2>
+					{#await loadingTask}
+						<LoadingIndicator>
+							<span>Locating sporos...</span>
+						</LoadingIndicator>
+					{:then}
+						<ul>
+							{#each $myCharacterTokens as sporo}
+								<li
+									data-augmented-ui
+									class="small-menu-item"
+									on:click={() => showToken(sporo)}
+									on:keyup={() => console.log('check for enter key and open token')}
+								>
+									{sporo.name} <small> {sporo.release}-{sporo.edition}</small>
+								</li>
+							{/each}
+						</ul>
+					{/await} -->
+			</div>
+			<!-- </LoggedInContainer> -->
+		</div>
+	</ContentPane>
+</Shell>
 
 <style>
 	.content-container {
@@ -86,35 +122,3 @@
 		align-items: end;
 	}
 </style>
-
-<Shell title="Console">
-	<ContentPane padding={0}>
-		<div class="content-container">
-			<LoggedInContainer>
-				<div class="fade-in">
-					<h2>Your Sporos</h2>
-					<!-- <Button url="/console/characters/create">Create new Sporo</Button> -->
-					<!-- <Button on:click={() => loaded = false}>Refresh</Button> -->
-					{#await loadingTask}
-						<LoadingIndicator>
-							<span>Locating sporos...</span>
-						</LoadingIndicator>
-					{:then}
-						<ul>
-							{#each $myCharacterTokens as sporo}
-								<li
-									data-augmented-ui
-									class="small-menu-item"
-									on:click={() => showToken(sporo)}
-									on:keyup={() => console.log('check for enter key and open token')}
-								>
-									{sporo.name} <small> {sporo.release}-{sporo.edition}</small>
-								</li>
-							{/each}
-						</ul>
-					{/await}
-				</div>
-			</LoggedInContainer>
-		</div>
-	</ContentPane>
-</Shell>
