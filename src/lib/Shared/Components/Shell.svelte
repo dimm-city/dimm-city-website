@@ -11,8 +11,11 @@
 	import TopMenu from './TopMenu.svelte';
 	import { config } from '$lib/Shared/config';
 
-	export let title;
-	export let titleUrl = null;
+	/**
+	 * type: string
+	 */
+	export let title = "";
+	export let titleUrl = "";
 	export let fullscreen = false;
 	export let enableSearch = false;
 

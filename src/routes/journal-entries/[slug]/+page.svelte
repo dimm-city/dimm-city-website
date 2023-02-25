@@ -1,0 +1,6 @@
+<script>
+	import { page } from '$app/stores';
+	import ViewJournalEntry from '$lib/JournalEntries/ViewJournalEntry.svelte';
+</script>
+
+<ViewJournalEntry slug={$page.params.slug} />
