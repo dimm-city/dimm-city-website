@@ -2,13 +2,12 @@
 	import Shell from '$lib/Shared/Components/Shell.svelte';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import { onMount } from 'svelte';
-	import { connect, loggedIn } from '$lib/Shared/Stores/UserStore';
-	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
 	import TokenViewModal from '$lib/Tokens/TokenViewModal.svelte';
 	import { openModal } from 'svelte-modals';
 	import LoggedInContainer from '$lib/Shared/Components/LoggedInContainer.svelte';
 	import { getSporos } from '$lib/Characters/Services/SporosService';
 	import type { IToken } from '$lib/Characters/Models/Character';
+	import ProfileView from '$lib/Profile/ProfileView.svelte';
 
 	let loadingTask: Promise<IToken[]>;
 	let selectedSporo = {} as IToken;
@@ -34,45 +33,11 @@
 <Shell title="Console">
 	<ContentPane padding={0}>
 		<div class="content-container">
-			<!-- <LoggedInContainer> -->
-			<div class="fade-in">
-				<h3>We apologize but the console connection is temporarily down.</h3>
-				<p>
-					The founders are hard at work to improve the console's backend connection to the ether.
-					The improved connectivity will allow us to provide several enhancements to the console. We
-					appreciate your patience while we implement the new tech. Keep an eye on our <a
-						href="https://www.reddit.com/r/DimmCityRPG/"
-						target="_blank">comm channel</a
-					>
-					to get notified when the console is back online.
-				</p>
-				<p>
-					In the meantime, please feel free to practice your hacking skills in our new <a
-						href="/tools/cyberwar">cyberwar simulator</a
-					>. Let us know what you think in the comm channel.
-				</p>
-				<p>- founder3</p>
-				<!-- <h2>Your Sporos</h2>
-					{#await loadingTask}
-						<LoadingIndicator>
-							<span>Locating sporos...</span>
-						</LoadingIndicator>
-					{:then}
-						<ul>
-							{#each $myCharacterTokens as sporo}
-								<li
-									data-augmented-ui
-									class="small-menu-item"
-									on:click={() => showToken(sporo)}
-									on:keyup={() => console.log('check for enter key and open token')}
-								>
-									{sporo.name} <small> {sporo.release}-{sporo.edition}</small>
-								</li>
-							{/each}
-						</ul>
-					{/await} -->
-			</div>
-			<!-- </LoggedInContainer> -->
+			<LoggedInContainer>
+				<div class="fade-in">
+					<ProfileView />
+				</div>
+			</LoggedInContainer>
 		</div>
 	</ContentPane>
 </Shell>
