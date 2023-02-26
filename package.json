@@ -1,6 +1,6 @@
 {
-	"name": "dimm.city.v1",
-	"version": "0.0.1",
+	"name": "dimm.city",
+	"version": "0.6.1",
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
