@@ -12,7 +12,7 @@
 
 <style>
 	[data-augmented-ui]::before {
-		background-color: rgb(128 128 128 / 25%);
+		background-color: rgba(15, 31, 172, 0.39);
 	}
 	.modal {
 		position: fixed;
@@ -30,20 +30,15 @@
 
 	.contents {
 		min-width: 80vw;
-		margin: 5rem;
+		margin: 2rem;
 		min-height: 10rem;
 		display: flex;
-
-		/* border-radius: 2em; */
 		padding: 2.5rem;
-		background: rgba(0, 0, 0, 0.9);
-		/* display: flex;
-        flex-direction: column;
-        justify-content: space-between; */
+		background: rgba(0, 0, 0, 0.795);
 		pointer-events: auto;
-
-		color: var(--primary-accent);
-		font-size: 0.8rem;
+		color: var(--pink);
+		border: 1px;
+		--aug-border-all: 2px;
 	}
 	.contents.fullscreen {
 		width: 100vw;

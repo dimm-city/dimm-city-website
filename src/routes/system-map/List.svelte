@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ListItem from './ListItem.svelte';
-	export let data = [];
+	export let data: any[] | null = [];
 	export let baseUrl = '';
 	export let classes = '';
 </script>

@@ -6,7 +6,7 @@
 	import { getLatestCitizens } from './getNewestCitizens';
 	import ListItemLink from '$lib/Shared/Components/ListItemLink.svelte';
 	import Hero from './Hero.svelte';
-	let newsQuery = getDashboardEntries().then((d) => (lastestNews = d));
+	let newsQuery = getDashboardEntries().then((d) => (lastestNews = d.filter(item => item?.id == 2 || item?.id == 4 || item?.id == 5)));
 	let lastestNews = [];
 
 	let districts = [];
@@ -21,6 +21,7 @@
 
 <style>
 	.container {
+		margin-top: 1.5rem;
 		display: grid;
 		padding-inline: 1.5rem;
 		grid-template-columns: 1fr;
@@ -96,6 +97,10 @@
 		color: var(--light);
 	}
 
+	.hero-body, .footer{
+
+		margin-top: 1.25rem;
+	}
 	.footer a {		
 		height: min-content;
 	}
@@ -114,7 +119,7 @@
 <div class="container">
 	<div class="hero">
 		<div class="hero-title">
-			<h4>Founder's Notes</h4>
+			<h4><a href="/journal-entries">Founder's Notes</a></h4>
 			<hr />
 		</div>
 		<div class="hero-body">

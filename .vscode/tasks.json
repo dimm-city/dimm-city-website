@@ -2,30 +2,12 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "type": "func",
-      "command": "host start",
-      "problemMatcher": "$func-node-watch",
+      "type": "shell",
+      "label": "npm run dev",
+      "command": "npm run dev",
       "isBackground": true,
-      "dependsOn": "npm install (functions)",
       "options": {
-        "cwd": "${workspaceFolder}/api"
-      }
-    },
-    {
-      "type": "shell",
-      "label": "npm install (functions)",
-      "command": "npm install",
-      "options": {
-        "cwd": "${workspaceFolder}/api"
-      }
-    },
-    {
-      "type": "shell",
-      "label": "npm prune (functions)",
-      "command": "npm prune --production",
-      "problemMatcher": [],
-      "options": {
-        "cwd": "${workspaceFolder}/api"
+        "cwd": "${workspaceFolder}"
       }
     }
   ]

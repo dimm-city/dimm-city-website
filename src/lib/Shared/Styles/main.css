@@ -13,8 +13,8 @@
 	font-weight: 400;
 	font-display: swap;
 	src: url('/assets/dimm-city.woff2') format('woff2');
-	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC,
-		U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F,
+		U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 * {
 	box-sizing: border-box;
@@ -87,6 +87,27 @@ li > a:focus {
 	);
 	border-radius: 1rem; /* roundness of the scroll thumb */
 	border: 1px solid var(--fourth-accent); /* creates padding around scroll thumb */
+}
+
+li > ul {
+	list-style-type: none;
+	margin-top: 0.5rem;
+}
+ul li {
+	position: relative;
+	list-style-type: none;
+	padding-left: 1rem;
+	margin-bottom: 0.5rem;
+}
+ul li:before {
+	content: '>';
+	display: block;
+	position: absolute;
+	color: var(--third-accent);
+	left: 0;
+	top: 0px;
+	width: 5px;
+	height: min-content;
 }
 
 ul.unstyled-list {

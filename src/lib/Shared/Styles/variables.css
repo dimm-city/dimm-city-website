@@ -1,7 +1,7 @@
 :root {
 	--main-font-family: 'dimm-city', 'Tomorrow', 'Droid Sans Mono', 'Comfortaa', Nunito, -apple-system,
-		BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji,
-		Segoe UI Symbol, Noto Color Emoji;
+		BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif, Apple Color Emoji,
+		Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
 
 	--pink: #ef1ebf;
 	--blue: #3e6ab3;
@@ -23,7 +23,13 @@
 	--disabled-color-dark: rgb(75, 75, 75);
 
 	--page-background-color: #02307ab4;
-	--page-background: linear-gradient(-45deg, var(--dark), var(--page-background-color), var(--translucent-dark), var(--page-background-color));
+	--page-background: linear-gradient(
+		-45deg,
+		var(--dark),
+		var(--page-background-color),
+		var(--translucent-dark),
+		var(--page-background-color)
+	);
 
 	--easing: 0.75s ease-in-out;
 	--quick-in: 0.5s ease-in;
@@ -31,7 +37,7 @@
 	--transition-in-time: 300ms;
 	--transition-in-delay: 10ms;
 
-	--menu-inlay-bg-color: #ffffff17;
+	--menu-inlay-bg-color: rgba(0, 0, 0, 0.333);
 	--menu-inlay-bg-color-hover: #ffffff27;
 
 	--divider-height: 8vh;
@@ -48,22 +54,42 @@
 		radial-gradient(circle at top right, var(--blue) 20px, transparent 30px),
 		radial-gradient(circle at bottom right, var(--pink) 40px, transparent 50px),
 		radial-gradient(circle at bottom left, var(--blue) 20px, transparent 30px);
+
+	--aug-border-all: 1px;
 }
 
 @-webkit-keyframes background-gradient {
-    0%{background-position:94% 0%}
-    50%{background-position:7% 100%}
-    100%{background-position:94% 0%}
+	0% {
+		background-position: 94% 0%;
+	}
+	50% {
+		background-position: 7% 100%;
+	}
+	100% {
+		background-position: 94% 0%;
+	}
 }
 @-moz-keyframes background-gradient {
-    0%{background-position:94% 0%}
-    50%{background-position:7% 100%}
-    100%{background-position:94% 0%}
+	0% {
+		background-position: 94% 0%;
+	}
+	50% {
+		background-position: 7% 100%;
+	}
+	100% {
+		background-position: 94% 0%;
+	}
 }
 @keyframes background-gradient {
-    0%{background-position:80% 0%}
-    50%{background-position:7% 100%}
-    100%{background-position:80% 0%}
+	0% {
+		background-position: 80% 0%;
+	}
+	50% {
+		background-position: 7% 100%;
+	}
+	100% {
+		background-position: 80% 0%;
+	}
 }
 /* 
 @keyframes background-gradient {

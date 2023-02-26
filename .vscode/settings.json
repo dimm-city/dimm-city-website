@@ -1,4 +1,10 @@
 {
+    "azureFunctions.deploySubpath": "build/server",
+    "azureFunctions.postDeployTask": "npm install (functions)",
+    "azureFunctions.projectLanguage": "JavaScript",
+    "azureFunctions.projectRuntime": "~4",
+    "azureFunctions.projectSubpath": "build/server",
+    "azureFunctions.preDeployTask": "npm prune (functions)",
     "files.exclude": {
         "**/.git": true,
         "**/.svn": true,
@@ -6,21 +12,6 @@
         "**/CVS": true,
         "**/.DS_Store": true,
         "**/Thumbs.db": true,
-        "**/node_modules": true,
-        "**/build": true,
-        "**/.svelte-kit": true
+   
     },
-    "azureFunctions.deploySubpath": "api",
-    "azureFunctions.postDeployTask": "npm install (functions)",
-    "azureFunctions.projectLanguage": "JavaScript",
-    "azureFunctions.projectRuntime": "~4",
-    "azureFunctions.preDeployTask": "npm prune (functions)",
-    "cSpell.words": [
-        "Dimm",
-        "ethersproject",
-        "fullresulotion",
-        "sporo",
-        "Sporos",
-        "strapi"
-    ]
 }

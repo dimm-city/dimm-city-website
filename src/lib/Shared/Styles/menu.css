@@ -14,7 +14,7 @@
 	--aug-clip-bl1: initial;
 	--aug-clip-br1: initial;
 	--aug-border: initial;
-	--aug-border-all: 0.25vh;
+	--aug-border-all: 1px;
 	--aug-tl1: 1vh;
 	--aug-tr1: 2vh;
 	--aug-br1: 1vh;
@@ -30,8 +30,10 @@
 }
 
 .menu-item:hover,
-.menu-item:focus {
-	--aug-border-all: 0.35vh;
+.menu-item:focus,
+.menu-item.active,
+.menu-item.selected {
+	--aug-border-all: 2px;
 	background-color: var(--menu-inlay-bg-color-hover);
 	opacity: 0.9;
 }
@@ -41,7 +43,11 @@
 	opacity: 0.5;
 	color: var(--disabled-color);
 	--aug-inlay-bg: #d3d3d311;
-	--aug-border-bg: radial-gradient(circle at top left, var(--disabled-color-dark) 40px, transparent 50px),
+	--aug-border-bg: radial-gradient(
+			circle at top left,
+			var(--disabled-color-dark) 40px,
+			transparent 50px
+		),
 		radial-gradient(circle at top right, var(--disabled-color-dark) 20px, transparent 30px),
 		radial-gradient(circle at bottom right, var(--disabled-color-dark) 40px, transparent 50px),
 		radial-gradient(circle at bottom left, var(--disabled-color-dark) 20px, transparent 30px);

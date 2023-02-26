@@ -1,6 +1,0 @@
-schema: src/queries/schema.graphql
-documents: "src/**/*.{gql,graphql,js,ts,jsx,tsx}"
-extensions:
-  endpoints:
-    default:
-      url: http://localhost:1337/graphql

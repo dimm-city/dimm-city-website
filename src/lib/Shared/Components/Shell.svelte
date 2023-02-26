@@ -11,8 +11,11 @@
 	import TopMenu from './TopMenu.svelte';
 	import { config } from '$lib/Shared/config';
 
-	export let title;
-	export let titleUrl = null;
+	/**
+	 * type: string
+	 */
+	export let title = "";
+	export let titleUrl = "";
 	export let fullscreen = false;
 	export let enableSearch = false;
 
@@ -69,9 +72,9 @@
 			var(--secondary-accent-muted),
 			var(--secondary-accent-muted)
 		);
-		background-size: calc(100vh * 1.9) calc(100vw * 1.9);
+		background-size: calc(100vh * 3) calc(100vw * 3);
 
-		--bg-animation-duration: 30s;
+		--bg-animation-duration: 110s;
 		-webkit-animation: background-gradient var(--bg-animation-duration) cubic-bezier(0.375, 0.5, 0.32, 0.9) infinite
 			alternate-reverse;
 		-moz-animation: background-gradient var(--bg-animation-duration) cubic-bezier(0.375, 0.5, 0.32, 0.9) infinite
