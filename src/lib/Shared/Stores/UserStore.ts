@@ -3,7 +3,7 @@ import { getSessionValue, setSessionValue } from '$lib/Shared/Stores/StoreUtils'
 
 export const jwt = writable<string>(getSessionValue('jwt') ?? null);
 jwt.subscribe((value) => {
-	if (value > '') {
+	if (typeof value === 'string' && value > '') {
 		setSessionValue('jwt', value);
 		console.log('jwt set', value);
 	}
@@ -18,10 +18,10 @@ profile.subscribe((value) => {
 });
 
 export const loggedIn = derived(
-	[jwt, profile],
-	([$jwt, $profile], set) => {
-		const isLoggedIn = $jwt != null && $profile?.id != null;
-		console.log('updating logged in', $jwt, $profile, isLoggedIn);
+	[jwt],
+	([$jwt], set) => {
+		const isLoggedIn = typeof $jwt === 'string' && $jwt > '';
+		console.log('updating logged in', $jwt, isLoggedIn);
 		set(isLoggedIn);
 	},
 	false

@@ -74,7 +74,7 @@
 		);
 		background-size: calc(100vh * 3) calc(100vw * 3);
 
-		--bg-animation-duration: 110s;
+		--bg-animation-duration: 40s;
 		-webkit-animation: background-gradient var(--bg-animation-duration) cubic-bezier(0.375, 0.5, 0.32, 0.9) infinite
 			alternate-reverse;
 		-moz-animation: background-gradient var(--bg-animation-duration) cubic-bezier(0.375, 0.5, 0.32, 0.9) infinite

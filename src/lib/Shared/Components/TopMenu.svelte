@@ -17,12 +17,12 @@
 <style>
 	h4 {
 		position: absolute;
-		color: var(--third-accent);
+		color: var(--light);
 		margin-top: 0px;
 	}
 	h4 a {
 		text-decoration: none;
-		color: var(--third-accent);
+		color: var(--fourth-accent);
 	}
 
 	.top-panel {
@@ -41,7 +41,7 @@
 	}
 
 	.top-panel-decoration {
-		background: rgb(0, 0, 0);
+		background: rgba(0, 0, 0, 0.74);
 		--aug-tl1: 0px;
 		--aug-tr1: 0px;
 		--aug-t1: 0px;
