@@ -73,7 +73,7 @@
 							slug: 'stats'
 						},
 						{
-							name: 'dependencies and Integrations',
+							name: 'Dependencies and Integrations',
 							slug: 'dependencies'
 						}
 					]

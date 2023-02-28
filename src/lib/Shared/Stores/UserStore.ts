@@ -17,6 +17,10 @@ profile.subscribe((value) => {
 	}
 });
 
+// export const wallets = derived<any[]>([profile], ([$profile], set) => {
+// 	 getUserWallets().then( data => set(data));	
+// });
+
 export const loggedIn = derived(
 	[jwt],
 	([$jwt], set) => {

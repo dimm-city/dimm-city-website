@@ -1,22 +1,20 @@
 <script lang="ts">
-	import { connected } from 'svelte-ethers-store';
-	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
 	import TokenViewModal from '$lib/Tokens/TokenViewModal.svelte';
 	import { openModal } from 'svelte-modals';
-	import Button from '$lib/Shared/Components/Button.svelte';
 	import LoggedInContainer from '$lib/Shared/Components/LoggedInContainer.svelte';
 	import { loadTokens, archive } from './TokensStore';
 	import type { IToken } from '$lib/Characters/Models/Character';
 
-	let loadingTask: Promise<IToken[]>;
-	let selectedSporo = {} as IToken;
-	let loaded = false;
+	export let tokens = [];
+	// let loadingTask: Promise<IToken[]>;
+	// let selectedSporo = {} as IToken;
+	// let loaded = false;
 
-	$: if (loaded == false && ($archive == null || $archive.length < 1)) {
-		loaded = true;
-		loadingTask = loadTokens(); //.then((data) => ($archive = data));
-	}
+	// $: if (loaded == false && ($archive == null || $archive.length < 1)) {
+	// 	loaded = true;
+	// 	loadingTask = loadTokens(); //.then((data) => ($archive = data));
+	// }
 
 	function showToken(token: any) {
 		openModal(TokenViewModal, { data: token });
@@ -45,7 +43,8 @@
     }
 	small {
 		white-space: nowrap;
-		font-size: clamp(0.3rem, 0.7rem, 1.25rem);		
+		font-size: 1rem; 
+		 /* clamp(0.3rem, 0.7rem, 1.25rem);		 */
 	}
 
 	.menu-item-grid {
@@ -83,26 +82,26 @@
 
 <LoggedInContainer>
 	<div class="fade-in">
-		<h2>Your Sporos</h2>
+		<!-- <h2>Your Sporos</h2> -->
 		<!-- <Button url="/console/characters/create">Create new Sporo</Button> -->
 		<!-- <Button on:click={() => loaded = false}>Refresh</Button> -->
-		{#await loadingTask}
+		<!-- {#await loadingTask}
 			<LoadingIndicator>
 				<span>Locating sporos...</span>
 			</LoadingIndicator>
-		{:then}
+		{:then} -->
 			<ul>
-				{#each $archive as sporo}
+				{#each tokens as sporo}
 					<li
 						data-augmented-ui
 						class="small-menu-item"
 						on:click={() => showToken(sporo)}
 						on:keyup={() => console.log('check for enter key and open token')}
 					>
-						<span>{sporo.name}</span> <small> {sporo.tokenId}</small>
+						<span>{sporo.metadata?.name ?? sporo.contract.slug + "-" + sporo.tokenId}</span> <small> <i class="bi bi-file-person"></i></small>
 					</li>
 				{/each}
 			</ul>
-		{/await}
+		<!-- {/await} -->
 	</div>
 </LoggedInContainer>

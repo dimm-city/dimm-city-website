@@ -1,23 +1,73 @@
-<script lang="ts">
+<script script lang="ts">
 	import List from '$lib/Shared/Components/List.svelte';
+	import type { ISummaryItem } from '$lib/Shared/Models/ISummaryItem';
 	import { getDashboardEntries } from './getDashboardEntries';
 	import { getDistricts } from './getDistricts';
 	import { getSpecialties } from './getSpecialties';
 	import { getLatestCitizens } from './getNewestCitizens';
 	import ListItemLink from '$lib/Shared/Components/ListItemLink.svelte';
 	import Hero from './Hero.svelte';
-	let newsQuery = getDashboardEntries().then((d) => (lastestNews = d.filter(item => item?.id == 2 || item?.id == 4 || item?.id == 5)));
-	let lastestNews = [];
+	import { onMount } from 'svelte';
+	let newsQuery = getDashboardEntries().then(
+		(d) => (latestNews = d?.filter((item) => item?.id == 2 || item?.id == 4 || item?.id == 5)));
+	let latestNews: ISummaryItem[] = [];
+	let districts: ISummaryItem[] = [];
+	let specialties: ISummaryItem[] = [];
+	let citizens: ISummaryItem[] = [];
 
-	let districts = [];
-	getDistricts().then((d) => (districts = d));
-
-	let specialties = [];
-	getSpecialties().then((d) => (specialties = d));
-
-	let citizens = [];
-	getLatestCitizens().then((d) => (citizens = d));
+	onMount(() => {
+		getDistricts().then((d) => (districts = d));
+		getSpecialties().then((d) => (specialties = d));
+		getLatestCitizens().then((d) => (citizens = d));
+		
+	});
 </script>
+
+<div class="container">
+	<div class="hero">
+		<div class="hero-title">
+			<h4><a href="/journal-entries">Founder's Notes</a></h4>
+			<hr />
+		</div>
+		<div class="hero-body">
+			<Hero query={newsQuery} data={latestNews} />
+		</div>
+	</div>
+	<div style="grid-area: ref;">
+		<h4>Dimm City Reference</h4>
+		<hr />
+	</div>
+	<div class="col1 col" data-augmented-ui>
+		<h4><a href="/citizens">Citizens</a></h4>
+		<hr />
+		<div class="list-container">
+			<List data={citizens} viewAllLink="/citizens">
+				<ListItemLink slot="item" let:item url="/citizens/{item.tokenId}" text={item.name} />
+			</List>
+		</div>
+	</div>
+	<div class="col2 col" data-augmented-ui>
+		<h4><a href="/specialties">Specialties</a></h4>
+		<hr />
+		<div class="list-container">
+			<List data={specialties} viewAllLink="/specialties">
+				<ListItemLink slot="item" let:item url="/specialties/{item.slug}" text={item.name} />
+			</List>
+		</div>
+	</div>
+	<div class="col3 col" data-augmented-ui>
+		<h4><a href="/locations">Locations</a></h4>
+		<hr />
+		<div class="list-container">
+			<List data={districts} viewAllLink="/locations">
+				<ListItemLink slot="item" let:item url="/locations/{item.slug}" text={item.name} />
+			</List>
+		</div>
+	</div>
+	<div class="footer">
+		<a href="/system-map" class="small-menu-item" data-augmented-ui>&lt;system map&gt;</a>
+	</div>
+</div>
 
 <style>
 	.container {
@@ -97,11 +147,11 @@
 		color: var(--light);
 	}
 
-	.hero-body, .footer{
-
+	.hero-body,
+	.footer {
 		margin-top: 1.25rem;
 	}
-	.footer a {		
+	.footer a {
 		height: min-content;
 	}
 	.footer a:hover,
@@ -115,49 +165,3 @@
 		margin-bottom: 0.25rem;
 	}
 </style>
-
-<div class="container">
-	<div class="hero">
-		<div class="hero-title">
-			<h4><a href="/journal-entries">Founder's Notes</a></h4>
-			<hr />
-		</div>
-		<div class="hero-body">
-			<Hero query={newsQuery} data={lastestNews} />
-		</div>
-	</div>
-	<div style="grid-area: ref;">
-		<h4>Dimm City Reference</h4>
-		<hr />
-	</div>
-	<div class="col1 col" data-augmented-ui>
-		<h4><a href="/citizens">Citizens</a></h4>
-		<hr />
-		<div class="list-container">
-			<List data={citizens} viewAllLink="/citizens">
-				<ListItemLink slot="item" let:item url="/citizens/{item.tokenId}" text={item.name} />
-			</List>
-		</div>
-	</div>
-	<div class="col2 col" data-augmented-ui>
-		<h4><a href="/specialties">Specialties</a></h4>
-		<hr />
-		<div class="list-container">
-			<List data={specialties} viewAllLink="/specialties">
-				<ListItemLink slot="item" let:item url="/specialties/{item.slug}" text={item.name} />
-			</List>
-		</div>
-	</div>
-	<div class="col3 col" data-augmented-ui>
-		<h4><a href="/locations">Locations</a></h4>
-		<hr />
-		<div class="list-container">
-			<List data={districts} viewAllLink="/locations">
-				<ListItemLink slot="item" let:item url="/locations/{item.slug}" text={item.name} />
-			</List>
-		</div>
-	</div>
-	<div class="footer">
-		<a href="/system-map" class="small-menu-item" data-augmented-ui>&lt;system map&gt;</a>
-	</div>
-</div>

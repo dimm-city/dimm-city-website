@@ -5,7 +5,9 @@
 </script>
 
 <style>
-	
+	a {
+color: var(--fourth-accent);
+	}
 </style>
 
 {#if item != null}

@@ -1,26 +1,16 @@
 <script lang="ts">
-	import { config } from '$lib/Shared/config';
-	import { profile, jwt, loggedIn } from '$lib/Shared/Stores/UserStore';
 	import { onMount } from 'svelte';
+	import { profile } from '$lib/Shared/Stores/UserStore';
+
+	import { loadProfile } from './getUserWallets';
 	onMount(async () => {
-		if ($loggedIn) {
-			const response = await fetch(`${config.apiBaseUrl}/users/me?fields=*&populate=*`, {
-				headers: {
-					Authorization: `Bearer ${$jwt}`
-				}
-			});
-			if (response.ok) {
-				$profile = await response.json();
-			}
-		}
+		await loadProfile();
 	});
 </script>
 
 <div>
 	<h1>{$profile?.settings?.displayName ?? $profile?.username}</h1>
-	<small
-		><a href="/console/archive">archives: {$profile?.wallets?.length ?? '0'}</a>
-	</small>
+	<small><a href="/console/archive">archives: {$profile?.wallets?.length ?? '0'}</a> </small>
 	<p>{@html $profile?.settings?.bio ?? ''}</p>
 </div>
 

@@ -20,6 +20,7 @@
 
 		const cbData = await callback.json();
 		console.log('setting jwt', cbData);
+		console.debug(cbData);
 		$jwt = cbData.jwt;
 		// // const data = await fetch(
 		// // 	config.apiBaseUrl +
