@@ -22,7 +22,7 @@ function getCurrentConfig() {
 	if (output.googleKey <= '') {
 		output.googleKey = 'testing';
 	}
-	output.version = '0.6.0';
+	output.version = '0.7.0';
 
 	return output;
 }
