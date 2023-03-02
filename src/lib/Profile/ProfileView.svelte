@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { profile } from '$lib/Shared/Stores/UserStore';
 
-	import { loadProfile } from './getUserWallets';
+	import { loadProfile } from '../Wallets/getUserWallets';
 	onMount(async () => {
 		await loadProfile();
 	});
