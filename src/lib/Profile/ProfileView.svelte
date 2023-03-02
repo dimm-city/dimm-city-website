@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { profile } from '$lib/Shared/Stores/UserStore';
+	import { profile, wallets, loadProfile } from '$lib/Shared/Stores/UserStore';
 
-	import { loadProfile } from '../Wallets/getUserWallets';
 	onMount(async () => {
 		await loadProfile();
 	});
@@ -10,7 +9,7 @@
 
 <div>
 	<h1>{$profile?.settings?.displayName ?? $profile?.username}</h1>
-	<small><a href="/console/archive">archives: {$profile?.wallets?.length ?? '0'}</a> </small>
+	<small><a href="/console/archive">archives: {$wallets?.length ?? '0'}</a> </small>
 	<p>{@html $profile?.settings?.bio ?? ''}</p>
 </div>
 

@@ -1,10 +1,9 @@
 <script>
 	import TokensList from '$lib/Tokens/TokensList.svelte';
-	import { profile } from '$lib/Shared/Stores/UserStore';
-	import { loadProfile } from '../Wallets/getUserWallets';
+	import {  loadWallets, wallets } from '$lib/Shared/Stores/UserStore';
 	import { onMount } from 'svelte';
 	onMount(async () => {
-		await loadProfile();
+		await loadWallets();
 	});
 </script>
 
@@ -15,8 +14,8 @@
 			>Attach Existing Archive</a
 		>
 	</div>
-	{#if $profile.wallets?.length > 0}
-		{#each $profile.wallets as wallet}
+	{#if $wallets?.length > 0}
+		{#each $wallets as wallet}
 			<div style="margin-bottom: 2rem">
 				<h4>
 					<a href="/console/archive/{wallet.address}">{wallet.name ?? wallet.address}</a>
