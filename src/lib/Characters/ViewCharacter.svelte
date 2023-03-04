@@ -18,15 +18,18 @@
 	import { canEdit } from '$lib/Characters/Queries/updateCharacter';
 	import TwitterButton from '$lib/Shared/Components/TwitterButton.svelte';
 	import { characters } from './CharacterStore';
+	import { ownsToken } from '$lib/Shared/Stores/UserStore';
 
 	export let tokenId; // = $page.params.tokenId;
 	let character;
 	let query = new Promise(() => {});
 	let tabs;
-	let isEditable = true;
+	let isEditable = false;
+
+	$: isEditable = character && ownsToken(character?.token);
 
 	onMount(async () => {
-		isEditable = await canEdit(tokenId);
+		//isEditable = await canEdit(tokenId);
 		character = $characters.find((c) => c.tokenId === tokenId && c.loaded);
 		if (character == null || character.id < 1) {
 			query = loadCharacter(tokenId).then((c) => {
@@ -62,7 +65,7 @@
 				>
 					<i class="fade-in btn bi bi-share" />
 				</TwitterButton>
-				{#if isEditable && 1 == 0 }
+				{#if isEditable }
 					<Button url="/console/characters/update/{character.tokenId}" shape="square" title="Edit citizen profile">
 						<i class="fade-in btn bi bi-device-ssd" />
 					</Button>

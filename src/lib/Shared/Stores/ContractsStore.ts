@@ -1,5 +1,5 @@
 import Web3Modal from 'web3modal';
-import { signerAddress, connected, defaultEvmStores, contracts } from 'svelte-ethers-store';
+import { signerAddress, defaultEvmStores, contracts } from 'svelte-ethers-store';
 import { derived, get, writable, type Readable } from 'svelte/store';
 import { Web3Provider } from '@ethersproject/providers';
 import { getSessionValue, setSessionValue } from '$lib/Shared/Stores/StoreUtils';

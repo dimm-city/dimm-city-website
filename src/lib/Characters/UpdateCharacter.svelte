@@ -13,16 +13,15 @@
 	import Button from '$lib/Shared/Components/Button.svelte';
 	import { canEdit, updateCharacter } from '$lib/Characters/Queries/updateCharacter';
 	import { Character, type ICharacter } from './Models/Character';
+	import { ownsToken } from '$lib/Shared/Stores/UserStore';
 
-	export let tokenId;
+	export let tokenId: string;
 	let isSaving = false;
 	let character: ICharacter;
 	let query = new Promise(() => {});
 	let tabs;
 	onMount(async () => {
-		const isEditable: boolean = await canEdit(tokenId);
-		if (!isEditable) window.history.back();
-
+		
 		character = $characters.find((c) => c.tokenId === tokenId && c.loaded);
 		if (character == null || character.id < 1) {
 			query = loadCharacter(tokenId).then((c) => {

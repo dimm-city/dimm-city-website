@@ -1,29 +1,31 @@
 <script lang="ts">
+	import type { IToken } from '$lib/Characters/Models/Character';
 	import Button from '$lib/Shared/Components/Button.svelte';
 	import Image from '$lib/Shared/Components/Image.svelte';
 	import Toolbar from '$lib/Shared/Components/Toolbar.svelte';
+	import { ownsToken } from '$lib/Shared/Stores/UserStore';
 	import MetadataView from './MetadataView.svelte';
 
-	export let data;
+	export let token: any;
 </script>
 
-<div class="token-container">
-	<Image imageUrl={data?.metadata.thumbnail_uri} title={data.name} />
+<div class="token-container" class:owned={ownsToken(token)}>
+	<Image imageUrl={token?.metadata.thumbnail_uri} title={token.name} />
 
-	<MetadataView {data} />
+	<MetadataView data={token} />
 
 	<div class="release-details" />
 	<div class="toolbar-row">
 		<Toolbar>
 			<Button shape="square">
-				<a href="/citizens/{data?.contract.slug}-{data?.tokenId}"
+				<a href="/citizens/{token?.contract.slug}-{token?.tokenId}"
 					><i class="btn bi bi-person-badge" />
 					<div>File</div></a
 				>
 			</Button>
 			<Button shape="square">
 				<a
-					href="https://opensea.io/assets/{data?.contract?.address}/{data.tokenId}"
+					href="https://opensea.io/assets/{token?.contract?.address}/{token.tokenId}"
 					target="_blank"
 					rel="noreferrer"
 				>

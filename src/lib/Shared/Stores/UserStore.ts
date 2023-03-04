@@ -20,21 +20,6 @@ export async function loadProfile() {
 	}
 }
 
-export async function loadWallets() {
-	const token = get(jwt);
-	const response = await fetch(`${config.apiBaseUrl}/chain-wallets/wallets`, {
-		headers: {
-			Authorization: `Bearer ${token}`
-		}
-	});
-	if (response.ok) {
-		const data = await response.json();
-		return data.results ?? [];
-	} else {
-		return [];
-	}
-}
-
 export const jwt = writable<string>(getSessionValue('jwt') ?? null);
 jwt.subscribe((value) => {
 	if (typeof value === 'string' && value > '') {
@@ -51,13 +36,6 @@ profile.subscribe((value) => {
 	}
 });
 
-// eslint-disable-next-line no-empty-pattern
-export const wallets = derived<any, any[]>([profile], ([], set) => {
-	loadWallets().then((data) => {
-		set(data);
-	});
-});
-
 export const loggedIn = derived(
 	[jwt],
 	([$jwt], set) => {
@@ -67,3 +45,34 @@ export const loggedIn = derived(
 	},
 	false
 );
+
+export function ownsToken(token: any) {
+	const userWallets = get(wallets) ?? [];
+	const id = (token.id || token.data?.id || -1).toString();
+	const result = userWallets.some((w) => w.tokens.some((t) => t.id.toString() === id));
+
+	return result;
+}
+
+export async function loadWallets() {
+	const token = get(jwt);
+	const response = await fetch(`${config.apiBaseUrl}/chain-wallets/wallets`, {
+		headers: {
+			Authorization: `Bearer ${token}`
+		}
+	});
+	if (response.ok) {
+		const data = await response.json();
+		setSessionValue('wallets', data.results ?? []);
+		return data.results ?? [];
+	} else {
+		return [];
+	}
+}
+
+// eslint-disable-next-line no-empty-pattern
+export const wallets = derived<any, any[]>([profile], ([], set) => {
+	loadWallets().then((data) => {
+		set(data);
+	});
+});

@@ -1,4 +1,4 @@
-import { Character } from '$lib/Characters/Models/Character';
+import { Character, Token } from '$lib/Characters/Models/Character';
 import { config } from '$lib/Shared/config';
 
 export const getCharacterBySlugQuery = `
@@ -8,6 +8,21 @@ export const getCharacterBySlugQuery = `
         id
         attributes {
           tokenId
+          token{
+            data{
+              id
+              attributes{
+                tokenId
+                contract{
+                  data{
+                    attributes{
+                      slug
+                    }
+                  }
+                }
+              }
+            }
+          }
           name
           hp
           ap
@@ -137,6 +152,15 @@ export function loadCharacter(tokenId): Promise<Character> {
 						: null;
 
 				if (character != null) {
+
+					// const token = new Token();
+					// token.tokenId = character.token.data.attributes.tokenId;
+					// token.contract = {
+					// 	slug: character.token.data.attributes.contract.data.attributes.slug
+					// };
+
+					//character.token = token;
+
 					if (character.imageUrl == null || character.imageUrl.length === 0)
 						character.imageUrl = '/assets/missing-image.png';
 					if (character.thumbnailUrl == null || character.thumbnailUrl.length === 0)

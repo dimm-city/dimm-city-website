@@ -8,7 +8,7 @@ export class Character implements ICharacter {
 	slug: string;
 	name: string;
 	tokenId: string;
-	token: IToken;
+	token: any;
 	loaded = false;
 	age: number;
 	height: number;
@@ -54,7 +54,11 @@ export interface IAttribute {
 	value: string;
 }
 
+export interface IContract{
+	slug: string;
+}
 export interface IToken {
+	contract: IContract;
 	compiler: string;
 	release: string;
 	artist: string;
@@ -63,6 +67,7 @@ export interface IToken {
 	name: string;
 	description: string;
 	dna: string;
+	metadata: any;
 	animation_url: string;
 	attributes: IAttribute[];
 	image: string;
@@ -74,6 +79,7 @@ export interface IToken {
 	hasCharacter: boolean;
 }
 export class Token implements IToken {
+	contract: IContract;
 	compiler: string;
 	release: string;
 	artist: string;
@@ -81,6 +87,7 @@ export class Token implements IToken {
 	date: number;
 	name: string;
 	description: string;
+	metadata: any;
 	dna: string;
 	animation_url: string;
 	attributes: IAttribute[];

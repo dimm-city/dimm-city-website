@@ -1,23 +1,12 @@
 <script lang="ts">
-	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
 	import TokenViewModal from '$lib/Tokens/TokenViewModal.svelte';
 	import { openModal } from 'svelte-modals';
 	import LoggedInContainer from '$lib/Shared/Components/LoggedInContainer.svelte';
-	import { loadTokens, archive } from './TokensStore';
-	import type { IToken } from '$lib/Characters/Models/Character';
 
 	export let tokens = [];
-	// let loadingTask: Promise<IToken[]>;
-	// let selectedSporo = {} as IToken;
-	// let loaded = false;
-
-	// $: if (loaded == false && ($archive == null || $archive.length < 1)) {
-	// 	loaded = true;
-	// 	loadingTask = loadTokens(); //.then((data) => ($archive = data));
-	// }
 
 	function showToken(token: any) {
-		openModal(TokenViewModal, { data: token });
+		openModal(TokenViewModal, { token: token });
 	}
 </script>
 
@@ -82,14 +71,6 @@
 
 <LoggedInContainer>
 	<div class="fade-in">
-		<!-- <h2>Your Sporos</h2> -->
-		<!-- <Button url="/console/characters/create">Create new Sporo</Button> -->
-		<!-- <Button on:click={() => loaded = false}>Refresh</Button> -->
-		<!-- {#await loadingTask}
-			<LoadingIndicator>
-				<span>Locating sporos...</span>
-			</LoadingIndicator>
-		{:then} -->
 			<ul>
 				{#each tokens as sporo}
 					<li
@@ -102,6 +83,5 @@
 					</li>
 				{/each}
 			</ul>
-		<!-- {/await} -->
 	</div>
 </LoggedInContainer>
