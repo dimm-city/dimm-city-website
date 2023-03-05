@@ -14,8 +14,8 @@
 	/**
 	 * type: string
 	 */
-	export let title = "";
-	export let titleUrl = "";
+	export let title = '';
+	export let titleUrl = '';
 	export let fullscreen = false;
 	export let enableSearch = false;
 
@@ -36,6 +36,58 @@
 		closeAllModals();
 	});
 </script>
+
+<svelte:head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta
+		name="viewport"
+		content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=false"
+	/>
+	<title>{$pageTitle ?? title} - Dimm City</title>
+	<meta name="description" content="" />
+	<meta name="twitter:image" content={$pageImage} />
+	<link rel="icon" type="image/x-icon" href="/assets/icons/shroom256.png" />
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-TJ2LB9K4M4"></script>
+	<link
+		rel="preload"
+		as="font"
+		href="/assets/dimm-city.woff2"
+		type="font/woff2"
+		crossorigin="anonymous"
+	/>
+	<slot name="head" />
+</svelte:head>
+<div class="page-background" />
+<div class="main-container {title.toLowerCase()}" class:fullscreen>
+	<div class="content-panel animate__animated animate__fadeInUp">
+		<div class="content-panel-grid">
+			<div class="content-panel-content-row">
+				<slot><ContentPane fullsize={true}>404</ContentPane></slot>
+			</div>
+			<div class="content-panel-toolbar-row">
+				<slot name="content-toolbar" />
+			</div>
+		</div>
+	</div>
+	<div class="menu-container">
+		<TopMenu {title} {enableSearch} {titleUrl} {fullscreen} />
+	</div>
+	<slot name="scripts" />
+</div>
+
+<Modals>
+	<div
+		slot="backdrop"
+		class="backdrop fade-in"
+		on:introstart
+		on:outroend
+		on:keyup
+		on:click={() => {
+			closeModal();
+		}}
+	/>
+</Modals>
 
 <style>
 	.backdrop {
@@ -75,12 +127,12 @@
 		background-size: calc(100vh * 3) calc(100vw * 3);
 
 		--bg-animation-duration: 40s;
-		-webkit-animation: background-gradient var(--bg-animation-duration) cubic-bezier(0.375, 0.5, 0.32, 0.9) infinite
-			alternate-reverse;
-		-moz-animation: background-gradient var(--bg-animation-duration) cubic-bezier(0.375, 0.5, 0.32, 0.9) infinite
-			alternate-reverse;
-		animation: background-gradient var(--bg-animation-duration) cubic-bezier(0.375, 0.5, 0.32, 0.9) infinite
-			alternate-reverse;
+		-webkit-animation: background-gradient var(--bg-animation-duration)
+			cubic-bezier(0.375, 0.5, 0.32, 0.9) infinite alternate-reverse;
+		-moz-animation: background-gradient var(--bg-animation-duration)
+			cubic-bezier(0.375, 0.5, 0.32, 0.9) infinite alternate-reverse;
+		animation: background-gradient var(--bg-animation-duration) cubic-bezier(0.375, 0.5, 0.32, 0.9)
+			infinite alternate-reverse;
 	}
 
 	.main-container {
@@ -118,6 +170,9 @@
 		height: 100vh;
 		margin-top: 0;
 	}
+	.fullscreen .content-panel-content-row {
+		padding-top: 3rem;
+	}
 	.fullscreen .menu-container {
 		height: 0px;
 		overflow: hidden;
@@ -133,7 +188,7 @@
 		height: 100%;
 		width: 100%;
 		overflow: hidden;
-		padding-top: 2rem;
+		padding-top: 0.5rem;
 	}
 	.content-panel-toolbar-row {
 		width: 100%;
@@ -177,46 +232,3 @@
 		visibility: hidden;
 	}
 </style>
-
-<svelte:head>
-	<meta charset="UTF-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=false" />
-	<title>{$pageTitle ?? title} - Dimm City</title>
-	<meta name="description" content="" />
-	<meta name="twitter:image" content={$pageImage} />
-	<link rel="icon" type="image/x-icon" href="/assets/icons/shroom256.png" />
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-TJ2LB9K4M4"></script>
-	<link rel="preload" as="font" href="/assets/dimm-city.woff2" type="font/woff2" crossorigin="anonymous" />
-	<slot name="head" />
-</svelte:head>
-<div class="page-background" />
-<div class="main-container {title.toLowerCase()}" class:fullscreen>
-	<div class="content-panel animate__animated animate__fadeInUp">
-		<div class="content-panel-grid">
-			<div class="content-panel-content-row">
-				<slot><ContentPane fullsize={true}>404</ContentPane></slot>
-			</div>
-			<div class="content-panel-toolbar-row">
-				<slot name="content-toolbar" />
-			</div>
-		</div>
-	</div>
-	<div class="menu-container">
-		<TopMenu {title} {enableSearch} {titleUrl} {fullscreen} />
-	</div>
-	<slot name="scripts" />
-</div>
-
-<Modals>
-	<div
-		slot="backdrop"
-		class="backdrop fade-in"
-		on:introstart
-		on:outroend
-		on:keyup
-		on:click={() => {
-			closeModal();
-		}}
-	/>
-</Modals>
