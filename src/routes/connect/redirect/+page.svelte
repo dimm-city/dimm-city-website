@@ -7,7 +7,7 @@
 	import { jwt, profile } from '$lib/Shared/Stores/UserStore';
 	import { onMount } from 'svelte';
 	const token = $page.url.searchParams.get('access_token');
-	export let data;
+	
 	onMount(async () => {
 		// if ($jwt && $profile) {
 		// 	document.location = '/console';

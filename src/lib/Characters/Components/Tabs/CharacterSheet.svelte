@@ -1,10 +1,11 @@
 <script lang="ts">
 
 	import { openModal } from 'svelte-modals';
-	import AbilityModal from '../../Components/AbilityModal.svelte';
+	import AbilityModal from '../AbilityModal.svelte';
 	import Image from '$lib/Shared/Components/Image.svelte';
+	import type { ICharacter } from '$lib/Characters/Models/Character';
 	//	export let tokenId; // `dcs1r1-${id}`;
-	export let character;
+	export let character: ICharacter;
 
 	// $: {
 	// 	if (!tokenId || tokenId.length < 1) {

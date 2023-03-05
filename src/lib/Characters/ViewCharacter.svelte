@@ -1,13 +1,9 @@
-<script context="module">
-	export const prerender = false;
-</script>
-
-<script>
-	import Character from '$lib/Characters/Components/Tabs/Character.svelte';
+<script lang="ts">
 	import Shell from '$lib/Shared/Components/Shell.svelte';
-	import {  pageImage } from '$lib/Shared/Stores/ShellStore';
+	import { pageImage } from '$lib/Shared/Stores/ShellStore';
 	import Tab from '$lib/Shared/Components/Tab.svelte';
 	import CharacterStats from '$lib/Characters/Components/Tabs/CharacterStats.svelte';
+	import CharacterSheet from '$lib/Characters/Components/Tabs/CharacterSheet.svelte';
 	import { loadCharacter } from '$lib/Characters/Queries/getCharacterBySlug';
 	import { onMount } from 'svelte';
 	import CharacterBiography from '$lib/Characters/Components/Tabs/CharacterBiography.svelte';
@@ -15,22 +11,22 @@
 	import Toolbar from '$lib/Shared/Components/Toolbar.svelte';
 	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
 	import Button from '$lib/Shared/Components/Button.svelte';
-	import { canEdit } from '$lib/Characters/Queries/updateCharacter';
 	import TwitterButton from '$lib/Shared/Components/TwitterButton.svelte';
 	import { characters } from './CharacterStore';
 	import { ownsToken } from '$lib/Shared/Stores/UserStore';
+	import { type ICharacter, Character } from './Models/Character';
 
-	export let tokenId; // = $page.params.tokenId;
-	let character;
+	export let tokenId: string; // = $page.params.tokenId;
+	let character: ICharacter;
 	let query = new Promise(() => {});
-	let tabs;
+	let tabs: TabPanel;
 	let isEditable = false;
 
 	$: isEditable = character && ownsToken(character?.token);
 
 	onMount(async () => {
 		//isEditable = await canEdit(tokenId);
-		character = $characters.find((c) => c.tokenId === tokenId && c.loaded);
+		character = $characters.find((c) => c.tokenId === tokenId && c.loaded) ?? new Character();
 		if (character == null || character.id < 1) {
 			query = loadCharacter(tokenId).then((c) => {
 				character = c;
@@ -38,10 +34,9 @@
 				$pageImage = character.thumbnailImage;
 			});
 		} else {
-			query = new Promise((resolve) => resolve());
+			query = new Promise((resolve) => resolve(new Character()));
 		}
 	});
-
 </script>
 
 <Shell title="Citizens" titleUrl="/citizens" fullscreen={true}>
@@ -65,8 +60,12 @@
 				>
 					<i class="fade-in btn bi bi-share" />
 				</TwitterButton>
-				{#if isEditable }
-					<Button url="/console/characters/update/{character.tokenId}" shape="square" title="Edit citizen profile">
+				{#if isEditable}
+					<Button
+						url="/console/characters/update/{character.tokenId}"
+						shape="square"
+						title="Edit citizen profile"
+					>
 						<i class="fade-in btn bi bi-device-ssd" />
 					</Button>
 				{/if}
@@ -84,8 +83,8 @@
 				<CharacterBiography {character} />
 			</Tab>
 			<Tab id="sheet" padding={1}>
-				<Character {character} />
+				<CharacterSheet {character} />
 			</Tab>
 		</TabPanel>
-	{/await}	
+	{/await}
 </Shell>

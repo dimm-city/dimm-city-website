@@ -133,6 +133,7 @@
 		height: 100%;
 		width: 100%;
 		overflow: hidden;
+		padding-top: 2rem;
 	}
 	.content-panel-toolbar-row {
 		width: 100%;
@@ -156,12 +157,19 @@
 			background-size: calc(100vh * 2.5) calc(100vw * 2.3);
 		}
 		.main-container {
-			width: 99vw;
+			width: 98vw;
 		}
-		.content-toolbar-container {
+		.content-toolbar {
 			width: 100%;
 			padding: 1rem;
-			top: 77vh;
+			bottom: 1rem;
+		}
+
+		.content-panel-toolbar-row {
+			width: 100%;
+			overflow: hidden;
+			padding-top: 0.5rem;
+			padding-bottom: 3rem;
 		}
 	}
 
@@ -184,7 +192,7 @@
 </svelte:head>
 <div class="page-background" />
 <div class="main-container {title.toLowerCase()}" class:fullscreen>
-	<div class="content-panel animate__animated animate__backInUp">
+	<div class="content-panel animate__animated animate__fadeInUp">
 		<div class="content-panel-grid">
 			<div class="content-panel-content-row">
 				<slot><ContentPane fullsize={true}>404</ContentPane></slot>

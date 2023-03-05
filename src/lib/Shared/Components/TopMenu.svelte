@@ -28,7 +28,9 @@
 	.top-panel {
 		--ds: drop-shadow(0 0 0.2vh var(--pink));
 		filter: var(--ds);
-		
+		animation-duration: 150ms;
+		animation-delay: 50ms;
+		--animate-delay: 50ms;
 	}
 
 	.top-panel,
@@ -156,7 +158,7 @@
 	}
 </style>
 
-<div class="top-panel fade-in">
+<div class="top-panel fade-in  animate__animated animate__fadeInDown">
 	<div
 		class="top-panel-decoration fade-in"
 		aria-hidden="true"

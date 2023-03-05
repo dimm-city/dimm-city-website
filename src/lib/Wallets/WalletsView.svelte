@@ -3,7 +3,7 @@
 	import {  loadWallets, wallets } from '$lib/Shared/Stores/UserStore';
 	import { onMount } from 'svelte';
 	onMount(async () => {
-		await loadWallets();
+		await loadWallets(true);
 	});
 </script>
 

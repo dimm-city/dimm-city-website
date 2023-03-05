@@ -2,11 +2,9 @@ import { writable, derived } from 'svelte/store';
 import {
 	getExpiryTime,
 	getLocalValue,
-	getSessionValue,
-	setLocalValue,
-	setSessionValue
+	setLocalValue
 } from '$lib/Shared/Stores/StoreUtils';
-import type { ICharacter, IToken } from '$lib/Characters/Models/Character';
+import type { ICharacter } from '$lib/Characters/Models/Character';
 import { searchText } from '$lib/Shared/Stores/ShellStore';
 
 export const characters = writable<ICharacter[]>(getLocalValue('characters') ?? []);
@@ -26,7 +24,3 @@ export const filteredCharacters = derived(
 	}
 );
 
-export const myCharacterTokens = writable<IToken[]>(getSessionValue('collection') ?? []);
-myCharacterTokens.subscribe((value) =>
-	setSessionValue('collection', Array.isArray(value) ? value : [])
-);

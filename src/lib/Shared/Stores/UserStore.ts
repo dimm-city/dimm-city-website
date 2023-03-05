@@ -1,6 +1,5 @@
 import { derived, writable } from 'svelte/store';
 import { getSessionValue, setSessionValue } from '$lib/Shared/Stores/StoreUtils';
-
 import { config } from '$lib/Shared/config';
 import { get } from 'svelte/store';
 
@@ -46,15 +45,20 @@ export const loggedIn = derived(
 	false
 );
 
-export function ownsToken(token: any) {
+export function ownsToken(token: any): boolean {
 	const userWallets = get(wallets) ?? [];
-	const id = (token.id || token.data?.id || -1).toString();
-	const result = userWallets.some((w) => w.tokens.some((t) => t.id.toString() === id));
+	const id = (token?.id || token?.data?.id || -1).toString();
+	const result =
+		id != '-1' && userWallets.some((w) => w.tokens.some((t) => t.id.toString() === id));
 
 	return result;
 }
 
-export async function loadWallets() {
+export async function loadWallets(force = false) {
+	if (!force) {
+		const wallets: any[] = getSessionValue('wallets');
+		if (wallets.length > 0) return wallets;
+	}
 	const token = get(jwt);
 	const response = await fetch(`${config.apiBaseUrl}/chain-wallets/wallets`, {
 		headers: {
@@ -70,9 +74,13 @@ export async function loadWallets() {
 	}
 }
 
-// eslint-disable-next-line no-empty-pattern
+// eslint-disable-next-line no-empty-pattern, @typescript-eslint/no-unused-vars
 export const wallets = derived<any, any[]>([profile], ([], set) => {
 	loadWallets().then((data) => {
 		set(data);
 	});
 });
+
+export const tokens = derived<any[], any[]>([wallets], ($wallets) =>
+	$wallets.flatMap((w: any) => w.tokens)
+);

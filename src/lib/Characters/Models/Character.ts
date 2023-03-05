@@ -3,6 +3,7 @@ import type { ISummaryItem } from '$lib/Shared/Models/ISummaryItem';
 export class Character implements ICharacter {
 	constructor(token: IToken = null) {
 		if (token) this.importToken(token);
+		this.id = -1;
 	}
 	id: number;
 	slug: string;
@@ -123,9 +124,9 @@ export interface ICharacter {
 	clothing: string;
 	mainImage: string;
 	thumbnailImage: string;
-	cybernetics: ISummaryItem[];
-	race: IRaceSummaryItem;
-	specialties: ISummaryItem[];
+	cybernetics: ISummaryItem[] | any;
+	race: IRaceSummaryItem | any;
+	specialties: ISummaryItem[] | any;
 	currentLocation: ISummaryItem;
 	selectedAbilities: ISummaryItem[];
 	items: ISummaryItem[];

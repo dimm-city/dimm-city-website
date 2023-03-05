@@ -2,19 +2,19 @@
 	import CharacterStats from './Components/Tabs/CharacterStats.svelte';
 	import StepWizard from 'svelte-step-wizard';
 	import { Character } from './Models/Character';
-	import { myCharacterTokens } from './CharacterStore';
 	import CharacterBiography from './Components/Tabs/CharacterBiography.svelte';
 	import Button from '$lib/Shared/Components/Button.svelte';
 	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
 	import type { ISummaryItem } from '$lib/Shared/Models/ISummaryItem';
 	import { createCitizenFile } from './Services/SporosService';
 	import LoggedInContainer from '$lib/Shared/Components/LoggedInContainer.svelte';
+	import { tokens } from '$lib/Shared/Stores/UserStore';
 	export let tokenId;
 
 	let isSaving = false;
 
 	//ToDo: load token if not in local collection
-	let token = $myCharacterTokens.find((s) => s.release.toLowerCase() + '-' + s.edition == tokenId.toLowerCase());
+	let token = $tokens.find((s) => s.contract?.slug.toLowerCase() + '-' + s.tokenId == tokenId.toLowerCase());
 
 	let character = new Character(token);
 	character.currentLocation = {

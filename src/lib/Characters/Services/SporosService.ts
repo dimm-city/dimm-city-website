@@ -6,7 +6,6 @@ import { get } from 'svelte/store';
 import { sessionToken } from '$lib/Shared/Stores/ContractsStore';
 import { config } from '$lib/Shared/config';
 import type { ICharacterRelease } from '$lib/Characters/Models/ICharacterRelease';
-import { myCharacterTokens } from '../CharacterStore';
 let initialized = false;
 async function initReleaseContracts() {
 	if (!initialized) {
@@ -117,11 +116,11 @@ export async function createCitizenFile(character: ICharacter) {
 			const { data, errors } = await res.json();
 			if (res.ok) {
 				console.log('saved');
-				// token.name = character.name;
-				// token.description = character.vibe;
-				// token.hasCharacter = true;
-				myCharacterTokens.set([]);
-				// nextStep();
+				// // token.name = character.name;
+				// // token.description = character.vibe;
+				// // token.hasCharacter = true;
+				// myCharacterTokens.set([]);
+				// // nextStep();
 				return data;
 			} else {
 				//TODO: display error

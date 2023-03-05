@@ -1,13 +1,16 @@
 <script lang="ts">
 	import { config } from '$lib/Shared/config';
 	import { connect, signMessage } from '$lib/Shared/Stores/ContractsStore';
-	import { jwt } from '$lib/Shared/Stores/UserStore';
+	import { jwt, loadWallets } from '$lib/Shared/Stores/UserStore';
 	import { connected, chainId } from 'svelte-ethers-store';
+	import { onMount } from 'svelte';
 
-	async function attachWallet() {
+	onMount(async () => {
 		if (!$connected) {
 			await connect();
 		}
+	});
+	async function attachWallet() {
 		const signature = await signMessage('Attach this wallet');
 
 		const response = await fetch(`${config.apiBaseUrl}/chain-wallets/wallets/attach/${$chainId}`, {
@@ -20,7 +23,8 @@
 
 		if (response.ok) {
 			console.log('attached wallet');
-            document.location = "/console/archive";
+            await loadWallets(true);
+			document.location = '/console/archive';
 		}
 	}
 </script>
@@ -31,6 +35,8 @@
 	<!-- {#if $connected}
 		<button data-augmented-ui class="aug-button" on:click={attachWallet}>Import</button>
 	{:else} -->
-		<button data-augmented-ui class="aug-button" on:click={() => attachWallet()}>Attach Archive</button>
+	<button data-augmented-ui class="aug-button" on:click={() => attachWallet()}
+		>Attach Archive</button
+	>
 	<!-- {/if} -->
 </div>

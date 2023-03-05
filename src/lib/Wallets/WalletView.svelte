@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { config } from '$lib/Shared/config';
-	import { jwt } from '$lib/Shared/Stores/UserStore';
+	import { jwt, loadWallets } from '$lib/Shared/Stores/UserStore';
 
 	export let wallet = { address: '', network: { chainId: 0 } };
 
@@ -17,6 +17,7 @@
 
 		if (response.ok) {
 			console.log('detached wallet');
+			await loadWallets(true);
 			document.location = "/console/archive";
 		}
 	}
