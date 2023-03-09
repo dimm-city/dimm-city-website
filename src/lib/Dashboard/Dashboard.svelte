@@ -8,18 +8,19 @@
 	import ListItemLink from '$lib/Shared/Components/ListItemLink.svelte';
 	import Hero from './Hero.svelte';
 	import { onMount } from 'svelte';
-	let newsQuery = getDashboardEntries().then(
-		(d) => (latestNews = d?.filter((item) => item?.id == 2 || item?.id == 4 || item?.id == 5)));
+	let newsQuery: any;
 	let latestNews: ISummaryItem[] = [];
 	let districts: ISummaryItem[] = [];
 	let specialties: ISummaryItem[] = [];
 	let citizens: ISummaryItem[] = [];
 
 	onMount(() => {
+		getDashboardEntries().then(
+			(d) => (latestNews = d?.filter((item) => item?.id == 2 || item?.id == 4 || item?.id == 5))
+		);
 		getDistricts().then((d) => (districts = d));
 		getSpecialties().then((d) => (specialties = d));
 		getLatestCitizens().then((d) => (citizens = d));
-		
 	});
 </script>
 
