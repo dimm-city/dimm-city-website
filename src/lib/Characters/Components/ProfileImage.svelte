@@ -4,10 +4,10 @@
 	import { config } from '$lib/Shared/config';
 
 	export let character: ICharacter;
-	//HACK: this should not be done by splitting strings!!
-	$: imagePath = `${character.tokenId.split('-').at(0)}/${character.tokenId.split('-').at(1)}.png`;
-	$: imageUrl = `${config.apiBaseUrl}/chain-wallets/images/${imagePath}`;
+	// //HACK: this should not be done by splitting strings!!
+	// $: imagePath = `${character.tokenId.split('-').at(0)}/${character.tokenId.split('-').at(1)}.png`;
+	// $: imageUrl = `${config.apiBaseUrl}/chain-wallets/images/${imagePath}`;
 		
 </script>
 
-<Image {imageUrl} title={character.name} on:click />
+<Image  imageUrl={character.imageUrl} title={character.name} on:click />
