@@ -41,14 +41,6 @@ export const getCharacterBySlugQuery = `
           clothing
           imageUrl
           thumbnailUrl
-          mainImage{
-            data{
-              attributes{
-                url
-                previewUrl
-              }
-            }
-          }
           cybernetics{
             data{
               id

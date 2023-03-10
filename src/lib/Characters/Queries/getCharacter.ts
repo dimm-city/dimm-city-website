@@ -17,14 +17,6 @@ export const getCharacterQuery = `
           clothing
           imageUrl
           thumbnailUrl
-          mainImage{
-            data{
-              attributes{
-                url
-                previewUrl
-              }
-            }
-          }
           cybernetics{
             data{
               id
