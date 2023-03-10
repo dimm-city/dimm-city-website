@@ -5,6 +5,21 @@ export const getCharacterQuery = `
         id
         attributes {
           tokenId
+          token{
+            data{
+              id
+              attributes{
+                tokenId
+                contract{
+                  data{
+                    attributes{
+                      slug
+                    }
+                  }
+                }
+              }
+            }
+          }
           name
           age
           height
