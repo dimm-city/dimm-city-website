@@ -67,6 +67,18 @@ export async function loadWallets(force = false) {
 	});
 	if (response.ok) {
 		const data = await response.json();
+
+		for (let index = 0; index < data.results?.length; index++) {
+			const wallet = data.results[index];
+
+			for (const token of wallet.tokens) {
+				const metaResponse = await fetch(
+					`${config.apiBaseUrl}/chain-wallets/metadata/${token.contract.slug}/${token.tokenId}`
+				);
+				if (metaResponse.ok) token.metadata = await metaResponse.json();
+			}
+		}
+
 		setSessionValue('wallets', data.results ?? []);
 		return data.results ?? [];
 	} else {

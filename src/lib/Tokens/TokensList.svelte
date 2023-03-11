@@ -6,17 +6,13 @@
 	export let tokens = [];
 
 	function showToken(token: any) {
-		openModal(TokenViewModal, { token: token });
+		//openModal(TokenViewModal, { token: token });
+		document.location = `/citizens/${token.contract.slug}-${token.tokenId}`;
 	}
 </script>
 
 <style>
-	.content-container {
-		padding: 1rem;
-	}
-	h2 {
-		text-align: center;
-	}
+
 
 	ul {
 		padding: 0;
@@ -36,37 +32,6 @@
 		 /* clamp(0.3rem, 0.7rem, 1.25rem);		 */
 	}
 
-	.menu-item-grid {
-		width: 100%;
-		padding-top: 0.5rem;
-		padding-bottom: 0.5rem;
-		display: grid;
-		grid-template-columns: 2fr 1fr;
-		grid-template-rows: min-content auto;
-		grid-template-areas:
-			'name-column id-column'
-			'image-column toolbar-column';
-	}
-	.name-column {
-		grid-area: name-column;
-	}
-	.id-column {
-		grid-area: id-column;
-		display: flex;
-		justify-content: end;
-	}
-	.image-column {
-		grid-area: image-column;
-		display: flex;
-		justify-content: start;
-	}
-	.toolbar-column {
-		grid-area: toolbar-column;
-		display: flex;
-		height: 100%;
-		justify-content: end;
-		align-items: end;
-	}
 </style>
 
 <LoggedInContainer>

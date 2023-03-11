@@ -34,7 +34,7 @@
 
 <div>
 	<div class="toolbar">
-		<button data-augmented-ui class="aug-button">Create New Archive</button>
+		<!-- <button data-augmented-ui class="aug-button">Create New Archive</button> -->
 		<button on:click={() => attachWallet()} data-augmented-ui class="aug-button"
 			>Attach Existing Archive</button>
 	</div>
