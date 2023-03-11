@@ -136,7 +136,7 @@
 		color: var(--third-accent);
 		position: absolute;
 		bottom: 0.1rem;
-		right: 1.5rem;
+		padding-right: 1.5rem;
 		width: 100%;
 		display: flex;
 		justify-content: end;
@@ -192,7 +192,7 @@
 		}
 
 		.version {
-			right: 0.1rem;
+			display: none;
 		}
 	}
 </style>

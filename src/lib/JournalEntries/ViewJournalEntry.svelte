@@ -15,6 +15,13 @@
 		getJournalEntry(slug).then((s) => (model = s));
 	}
 </script>
+<style>
+	h1{
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+</style>
 
 <Shell title="Journal Entries" titleUrl="/journal-entries">
 	<ContentPane padding={2} scrollable={true}>
