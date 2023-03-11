@@ -100,7 +100,7 @@
 	.version {
 		color: var(--third-accent);
 		position: absolute;
-		bottom: 0.5rem;
+		bottom: 0.1rem;
 		padding-right: 1.5rem;
 		width: 100%;
 		display: flex;

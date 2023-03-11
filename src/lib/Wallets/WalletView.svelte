@@ -18,7 +18,7 @@
 		if (response.ok) {
 			console.log('detached wallet');
 			await loadWallets(true);
-			document.location = "/console/archive";
+			document.location = "/console";
 		}
 	}
 </script>
