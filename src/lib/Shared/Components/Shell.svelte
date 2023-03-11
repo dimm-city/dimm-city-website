@@ -42,7 +42,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta
 		name="viewport"
-		content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=false"
+		content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0"
 	/>
 	<title>{$pageTitle ?? title} - Dimm City</title>
 	<meta name="description" content="" />
@@ -50,7 +50,6 @@
 	<link rel="icon" type="image/x-icon" href="/assets/icons/shroom256.png" />
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-TJ2LB9K4M4"></script>
 	<link
-		rel="preload"
 		as="font"
 		href="/assets/dimm-city.woff2"
 		type="font/woff2"
@@ -195,7 +194,7 @@
 		overflow: hidden;
 		padding: 1rem;
 	}
-	@media all and (max-width: 768px), (max-aspect-ratio: 0.74) {
+	@media screen and (max-width: 768px), (max-aspect-ratio: 0.74) {
 		:root {
 			--divider-gap: 3em;
 		}
@@ -209,7 +208,7 @@
 
 	@media (max-width: 750px) {
 		.page-background {
-			background-size: calc(100vh * 2.5) calc(100vw * 2.3);
+			background-size: calc(100vh * 5.5) calc(100vw * 5.3);
 		}
 		.main-container {
 			width: 98vw;

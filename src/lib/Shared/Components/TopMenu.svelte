@@ -14,6 +14,42 @@
 	}
 </script>
 
+<div class="top-panel fade-in  animate__animated animate__fadeInDown">
+	<div
+		class="top-panel-decoration fade-in"
+		aria-hidden="true"
+		data-augmented-ui="tl-clip l-clip t-clip-x b-clip-x tr-clip r-clip bl-clip br-clip"
+	/>
+
+	{#if !fullscreen}
+		<div class="version"><small>DCC v{config.version}</small></div>
+	{/if}
+	<div class="global-toolbar">
+		<button on:click={showModalMenu} class="panel-button" data-augmented-ui="all-hex border"
+			><i class="bi bi-menu-button" title="home screen" /></button
+		>
+
+		<a href="/console" class="panel-button" data-augmented-ui="all-hex border" title="op console">
+			{#if $loggedIn}
+				<i class="bi bi-person-check-fill fade-in" />
+			{:else}
+				<i class="bi bi-person-x-fill fade-in" />
+			{/if}
+		</a>
+	</div>
+	<div class="search-container">
+		{#if enableSearch}
+			<div data-augmented-ui class="aug-input">
+				<!-- <i class="bi bi-gear" /> -->
+				<input bind:value={$searchText} type="text" placeholder="Search {title}..." />
+				<i class="bi bi-search" />
+			</div>
+		{:else}
+			<h4><a href={titleUrl}>{title}</a></h4>
+		{/if}
+	</div>
+</div>
+
 <style>
 	h4 {
 		position: absolute;
@@ -39,7 +75,6 @@
 		position: absolute;
 		top: 0;
 		width: 100%;
-		;
 	}
 
 	.top-panel-decoration {
@@ -101,14 +136,14 @@
 		color: var(--third-accent);
 		position: absolute;
 		bottom: 0.1rem;
-		padding-right: 1.5rem;
+		right: 1.5rem;
 		width: 100%;
 		display: flex;
 		justify-content: end;
 		transition: all var(--transition-in-time);
 		font-size: 0.75rem;
 	}
-	
+
 	.global-toolbar i {
 		margin: 0;
 		font-size: 1.5rem;
@@ -155,41 +190,9 @@
 		.top-panel-decoration {
 			--aug-border-all: 0.25vh;
 		}
+
+		.version {
+			right: 0.1rem;
+		}
 	}
 </style>
-
-<div class="top-panel fade-in  animate__animated animate__fadeInDown">
-	<div
-		class="top-panel-decoration fade-in"
-		aria-hidden="true"
-		data-augmented-ui="tl-clip l-clip t-clip-x b-clip-x tr-clip r-clip bl-clip br-clip"
-	/>
-
-	{#if !fullscreen}
-	<div class="version"><small>DCC v{config.version}</small></div>
-	{/if}
-	<div class="global-toolbar">
-		<button on:click={showModalMenu} class="panel-button" data-augmented-ui="all-hex border"
-			><i class="bi bi-menu-button" title="home screen" /></button
-		>
-
-		<a href="/console"  class="panel-button" data-augmented-ui="all-hex border" title="op console">
-			{#if $loggedIn}
-				<i class="bi bi-person-check-fill fade-in" />
-			{:else}
-				<i class="bi bi-person-x-fill fade-in" />
-			{/if}
-		</a>
-	</div>
-	<div class="search-container">
-		{#if enableSearch}
-			<div data-augmented-ui class="aug-input">
-				<!-- <i class="bi bi-gear" /> -->
-				<input bind:value={$searchText} type="text" placeholder="Search {title}..." />
-				<i class="bi bi-search" />
-			</div>
-		{:else}
-			<h4><a href={titleUrl}>{title}</a></h4>
-		{/if}
-	</div>
-</div>

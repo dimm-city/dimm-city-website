@@ -32,10 +32,10 @@ export async function getReleaseContract(releaseKey: string) {
 }
 
 const _signerAddress = writable<string>(getSessionValue('_signerAddress') ?? null);
-_signerAddress.subscribe((value) => setSessionValue('_signerAddress', value));
+//_signerAddress.subscribe((value) => setSessionValue('_signerAddress', value));
 
 const _token = writable<string>(getSessionValue('_token') ?? null);
-_token.subscribe((value) => setSessionValue('_token', value));
+//_token.subscribe((value) => setSessionValue('_token', value));
 
 export const sessionToken = derived<Readable<string>, string>(_token, ($token, set) => set($token));
 

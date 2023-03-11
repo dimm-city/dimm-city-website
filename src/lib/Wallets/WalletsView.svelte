@@ -8,11 +8,11 @@
 
 	onMount(async () => {
 		await loadWallets(true);
-		if (!$connected) {
-			await connect();
-		}
 	});
 	async function attachWallet() {
+		if (!$connected && window.ethereum) {
+			await connect();
+		}
 		const signature = await signMessage('Attach this wallet');
 
 		const response = await fetch(`${config.apiBaseUrl}/chain-wallets/wallets/attach/${$chainId}`, {
@@ -25,7 +25,7 @@
 
 		if (response.ok) {
 			console.log('attached wallet');
-            myWallets = await loadWallets(true);
+			myWallets = await loadWallets(true);
 		}
 	}
 
@@ -36,15 +36,18 @@
 	<div class="toolbar">
 		<!-- <button data-augmented-ui class="aug-button">Create New Archive</button> -->
 		<button on:click={() => attachWallet()} data-augmented-ui class="aug-button"
-			>Attach Existing Archive</button>
+			>Attach Existing Archive</button
+		>
 	</div>
 	{#if myWallets?.length > 0}
 		{#each myWallets as wallet}
 			<div style="margin-bottom: 2rem">
-				<h4>
-					<a href="/console/archive/{wallet.address}">{wallet.name ?? wallet.address}</a>
+				<div class="wallet-title">
+					<h4>
+						<a href="/console/archive/{wallet.address}">{wallet.name ?? wallet.address}</a>
+					</h4>
 					<span>({wallet.tokens?.length ?? 0}) </span>
-				</h4>
+				</div>
 				<TokensList tokens={wallet.tokens} />
 			</div>
 		{/each}
@@ -54,11 +57,21 @@
 </div>
 
 <style>
-	h4 {
+	.wallet-title {
 		display: flex;
 		justify-content: space-between;
+		width: 100%;
 	}
-	h4 span {
+	h4 {
+		display: inline;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	span {
+		align-self: center;
+	}
+	.wallet-title h4 span {
 		margin-right: 0.5rem;
 	}
 	.toolbar {
