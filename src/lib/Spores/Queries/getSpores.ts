@@ -47,6 +47,6 @@ export async function getSpores() : Promise<ISummaryItem[]> {
 			return [];
 		})
 		.catch((reason) => {
-			console.log('loadSpecialties failed', reason);
+			console.log('getSpores failed', reason);
 		});
 }

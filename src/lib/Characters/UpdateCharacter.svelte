@@ -1,5 +1,5 @@
 <script lang="ts">
-	import CharacterTab from '$lib/Characters/Components/Tabs/Character.svelte';
+	import CharacterTab from '$lib/Characters/Components/Tabs/CharacterSheet.svelte';
 	import Shell from '$lib/Shared/Components/Shell.svelte';
 	import { characters } from './CharacterStore';
 	import Tab from '$lib/Shared/Components/Tab.svelte';
@@ -11,19 +11,18 @@
 	import Toolbar from '$lib/Shared/Components/Toolbar.svelte';
 	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
 	import Button from '$lib/Shared/Components/Button.svelte';
-	import { canEdit, updateCharacter } from '$lib/Characters/Queries/updateCharacter';
+	import { updateCharacter } from '$lib/Characters/Queries/updateCharacter';
 	import { Character, type ICharacter } from './Models/Character';
+	import { ownsToken } from '$lib/Shared/Stores/UserStore';
+	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 
-	export let tokenId;
+	export let tokenId: string;
 	let isSaving = false;
 	let character: ICharacter;
 	let query = new Promise(() => {});
-	let tabs;
+	let tabs: TabPanel;
 	onMount(async () => {
-		const isEditable: boolean = await canEdit(tokenId);
-		if (!isEditable) window.history.back();
-
-		character = $characters.find((c) => c.tokenId === tokenId && c.loaded);
+		character = $characters.find((c) => c.tokenId === tokenId && c.loaded) ?? new Character();
 		if (character == null || character.id < 1) {
 			query = loadCharacter(tokenId).then((c) => {
 				character = c;
@@ -33,20 +32,24 @@
 			query = new Promise((resolve) => resolve(new Character()));
 		}
 	});
-	
+
 	async function save() {
-		isSaving = true;
-		query = updateCharacter(character)
-			.then(() => {
-				isSaving = false;
-				//$characters = [...$characters.filter((l) => l.id != character.id)];
-				//window.location.href = '/citizens/' + tokenId;
-				// if (window.history.length > 0) window.history.back();
-				// else window.location.href = '/citizens';
-			})
-			.catch((reason) => {
-				console.error('Error updating citizen file', reason);
-			});
+		if (ownsToken(character.token)) {
+			isSaving = true;
+			await updateCharacter(character)
+				.then(() => {
+					console.log('character', character);
+
+					//$characters = [...$characters.filter((l) => l.id != character.id)];
+					//window.location.href = '/citizens/' + tokenId;
+					if (window.history.length > 0) window.history.back();
+					else window.location.href = '/citizens/' + tokenId;
+				})
+				.catch((reason) => {
+					console.error('Error updating citizen file', reason);
+				})
+				.finally(() => (isSaving = false));
+		}
 	}
 
 	async function cancel() {
@@ -82,19 +85,21 @@
 			</Toolbar>
 		{/await}
 	</div>
-	{#await query}
-		<LoadingIndicator>Extracting character data...</LoadingIndicator>
-	{:then}
-		<TabPanel bind:this={tabs} initialTab="stats">
-			<Tab id="stats" padding={2}>
-				<CharacterStats {character} title={character.name} readonly={false} />
-			</Tab>
-			<Tab id="story" padding={2}>
-				<CharacterBiography {character} readonly={false} />
-			</Tab>
-			<Tab id="sheet" padding={1}>
-				<CharacterTab {character} />
-			</Tab>
-		</TabPanel>
-	{/await}
+	<ContentPane padding={0}>
+		{#await query}
+			<LoadingIndicator>Extracting character data...</LoadingIndicator>
+		{:then}
+			<TabPanel bind:this={tabs} initialTab="stats">
+				<Tab id="stats" padding={1}>
+					<CharacterStats {character} title={character.name} readonly={false} />
+				</Tab>
+				<Tab id="story" padding={1}>
+					<CharacterBiography {character} readonly={false} />
+				</Tab>
+				<Tab id="sheet" padding={1}>
+					<CharacterTab {character} />
+				</Tab>
+			</TabPanel>
+		{/await}
+	</ContentPane>
 </Shell>

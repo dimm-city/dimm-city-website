@@ -60,23 +60,17 @@
 	@media (max-width: 768px) {
 		.container {
 			height: 100%;
-			display: grid;
+			display: flex;
+			flex-direction: column;
 			width: 100%;
-			grid-template-columns: 1fr;
-			grid-template-rows: repeat(3, 1fr);
-			gap: 1rem;
-			grid-auto-flow: row;
-			grid-template-areas:
-				'title-area'
-				'image-area'
-				'attributes-area';
+		
 		}
 
 		.title-area {
 			display: none;
 		}
 		.attributes {
-			margin: 1rem 2rem 5rem;
+			margin-inline: 0.45rem;
 			display: grid;
 			grid-template-columns: 1fr;
 			gap: 1rem;

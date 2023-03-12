@@ -5,7 +5,6 @@
 <style>
 	textarea {
 		width: 100%;
-		height: 100%;
 		padding: 1rem;
 		background-color: rgba(17, 17, 17, 0.75);
 		border: 0;
@@ -15,7 +14,6 @@
 	}
 	.aug-textarea {
 		width: 100%;
-		height: 100%;
 
 		--aug-clip-tl1: initial;
 		--aug-clip-tr1: initial;

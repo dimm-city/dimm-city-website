@@ -1,8 +1,9 @@
 <script lang="ts">
 	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
+	import type { ISummaryItem } from '$lib/Shared/Models/ISummaryItem';
 	export let query: any = null; // new Promise();
-	export let data;
-	export let icon = 'bi-file-text';
+	export let data: ISummaryItem[] = [];
+	// export let icon = 'bi-file-text';
 </script>
 
 <style>

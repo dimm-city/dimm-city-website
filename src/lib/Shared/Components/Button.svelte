@@ -1,10 +1,10 @@
-<script>
+<script lang="ts">
 	export let border = '';
 	export let shape = 'default';
 	export let title = '';
 	export let url = '';
 	export let height = 'max-content';
-	export let target = null;
+	export let target: string = "";
 </script>
 
 <style>
@@ -78,7 +78,6 @@
 	class="aug-button {shape}"
 	style="--aug-border-bg: {border}; height: {height};"
 	on:click
-	alt={title}
 	{target}
 	{title}><slot /></a
 >

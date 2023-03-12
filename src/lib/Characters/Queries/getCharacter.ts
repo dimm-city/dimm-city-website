@@ -5,6 +5,22 @@ export const getCharacterQuery = `
         id
         attributes {
           tokenId
+          token{
+            data{
+              id
+              attributes{
+                tokenId
+                contract{
+                  data{
+                    attributes{
+                      slug
+                    }
+                  }
+                }
+              }
+            }
+          }
+          playerUpdated
           name
           age
           height
@@ -17,14 +33,6 @@ export const getCharacterQuery = `
           clothing
           imageUrl
           thumbnailUrl
-          mainImage{
-            data{
-              attributes{
-                url
-                previewUrl
-              }
-            }
-          }
           cybernetics{
             data{
               id

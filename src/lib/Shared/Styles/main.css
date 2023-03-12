@@ -45,21 +45,23 @@ body {
 
 a {
 	text-decoration: none;
-	color: var(--primary-accent);
+	color: var(--fourth-accent);
+	opacity: 0.8;
 	transition: all var(--transition-in-time) ease;
 }
 a:hover,
 a:active {
-	color: var(--third-accent);
-	/* text-shadow: 1px 1px var(--secondary-accent); */
-	transition: all var(--transition-in-time) ease;
+	color: var(--pink);
+	opacity: 1;
+	/* text-shadow: 1px 1px var(--secondary-accent); 
+	transition: all var(--transition-in-time) ease;*/
 }
 
 li > a {
 	display: block;
 	cursor: pointer;
 
-	color: var(--light);
+	color: var(--fourth-accent);
 }
 li > a:hover,
 li > a:focus {

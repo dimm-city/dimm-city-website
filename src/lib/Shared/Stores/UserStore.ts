@@ -1,51 +1,97 @@
-import Web3Modal from 'web3modal';
-import { signerAddress, connected, defaultEvmStores } from 'svelte-ethers-store';
-import { derived, get, writable, type Readable } from 'svelte/store';
-import { Web3Provider } from '@ethersproject/providers';
+import { derived, writable } from 'svelte/store';
 import { getSessionValue, setSessionValue } from '$lib/Shared/Stores/StoreUtils';
+import { config } from '$lib/Shared/config';
+import { get } from 'svelte/store';
 
-const profile = writable<string>(getSessionValue('profile') ?? null);
-profile.subscribe((value) => setSessionValue('profile', value));
+export async function loadProfile() {
+	const token = get(jwt);
+	if (token > '') {
+		let data = null;
+		const response = await fetch(`${config.apiBaseUrl}/users/me?fields=*&populate=*`, {
+			headers: {
+				Authorization: `Bearer ${token}`
+			}
+		});
+		if (response.ok) {
+			data = await response.json();
+		}
+		if (data) profile.set(data);
+	}
+}
 
-const token = writable<string>(getSessionValue('token') ?? null);
-token.subscribe((value) => setSessionValue('token', value));
+export const jwt = writable<string | null>(getSessionValue('jwt') ?? null);
+jwt.subscribe((value) => {
+	setSessionValue('jwt', value);
+});
 
-export const sessionToken = derived<Readable<string>, string>(token, ($token, set) => set($token));
+export const profile = writable<any>(getSessionValue('profile') ?? null);
+profile.subscribe((value) => {
+	setSessionValue('profile', value);
+});
+
+export const wallets = writable<any[]>(getSessionValue('wallets') ?? null);
+wallets.subscribe((value) => {
+	setSessionValue('wallets', value);
+});
 
 export const loggedIn = derived(
-	[connected, signerAddress, token],
-	([$connected, $signerAddress, $sessionToken], set) => set($sessionToken > '' || ($connected && $signerAddress > '')),
+	[jwt],
+	([$jwt], set) => {
+		const isLoggedIn = typeof $jwt === 'string' && $jwt > '';
+		console.log('updating logged in', $jwt, isLoggedIn);
+		set(isLoggedIn);
+	},
 	false
 );
 
-defaultEvmStores.signer.subscribe(async (signer) => {
-	//when the signer changes, update the session variables
-	if (signer != null && (get(profile) <= '' || get(token) <= '')) {
-		const sign = await signMessage('Sign this message to connect to your Dimm City profile.');
-		token.set(sign);
-		profile.set(get(signerAddress));
+export function ownsToken(token: any): boolean {
+	const userWallets = get(wallets) ?? [];
+	const id = (token?.id || token?.data?.id || -1).toString();
+	const result =
+		id != '-1' && userWallets.some((w) => w.tokens.some((t) => t.id.toString() === id));
+
+	return result;
+}
+
+export async function loadWallets(force = false) {
+	if (!force) {
+		const wallets: any[] = getSessionValue('wallets');
+		if (wallets.length > 0) return wallets;
 	}
-});
-
-export function disconnect() {
-	//connected.set(false);
-}
-export async function connect() {
-	const providerOptions = {
-		/* See Provider Options Section */
-	};
-
-	const web3Modal = new Web3Modal({
-		network: 'mainnet', // optional
-		cacheProvider: true, // optional
-		providerOptions // required
+	const token = get(jwt);
+	const response = await fetch(`${config.apiBaseUrl}/chain-wallets/wallets`, {
+		headers: {
+			Authorization: `Bearer ${token}`
+		}
 	});
+	if (response.ok) {
+		const data = await response.json();
 
-	const instance = await web3Modal.connect();
-	defaultEvmStores.setProvider(new Web3Provider(instance));
+		for (let index = 0; index < data.results?.length; index++) {
+			const wallet = data.results[index];
+
+			for (const token of wallet.tokens) {
+				const metaResponse = await fetch(
+					`${config.apiBaseUrl}/chain-wallets/metadata/${token.contract.slug}/${token.tokenId}`
+				);
+				if (metaResponse.ok) token.metadata = await metaResponse.json();
+			}
+		}
+
+		wallets.set(data.results ?? []);
+		return data.results ?? [];
+	} else {
+		return [];
+	}
 }
 
-export async function signMessage(message: string) {
-	const _signer = get(defaultEvmStores.signer);
-	return await _signer.signMessage(message);
-}
+export const tokens = derived<any[], any[]>([wallets], ($wallets) =>
+	$wallets.flatMap((w: any) => w.tokens)
+);
+
+export const logout = () => {
+	jwt.set(null);
+	profile.set(null);
+
+	setSessionValue('wallets', []);
+};

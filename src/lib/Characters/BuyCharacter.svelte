@@ -7,17 +7,17 @@
 	import { getCharacterReleases } from './Queries/getCharacterReleases';
 	import { onMount } from 'svelte';
 	import LoggedInContainer from '$lib/Shared/Components/LoggedInContainer.svelte';
-	import { createSporo } from '$lib/Characters/Services/SporosService';
-	import type { IToken } from './Models/Character';
+	import type { ICharacter, IToken } from './Models/Character';
+	import { createSporo } from './CharacterStore';
 
 	export let releaseKey: string;
 	let isSaving = false;
-	let token: IToken;
+	let token: ICharacter;
 	let releases = [];
 	onMount(async () => {
 		const data = await getCharacterReleases();
 		releases = data;
-		selectedRelease = releases.find((r) => r.slug == releaseKey);	
+		selectedRelease = releases.find((r) => r.slug == releaseKey) as ICharacterRelease;	
 	});
 
 	let selectedRelease: ICharacterRelease = {
@@ -31,7 +31,7 @@
 		tags: '',
 		author: '',
 		contractAddress: '',
-		abi: undefined,
+		abi: null,
 		totalSupply: 0,
 		maxSupply: 0,
 		metadataBaseUri: ''
@@ -41,7 +41,7 @@
 		if (window.history.length > 0) window.history.back();
 		else window.location.href = '/console';
 	}
-	async function buy(nextStep) {
+	async function buy(nextStep: Function) {
 		token = await createSporo(selectedRelease);
 		console.log('buy', token);
 		nextStep();

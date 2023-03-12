@@ -3,13 +3,15 @@ import type { ISummaryItem } from '$lib/Shared/Models/ISummaryItem';
 export class Character implements ICharacter {
 	constructor(token: IToken = null) {
 		if (token) this.importToken(token);
+		this.id = -1;
 	}
 	id: number;
 	slug: string;
 	name: string;
 	tokenId: string;
-	token: IToken;
+	token: any;
 	loaded = false;
+	playerUpdated = false;
 	age: number;
 	height: number;
 	weight: number;
@@ -44,7 +46,9 @@ export class Character implements ICharacter {
 	}
 
 	_getAttributeValue(token, attribKey): string {
-		const result = token.attributes.find((a) => a.trait_type.toLowerCase() == attribKey.toLowerCase());
+		const result = token.attributes.find(
+			(a) => a.trait_type.toLowerCase() == attribKey.toLowerCase()
+		);
 		return result ? result.value : '';
 	}
 }
@@ -54,7 +58,11 @@ export interface IAttribute {
 	value: string;
 }
 
+export interface IContract {
+	slug: string;
+}
 export interface IToken {
+	contract: IContract;
 	compiler: string;
 	release: string;
 	artist: string;
@@ -63,6 +71,7 @@ export interface IToken {
 	name: string;
 	description: string;
 	dna: string;
+	metadata: any;
 	animation_url: string;
 	attributes: IAttribute[];
 	image: string;
@@ -74,6 +83,7 @@ export interface IToken {
 	hasCharacter: boolean;
 }
 export class Token implements IToken {
+	contract: IContract;
 	compiler: string;
 	release: string;
 	artist: string;
@@ -81,6 +91,7 @@ export class Token implements IToken {
 	date: number;
 	name: string;
 	description: string;
+	metadata: any;
 	dna: string;
 	animation_url: string;
 	attributes: IAttribute[];
@@ -93,6 +104,7 @@ export class Token implements IToken {
 	hasCharacter = false;
 }
 export interface ICharacter {
+	playerUpdated: boolean;
 	//TODO: add to strapi
 	beliefs: string;
 	flaws: string;
@@ -116,9 +128,9 @@ export interface ICharacter {
 	clothing: string;
 	mainImage: string;
 	thumbnailImage: string;
-	cybernetics: ISummaryItem[];
-	race: IRaceSummaryItem;
-	specialties: ISummaryItem[];
+	cybernetics: ISummaryItem[] | any;
+	race: IRaceSummaryItem | any;
+	specialties: ISummaryItem[] | any;
 	currentLocation: ISummaryItem;
 	selectedAbilities: ISummaryItem[];
 	items: ISummaryItem[];

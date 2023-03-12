@@ -77,7 +77,7 @@
 			display: grid;
 			width: 100%;
 			grid-template-columns: 0.7fr 1.6fr;
-			grid-template-rows: min-content 0.5fr 0.8fr;
+			grid-template-rows: min-content 0.5fr 0.5fr;
 			gap: 1rem;
 			grid-auto-flow: row;
 			grid-template-areas:
@@ -125,7 +125,7 @@
 			<TextContainer>{character.backstory > '' ? character.backstory : '404: Unable to locate file'}</TextContainer>
 		{:else}
 			<div class="label">Tell us a bit about {character.name}'s backstory...</div>
-			<Textarea bind:value={character.backstory} disabled={readonly} />
+			<Textarea bind:value={character.backstory} disabled={readonly}  rows="10"/>
 		{/if}
 	</div>
 </div>

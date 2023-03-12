@@ -2,12 +2,12 @@ import { writable, derived } from 'svelte/store';
 import {
 	getExpiryTime,
 	getLocalValue,
-	getSessionValue,
-	setLocalValue,
-	setSessionValue
+	setLocalValue
 } from '$lib/Shared/Stores/StoreUtils';
-import type { ICharacter, IToken } from '$lib/Characters/Models/Character';
+import { Character, type ICharacter } from '$lib/Characters/Models/Character';
 import { searchText } from '$lib/Shared/Stores/ShellStore';
+import { getReleaseContract } from '$lib/Shared/Stores/ContractsStore';
+import type { ICharacterRelease } from './Models/ICharacterRelease';
 
 export const characters = writable<ICharacter[]>(getLocalValue('characters') ?? []);
 characters.subscribe((value) => setLocalValue('characters', value, getExpiryTime()));
@@ -26,7 +26,31 @@ export const filteredCharacters = derived(
 	}
 );
 
-export const myCharacterTokens = writable<IToken[]>(getSessionValue('collection') ?? []);
-myCharacterTokens.subscribe((value) =>
-	setSessionValue('collection', Array.isArray(value) ? value : [])
-);
+export async function createCitizenFile(character: ICharacter) : Promise<ICharacter> {
+	return new Character();
+}
+export async function createSporo(release: ICharacterRelease): Promise<ICharacter> {
+	const contract = await getReleaseContract(release.slug);
+	const cost = await contract.getPackCost();
+	const totalSupply = (await contract.totalSupply());// as BigNumber;
+	const maxSupply = (await contract.MaxSupply()); // as BigNumber;
+
+	if (totalSupply.gte(maxSupply)) throw new Error('This release is currently sold out.');
+
+	//await contract.buyPack(get(signerAddress), 1, true, {value: cost});
+
+	await new Promise((resolve) =>
+		setTimeout(async () => {
+			console.log(contract, cost, totalSupply, maxSupply.toNumber());
+
+			resolve(0);
+		}, 500)
+	);
+
+	//ToDo: Get balanceOf, get new tokenIds
+
+	const tokenId = 35;
+	console.log('downloading new token');
+
+	return new Character(); //await downloadSporo(tokenId, release);
+}
