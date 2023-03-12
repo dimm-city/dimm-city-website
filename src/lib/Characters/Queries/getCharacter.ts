@@ -20,6 +20,7 @@ export const getCharacterQuery = `
               }
             }
           }
+          playerUpdated
           name
           age
           height

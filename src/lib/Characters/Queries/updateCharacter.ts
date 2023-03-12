@@ -4,7 +4,9 @@ import { get } from 'svelte/store';
 import { jwt } from '$lib/Shared/Stores/UserStore';
 
 export async function updateCharacter(character: ICharacter) {
+	
 	const importData = JSON.parse(JSON.stringify(character));
+	importData.playerUpdated = true;
 	//importData.slug = character.name.replace(' ', '-');
 	// importData.currentLocation = character.currentLocation.id;
 	// importData.specialties = character.specialties.map(r => r.id);

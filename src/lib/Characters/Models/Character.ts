@@ -11,6 +11,7 @@ export class Character implements ICharacter {
 	tokenId: string;
 	token: any;
 	loaded = false;
+	playerUpdated = false;
 	age: number;
 	height: number;
 	weight: number;
@@ -45,7 +46,9 @@ export class Character implements ICharacter {
 	}
 
 	_getAttributeValue(token, attribKey): string {
-		const result = token.attributes.find((a) => a.trait_type.toLowerCase() == attribKey.toLowerCase());
+		const result = token.attributes.find(
+			(a) => a.trait_type.toLowerCase() == attribKey.toLowerCase()
+		);
 		return result ? result.value : '';
 	}
 }
@@ -55,7 +58,7 @@ export interface IAttribute {
 	value: string;
 }
 
-export interface IContract{
+export interface IContract {
 	slug: string;
 }
 export interface IToken {
@@ -101,6 +104,7 @@ export class Token implements IToken {
 	hasCharacter = false;
 }
 export interface ICharacter {
+	playerUpdated: boolean;
 	//TODO: add to strapi
 	beliefs: string;
 	flaws: string;

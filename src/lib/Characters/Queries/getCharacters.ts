@@ -6,6 +6,7 @@ query {
        attributes{
          tokenId
          name
+         playerUpdated
          race {
           data {
             attributes {

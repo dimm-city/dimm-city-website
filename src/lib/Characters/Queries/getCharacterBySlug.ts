@@ -24,6 +24,7 @@ export const getCharacterBySlugQuery = `
             }
           }
           name
+          playerUpdated
           hp
           ap
           age
