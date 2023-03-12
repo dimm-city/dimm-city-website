@@ -1,4 +1,6 @@
 <script>
+// @ts-nocheck
+
 	import TokensList from '$lib/Tokens/TokensList.svelte';
 	import { config } from '$lib/Shared/config';
 	import { connect, signMessage } from '$lib/Shared/Stores/ContractsStore';
@@ -12,6 +14,7 @@
 		loading = loadWallets(false);
 	});
 	async function attachWallet() {
+		// @ts-ignore
 		if (!$connected && window.ethereum) {
 			await connect();
 		}
