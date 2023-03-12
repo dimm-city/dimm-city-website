@@ -3,32 +3,6 @@ import { config } from '$lib/Shared/config';
 import { get } from 'svelte/store';
 import { jwt } from '$lib/Shared/Stores/UserStore';
 
-// async function canEdit(tokenId: string): Promise<boolean> {
-// 	return await window
-// 		.fetch(`${config.apiBaseUrl}/sporos/can-edit/${tokenId}`, {
-// 			method: 'GET',
-// 			headers: {
-// 				authorization: get(sessionToken),
-// 				'Content-Type': 'application/json'
-// 			}
-// 		})
-// 		.then(async (res) => {
-// 			if (res.ok) {
-// 				const data = await res.json();
-// 				return data;
-// 			} else {
-// 				//TODO: display error
-// 				const { data, errors } = await res.json();
-// 				console.log('failed', errors, data);
-// 				return false;
-// 			}
-// 		})
-// 		.catch((reason) => {
-// 			console.log('could not create character', reason);
-// 			return false;
-// 		});
-// }
-
 export async function updateCharacter(character: ICharacter) {
 	const importData = JSON.parse(JSON.stringify(character));
 	//importData.slug = character.name.replace(' ', '-');

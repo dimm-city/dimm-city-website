@@ -15,6 +15,7 @@
 	import { characters } from './CharacterStore';
 	import { ownsToken } from '$lib/Shared/Stores/UserStore';
 	import { type ICharacter, Character } from './Models/Character';
+	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 
 	export let tokenId: string; // = $page.params.tokenId;
 	let character: ICharacter;
@@ -72,19 +73,21 @@
 			</Toolbar>
 		{/await}
 	</div>
-	{#await query}
-		<LoadingIndicator>Extracting character data...</LoadingIndicator>
-	{:then}
-		<TabPanel bind:this={tabs} initialTab="story">
-			<Tab id="stats" padding={2}>
-				<CharacterStats {character} title={character.name} />
-			</Tab>
-			<Tab id="story" padding={2}>
-				<CharacterBiography {character} />
-			</Tab>
-			<Tab id="sheet" padding={1}>
-				<CharacterSheet {character} />
-			</Tab>
-		</TabPanel>
-	{/await}
+	<ContentPane padding={1}>
+		{#await query}
+			<LoadingIndicator>Extracting character data...</LoadingIndicator>
+		{:then}
+			<TabPanel bind:this={tabs} initialTab="story">
+				<Tab id="stats" padding={2}>
+					<CharacterStats {character} title={character.name} />
+				</Tab>
+				<Tab id="story" padding={2}>
+					<CharacterBiography {character} />
+				</Tab>
+				<Tab id="sheet" padding={1}>
+					<CharacterSheet {character} />
+				</Tab>
+			</TabPanel>
+		{/await}
+	</ContentPane>
 </Shell>

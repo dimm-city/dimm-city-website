@@ -16,7 +16,7 @@
 
 	onMount(() => {
 		getDashboardEntries().then(
-			(d) => (latestNews = d?.filter((item) => item?.id == 2 || item?.id == 4 || item?.id == 5))
+			(d) => (latestNews = d?.filter((item) => item.tags?.includes("dashboard") || item?.id == 2 || item?.id == 4 || item?.id == 5))
 		);
 		getDistricts().then((d) => (districts = d));
 		getSpecialties().then((d) => (specialties = d));
@@ -66,7 +66,7 @@
 		</div>
 	</div>
 	<div class="footer">
-		<a href="/system-map" class="small-menu-item" data-augmented-ui>&lt;system map&gt;</a>
+		<!-- <a href="/system-map" class="small-menu-item" data-augmented-ui>&lt;system map&gt;</a> -->
 	</div>
 </div>
 

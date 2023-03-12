@@ -122,4 +122,7 @@ input:read-only,
 		padding: .85rem;
 		width: 100%;
 	}
+	.aug-button.square {
+		width: auto;
+	}
 }

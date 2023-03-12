@@ -6,10 +6,10 @@
 	import Button from '$lib/Shared/Components/Button.svelte';
 	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
 	import type { ISummaryItem } from '$lib/Shared/Models/ISummaryItem';
-	import { createCitizenFile } from './Services/SporosService';
-	import LoggedInContainer from '$lib/Shared/Components/LoggedInContainer.svelte';
 	import { tokens } from '$lib/Shared/Stores/UserStore';
-	export let tokenId;
+	import { createCitizenFile } from './CharacterStore';
+	import LoggedInContainer from '$lib/Shared/Components/LoggedInContainer.svelte';
+	export let tokenId: string;
 
 	let isSaving = false;
 
@@ -24,14 +24,14 @@
 	function cancelImport() {
 		window.location.href = '/console';
 	}
-	async function createCharacter(nextStep) {
+	async function createCharacter(nextStep: Function) {
 		isSaving = true;
 
 		const response = await createCitizenFile(character);
 
 		isSaving = false;
 		if (response) {
-			character = response;
+			character = response as Character;
 			nextStep();
 		} else {
 			console.log('ALERT: saving failed');

@@ -40,6 +40,7 @@ export async function getDashboardEntries() : Promise<ISummaryItem[]> {
 						id: i.id,
 						slug: i.attributes.slug,
 						name: i.attributes.title,
+						tags: i.attributes.tags,
 						description: i.attributes.shortDescription ?? 'no information on this subject...',
 						thumbnailUrl: i.attributes.thumbnailUrl,
 						imageUrl: i.attributes.imageUrl,

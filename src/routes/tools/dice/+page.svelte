@@ -4,7 +4,7 @@
 	import D20 from '$lib/Shared/Components/Dice/d20.svelte';
 </script>
 
-<Shell title="Home">
+<Shell title="Dimm City: Dice">
 	<ContentPane>
 		<div style="overflow: hidden; max-height: 100%"><D20 /></div>
 	</ContentPane>

@@ -1,8 +1,8 @@
 import Web3Modal from 'web3modal';
 import { signerAddress, defaultEvmStores, contracts } from 'svelte-ethers-store';
-import { derived, get, writable, type Readable } from 'svelte/store';
+import {  get, writable, } from 'svelte/store';
 import { Web3Provider } from '@ethersproject/providers';
-import { getSessionValue, setSessionValue } from '$lib/Shared/Stores/StoreUtils';
+import { getSessionValue } from '$lib/Shared/Stores/StoreUtils';
 
 import { getCharacterReleases } from '$lib/Characters/Queries/getCharacterReleases';
 
@@ -14,7 +14,11 @@ async function initReleaseContracts() {
 		await defaultEvmStores.setProvider();
 
 		data.forEach(async (release) => {
-			await defaultEvmStores.attachContract(release.slug, release.contractAddress, JSON.stringify(release.abi));
+			await defaultEvmStores.attachContract(
+				release.slug,
+				release.contractAddress,
+				JSON.stringify(release.abi)
+			);
 		});
 
 		console.log('release contracts initialized', data);
@@ -35,9 +39,8 @@ const _signerAddress = writable<string>(getSessionValue('_signerAddress') ?? nul
 //_signerAddress.subscribe((value) => setSessionValue('_signerAddress', value));
 
 const _token = writable<string>(getSessionValue('_token') ?? null);
-//_token.subscribe((value) => setSessionValue('_token', value));
 
-export const sessionToken = derived<Readable<string>, string>(_token, ($token, set) => set($token));
+// export const sessionToken = derived<Readable<string>, string>(_token, ($token, set) => set($token));
 
 defaultEvmStores.signer.subscribe(async (signer) => {
 	//when the signer changes, update the session variables
@@ -68,5 +71,6 @@ export async function connect() {
 
 export async function signMessage(message: string) {
 	const _signer = get(defaultEvmStores.signer);
+	if (!_signer) await connect();
 	return await _signer.signMessage(message);
 }
