@@ -1,14 +1,14 @@
-import Web3Modal from 'web3modal';
-import { signerAddress, defaultEvmStores, contracts } from 'svelte-ethers-store';
-import {  get, writable, } from 'svelte/store';
-import { Web3Provider } from '@ethersproject/providers';
-import { getSessionValue } from '$lib/Shared/Stores/StoreUtils';
-
+import { defaultEvmStores, contracts, chainId, signerAddress } from 'svelte-ethers-store';
+import { get } from 'svelte/store';
 import { getCharacterReleases } from '$lib/Characters/Queries/getCharacterReleases';
+import { config } from '../config';
+import { jwt } from './UserStore';
 
+let msg = '';
 let initialized = false;
 async function initReleaseContracts() {
 	if (!initialized) {
+		//ToDo: update to use release.contract
 		const data = await getCharacterReleases();
 
 		await defaultEvmStores.setProvider();
@@ -35,38 +35,74 @@ export async function getReleaseContract(releaseKey: string) {
 	return contract;
 }
 
-const _signerAddress = writable<string>(getSessionValue('_signerAddress') ?? null);
-//_signerAddress.subscribe((value) => setSessionValue('_signerAddress', value));
+// const _signerAddress = writable<string>(getSessionValue('_signerAddress') ?? null);
+// //_signerAddress.subscribe((value) => setSessionValue('_signerAddress', value));
 
-const _token = writable<string>(getSessionValue('_token') ?? null);
+// const _token = writable<string>(getSessionValue('_token') ?? null);
 
 // export const sessionToken = derived<Readable<string>, string>(_token, ($token, set) => set($token));
 
-defaultEvmStores.signer.subscribe(async (signer) => {
-	//when the signer changes, update the session variables
-	if (signer != null && (get(_signerAddress) <= '' || get(_token) <= '')) {
-		const sign = await signMessage('Sign this message to connect to your Dimm City profile.');
-		_token.set(sign);
-		_signerAddress.set(get(signerAddress));
-	}
-});
+// defaultEvmStores.signer.subscribe(async (signer) => {
+// 	//when the signer changes, update the session variables
+// 	if (signer != null && (get(_signerAddress) <= '' || get(_token) <= '')) {
+// 		const sign = await signMessage('Sign this message to connect to your Dimm City profile.');
+// 		_token.set(sign);
+// 		_signerAddress.set(get(signerAddress));
+// 	}
+// });
 
 export function disconnect() {
 	//connected.set(false);
 }
 export async function connect() {
-	const providerOptions = {
-		/* See Provider Options Section */
-	};
+	defaultEvmStores.setProvider();
+	// const providerOptions = {
+	// 	/* See Provider Options Section */
+	// };
 
-	const web3Modal = new Web3Modal({
-		network: 'mainnet', // optional
-		cacheProvider: true, // optional
-		providerOptions // required
+	// const web3Modal = new Web3Modal({
+	// 	network: 'mainnet', // optional
+	// 	cacheProvider: true, // optional
+	// 	providerOptions // required
+	// });
+
+	// const instance = await web3Modal.connect();
+	// defaultEvmStores.setProvider(new Web3Provider(instance));
+}
+
+export async function loginWithWallet() {
+	if (!msg) {
+		const response = await fetch(`${config.apiBaseUrl}/chain-wallets/auth/verification-message`);
+		if (response.ok) {
+			msg = await response.text(); //"sign into dimm city"
+		}else{
+		return {
+			error: 'Could not load verification message'
+		};
+	}
+	}
+	const signedMessage = await signMessage(msg);
+	const response = await fetch(`${config.apiBaseUrl}/chain-wallets/auth/login`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			network: get(chainId),
+			address: get(signerAddress),
+			signature: signedMessage
+		})
 	});
 
-	const instance = await web3Modal.connect();
-	defaultEvmStores.setProvider(new Web3Provider(instance));
+	if (response.ok) {
+		const data = await response.json();
+		jwt.set(data.jwt);
+		//document.location = "/console";
+	} else {
+		return {
+			error: 'Failed to login'
+		};
+	}
 }
 
 export async function signMessage(message: string) {

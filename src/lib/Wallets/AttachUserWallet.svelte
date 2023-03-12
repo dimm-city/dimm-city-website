@@ -2,13 +2,15 @@
 	import { config } from '$lib/Shared/config';
 	import { connect, signMessage } from '$lib/Shared/Stores/ContractsStore';
 	import { jwt, loadWallets } from '$lib/Shared/Stores/UserStore';
-	import { connected, chainId } from 'svelte-ethers-store';
+	import { connected, chainId, defaultEvmStores } from 'svelte-ethers-store';
 	import { onMount } from 'svelte';
 
 	onMount(async () => {
-		if (!$connected) {
-			await connect();
-		}
+		// if (!$connected) {
+		// 	await connect();
+		// }
+
+		defaultEvmStores.setProvider();
 	});
 	async function attachWallet() {
 		const signature = await signMessage('Attach this wallet');
@@ -23,7 +25,7 @@
 
 		if (response.ok) {
 			console.log('attached wallet');
-            await loadWallets(true);
+			await loadWallets(true);
 			document.location = '/console/archive';
 		}
 	}

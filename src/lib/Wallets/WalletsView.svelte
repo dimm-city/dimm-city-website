@@ -9,7 +9,7 @@
 
 	let loading = new Promise((resolve)=> resolve(null));
 	onMount(async () => {
-		loading = loadWallets(true);
+		loading = loadWallets(false);
 	});
 	async function attachWallet() {
 		if (!$connected && window.ethereum) {
@@ -27,11 +27,10 @@
 
 		if (response.ok) {
 			console.log('attached wallet');
-			myWallets = await loadWallets(true);
+			await loadWallets(true);
 		}
 	}
 
-	$: myWallets = $wallets;
 </script>
 
 <div>
@@ -47,9 +46,9 @@
 	<div class="loading-container">
 		<LoadingIndicator>Locating archives...</LoadingIndicator>
 	</div>		
-	{:then wallets}
-		{#if myWallets?.length > 0}
-			{#each myWallets as wallet}
+	{:then w}
+		{#if $wallets.length > 0}
+			{#each $wallets as wallet}
 				<div style="margin-bottom: 2rem">
 					<div class="wallet-title">
 						<h4>

@@ -19,20 +19,19 @@ export async function loadProfile() {
 	}
 }
 
-export const jwt = writable<string>(getSessionValue('jwt') ?? null);
+export const jwt = writable<string | null>(getSessionValue('jwt') ?? null);
 jwt.subscribe((value) => {
-	if (typeof value === 'string' && value > '') {
-		setSessionValue('jwt', value);
-		console.log('jwt set', value);
-	}
+	setSessionValue('jwt', value);
 });
 
 export const profile = writable<any>(getSessionValue('profile') ?? null);
 profile.subscribe((value) => {
-	if (value?.id != null) {
-		setSessionValue('profile', value);
-		console.log('profile set', value);
-	}
+	setSessionValue('profile', value);
+});
+
+export const wallets = writable<any[]>(getSessionValue('wallets') ?? null);
+wallets.subscribe((value) => {
+	setSessionValue('wallets', value);
 });
 
 export const loggedIn = derived(
@@ -79,20 +78,20 @@ export async function loadWallets(force = false) {
 			}
 		}
 
-		setSessionValue('wallets', data.results ?? []);
+		wallets.set(data.results ?? []);
 		return data.results ?? [];
 	} else {
 		return [];
 	}
 }
 
-// eslint-disable-next-line no-empty-pattern, @typescript-eslint/no-unused-vars
-export const wallets = derived<any, any[]>([profile], ([], set) => {
-	loadWallets().then((data) => {
-		set(data);
-	});
-});
-
 export const tokens = derived<any[], any[]>([wallets], ($wallets) =>
 	$wallets.flatMap((w: any) => w.tokens)
 );
+
+export const logout = () => {
+	jwt.set(null);
+	profile.set(null);
+
+	setSessionValue('wallets', []);
+};

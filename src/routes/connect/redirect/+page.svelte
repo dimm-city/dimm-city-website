@@ -7,33 +7,16 @@
 	import { jwt, profile } from '$lib/Shared/Stores/UserStore';
 	import { onMount } from 'svelte';
 	const token = $page.url.searchParams.get('access_token');
-	
+
 	onMount(async () => {
-		// if ($jwt && $profile) {
-		// 	document.location = '/console';
-		// }
-
-		console.log('getting jwt');
-
 		const callback = await fetch(config.apiBaseUrl + '/auth/reddit/callback?access_token=' + token);
-		console.log('parsing token');
-
+		//console.log('parsing token');
 		const cbData = await callback.json();
-		console.log('setting jwt', cbData);
-		console.debug(cbData);
+		//console.log('setting jwt', cbData);
+		//console.debug(cbData);
 		$jwt = cbData.jwt;
-		// // const data = await fetch(
-		// // 	config.apiBaseUrl +
-		// // 		'/users/me?fields=id&populate[wallets][populate]=*&populate[settings][populate]=*',
-		// // 	{
-		// // 		headers: {
-		// // 			Authorization: `Bearer ${$jwt}`
-		// // 		}
-		// // 	}
-		// // );
-		// // const json = await data.json();
-		console.log('setting profile');
 
+		//console.log('setting profile');
 		$profile = { ...cbData };
 		if (document) {
 			document.location = '/console';

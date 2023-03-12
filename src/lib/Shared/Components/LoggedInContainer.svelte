@@ -1,8 +1,16 @@
 <script lang="ts">
 	import { loggedIn } from '$lib/Shared/Stores/UserStore';
 	import { config } from '$lib/Shared/config';
-	import { connect } from '$lib/Shared/Stores/ContractsStore';
+	import { connect, loginWithWallet } from '$lib/Shared/Stores/ContractsStore';
 	import Button from './Button.svelte';
+	import { defaultEvmStores, chainId, connected, signerAddress } from 'svelte-ethers-store';
+	import { onMount } from 'svelte';
+	onMount(async ()=>{
+		if(!$connected && window.ethereum){
+			connect();
+		}
+
+	});
 </script>
 
 {#if $loggedIn}
@@ -14,15 +22,29 @@
 				><i class="bi bi-reddit" />Login with Reddit</Button
 			>
 			{#if window.ethereum}
-				<Button height="5rem" on:click={connect}
-					><i class="bi bi-safe" /> Login with Metamask</Button
-				>
+				{#if $connected && $signerAddress}
+					<Button height="5rem" on:click={loginWithWallet}
+						><i class="bi bi-safe" />
+						Login with Metamask
+						<small class="connection-details">(chain: {$chainId} | address: {$signerAddress})</small
+						>
+						<small>
+							you will be prompted to sign a message to login with your connected wallet
+						</small>
+					</Button>
+				{:else}<Button height="5rem" on:click={connect}
+						><i class="bi bi-safe" />
+						Connect Metamask
+						<p>
+							<small>to login with metamask you will first be asked to connect to the site</small>
+						</p>
+					</Button>
+				{/if}
 			{:else}
 				<Button height="5rem" url="https://metamask.io" target="_blank"
 					><i class="bi bi-safe" /> Metamask not installed
 					<p><small>please install metamask to enable this option</small></p>
-					</Button
-				>
+				</Button>
 			{/if}
 		</div>
 	</slot>
@@ -37,6 +59,10 @@
 		align-items: stretch;
 		justify-content: center;
 		height: 100%;
+	}
+	.connection-details {
+		display: block;
+		padding: 0.25rem;
 	}
 
 	.bi {
