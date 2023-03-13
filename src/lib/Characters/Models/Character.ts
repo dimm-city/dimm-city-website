@@ -81,6 +81,10 @@ export interface IToken {
 	id: number;
 	tokenId: string;
 	hasCharacter: boolean;
+	data: {
+		id: number;
+		attributes: any;
+	}
 }
 export class Token implements IToken {
 	contract: IContract;
@@ -102,6 +106,10 @@ export class Token implements IToken {
 	id: number;
 	tokenId: string;
 	hasCharacter = false;
+	data: {
+		id: number;
+		attributes: any;
+	}
 }
 export interface ICharacter {
 	playerUpdated: boolean;

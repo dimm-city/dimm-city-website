@@ -48,7 +48,8 @@ export function ownsToken(token: any): boolean {
 	const userWallets = get(wallets) ?? [];
 	const id = (token?.id || token?.data?.id || -1).toString();
 	const result =
-		id != '-1' && userWallets.some((w) => w.tokens.some((t) => t.id.toString() === id));
+		id != '-1' && Array.isArray(userWallets) 
+		&& userWallets?.some((w) => w.tokens?.some((t) => t.id.toString() === id));
 
 	return result;
 }
