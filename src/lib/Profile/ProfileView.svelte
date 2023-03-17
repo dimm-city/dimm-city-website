@@ -14,6 +14,9 @@
 	<a on:click={logout} on:keyup={logout}><small>logout</small></a>
 	<!-- <p>{@html $profile?.settings?.bio ?? ''}</p> -->
 </div>
+<div class="menu">
+	<a href="/console/characters/create"><small>create character</small></a>
+</div>
 <WalletsView />
 
 <style>

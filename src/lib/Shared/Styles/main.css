@@ -129,6 +129,10 @@ ul.unstyled-list li {
 .text-highlight {
 	color: var(--third-accent) !important;
 }
+.text-warning {
+	color: var(--fourth-accent) !important;
+}
+
 
 .centered-container {
 	display: flex;

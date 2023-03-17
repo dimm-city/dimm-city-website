@@ -2,36 +2,36 @@ import { config } from '$lib/Shared/config';
 import type { ICharacterRelease } from '../Models/ICharacterRelease';
 
 export const getCharacterReleasesQuery = `
-	query getCharacterReleases{
-		characterReleases{
-		data{
-			id
+query getCharacterReleases{
+	characterReleases{
+	  data{
+		id
+		attributes{
+		name
+		slug
+		description
+				metadata	
+		contract{
+			data{
 			attributes{
-			name
-			slug
-			description
-			contractAddress
-			metadata
-			abi
-			totalSupply
-			maxSupply
-			price
-			imageUrl
-			videoUrl
-			thumbnailUrl
-			metadataBaseUri
-			tags
-			authors {
-				data{
-					attributes {
-					address
-					}
-					}
-				}
+				address	
+				totalSupply
+				maxSupply
+				price
+        abi
+			}
 			}
 		}
+		
+		imageUrl
+		videoUrl
+		thumbnailUrl
+		tags
+		icon
 		}
+	  }
 	}
+  }
 `;
 
 export function getCharacterReleases(): Promise<Array<ICharacterRelease>> {
@@ -51,11 +51,13 @@ export function getCharacterReleases(): Promise<Array<ICharacterRelease>> {
 				const json = await response.json();
 				console.log('release data', json);
 
-				const output = json.data.characterReleases.data.map((r: { attributes: any; id: string; }) => {
-					const item = { ...r.attributes };
-					item.id = r.id;
-					return item;
-				});
+				const output = json.data.characterReleases.data.map(
+					(r: { attributes: any; id: string }) => {
+						const item = { ...r.attributes };
+						item.id = r.id;
+						return item;
+					}
+				);
 				return output;
 			}
 			return new Array<ICharacterRelease>();

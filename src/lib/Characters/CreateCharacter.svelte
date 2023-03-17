@@ -8,41 +8,19 @@
 	import { onMount } from 'svelte';
 	import LoggedInContainer from '$lib/Shared/Components/LoggedInContainer.svelte';
 	import type { ICharacter, IToken } from './Models/Character';
-	import { createSporo } from './CharacterStore';
+	import StripePayment from '$lib/Shared/Components/StripePayment.svelte';
+	import Article from '$lib/Shared/Components/Article.svelte';
+	import Toolbar from '$lib/Shared/Components/Toolbar.svelte';
 
-	export let releaseKey: string;
+	let stripe;
+	let processing = false;
 	let isSaving = false;
 	let token: ICharacter;
 	let releases = [];
-	onMount(async () => {
-		const data = await getCharacterReleases();
-		releases = data;
-		selectedRelease = releases.find((r) => r.slug == releaseKey) as ICharacterRelease;
-
-		const ssProduct = document.querySelectorAll('.SS_ProductCheckout');
-		if (ssProduct) {
-			ssProduct.forEach((product) => {
-				product.addEventListener('click', function handleClick(event) {
-					SS_ProductCheckout(
-						event.target.dataset.id,
-						event.target.dataset.url,
-						event.target.dataset.email
-					);
-				});
-			});
-		}
-		// for storing product payment order in strapi
-		const params = new URLSearchParams(document.location.search);
-		const checkoutSessionId = params.get('sessionId');
-		if (checkoutSessionId) {
-			SS_GetProductPaymentDetails(checkoutSessionId);
-		}
-	});
-
 	let selectedRelease: ICharacterRelease = {
 		name: '',
 		id: 0,
-		slug: '',
+		slug: 'na-000',
 		description: '',
 		imageUrl: '',
 		videoUrl: '',
@@ -56,49 +34,100 @@
 		metadataBaseUri: ''
 	};
 
+	onMount(async () => {
+		const data = await getCharacterReleases();
+		releases = data;
+		selectedRelease = releases.find((r) => true || r.slug == releaseKey) as ICharacterRelease;
+	});
+
 	function cancel() {
 		if (window.history.length > 0) window.history.back();
 		else window.location.href = '/console';
 	}
-	async function buy(nextStep: Function) {
-		token = await createSporo(selectedRelease);
-		console.log('buy', token);
-		nextStep();
-	}
+	// async function buy(nextStep: Function) {
+	// 	///token = await createSporo(selectedRelease);
+	// 	console.log('buy', token);
+	// 	nextStep();
+	// }
 </script>
-
-<svelte:head>
-	<script type="text/javascript" src="http://localhost:1337/plugins/strapi-stripe/static/stripe.js">
-	</script>
-</svelte:head>
 
 <LoggedInContainer>
 	<StepWizard initialStep={1}>
 		<StepWizard.Step num={1} let:previousStep let:nextStep>
-			<div class="step-container fade-in">
+			<div class="step-container release-step  fade-in">
 				<div>
-					<!-- <Article model={selectedRelease} imageHeight="300px" /> -->
-					<small>
+					<h4>Select which collection you would like to create a character from</h4>
+					{#each releases as release}
+						<button
+							class="aug-button hex"
+							class:selected={selectedRelease == release}
+							data-augmented-ui
+							on:click={() => (selectedRelease = release)}
+							><i class={release.icon} /><span>{release.slug}</span></button
+						>
+					{/each}
+				</div>
+				<div>
+					<Article model={selectedRelease} imageHeight="200px" />
+					<!-- <small>
 						{#if selectedRelease?.id > 0}
 							<span
 								>{selectedRelease.totalSupply} sporos created our of {selectedRelease.maxSupply} in this
 								release</span
 							>
 						{/if}
-						<button
-							type="button"
-							class="SS_ProductCheckout"
-							data-id="1"
-							data-email="itlackey@gmail.com"
-							data-url="http://localhost:1337"
-						>
-							Buy Now
-						</button>
-					</small>
+					</small> -->
 				</div>
 				<div class="button-row">
-					<Button on:click={cancel}>cancel</Button>
-					<Button on:click={() => buy(nextStep)}>create sporo</Button>
+					<button data-augmented-ui class="aug-button" on:click={cancel}>cancel</button>
+					<button data-augmented-ui class="aug-button" on:click={nextStep}>continue</button>
+
+					<!-- <Button on:click={() => buy(nextStep)}>create sporo</Button> -->
+				</div>
+			</div>
+		</StepWizard.Step>
+		<StepWizard.Step class="Step" num={2} let:previousStep let:nextStep>
+			<div class="step-container fade-in">
+				<div>
+					<h4>Create a character</h4>
+					<div class="character-details-container">
+						<ul>
+                            <li><span>Release:</span><span>{selectedRelease.name}</span></li>
+							<li><span>ID:</span><span>{selectedRelease.slug}</span></li>
+							<li><span>Price:</span><span>$20 USD</span></li>
+							<!-- <li><label>Release:</label><span>DCS1R1</span></li> -->
+						</ul>
+					</div>
+					<hr />
+					<h4>Enter Payment Details</h4>
+					<StripePayment
+						bind:this={stripe}
+						callback={nextStep}
+						metadata={selectedRelease}
+						bind:processing
+					/>
+					<blockquote class="text-warning">
+						<h4>You will be charged for your character when you press continue.</h4>
+						<p>Once your payment has been processed, character creation will begin...</p>
+					</blockquote>
+					{#if processing}
+						<LoadingIndicator>Processing payment...</LoadingIndicator>
+					{/if}
+				</div>
+				<div class="button-row">
+					<button data-augmented-ui class="aug-button" on:click={previousStep}>go back</button>
+					<button
+						data-augmented-ui
+						class="aug-button"
+						disabled={processing}
+						on:click={stripe.process}
+					>
+						{#if processing}
+							processing...
+						{:else}
+							continue
+						{/if}
+					</button>
 				</div>
 			</div>
 		</StepWizard.Step>
@@ -120,7 +149,7 @@
 		</div>
 	</StepWizard.Step> -->
 
-		<StepWizard.Step num={2} let:previousStep let:nextStep>
+		<StepWizard.Step num={3} let:previousStep let:nextStep>
 			<div class="step-container fade-in">
 				<div class="centered-container h-100">
 					<div class="">
@@ -148,7 +177,7 @@
 					<!-- <Button on:click={cancel}>skip</Button> -->
 					<!-- <Button on:click={() => }>Complete</Button> -->
 					<Button url="/console">Return to Op Console</Button>
-					<Button url={'/console/characters/import/' + token.tokenId}>Create Citizen File</Button>
+					<!-- <Button url={'/console/characters/import/' + token.tokenId}>Create Citizen File</Button> -->
 				</div>
 			</div>
 		</StepWizard.Step>
@@ -175,12 +204,30 @@
 		grid-template-rows: auto 0.1fr;
 		padding: 1rem 0;
 	}
+	.step-container.release-step {
+		grid-template-rows: min-content auto min-content;
+	}
+
+	.character-details-container span:nth-child(odd) {
+		padding-right: 1rem;
+	}
+	.character-details-container span:nth-child(even) {
+		text-transform: uppercase;
+	}
+	.character-details-container ul {
+		padding-inline-start: 0px;
+	}
+
+	.selected {
+		color: var(--fourth-accent);
+	}
+
 	.step-container div:nth-child(1) {
 		min-height: max-content;
 		height: 100%;
 		width: 100%;
 		justify-content: space-between;
-		overflow-y: auto;
+		/* overflow-y: auto; */
 	}
 	.button-row {
 		display: flex;
