@@ -53,6 +53,6 @@ export async function updateCharacter(character: ICharacter) {
 			}
 		})
 		.catch((reason) => {
-			console.log('could not create character', reason);
+			console.log('could not update character', reason);
 		});
 }

@@ -55,6 +55,7 @@ export function getCharacterReleases(): Promise<Array<ICharacterRelease>> {
 					(r: { attributes: any; id: string }) => {
 						const item = { ...r.attributes };
 						item.id = r.id;
+						item.contract = { ...item.contract.data.attributes}
 						return item;
 					}
 				);

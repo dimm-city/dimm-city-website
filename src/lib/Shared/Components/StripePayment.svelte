@@ -3,13 +3,7 @@
 	import { PUBLIC_STRIPE_KEY } from '$env/static/public';
 	import {
 		Elements,
-		PaymentElement,
-		LinkAuthenticationElement,
-		Address,
-		Card,
-		CardNumber,
-		CardExpiry,
-		CardCvc
+		PaymentElement
 	} from 'svelte-stripe';
 	import { onMount } from 'svelte';
 	export let callback: Function;
@@ -18,7 +12,7 @@
 	let stripe: Stripe | null = null;
 	let clientSecret: string | null = null;
 	let error = null;
-	let elements: StripeElements | null;
+	let elements: StripeElements | undefined;
 	let elementVars = {
 		colorPrimary: '#ef1ebf',
 		colorBackground: '#111111',
@@ -50,23 +44,21 @@
 	}
 	async function submit() {
 		if (!elements || !stripe) return;
-		// avoid processing duplicates
+
 		if (processing) return;
 		processing = true;
-		// confirm payment with stripe
+
 		const result = await stripe.confirmPayment({
 			elements,
 			redirect: 'if_required'
 		});
-		// log results, for debugging
-		console.log({ result });
+
+		//console.log({ result });
 		if (result.error) {
 			// payment failed, notify user
 			error = result.error;
 			callback(error);
 		} else {
-			// payment succeeded, redirect to "thank you" page
-			//('/examples/payment-element/thanks');
 			callback(result);
 		}
 		processing = false;
