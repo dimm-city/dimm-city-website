@@ -40,6 +40,7 @@
 		selectedRelease = releases.find((r) => true || r.slug == releaseKey) as ICharacterRelease;
 	});
 
+	
 	function cancel() {
 		if (window.history.length > 0) window.history.back();
 		else window.location.href = '/console';
@@ -156,8 +157,7 @@
 						<h2>Sporo Generated</h2>
 
 						<p>
-							Click the <strong>complete</strong> button to complete their citizen file and submit it
-							to the Dimm City Archive.
+							Click the <strong>complete</strong> button to complete their citizen file in your Dimm City Archive.
 						</p>
 
 						<p>
