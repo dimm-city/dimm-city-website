@@ -11,7 +11,9 @@
 	import StripePayment from '$lib/Shared/Components/StripePayment.svelte';
 	import Article from '$lib/Shared/Components/Article.svelte';
 	import Toolbar from '$lib/Shared/Components/Toolbar.svelte';
+	import { profile } from '$lib/Shared/Stores/UserStore';
 
+	
 	let stripe;
 	let processing = false;
 	let isSaving = false;
@@ -33,14 +35,16 @@
 		maxSupply: 0,
 		metadataBaseUri: ''
 	};
-
+	$: metadata = {
+		slug: selectedRelease.slug,
+		user: $profile.id,
+	}
 	onMount(async () => {
 		const data = await getCharacterReleases();
 		releases = data;
 		selectedRelease = releases.find((r) => true || r.slug == releaseKey) as ICharacterRelease;
 	});
 
-	
 	function cancel() {
 		if (window.history.length > 0) window.history.back();
 		else window.location.href = '/console';
@@ -93,7 +97,7 @@
 					<h4>Create a character</h4>
 					<div class="character-details-container">
 						<ul>
-                            <li><span>Release:</span><span>{selectedRelease.name}</span></li>
+							<li><span>Release:</span><span>{selectedRelease.name}</span></li>
 							<li><span>ID:</span><span>{selectedRelease.slug}</span></li>
 							<li><span>Price:</span><span>$20 USD</span></li>
 							<!-- <li><label>Release:</label><span>DCS1R1</span></li> -->
@@ -104,7 +108,7 @@
 					<StripePayment
 						bind:this={stripe}
 						callback={nextStep}
-						metadata={selectedRelease}
+						{metadata}
 						bind:processing
 					/>
 					<blockquote class="text-warning">
@@ -157,7 +161,8 @@
 						<h2>Sporo Generated</h2>
 
 						<p>
-							Click the <strong>complete</strong> button to complete their citizen file in your Dimm City Archive.
+							Click the <strong>complete</strong> button to complete their citizen file in your Dimm
+							City Archive.
 						</p>
 
 						<p>
