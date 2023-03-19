@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { loadStripe, type Stripe, type StripeElements } from '@stripe/stripe-js';
-	import { PUBLIC_STRIPE_KEY } from '$env/static/public';
 	import {
 		Elements,
 		PaymentElement
 	} from 'svelte-stripe';
 	import { onMount } from 'svelte';
+	import { config } from '../config';
 	export let callback: Function;
 	export let metadata: any;
 	export const process = submit;
@@ -25,7 +25,7 @@
 	};
 	export let processing = false;
 	onMount(async () => {
-		stripe = await loadStripe(PUBLIC_STRIPE_KEY, {});
+		stripe = await loadStripe(config.stripePublicKey, {});
 		clientSecret = await createPaymentIntent();
 	});
 

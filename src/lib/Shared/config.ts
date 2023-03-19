@@ -3,7 +3,6 @@ import { config as staging } from './Config/config.staging';
 import { config as dev } from './Config/config.dev';
 import { browser } from '$app/environment';
 
-
 // import { readFileSync } from 'fs';
 // import { fileURLToPath } from 'url';
 // const file = fileURLToPath(new URL('../../../package.json', import.meta.url));
@@ -13,7 +12,6 @@ import { browser } from '$app/environment';
 export const config = getCurrentConfig();
 
 function getCurrentConfig() {
-
 	let output = dev;
 	if (!browser && process && process.env && process.env.NODE_ENV === 'production') output = prod;
 	if (browser && window.location.href.includes(prod.baseUrl)) output = prod;
@@ -23,6 +21,7 @@ function getCurrentConfig() {
 		output.googleKey = 'testing';
 	}
 	output.version = '0.7.0';
-
+	output.stripePublicKey =
+		'pk_test_51MmHcALeft6siyywTseJIs5awwWr469e2D9RQMI5a79oz1NGhg8ijvPNH1NbgMrM2aIn4KadqswLuTF2kc4tZVNp00UQj2pA8Z';
 	return output;
 }
