@@ -1,10 +1,9 @@
 import Stripe from 'stripe';
-import { SECRET_STRIPE_KEY } from '$env/static/private';
 import { json } from '@sveltejs/kit';
 
 // initialize Stripe
 // @ts-ignore
-const stripe = new Stripe(SECRET_STRIPE_KEY);
+const stripe = new Stripe(process.env.SECRET_STRIPE_KEY);
 
 // handle POST /create-payment-intent
 export async function POST({ request }) {
