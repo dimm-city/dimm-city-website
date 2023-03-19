@@ -59,10 +59,14 @@
 		if (result.paymentIntent.status != 'succeeded') previousStep();
 
 		const response = await createCharacter(result.paymentIntent.id);
-		
-		loadWallets(true);		
-		
-		character = { tokenId: response.token.slug, name: response.token.metadata.name, imageUrl: response.token.metadata.image };
+
+		loadWallets(true);
+
+		character = {
+			tokenId: response.token.slug,
+			name: response.token.metadata.name,
+			imageUrl: response.token.metadata.image
+		};
 
 		nextStep();
 	}
@@ -140,7 +144,9 @@
 						<p>Once your payment has been processed, character creation will begin...</p>
 					</blockquote>
 					{#if processing}
-						<LoadingIndicator>Processing payment...</LoadingIndicator>
+						<div class="padding-1">
+							<LoadingIndicator>processing...</LoadingIndicator>
+						</div>
 					{/if}
 				</div>
 				<div class="button-row">
@@ -193,9 +199,7 @@
 					<!-- <Button on:click={cancel}>skip</Button> -->
 					<!-- <Button on:click={() => }>Complete</Button> -->
 					<Button url="/console">Return to Op Console</Button>
-					<Button url={'/citizens/' + character.tokenId}
-						>View Citizen File</Button
-					>
+					<Button url={'/citizens/' + character.tokenId}>View Citizen File</Button>
 					<!-- <Button url={'/console/characters/import/' + token.tokenId}>Create Citizen File</Button> -->
 				</div>
 			</div>

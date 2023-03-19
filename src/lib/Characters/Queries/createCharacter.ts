@@ -4,7 +4,7 @@ import { jwt } from '$lib/Shared/Stores/UserStore';
 
 
 export async function createCharacter(paymentId: string) : Promise<any> {
-	return fetch(`${config.apiBaseUrl}/characters/purchased/${paymentId}`, {
+	return fetch(`${config.apiBaseUrl}/payments/purchased/${paymentId}`, {
 			method: 'POST',
 			headers: {
 				Authorization: `Bearer ${get(jwt)}`,

@@ -6,6 +6,8 @@
 	} from 'svelte-stripe';
 	import { onMount } from 'svelte';
 	import { config } from '../config';
+	import { jwt } from '../Stores/UserStore';
+	import { get } from 'svelte/store';
 	export let callback: Function;
 	export let metadata: any;
 	export const process = submit;
@@ -30,10 +32,11 @@
 	});
 
 	async function createPaymentIntent() {
-		const response = await fetch('/api/payments', {
+		const response = await fetch(config.apiBaseUrl + '/payments/begin', {
 			method: 'POST',
 			headers: {
-				'content-type': 'application/json'
+				'content-type': 'application/json',
+				Authorization: `Bearer ${get(jwt)}`
 			},
 			body: JSON.stringify({
 				metadata
