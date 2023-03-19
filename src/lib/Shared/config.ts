@@ -20,7 +20,7 @@ function getCurrentConfig() {
 	if (output.googleKey <= '') {
 		output.googleKey = 'testing';
 	}
-	output.version = '0.7.0';
+	output.version = '0.8.0';
 	output.stripePublicKey =
 		'pk_test_51MmHcALeft6siyywTseJIs5awwWr469e2D9RQMI5a79oz1NGhg8ijvPNH1NbgMrM2aIn4KadqswLuTF2kc4tZVNp00UQj2pA8Z';
 	return output;
