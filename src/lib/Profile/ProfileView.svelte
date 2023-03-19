@@ -25,6 +25,12 @@
 		width: 100%;
 		justify-content: space-between;
 	}
+	h1{
+		display: block;
+		width: 100%;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
 	small {
 		font-size: 0.8rem;
 		cursor: pointer;

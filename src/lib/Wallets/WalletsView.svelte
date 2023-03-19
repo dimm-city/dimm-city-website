@@ -57,7 +57,7 @@
 						<h4>
 							<a href="/console/archive/{wallet.address}">{wallet.name ?? wallet.address}</a>
 						</h4>
-						<span>({wallet.tokens?.length ?? 0}) </span>
+						<span>({wallet.chain} - {wallet.tokens?.length ?? 0}) </span>
 					</div>
 					<TokensList tokens={wallet.tokens} />
 				</div>
