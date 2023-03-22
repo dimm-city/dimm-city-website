@@ -126,6 +126,8 @@ export interface ICharacter {
 	tokenId: string;
 	name: string;
 	age: number;
+	hp: number;
+	ap: number;
 	height: number;
 	weight: number;
 	pronouns: string;
