@@ -34,10 +34,13 @@
 </div>
 
 <style>
-	div.list {
+	:root{	
+		--list-gap: 1rem;
+	}	
+	.list {		
 		display: flex;
 		flex-direction: column;
-		gap: 1rem;
+		gap: var(--list-gap) 1rem;
 		margin-block: 1rem;
 	}
 

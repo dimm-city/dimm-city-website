@@ -70,7 +70,7 @@ li > a:focus {
 
 /* https://css-tricks.com/custom-scrollbars-in-webkit/ */
 *::-webkit-scrollbar {
-	width: 0.2rem; /* width of the entire scrollbar */
+	width: 0.1rem; /* width of the entire scrollbar */	
 }
 
 *::-webkit-scrollbar-track {
@@ -84,10 +84,10 @@ li > a:focus {
 		90deg,
 		rgba(0, 0, 0, 0) 0%,
 		var(--fourth-accent) 29%,
-		var(--fourth-accent) 65%,
+		var(--fourth-accent) 50%,
 		rgba(0, 0, 0, 0) 100%
 	);
-	border-radius: 1rem; /* roundness of the scroll thumb */
+	border-radius: 100vw; /* roundness of the scroll thumb */
 	border: 1px solid var(--fourth-accent); /* creates padding around scroll thumb */
 }
 

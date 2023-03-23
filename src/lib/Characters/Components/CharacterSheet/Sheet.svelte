@@ -28,7 +28,7 @@
 
 <div
 	class="sheet"
-	data-augmented-ui="bl-2-clip-y br-clip-inset tl-2-clip-xy tr-2-clip-xy l-rect r-rect t-clip both"
+	data-augmented-ui="bl-2-clip-y br-2-clip-y tl-2-clip-xy tr-2-clip-xy l-rect r-rect t-clip both"
 >
 	<div class="heading">
 		<h1>
@@ -45,7 +45,7 @@
 	</div>
 	<div class="container">
 		<div class="stats-row" data-augmented-ui="tl-clip tr-clip br-clip-x bl-clip-x both">
-				<h3 class="section-title">Physical Stats</h3>
+			<h3 class="section-title">Physical Stats</h3>
 			<div class="stats-container">
 				<div class="image">
 					<Image imageUrl={character.imageUrl} title="Profile" height="200px" width="150px" />
@@ -95,7 +95,7 @@
 			</div>
 			<div class="cybernetics-container">
 				<h3 class="section-title">Cybernetics</h3>
-				<List data={skills} maxItems={3}>
+				<List data={skills} maxItems={5}>
 					<div let:item slot="item">
 						<button data-augmented-ui class="aug-button" on:click={() => viewAbility(item)}
 							>{item.attributes.name}</button
@@ -233,7 +233,7 @@
 		width: 100%;
 		display: grid;
 		grid-template-columns: 1fr;
-		grid-template-rows: 0.7fr 0.7fr 1.6fr;
+		grid-template-rows: 0.2fr 0.6fr 0.2fr;
 		gap: 0.5rem;
 		grid-auto-flow: row;
 	}
@@ -259,9 +259,10 @@
 
 	.stats-row {
 		display: grid;
-		grid-template-columns: 1.25fr 0.5fr 1.25fr;
+		grid-template-columns: 1fr 0.75fr 1fr;
 		padding: 1rem;
 		padding-top: 1rem;
+		padding-bottom: 0.25rem;
 		--aug-border-all: 1px;
 		--aug-border-bg: var(--secondary-accent-muted);
 		--aug-tl: 13px;
@@ -292,13 +293,13 @@
 		width: 100%;
 		height: 100%;
 		display: grid;
-		margin-left: 0.2rem;
-		gap: 0.2rem;
+		margin-left: 0.25rem;
+		align-content: space-around;
 	}
 
 	.scores-container {
-		display: grid;
-		flex-direction: column;
+		display: flex;
+		flex-direction: row;
 		justify-content: space-evenly;
 		align-items: center;
 	}
@@ -314,6 +315,16 @@
 
 	.cybernetics-container {
 		position: relative;
+		padding: 0.5rem;
+	}
+	:global(.cybernetics-container .list) {
+		--list-gap: 0.25rem;
+	}
+
+	:global(.cybernetics-container .list button) {
+		--aug-border-bg: var(--menu-item-aug-border-bg);
+		width: 100%;
+		font-size: 0.65rem;
 	}
 
 	.profile-row {
@@ -328,7 +339,8 @@
 		--aug-bl: 13px;
 		--aug-br: 13px;
 		--aug-inlay: 0;
-		padding-inline: 1.5rem;
+		padding-block: 1rem;
+		padding-inline: 2rem;
 		gap: 1.5rem;
 		align-content: center;
 	}
@@ -372,40 +384,66 @@
 		text-transform: lowercase;
 	}
 
+	:global(.list) {
+		--list-gap: 0.5rem;
+	}
+
+	:global(.list button),
 	.lists-row button {
 		--aug-border-bg: var(--menu-item-aug-border-bg);
 		width: 100%;
 	}
 
+	:global(.list button) {
+		font-size: 0.8rem;
+	}
+
 	@media (max-width: 768px) {
 		.sheet {
 			--aug-border-all: 3px;
-			--aug-border-bg: var(--secondary-accent-muted);
+			--aug-border-bg: transparent;
 			--aug-tl: 3px;
 			--aug-tr: 3px;
 			--aug-t-center: 50%;
 			--aug-t: 5px;
 			--aug-inlay-bg: transparent;
-			/* --aug-l-center: 38%; */
-			--aug-l: 5px;
-			--aug-r: 5px;
-			/* var(--content-container-background); */
-			/* --aug-bl2-height: 0.25rem;
-		--aug-bl2-width: 0.25rem; */
+			--aug-l: 0px;
+			--aug-r: 0px;
 			overflow-y: auto;
-			overflow-x: hidden;
+			overflow-x: hidden;			
 		}
 		.container {
 			grid-template-rows: auto;
 		}
 		.stats-row {
-			grid-template-columns: 1fr;
-			grid-template-rows: repeat(3, 1fr);
+			grid-template-columns: 1fr 0.2fr;
+			grid-template-rows: 1fr 0.5fr min-content;
+		}
+		.scores-container {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-around;
+			align-items: center;
+		}
+		.cybernetics-container{
+			grid-column-start: 1;
+			grid-column-end: none;
+			grid-row-start: 2;
 		}
 		.lists-row,
 		.profile-row {
+			padding-top: 2rem;
 			grid-template-columns: 1fr;
 			grid-template-rows: repeat(3, 1fr);
+		}
+		.lists-row > div {
+			position: relative;
+			text-align: center;
+			padding-inline: 0.75rem;
+			overflow-y: auto;
+			max-height: max-content;
+			--aug-border-all: 2px;
+			--aug-border-bg: var(--fourth-accent);
 		}
 	}
 </style>
