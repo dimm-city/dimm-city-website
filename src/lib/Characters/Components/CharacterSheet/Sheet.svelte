@@ -1,27 +1,38 @@
 <!-- CharacterSheet.svelte -->
 <script lang="ts">
 	import { openModal } from 'svelte-modals';
-	import AbilityModal from './Components/AbilityModal.svelte';
+	import AbilityModal from '../AbilityModal.svelte';
 	import Image from '$lib/Shared/Components/Image.svelte';
 	import type { ICharacter } from '$lib/Characters/Models/Character';
 	import List from '$lib/Shared/Components/List.svelte';
-	import ListItem from '../../routes/system-map/ListItem.svelte';
 	import { specialties } from '$lib/Specialties/SpecialtyStore';
+	import ListItemLink from '$lib/Shared/Components/ListItemLink.svelte';
 
 	export let character: ICharacter;
 
 	function viewAbility(ability: any) {
 		openModal(AbilityModal, { data: ability });
 	}
+
+	const skills = [];
+	for (let index = 0; index < 10; index++) {
+		skills.push({
+			attributes: {
+				name: `ability ${index}`,
+				ap: Math.round(index / 2),
+				description: 'does some cool stuff and then ' + index + ' more things...'
+			}
+		});
+	}
 </script>
 
 <div
 	class="sheet"
-	data-augmented-ui="bl-clip-inset br-clip-inset tl-2-clip-xy tr-2-clip-xy l-rect r-rect t-clip both"
+	data-augmented-ui="bl-2-clip-y br-clip-inset tl-2-clip-xy tr-2-clip-xy l-rect r-rect t-clip both"
 >
 	<div class="heading">
 		<h1>
-			Name: {character.name}
+			{character.name}
 		</h1>
 		<div>
 			<button class="aug-button">menu</button>
@@ -34,8 +45,8 @@
 	</div>
 	<div class="container">
 		<div class="stats-row" data-augmented-ui="tl-clip tr-clip br-clip-x bl-clip-x both">
-			<div class="stats-container">
 				<h3 class="section-title">Physical Stats</h3>
+			<div class="stats-container">
 				<div class="image">
 					<Image imageUrl={character.imageUrl} title="Profile" height="200px" width="150px" />
 				</div>
@@ -84,12 +95,18 @@
 			</div>
 			<div class="cybernetics-container">
 				<h3 class="section-title">Cybernetics</h3>
-				<List />
+				<List data={skills} maxItems={3}>
+					<div let:item slot="item">
+						<button data-augmented-ui class="aug-button" on:click={() => viewAbility(item)}
+							>{item.attributes.name}</button
+						>
+					</div>
+				</List>
 			</div>
 		</div>
 		<div class="profile-row" data-augmented-ui="tl-clip-x tr-clip-x br-clip bl-clip border">
+			<h3 class="section-title">Profile</h3>
 			<section class="section-container">
-				<h3 class="section-title">Profile</h3>
 				<div>
 					Vibe:
 					<span>{character.vibe || 'they/them'}</span>
@@ -101,24 +118,25 @@
 				<div>
 					Flaws:<span>{character.flaws ?? 'Unknown'} </span>
 				</div>
-			</section>
-			<section class="section-container">
 				<div>
 					Origin:<span>{character.currentLocation?.name ?? 'Unknown'} </span>
 				</div>
 				<div>
-					Backstory:
+					Current District:
+					<span>{character.currentLocation?.name ?? 'Unknown'} </span>
+				</div>
+			</section>
+			<section class="section-container">
+				<div class="text-section">
+					<span>Backstory:</span>
 					<div class="text-container" data-augmented-ui="tl-clip tr-clip br-clip bl-clip border">
 						{character.backstory}
 					</div>
 				</div>
 			</section>
 			<section class="section-container">
-				<div>
-					Current District:<span>{character.currentLocation?.name ?? 'Unknown'} </span>
-				</div>
-				<div>
-					Dreams:
+				<div class="text-section">
+					<span>Dreams:</span>
 					<div class="text-container" data-augmented-ui="tl-clip tr-clip br-clip bl-clip border">
 						{character.dreams}
 					</div>
@@ -126,17 +144,35 @@
 			</section>
 		</div>
 		<div class="lists-row">
-			<div class="skills-container">
-				<h3 class="section-title">Skills</h3>
-				<List />
+			<h3 class="section-title">Skills</h3>
+			<h3 class="section-title">Items</h3>
+			<h3 class="section-title">Scripts</h3>
+			<div class="skills-container" data-augmented-ui="tl-clip tr-clip br-clip bl-clip none">
+				<List data={skills} maxItems={-1}>
+					<div let:item slot="item">
+						<button data-augmented-ui class="aug-button" on:click={() => viewAbility(item)}
+							>{item.attributes.name}</button
+						>
+					</div>
+				</List>
 			</div>
-			<div class="items-container">
-				<h3 class="section-title">Items</h3>
-				<List />
+			<div class="items-container" data-augmented-ui="tl-clip tr-clip br-clip bl-clip none">
+				<List data={skills} maxItems={-1}>
+					<div let:item slot="item">
+						<button data-augmented-ui class="aug-button" on:click={() => viewAbility(item)}
+							>{item.attributes.name}</button
+						>
+					</div>
+				</List>
 			</div>
-			<div class="scripts-container">
-				<h3 class="section-title">Scripts</h3>
-				<List />
+			<div class="scripts-container" data-augmented-ui="tl-clip tr-clip br-clip bl-clip none">
+				<List data={skills} maxItems={-1}>
+					<div let:item slot="item">
+						<button data-augmented-ui class="aug-button" on:click={() => viewAbility(item)}
+							>{item.attributes.name}</button
+						>
+					</div>
+				</List>
 			</div>
 		</div>
 	</div>
@@ -157,7 +193,10 @@
 		--aug-l: 5px;
 		--aug-r: 5px;
 		/* var(--content-container-background); */
+		/* --aug-bl2-height: 0.25rem;
+		--aug-bl2-width: 0.25rem; */
 		width: 100%;
+		height: 100%;
 		color: var(--light);
 		background-color: var(--content-container-background);
 	}
@@ -183,7 +222,10 @@
 		font-size: 0.8rem;
 		padding-left: 0.5rem;
 	}
-	span{
+	h3 {
+		margin: 0;
+	}
+	span {
 		margin-left: 0.5rem;
 	}
 	.container {
@@ -192,31 +234,34 @@
 		display: grid;
 		grid-template-columns: 1fr;
 		grid-template-rows: 0.7fr 0.7fr 1.6fr;
-		gap: 1.5rem;
+		gap: 0.5rem;
 		grid-auto-flow: row;
 	}
 
-	.section-container{
+	.section-container {
 		position: relative;
 		display: flex;
 		flex-direction: column;
 		height: 100%;
 		align-items: stretch;
+		justify-content: space-evenly;
 		gap: 0.5rem;
 	}
 	.section-title {
 		display: inline;
 		position: absolute;
-		top: -2.5rem;
+		/* top: -3.8rem; */
 		font-size: 1rem;
 		text-transform: lowercase;
 		color: var(--fourth-accent);
+		padding-inline: 2rem;
 	}
+
 	.stats-row {
 		display: grid;
 		grid-template-columns: 1.25fr 0.5fr 1.25fr;
 		padding: 1rem;
-		padding-top: 2.5rem;
+		padding-top: 1rem;
 		--aug-border-all: 1px;
 		--aug-border-bg: var(--secondary-accent-muted);
 		--aug-tl: 13px;
@@ -234,7 +279,12 @@
 	.image {
 		padding: 0.5rem;
 	}
+
 	:global(.image > div) {
+		--aug-b: 3px;
+		--aug-l: 3px;
+		--aug-t: 3px;
+		--aug-tr: 7px;
 		--aug-border-all: 2px;
 		--aug-border-bg: var(--fourth-accent);
 	}
@@ -266,15 +316,11 @@
 		position: relative;
 	}
 
-	.profile-row,
-	.lists-row {
+	.profile-row {
 		position: relative;
 		display: grid;
 		grid-template-columns: 1fr 1fr 1fr;
 		width: 100%;
-	}
-
-	.profile-row {
 		--aug-border-all: 1px;
 		--aug-border-bg: var(--secondary-accent-muted);
 		--aug-tl: 13px;
@@ -282,34 +328,73 @@
 		--aug-bl: 13px;
 		--aug-br: 13px;
 		--aug-inlay: 0;
-		padding: 1rem;
-		padding-top: 2.5rem;
-		gap: 1rem;
+		padding-inline: 1.5rem;
+		gap: 1.5rem;
+		align-content: center;
 	}
-	.text-container{
+	.text-section span {
+		display: block;
+		margin-bottom: 0.5rem;
+	}
+	.text-container {
 		display: grid;
-		min-height: 3rem;
 		width: 100%;
-		height: 100%;
-		padding: 0.33rem;
+		height: 8rem;
+		padding: 0.5rem;
 		--aug-border-all: 1px;
 		--aug-border-bg: var(--fourth-accent);
+	}
+	.lists-row {
+		position: relative;
+		display: grid;
+		grid-template-rows: min-content auto;
+		grid-template-columns: 1fr 1fr 1fr;
+		gap: 0.33rem;
+		row-gap: 0;
+		margin-inline: 0.5rem;
 	}
 	.lists-row > div {
 		position: relative;
 		text-align: center;
+		padding-inline: 0.75rem;
+		max-height: 22rem;
+		overflow-y: scroll;
+		--aug-border-all: 2px;
+		--aug-border-bg: var(--fourth-accent);
 	}
 	.lists-row .section-title {
 		display: flex;
 		justify-content: center;
 		width: 100%;
-		position: absolute;
-		top: -2rem;
+		position: relative;
+		/* top: -2rem; */
 		font-size: 1rem;
 		text-transform: lowercase;
 	}
 
+	.lists-row button {
+		--aug-border-bg: var(--menu-item-aug-border-bg);
+		width: 100%;
+	}
+
 	@media (max-width: 768px) {
+		.sheet {
+			--aug-border-all: 3px;
+			--aug-border-bg: var(--secondary-accent-muted);
+			--aug-tl: 3px;
+			--aug-tr: 3px;
+			--aug-t-center: 50%;
+			--aug-t: 5px;
+			--aug-inlay-bg: transparent;
+			/* --aug-l-center: 38%; */
+			--aug-l: 5px;
+			--aug-r: 5px;
+			/* var(--content-container-background); */
+			/* --aug-bl2-height: 0.25rem;
+		--aug-bl2-width: 0.25rem; */
+			overflow-y: auto;
+			overflow-x: hidden;
+		}
 		.container {
 			grid-template-rows: auto;
 		}
@@ -323,6 +408,4 @@
 			grid-template-rows: repeat(3, 1fr);
 		}
 	}
-
-
 </style>

@@ -16,7 +16,7 @@
 	import { ownsToken } from '$lib/Shared/Stores/UserStore';
 	import { type ICharacter, Character } from './Models/Character';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
-	import Sheet from './Sheet.svelte';
+	import Sheet from './Components/CharacterSheet/Sheet.svelte';
 
 	export let tokenId: string; // = $page.params.tokenId;
 	let character: ICharacter;
