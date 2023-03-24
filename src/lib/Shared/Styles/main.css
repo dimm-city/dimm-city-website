@@ -75,6 +75,8 @@ li > a:focus {
 
 *::-webkit-scrollbar-track {
 	background: transparent; /* var(--third-accent); /* color of the tracking area */
+	margin-top: 10vh;
+	margin-bottom: 10vh;
 }
 
 *::-webkit-scrollbar-thumb {

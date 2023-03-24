@@ -62,8 +62,6 @@
 			<div class="main-image">
 				<slot name="main-image">
 					<Image
-						height={imageHeight}
-						width=""
 						imageUrl={model.imageUrl}
 						title={model.name}
 						videoUrl={model.videoUrl}

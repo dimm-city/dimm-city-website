@@ -1,17 +1,15 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	export let title;
-	export let imageUrl;
+	export let title: string;
+	export let imageUrl: string;
 	export let videoUrl = '';
 	export let aug = 'tl-clip t-clip-x tr-clip-y br-clip b-rect bl-clip l-scoop border';
 	export let classes = '';
-	export let height = '400px';
-	export let width = '300px';
 
-	let video;
+	let video: any;
 	let hasVideo = false;
-	let mediaUrl;
+	let mediaUrl: string | null;
 
 	function onVideoLoaded() {
 		console.log('video loaded');
@@ -23,7 +21,7 @@
 		console.log('video changed', videoUrl, video);
 		mediaUrl = videoUrl;
 		hasVideo = mediaUrl != null;
-		if (video) {
+		if (video != null) {
 			video.querySelector('source').src = mediaUrl;
 			video.load();
 		}
@@ -38,7 +36,40 @@
 	});
 </script>
 
+<div on:click on:keyup class="m-3 p-4 d-flex image-wrapper {classes}" data-augmented-ui={aug}>
+	<!-- svelte-ignore a11y-media-has-caption -->
+	<video
+		bind:this={video}
+		id={title}
+		autoplay
+		on:canplay={onCanPlay}
+		on:loadeddata={onVideoLoaded}
+		class="fade-in"
+		class:d-none={hasVideo == false}
+		loop
+	>
+		<source src={mediaUrl} type="video/mp4" />
+
+		Your browser does not support the video tag.
+	</video>
+	{#if hasVideo == false}
+		<img src={imageUrl} class="fade-in" alt={title}  />
+	{/if}
+</div>
+
 <style>
+	:root {
+		--dc-image-height: 400px;
+		--dc-image-width: auto;
+		--dc-image-aspect-ratio: 16/9;
+	}
+	img,
+	video,
+	.image-wrapper {
+		height: var(--dc-image-height);
+		width: var(--dc-image-width);
+		aspect-ratio: var(--dc-image-aspect-ratio);
+	}
 	img,
 	video {
 		opacity: 0;
@@ -69,6 +100,8 @@
 		background-position: center;
 
 		overflow: hidden;
+
+		aspect-ratio: var(--dc-image-aspect-ratio);
 	}
 
 	/* @media (max-width: 745px) {
@@ -78,30 +111,3 @@
 		}		
 	} */
 </style>
-
-<div
-	on:click
-	class="m-3 p-4 d-flex image-wrapper {classes}"
-	data-augmented-ui={aug}
-	style="height: {height}; width: {width}"
->
-	<!-- svelte-ignore a11y-media-has-caption -->
-	<video
-		bind:this={video}
-		id={title}
-		autoplay
-		on:canplay={onCanPlay}
-		on:loadeddata={onVideoLoaded}
-		class="fade-in"
-		class:d-none={hasVideo == false}
-		loop
-		style="height: {height}; width: {width}"
-	>
-		<source src={mediaUrl} type="video/mp4" />
-
-		Your browser does not support the video tag.
-	</video>
-	{#if hasVideo == false}
-		<img src={imageUrl} class="fade-in" alt={title} style="height: {height}; width: {width}" />
-	{/if}
-</div>

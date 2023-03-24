@@ -34,8 +34,6 @@
 				<div slot="main-image">
 					{#if model.imageUrl > ''}
 						<Image
-							height=""
-							width=""
 							imageUrl={model.imageUrl}
 							title={model.name}
 							videoUrl={model.videoUrl}
