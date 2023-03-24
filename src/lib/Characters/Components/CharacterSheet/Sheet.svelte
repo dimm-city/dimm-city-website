@@ -24,179 +24,190 @@
 	}
 </script>
 
-<div
-	class="sheet"
-	data-augmented-ui="bl-2-clip-y br-2-clip-y tl-2-clip-xy tr-2-clip-xy l-rect r-rect t-clip both"
->
-	<div class="heading">
-		<div>
-			<h1>
-				{character.name}
-			</h1>
-		</div>
-		<div>
-			<button class="aug-button" data-augmented-ui="all-hex"><i class="bi bi-menu-app" /></button>
-		</div>
-		<div>
-			<h2>
-				Specialty: {character.specialties?.data?.length > 0
-					? character.specialties?.data.join(', ')
-					: 'Unknown'}
-			</h2>
-		</div>
-	</div>
-	<div class="container" data-augmented-ui-reset>
-		<div class="stats-row" data-augmented-ui="tl-clip tr-clip br-clip-x bl-clip-x both">
-			<div class="stats-heading"><h3>Physical Stats</h3></div>
-			<div class="scores-heading" />
-			<div class="cyber-heading">
-				<h3>Cybernetics</h3>
+<div class="scroll-wrapper">
+	<div
+		class="sheet"
+		data-augmented-ui="bl-2-clip-y br-2-clip-y tl-2-clip-xy tr-2-clip-xy l-rect r-rect t-clip both"
+	>
+		<div class="heading">
+			<div>
+				<h1>
+					{character.name}
+				</h1>
 			</div>
-			<div class="stats-container">
-				<div class="image">
-					<Image imageUrl={character.imageUrl} title="Profile" height="200px" width="150px" />
+			<div>
+				<button class="aug-button" data-augmented-ui="all-hex"><i class="bi bi-menu-app" /></button>
+			</div>
+			<div>
+				<h2>
+					Specialty: {character.specialties?.data?.length > 0
+						? character.specialties?.data.join(', ')
+						: 'Unknown'}
+				</h2>
+			</div>
+		</div>
+		<div class="container" data-augmented-ui-reset>
+			<div class="stats-row" data-augmented-ui="tl-clip tr-clip br-clip-x bl-clip-x both">
+				<div class="stats-heading"><h3>Physical Stats</h3></div>
+				<div class="scores-heading" />
+				<div class="cyber-heading">
+					<h3>Cybernetics</h3>
 				</div>
-				<div class="physical-stats">
-					<div>
-						Pronouns:
-						<span>{character.pronouns || 'they/them'}</span>
+				<div class="stats-container">
+					<div class="image">
+						<Image imageUrl={character.imageUrl} title="Profile" height="200px" width="150px" />
 					</div>
-					<div>
-						Age:
-						<span>{character.age ?? 'Unknown'} </span>
-					</div>
-					<div>
-						Race:
-						<span>
-							{#if character.race}
-								{character.race.data.attributes.name}
-							{/if}
-						</span>
-					</div>
-					<div>
-						Height:
-						<span>{character.height || 0} m</span>
-					</div>
-					<div>
-						Weight:
-						<span>{character.weight || 0} kg</span>
-					</div>
-					<div>
-						Eyes:
-						<span>{character.eyes || ''}</span>
-					</div>
-					<div>
-						Skin:
-						<span>{character.skin || ''}</span>
-					</div>
-					<!-- <div>
+					<div class="physical-stats">
+						<div>
+							Pronouns:
+							<span>{character.pronouns || 'they/them'}</span>
+						</div>
+						<div>
+							Age:
+							<span>{character.age ?? 'Unknown'} </span>
+						</div>
+						<div>
+							Race:
+							<span>
+								{#if character.race}
+									{character.race.data.attributes.name}
+								{/if}
+							</span>
+						</div>
+						<div>
+							Height:
+							<span>{character.height || 0} m</span>
+						</div>
+						<div>
+							Weight:
+							<span>{character.weight || 0} kg</span>
+						</div>
+						<div>
+							Eyes:
+							<span>{character.eyes || ''}</span>
+						</div>
+						<div>
+							Skin:
+							<span>{character.skin || ''}</span>
+						</div>
+						<!-- <div>
 						Hair:
 						<span>{character.hair || ''}</span>
 					</div> -->
-				</div>
-			</div>
-			<div class="scores-container">
-				<div class="hp">
-					<h4>HP</h4>
-					<div data-augmented-ui="all-hex border">
-						<span>10</span><small>10</small>
 					</div>
 				</div>
-				<div class="ap">
+				<div class="scores-container">
+					<div class="hp">
+						<h4>HP</h4>
+						<div data-augmented-ui="all-hex border">
+							<span>10</span><small>10</small>
+						</div>
+					</div>
+					<div class="ap">
 						<h4>AP</h4>
-					<div data-augmented-ui="all-hex border">
-						10
+						<div data-augmented-ui="all-hex border">10</div>
 					</div>
+				</div>
+				<div class="cybernetics-container">
+					<List data={skills} maxItems={5}>
+						<div let:item slot="item">
+							<button data-augmented-ui class="aug-button" on:click={() => viewAbility(item)}
+								>{item.attributes.name}</button
+							>
+						</div>
+					</List>
 				</div>
 			</div>
-			<div class="cybernetics-container">
-				<List data={skills} maxItems={5}>
-					<div let:item slot="item">
-						<button data-augmented-ui class="aug-button" on:click={() => viewAbility(item)}
-							>{item.attributes.name}</button
-						>
+			<div class="profile-row" data-augmented-ui="tl-clip-x tr-clip-x br-clip bl-clip border">
+				<div class="profile-heading"><h3>Profile</h3></div>
+				<section class="section-container">
+					<div>
+						Vibe:
+						<span>{character.vibe || 'they/them'}</span>
 					</div>
-				</List>
+					<div>
+						Beliefs:
+						<span>{character.beliefs ?? 'Unknown'} </span>
+					</div>
+					<div>
+						Flaws:<span>{character.flaws ?? 'Unknown'} </span>
+					</div>
+					<div>
+						Origin:<span>{character.currentLocation?.name ?? 'Unknown'} </span>
+					</div>
+					<div>
+						Current District:
+						<span>{character.currentLocation?.name ?? 'Unknown'} </span>
+					</div>
+				</section>
+				<section class="section-container">
+					<div class="text-section">
+						<span>Backstory:</span>
+						<div class="text-container" data-augmented-ui=" tr-clip bl-clip border">
+							{character.backstory}
+						</div>
+					</div>
+				</section>
+				<section class="section-container">
+					<div class="text-section">
+						<span>Dreams:</span>
+						<div class="text-container" data-augmented-ui="tr-clip bl-clip  border">
+							{character.dreams}
+						</div>
+					</div>
+				</section>
 			</div>
-		</div>
-		<div class="profile-row" data-augmented-ui="tl-clip-x tr-clip-x br-clip bl-clip border">
-			<div class="profile-heading"><h3>Profile</h3></div>
-			<section class="section-container">
-				<div>
-					Vibe:
-					<span>{character.vibe || 'they/them'}</span>
+			<div class="lists-row" data-augmented-ui-reset>
+				<div class="skills-container" data-augmented-ui="tl-clip tr-clip br-clip bl-clip none">
+					<h3 class="section-title">Skills</h3>
+					<List data={skills} maxItems={-1}>
+						<div let:item slot="item">
+							<button data-augmented-ui class="aug-button" on:click={() => viewAbility(item)}
+								>{item.attributes.name}</button
+							>
+						</div>
+					</List>
 				</div>
-				<div>
-					Beliefs:
-					<span>{character.beliefs ?? 'Unknown'} </span>
+				<div class="items-container" data-augmented-ui="tl-clip tr-clip br-clip bl-clip none">
+					<h3 class="section-title">Items</h3>
+					<List data={skills} maxItems={-1}>
+						<div let:item slot="item">
+							<button data-augmented-ui class="aug-button" on:click={() => viewAbility(item)}
+								>{item.attributes.name}</button
+							>
+						</div>
+					</List>
 				</div>
-				<div>
-					Flaws:<span>{character.flaws ?? 'Unknown'} </span>
+				<div class="scripts-container" data-augmented-ui="tl-clip tr-clip br-clip bl-clip none">
+					<h3 class="section-title">Scripts</h3>
+					<List data={skills} maxItems={-1}>
+						<div let:item slot="item">
+							<button data-augmented-ui class="aug-button" on:click={() => viewAbility(item)}
+								>{item.attributes.name}</button
+							>
+						</div>
+					</List>
 				</div>
-				<div>
-					Origin:<span>{character.currentLocation?.name ?? 'Unknown'} </span>
-				</div>
-				<div>
-					Current District:
-					<span>{character.currentLocation?.name ?? 'Unknown'} </span>
-				</div>
-			</section>
-			<section class="section-container">
-				<div class="text-section">
-					<span>Backstory:</span>
-					<div class="text-container" data-augmented-ui=" tr-clip bl-clip border">
-						{character.backstory}
-					</div>
-				</div>
-			</section>
-			<section class="section-container">
-				<div class="text-section">
-					<span>Dreams:</span>
-					<div class="text-container" data-augmented-ui="tr-clip bl-clip  border">
-						{character.dreams}
-					</div>
-				</div>
-			</section>
-		</div>
-		<div class="lists-row" data-augmented-ui-reset>
-			<div class="skills-container" data-augmented-ui="tl-clip tr-clip br-clip bl-clip none">
-				<h3 class="section-title">Skills</h3>
-				<List data={skills} maxItems={-1}>
-					<div let:item slot="item">
-						<button data-augmented-ui class="aug-button" on:click={() => viewAbility(item)}
-							>{item.attributes.name}</button
-						>
-					</div>
-				</List>
-			</div>
-			<div class="items-container" data-augmented-ui="tl-clip tr-clip br-clip bl-clip none">
-				<h3 class="section-title">Items</h3>
-				<List data={skills} maxItems={-1}>
-					<div let:item slot="item">
-						<button data-augmented-ui class="aug-button" on:click={() => viewAbility(item)}
-							>{item.attributes.name}</button
-						>
-					</div>
-				</List>
-			</div>
-			<div class="scripts-container" data-augmented-ui="tl-clip tr-clip br-clip bl-clip none">
-				<h3 class="section-title">Scripts</h3>
-				<List data={skills} maxItems={-1}>
-					<div let:item slot="item">
-						<button data-augmented-ui class="aug-button" on:click={() => viewAbility(item)}
-							>{item.attributes.name}</button
-						>
-					</div>
-				</List>
 			</div>
 		</div>
 	</div>
 </div>
 
 <style>
+	:root {
+		--dc-bottom-toolbar-display: none;
+	}
+	.scroll-wrapper {
+		display: grid;
+		height: 100%;
+		width: 100%;
+		overflow: hidden;
+		overflow-y: auto;
+		padding-inline: 0.25rem;
+	}
 	.sheet {
 		position: relative;
-		border: 0;
+
 		--aug-border-all: 2px;
 		--aug-border-bg: var(--secondary-accent-muted);
 		--aug-tl: 9px;
@@ -241,8 +252,8 @@
 	div.heading > div:last-of-type {
 		text-align: right;
 	}
-	
-	div.heading button{
+
+	div.heading button {
 		padding: 0;
 	}
 	h1 {
@@ -271,7 +282,8 @@
 		display: grid;
 		grid-auto-flow: row;
 		grid-template-columns: 1fr;
-		grid-template-rows: 0.5fr 0.2fr 0.3fr;
+		/* grid-template-rows: 0.5fr 0.2fr 0.3fr; */
+		grid-template-rows: min-content min-content auto;
 		gap: 0.5rem;
 	}
 
@@ -372,9 +384,9 @@
 	.hp h4,
 	.ap h4 {
 		position: relative;
-		margin: 0;		
+		margin: 0;
 	}
-	.ap h4{
+	.ap h4 {
 		text-align: right;
 	}
 	.hp span {
@@ -395,6 +407,7 @@
 	}
 	:global(.cybernetics-container .list) {
 		--list-gap: 0.5rem;
+		margin-block: 1rem;
 	}
 
 	:global(.cybernetics-container .list button) {
@@ -447,7 +460,7 @@
 	.lists-row {
 		position: relative;
 		display: grid;
-		grid-template-rows: min-content auto;
+		grid-template-rows: min-content;
 		grid-template-columns: 1fr 1fr 1fr;
 		gap: 0.33rem;
 		row-gap: 0;
@@ -457,8 +470,9 @@
 		position: relative;
 		text-align: center;
 		padding-inline: 0.75rem;
-		max-height: 22rem;
-		overflow-y: scroll;
+		margin-bottom: 2.5rem;
+		/* max-height: 22rem;
+		overflow-y: scroll; */
 		--aug-border-all: 2px;
 		--aug-border-bg: var(--fourth-accent);
 	}
@@ -487,9 +501,11 @@
 	}
 
 	@media (max-width: 768px) {
+		.scroll-wrapper {
+			overflow-y: auto;
+		}
 		.sheet {
 			--aug-border-all: 3px;
-			--aug-border-bg: transparent;
 			--aug-tl: 3px;
 			--aug-tr: 3px;
 			--aug-t-center: 50%;
@@ -497,8 +513,6 @@
 			--aug-inlay-bg: transparent;
 			--aug-l: 0px;
 			--aug-r: 0px;
-			overflow-y: auto;
-			overflow-x: hidden;
 		}
 		.container {
 			grid-template-rows: auto;
@@ -539,14 +553,12 @@
 		.lists-row {
 			padding-top: 2rem;
 			grid-template-columns: 1fr;
-			grid-template-rows: repeat(3, 1fr);
+			grid-template-rows: repeat(3, max-content);
 		}
 		.lists-row > div {
 			position: relative;
 			text-align: center;
-			padding-inline: 0.75rem;
-			overflow-y: auto;
-			max-height: max-content;
+			
 			--aug-border-all: 2px;
 			--aug-border-bg: var(--fourth-accent);
 		}

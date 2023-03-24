@@ -89,6 +89,10 @@
 </Modals>
 
 <style>
+
+	:root{
+		--dc-bottom-toolbar-display: inherit;
+	}
 	.backdrop {
 		position: fixed;
 		top: 0;
@@ -190,6 +194,7 @@
 		padding-top: 0.5rem;
 	}
 	.content-panel-toolbar-row {
+		display: var(--dc-bottom-toolbar-display);
 		width: 100%;
 		overflow: hidden;
 		padding: 1rem;
