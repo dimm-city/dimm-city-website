@@ -503,6 +503,7 @@
 	@media (max-width: 768px) {
 		.scroll-wrapper {
 			overflow-y: auto;
+			padding-inline: 0.5rem;
 		}
 		.sheet {
 			--aug-border-all: 3px;
