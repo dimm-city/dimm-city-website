@@ -5,6 +5,7 @@
 		justify-content: space-between;
 		width: 100%;
 	}
+	/* lets make the modal height 80% vh */
 </style>
 
 <ModalShell fullscreen={false}>

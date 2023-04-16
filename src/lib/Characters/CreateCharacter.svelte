@@ -92,15 +92,15 @@
 					<small>
 						{#if selectedRelease?.id > 0}
 							<span
-								>{selectedRelease.contract.totalSupply}/{selectedRelease.contract.maxSupply} sporos created
+								>{selectedRelease.contract.totalSupply}/{selectedRelease.contract.maxSupply ?? 'Unknown'} sporos created
 								in this release</span
 							>
 						{/if}
 					</small>
 				</div>
 				<div class="step-container-content">
-					<div>
-						<Article model={selectedRelease} imageHeight="200px" />
+					<div class="release-container">
+						<Article model={selectedRelease}  />
 					</div>
 				</div>
 				<div class="button-row">
@@ -258,7 +258,9 @@
 		display: flex;
 		justify-content: space-between;
 	}
-
+	.release-container{
+		--dc-image-aspect-ratio: 3/4;
+	}
 	/* .step-container div:nth-child(1) .centered-container {
 		height: fit-content;
 	} */

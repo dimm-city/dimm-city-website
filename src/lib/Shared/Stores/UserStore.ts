@@ -71,7 +71,7 @@ export async function loadWallets(force = false) {
 		for (let index = 0; index < data.results?.length; index++) {
 			const wallet = data.results[index];
 
-			for (const token of wallet.tokens) {
+			for (const token of wallet.tokens.filter(t => t.contract != null)) {
 				const metaResponse = await fetch(
 					`${config.apiBaseUrl}/chain-wallets/metadata/${token.contract.slug}/${token.tokenId}`
 				);

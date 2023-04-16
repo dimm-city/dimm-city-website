@@ -6,26 +6,23 @@
 	import { config } from '$lib/Shared/config';
 	import { jwt, profile } from '$lib/Shared/Stores/UserStore';
 	import { onMount } from 'svelte';
-	const token = $page.url.searchParams.get('access_token');
+	const token =  $page.url.searchParams.get('access_token');
 
 	onMount(async () => {
 		const callback = await fetch(config.apiBaseUrl + '/auth/reddit/callback?access_token=' + token);
-		//console.log('parsing token');
+		
 		const cbData = await callback.json();
-		//console.log('setting jwt', cbData);
-		//console.debug(cbData);
 		$jwt = cbData.jwt;
 
-		//console.log('setting profile');
 		$profile = { ...cbData };
 		if (document) {
 			document.location = '/console';
 		}
 	});
-</script>
-
+</script> 
+<!-- 
 <Shell title="Loading profile...">
 	<ContentPane>
 		<LoadingIndicator>Loading profile...</LoadingIndicator>
 	</ContentPane>
-</Shell>
+</Shell> -->

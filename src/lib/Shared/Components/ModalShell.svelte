@@ -47,7 +47,7 @@
 	}
 
 	.modal-content-container {
-		max-height: 80vh;
+		height: 80vh;
 		width: 100%;
 		overflow-y: scroll;
 		overflow-x: hidden;

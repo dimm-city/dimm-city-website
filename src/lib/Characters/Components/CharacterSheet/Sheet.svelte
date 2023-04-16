@@ -144,7 +144,8 @@
 					<div class="text-section">
 						<span>Backstory:</span>
 						<div class="text-container" data-augmented-ui=" tr-clip bl-clip border">
-							{character.backstory}
+							<div>
+							{character.backstory}</div>
 						</div>
 					</div>
 				</section>
@@ -152,7 +153,7 @@
 					<div class="text-section">
 						<span>Dreams:</span>
 						<div class="text-container" data-augmented-ui="tr-clip bl-clip  border">
-							{character.dreams}
+							<div> {character.dreams}</div>
 						</div>
 					</div>
 				</section>
@@ -455,6 +456,8 @@
 		padding: 0.5rem;
 		--aug-border-all: 1px;
 		--aug-border-bg: var(--fourth-accent);
+	}
+	.text-container > div {
 		overflow-y: auto;
 	}
 	.lists-row {
