@@ -75,7 +75,7 @@
 							Race:
 							<span>
 								{#if character.race}
-									{character.race.data.attributes.name}
+									{character.race.data?.attributes?.name}
 								{/if}
 							</span>
 						</div>
@@ -221,6 +221,7 @@
 		width: 100%;
 		overflow: hidden;
 		overflow-y: auto;
+		padding-inline: 0.25rem;
 	}
 	.sheet {
 		position: relative;

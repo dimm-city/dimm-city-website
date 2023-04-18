@@ -92,7 +92,7 @@
 					<small>
 						{#if selectedRelease?.id > 0}
 							<span
-								>{selectedRelease.contract.totalSupply}/{selectedRelease.contract.maxSupply ?? 'Unknown'} sporos created
+								>{selectedRelease.contract?.totalSupply}/{selectedRelease.contract?.maxSupply ?? 'Unknown'} sporos created
 								in this release</span
 							>
 						{/if}
@@ -117,13 +117,13 @@
 						<ul>
 							<li><span>Release:</span><span>{selectedRelease.name}</span></li>
 							<li><span>ID:</span><span>{selectedRelease.slug}</span></li>
-							<li><span>Price:</span><span>${selectedRelease.contract.price} USD</span></li>
+							<li><span>Price:</span><span>${selectedRelease.contract?.price} USD</span></li>
 							<!-- <li><label>Release:</label><span>DCS1R1</span></li> -->
 						</ul>
 						<small>
 							{#if selectedRelease?.id > 0}
 								<span
-									>{selectedRelease.contract.totalSupply}/{selectedRelease.contract.maxSupply} sporos
+									>{selectedRelease.contract?.totalSupply}/{selectedRelease.contract?.maxSupply} sporos
 									created in this release</span
 								>
 							{/if}
@@ -168,12 +168,12 @@
 		</StepWizard.Step>
 		<StepWizard.Step num={3} let:previousStep let:nextStep>
 			<h2>Generating sporo...</h2>
-			<Image videoUrl="https://files.dimm.city/assets/connecting.mp4" width="100%" />
+			<Image videoUrl="https://files.dimm.city/assets/connecting.mp4" title="Generating character"/>
 		</StepWizard.Step>
 		<StepWizard.Step num={4} let:previousStep let:nextStep>
 			<div class="step-container fade-in">
 				<div class="centered-container h-100">
-					<div class="">
+					<div class="character-created-container">
 						<h2>Sporo Generated</h2>
 						<h3>{character.name}</h3>
 						<Image imageUrl={character.imageUrl} title="character image" />
@@ -208,6 +208,9 @@
 </LoggedInContainer>
 
 <style>
+	:root{
+		--focusBoxShadow: 0;
+	}
 	.step-container {
 		height: 100%;
 		width: 100%;
@@ -261,7 +264,17 @@
 	.release-container{
 		--dc-image-aspect-ratio: 3/4;
 	}
+	.character-created-container {
+		--dc-image-height: 400px;
+		--dc-image-width: auto;
+		--dc-image-aspect-ratio: 3/4;
+	}
 	/* .step-container div:nth-child(1) .centered-container {
 		height: fit-content;
 	} */
+
+	:global(.Input, .Input--invalid, .p-Input-input.Input.p-CardNumberInput-input){
+		padding: 0;
+		box-shadow: 0;
+	}
 </style>

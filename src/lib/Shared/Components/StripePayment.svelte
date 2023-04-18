@@ -20,8 +20,9 @@
 		colorBackground: '#111111',
 		colorText: '#ef1ebf',
 		colorDanger: '#f8f400da',
+		focusBoxShadow: '0',
 		fontFamily: 'dimm-city, Tomorrow, Droid Sans Mono, Comfortaa, Segoe UI, Roboto',
-		spacingUnit: '0.23rem',
+		spacingUnit: '0.25rem',
 		borderRadius: '4px'
 		// See all possible variables below
 	};
