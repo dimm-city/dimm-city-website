@@ -1,10 +1,12 @@
 import type { ISummaryItem } from '$lib/Shared/Models/ISummaryItem';
 
 export class Character implements ICharacter {
-	constructor(token: IToken = null) {
+	constructor(token: IToken | null) {
 		if (token) this.importToken(token);
 		this.id = -1;
 	}
+	hp: number;
+	ap: number;
 	id: number;
 	slug: string;
 	name: string;
