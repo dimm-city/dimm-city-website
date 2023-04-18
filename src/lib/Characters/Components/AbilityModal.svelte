@@ -1,12 +1,15 @@
-<style>
-	.ability-header {
-		margin-top: 0.5rem;
-		display: flex;
-		justify-content: space-between;
-		width: 100%;
+<script lang="ts">
+	import ModalShell from '$lib/Shared/Components/ModalShell.svelte';
+	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
+	import markdownit from 'markdown-it';
+
+	export let data: any = {};
+	const md = new markdownit();
+
+	function loadAbility(id: Number): any {
+		return data;
 	}
-	/* lets make the modal height 80% vh */
-</style>
+</script>
 
 <ModalShell fullscreen={false}>
 	<div>
@@ -28,15 +31,12 @@
 	</div>
 </ModalShell>
 
-<script lang="ts">
-	import ModalShell from '$lib/Shared/Components/ModalShell.svelte';
-	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
-	import markdownit from 'markdown-it';
-
-	export let data: any = {};
-	const md = new markdownit();
-
-	function loadAbility(id: Number): any {
-		return data;
+<style>
+	.ability-header {
+		margin-top: 0.5rem;
+		display: flex;
+		justify-content: space-between;
+		width: 100%;
 	}
-</script>
+	/* lets make the modal height 80% vh */
+</style>

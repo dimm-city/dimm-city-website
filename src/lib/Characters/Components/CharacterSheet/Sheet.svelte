@@ -2,6 +2,7 @@
 <script lang="ts">
 	import { openModal } from 'svelte-modals';
 	import AbilityModal from '../AbilityModal.svelte';
+	import ContentModal from '../ContentModal.svelte';
 	import Image from '$lib/Shared/Components/Image.svelte';
 	import type { ICharacter } from '$lib/Characters/Models/Character';
 	import List from '$lib/Shared/Components/List.svelte';
@@ -10,6 +11,10 @@
 
 	function viewAbility(ability: any) {
 		openModal(AbilityModal, { data: ability });
+	}
+
+	function viewText(text: string) {
+		openModal(ContentModal, { data: text });
 	}
 
 	const skills = [];
@@ -142,18 +147,33 @@
 				</section>
 				<section class="section-container">
 					<div class="text-section">
-						<span>Backstory:</span>
+						<div class="text-section-header">
+							<span>Backstory:</span>
+							<i
+								class="btn inline bi bi-fullscreen"
+								on:keypress={() => viewText(character.backstory)}
+								on:click={() => viewText(character.backstory)}
+							/>
+						</div>
 						<div class="text-container" data-augmented-ui=" tr-clip bl-clip border">
 							<div>
-							{character.backstory}</div>
+								{character.backstory}
+							</div>
 						</div>
 					</div>
 				</section>
 				<section class="section-container">
 					<div class="text-section">
-						<span>Dreams:</span>
+						<div class="text-section-header">
+							<span>Dreams:</span>
+							<i
+								class="btn inline bi bi-fullscreen"
+								on:keypress={() => viewText(character.dreams)}
+								on:click={() => viewText(character.dreams)}
+							/>
+						</div>
 						<div class="text-container" data-augmented-ui="tr-clip bl-clip  border">
-							<div> {character.dreams}</div>
+							<div>{character.dreams}</div>
 						</div>
 					</div>
 				</section>
@@ -443,6 +463,11 @@
 	.profile-heading {
 		grid-area: heading;
 	}
+	.text-section-header {
+		display: flex;
+		width: 100%;
+		justify-content: space-between;
+	}
 
 	.text-section span {
 		display: block;
@@ -562,7 +587,7 @@
 		.lists-row > div {
 			position: relative;
 			text-align: center;
-			
+
 			--aug-border-all: 2px;
 			--aug-border-bg: var(--fourth-accent);
 		}

@@ -9,6 +9,10 @@ i.btn {
 	padding-bottom: 0.2rem;
 	text-align: center;
 }
+i.btn.inline{
+	font-size: inherit;
+	transition: color 300ms;
+}
 @media (max-width: 500px) {
 	i.btn {
 		font-size: 1.25rem;
