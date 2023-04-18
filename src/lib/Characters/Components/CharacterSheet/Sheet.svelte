@@ -18,15 +18,15 @@
 	}
 
 	const skills = [];
-	for (let index = 0; index < 10; index++) {
-		skills.push({
-			attributes: {
-				name: `ability ${index}`,
-				ap: Math.round(index / 2),
-				description: 'does some cool stuff and then ' + index + ' more things...'
-			}
-		});
-	}
+	// for (let index = 0; index < 10; index++) {
+	// 	skills.push({
+	// 		attributes: {
+	// 			name: `ability ${index}`,
+	// 			ap: Math.round(index / 2),
+	// 			description: 'does some cool stuff and then ' + index + ' more things...'
+	// 		}
+	// 	});
+	// }
 </script>
 
 <div class="scroll-wrapper">
@@ -114,7 +114,7 @@
 					</div>
 				</div>
 				<div class="cybernetics-container">
-					<List data={skills} maxItems={5}>
+					<List data={skills} maxItems={5} noItemsText="No cybernetics registered">
 						<div let:item slot="item">
 							<button data-augmented-ui class="aug-button" on:click={() => viewAbility(item)}
 								>{item.attributes.name}</button
@@ -156,9 +156,7 @@
 							/>
 						</div>
 						<div class="text-container" data-augmented-ui=" tr-clip bl-clip border">
-							<div>
-								{character.backstory}
-							</div>
+							{character.backstory}
 						</div>
 					</div>
 				</section>
@@ -173,7 +171,7 @@
 							/>
 						</div>
 						<div class="text-container" data-augmented-ui="tr-clip bl-clip  border">
-							<div>{character.dreams}</div>
+							{character.dreams}
 						</div>
 					</div>
 				</section>
@@ -181,7 +179,7 @@
 			<div class="lists-row" data-augmented-ui-reset>
 				<div class="skills-container" data-augmented-ui="tl-clip tr-clip br-clip bl-clip none">
 					<h3 class="section-title">Skills</h3>
-					<List data={skills} maxItems={-1}>
+					<List data={skills} maxItems={-1} noItemsText="No skills recorded">
 						<div let:item slot="item">
 							<button data-augmented-ui class="aug-button" on:click={() => viewAbility(item)}
 								>{item.attributes.name}</button
@@ -191,7 +189,7 @@
 				</div>
 				<div class="items-container" data-augmented-ui="tl-clip tr-clip br-clip bl-clip none">
 					<h3 class="section-title">Items</h3>
-					<List data={skills} maxItems={-1}>
+					<List data={skills} maxItems={-1} noItemsText="No inventory recorded">
 						<div let:item slot="item">
 							<button data-augmented-ui class="aug-button" on:click={() => viewAbility(item)}
 								>{item.attributes.name}</button
@@ -201,7 +199,7 @@
 				</div>
 				<div class="scripts-container" data-augmented-ui="tl-clip tr-clip br-clip bl-clip none">
 					<h3 class="section-title">Scripts</h3>
-					<List data={skills} maxItems={-1}>
+					<List data={skills} maxItems={-1} noItemsText="No scripts detected">
 						<div let:item slot="item">
 							<button data-augmented-ui class="aug-button" on:click={() => viewAbility(item)}
 								>{item.attributes.name}</button
@@ -213,7 +211,6 @@
 		</div>
 	</div>
 </div>
-
 <style>
 	:root {
 		--dc-bottom-toolbar-display: none;
@@ -224,7 +221,6 @@
 		width: 100%;
 		overflow: hidden;
 		overflow-y: auto;
-		padding-inline: 0.25rem;
 	}
 	.sheet {
 		position: relative;
@@ -298,7 +294,7 @@
 		margin-left: 0.5rem;
 	}
 	.container {
-		height: 100%;
+		height: max-content;
 		width: 100%;
 		display: grid;
 		grid-auto-flow: row;
@@ -463,6 +459,11 @@
 	.profile-heading {
 		grid-area: heading;
 	}
+	.text-section {
+		display: grid;
+		height: 100%;
+		align-items: start;
+	}
 	.text-section-header {
 		display: flex;
 		width: 100%;
@@ -477,7 +478,10 @@
 	.text-container {
 		display: grid;
 		width: 100%;
-		height: 7rem;
+		min-height: 7rem;
+		max-height: 12rem;
+		overflow: hidden;
+		text-overflow: ellipsis;
 		padding: 0.5rem;
 		--aug-border-all: 1px;
 		--aug-border-bg: var(--fourth-accent);
