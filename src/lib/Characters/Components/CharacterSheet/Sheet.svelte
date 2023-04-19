@@ -6,27 +6,15 @@
 	import Image from '$lib/Shared/Components/Image.svelte';
 	import type { ICharacter } from '$lib/Characters/Models/Character';
 	import List from '$lib/Shared/Components/List.svelte';
+	import HexMenu from '$lib/Shared/Components/Menu/HexMenu.svelte';
 
 	export let character: ICharacter;
 
-	function viewAbility(ability: any) {
-		openModal(AbilityModal, { data: ability });
-	}
+	const viewAbility = (ability: any) => openModal(AbilityModal, { data: ability });
 
-	function viewText(text: string) {
-		openModal(ContentModal, { data: text });
-	}
+	const viewText = (text: string) => openModal(ContentModal, { data: text ?? "" });
 
 	const skills: object[] = [];
-	// for (let index = 0; index < 10; index++) {
-	// 	skills.push({
-	// 		attributes: {
-	// 			name: `ability ${index}`,
-	// 			ap: Math.round(index / 2),
-	// 			description: 'does some cool stuff and then ' + index + ' more things...'
-	// 		}
-	// 	});
-	// }
 </script>
 
 <div class="scroll-wrapper">
@@ -38,7 +26,7 @@
 			<div>
 				<h1>
 					{character.name}
-				</h1>
+				</h1>				
 			</div>
 			<div>
 				<button class="aug-button" data-augmented-ui="all-hex"><i class="bi bi-menu-app" /></button>
@@ -95,10 +83,6 @@
 							Skin:
 							<span>{character.skin || ''}</span>
 						</div>
-						<!-- <div>
-						Hair:
-						<span>{character.hair || ''}</span>
-					</div> -->
 					</div>
 				</div>
 				<div class="scores-container">
@@ -213,7 +197,6 @@
 </div>
 
 <style>
-	/* review this code and suggest improvements such as removing redundant styling and clarifying naming conventions*/
 	:root {
 		--dc-bottom-toolbar-display: none;
 	}
@@ -235,12 +218,8 @@
 		--aug-t-center: 33%;
 		--aug-t: 10px;
 		--aug-inlay-bg: transparent;
-		/* --aug-l-center: 38%; */
 		--aug-l: 5px;
 		--aug-r: 5px;
-		/* var(--content-container-background); */
-		/* --aug-bl2-height: 0.25rem;
-    --aug-bl2-width: 0.25rem; */
 		width: 100%;
 		height: 100%;
 		color: var(--light);
@@ -490,9 +469,6 @@
 		--aug-border-all: 1px;
 		--aug-border-bg: var(--fourth-accent);
 	}
-	.text-container > div {
-		overflow-y: auto;
-	}
 	.lists-row {
 		position: relative;
 		display: grid;
@@ -507,8 +483,6 @@
 		text-align: center;
 		padding-inline: 0.75rem;
 		margin-bottom: 2.5rem;
-		/* max-height: 22rem;
-    overflow-y: scroll; */
 		--aug-border-all: 2px;
 		--aug-border-bg: var(--fourth-accent);
 	}
@@ -517,7 +491,6 @@
 		justify-content: center;
 		width: 100%;
 		position: relative;
-		/* top: -2rem; */
 		font-size: 1rem;
 		text-transform: lowercase;
 	}
