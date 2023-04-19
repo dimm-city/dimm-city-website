@@ -212,3 +212,23 @@
 		</div>
 	</div>
 </div>
+
+<style>
+	:root {
+		--dc-bottom-toolbar-display: none;
+	}
+	.sheet {
+		--aug-border-all: 2px;
+		--aug-border-bg: var(--secondary-accent-muted);
+		--aug-tl: 9px;
+		--aug-tr: 9px;
+		--aug-t-center: 33%;
+		--aug-t: 10px;
+		--aug-inlay-bg: transparent;
+		--aug-l: 5px;
+		--aug-r: 5px;
+
+		color: var(--light);
+		background-color: var(--content-container-background);
+	}
+</style>
