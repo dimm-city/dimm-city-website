@@ -6,7 +6,6 @@
 	import Image from '$lib/Shared/Components/Image.svelte';
 	import type { ICharacter } from '$lib/Characters/Models/Character';
 	import List from '$lib/Shared/Components/List.svelte';
-	import HexMenu from '$lib/Shared/Components/Menu/HexMenu.svelte';
 
 	export let character: ICharacter;
 
