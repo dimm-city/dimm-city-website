@@ -57,15 +57,15 @@
 		color: white;
 		opacity: 0.75;
 
-		--aug-border-bg: var(--blue);
+		--aug-border-bg: var(--yellow);
 	}
 	.dropdown-button {
 		cursor: pointer;
 		/* background: var(--pink); */
 		--aug-border-all: 1px;
-		--aug-border-bg: var(--blue);
+		--aug-border-bg: var(--pink);
 		--aug-all-width: max(5vh, 2vw);
-		--aug-inlay-bg: var(--blue);
+		--aug-inlay-bg: var(--pink);
 		transition: transform var(--easing);
 	}
 
