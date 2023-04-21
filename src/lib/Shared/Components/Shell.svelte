@@ -49,12 +49,7 @@
 	<meta name="twitter:image" content={$pageImage} />
 	<link rel="icon" type="image/x-icon" href="/assets/icons/shroom256.png" />
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-TJ2LB9K4M4"></script>
-	<link
-		as="font"
-		href="/assets/dimm-city.woff2"
-		type="font/woff2"
-		crossorigin="anonymous"
-	/>
+	<link as="font" href="/assets/dimm-city.woff2" type="font/woff2" crossorigin="anonymous" />
 	<slot name="head" />
 </svelte:head>
 <div class="page-background" />
@@ -70,7 +65,11 @@
 		</div>
 	</div>
 	<div class="menu-container">
-		<TopMenu {title} {enableSearch} {titleUrl} {fullscreen} />
+		<TopMenu {title} {enableSearch} {titleUrl} {fullscreen}>
+			<svelte:fragment slot="action-menu">
+				<slot name="action-menu" />
+			</svelte:fragment>			
+		</TopMenu>
 	</div>
 	<slot name="scripts" />
 </div>
@@ -89,8 +88,7 @@
 </Modals>
 
 <style>
-
-	:root{
+	:root {
 		--dc-bottom-toolbar-display: inherit;
 	}
 	.backdrop {

@@ -4,6 +4,7 @@
 	import { searchText } from '$lib/Shared/Stores/ShellStore';
 	import MainMenuModal from './MainMenuModal.svelte';
 	import { openModal } from 'svelte-modals';
+	import HexMenu from './Menu/HexMenu.svelte';
 
 	export let enableSearch = false;
 	export let title = '';
@@ -14,7 +15,7 @@
 	}
 </script>
 
-<div class="top-panel fade-in  animate__animated animate__fadeInDown">
+<div class="top-panel fade-in animate__animated animate__fadeInDown">
 	<div
 		class="top-panel-decoration fade-in"
 		aria-hidden="true"
@@ -28,14 +29,21 @@
 		<button on:click={showModalMenu} class="panel-button" data-augmented-ui="all-hex border"
 			><i class="bi bi-menu-button" title="home screen" /></button
 		>
-
-		<a href="/console" class="panel-button" data-augmented-ui="all-hex border" title="op console">
+		<div class="panel-button">
+			<HexMenu position="bottom left">
+				<a href="/console" class="panel-button" data-augmented-ui="all-hex border" title="op console">
 			{#if $loggedIn}
+			
 				<i class="bi bi-person-check-fill fade-in" />
 			{:else}
 				<i class="bi bi-person-x-fill fade-in" />
+				
 			{/if}
 		</a>
+				<slot name="action-menu" />
+			</HexMenu>
+		</div>
+		
 	</div>
 	<div class="search-container">
 		{#if enableSearch}

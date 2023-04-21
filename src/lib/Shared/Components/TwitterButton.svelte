@@ -1,14 +1,17 @@
 <script>
-	import Button from './Button.svelte';
+	import { onMount } from 'svelte';
 
 	export let text = '';
 	export let hashTags = '';
-	export let url = document.location.href;
-    export let title = "";
-    export let shape = "";
+	export let url = '';
+	export let title = '';
+	export let shape = '';
 	$: urlTemplate = `https://twitter.com/intent/tweet?text=${text}&url=${url}&related=SporosETH&hashtags=${hashTags}`;
+	onMount(() => {
+		if (url == '') url = document.location.href;
+	});
 </script>
 
-<Button url={urlTemplate} target="_blank" {title} shape={shape}>
-	<slot><i class="fade-in btn bi bi-share" /></slot>
-</Button>
+<a href={urlTemplate} target="_blank" {title} class={'aug-button ' + shape} data-augmented-ui>
+	<slot><i class="fade-in bi bi-share" /></slot>
+</a>

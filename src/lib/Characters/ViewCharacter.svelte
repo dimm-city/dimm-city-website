@@ -1,27 +1,18 @@
 <script lang="ts">
 	import Shell from '$lib/Shared/Components/Shell.svelte';
 	import { pageImage } from '$lib/Shared/Stores/ShellStore';
-	import Tab from '$lib/Shared/Components/Tab.svelte';
-	import CharacterStats from '$lib/Characters/Components/Tabs/CharacterStats.svelte';
-	import CharacterSheet from '$lib/Characters/Components/Tabs/CharacterSheet.svelte';
 	import { loadCharacter } from '$lib/Characters/Queries/getCharacterBySlug';
 	import { onMount } from 'svelte';
-	import CharacterBiography from '$lib/Characters/Components/Tabs/CharacterBiography.svelte';
-	import TabPanel from '$lib/Shared/Components/TabPanel.svelte';
-	import Toolbar from '$lib/Shared/Components/Toolbar.svelte';
 	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
-	import Button from '$lib/Shared/Components/Button.svelte';
 	import TwitterButton from '$lib/Shared/Components/TwitterButton.svelte';
 	import { characters } from './CharacterStore';
 	import { ownsToken } from '$lib/Shared/Stores/UserStore';
 	import { type ICharacter, Character } from './Models/Character';
-	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import Sheet from './Components/CharacterSheet/Sheet.svelte';
 
 	export let tokenId: string; // = $page.params.tokenId;
 	let character: ICharacter;
 	let query = new Promise(() => {});
-	let tabs: TabPanel;
 	let isEditable = false;
 
 	$: isEditable = character && ownsToken(character?.token);
@@ -47,4 +38,9 @@
 	{:then}
 		<Sheet {character} />
 	{/await}
+	<svelte:fragment slot="action-menu">
+		<a href="/console/characters/update/{character?.tokenId}" class="aug-button" data-augmented-ui=""><i class="bi bi-pencil" /></a>
+		<TwitterButton ></TwitterButton>
+		<a href="/citizens/{character?.tokenId}/print" class="aug-button" data-augmented-ui=""><i class="bi bi-printer" /></a>
+	</svelte:fragment>
 </Shell>
