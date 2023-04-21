@@ -1,18 +1,14 @@
 <script lang="ts">
 	import { config } from '$lib/Shared//config';
-	import { loggedIn } from '$lib/Shared/Stores/UserStore';
 	import { searchText } from '$lib/Shared/Stores/ShellStore';
-	import MainMenuModal from './MainMenuModal.svelte';
-	import { openModal } from 'svelte-modals';
 	import HexMenu from './Menu/HexMenu.svelte';
+	import MainMenu from './Menu/MainMenu.svelte';
 
 	export let enableSearch = false;
 	export let title = '';
 	export let titleUrl = '';
 	export let fullscreen = false;
-	function showModalMenu() {
-		openModal(MainMenuModal, { fullscreen: true });
-	}
+	
 </script>
 
 <div class="top-panel fade-in animate__animated animate__fadeInDown">
@@ -26,24 +22,10 @@
 		<div class="version"><small>DCC v{config.version}</small></div>
 	{/if}
 	<div class="global-toolbar">
-		<button on:click={showModalMenu} class="panel-button" data-augmented-ui="all-hex border"
-			><i class="bi bi-menu-button" title="home screen" /></button
-		>
-		<div class="panel-button">
-			<HexMenu position="bottom left">
-				<a href="/console" class="panel-button" data-augmented-ui="all-hex border" title="op console">
-			{#if $loggedIn}
-			
-				<i class="bi bi-person-check-fill fade-in" />
-			{:else}
-				<i class="bi bi-person-x-fill fade-in" />
-				
-			{/if}
-		</a>
-				<slot name="action-menu" />
-			</HexMenu>
-		</div>
-		
+		<MainMenu />
+		<HexMenu position="bottom left">
+			<slot name="action-menu" />
+		</HexMenu>
 	</div>
 	<div class="search-container">
 		{#if enableSearch}
@@ -59,6 +41,7 @@
 </div>
 
 <style>
+
 	h4 {
 		position: absolute;
 		color: var(--light);
@@ -119,17 +102,7 @@
 		justify-content: space-between;
 	}
 
-	.top-panel button.panel-button,
-	.top-panel a.panel-button {
-		cursor: pointer;
-		border: none;
-		background: var(--pink);
-		transform: translate(0, -25%) rotateZ(0deg);
-		--aug-border-all: 1px;
-		--aug-border-bg: var(--blue);
-		--aug-all-width: max(5vh, 2vw);
-		transition: transform var(--easing);
-	}
+
 	.top-panel .global-toolbar a {
 		display: flex;
 		align-items: center;
@@ -152,12 +125,7 @@
 		font-size: 0.75rem;
 	}
 
-	.global-toolbar i {
-		margin: 0;
-		font-size: 1.5rem;
-		color: var(--light);
-	}
-
+	
 	.top-panel {
 		transition: bottom var(--easing), transform var(--easing);
 	}

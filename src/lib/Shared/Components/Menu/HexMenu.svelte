@@ -40,7 +40,9 @@
 		class:hidden={!visible}
 		bind:this={dropdownContent}
 	>
-		<slot />
+		<div class="dropdown-content-grid">
+			<slot />
+		</div>
 	</div>
 </div>
 
@@ -70,25 +72,22 @@
 	.dropdown-content {
 		display: grid;
 		position: absolute;
-		z-index: -1;
-		grid-template-rows: 1fr;
-		gap: 1rem;
-		padding: 2rem;
+		z-index: -10;
 		left: 0;
 		right: 0;
 		width: max-content;
+		max-height: 80vh;
+		overflow-y: hidden;
 		--aug-inlay-bg: var(--dark);
 		--aug-border-all: 1px;
 		--aug-border-bg: var(--blue);
-
 		transform: translateY(-100px);
-		transition: opacity 0.1s ease-in-out, transform 0.15s ease-in-out;
+		transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
 	}
 
 	.dropdown-content.bottom {
 		top: 100%;
 		transform-origin: top left;
-		/* animation: backInDown; */
 	}
 	.dropdown-content.bottom.left {
 		top: 100%;
@@ -98,39 +97,50 @@
 	}
 	.dropdown-content.top {
 		transform-origin: bottom left;
-		/* animation: backInUp; */
 	}
 
 	.dropdown-content.visible {
 		z-index: 1;
 		opacity: 1;
 		transform: translateY(0);
-		transition: opacity 0.1s ease-in-out, transform 0.15s ease-in-out;
-		/* transform: scaleY(1) scaleX(1);
-		transition: transform 300ms ease-in-out; */
+		transition: opacity 0.2s ease-in-out, transform 0.3s ease-in-out;
 	}
 	.dropdown-content.hidden {
 		opacity: 0;
 		transform: translateY(-100px);
-		transition: opacity 0.1s ease-in-out, transform 0.15s ease-in-out;
-		transition-delay: 0.5s;
-		/* transform: scaleY(0) scaleX(0);
-		transition: transform 300ms ease-in-out; */
+		transition: opacity 0.1s ease-in-out, transform 0.2s ease-in-out;
+		transition-delay: 0.2s;
 	}
 
-	:global(.dropdown-content > *) {
+	.dropdown-content-grid {
+		display: grid;
+		z-index: -10;
+		grid-template-rows: 1fr;
+		gap: 1rem;
+		padding: 2rem;
+		width: fit-content;
+		max-height: 80vh;
+		overflow-y: auto;
+	}
+
+	.dropdown-content.visible .dropdown-content-grid {
+		z-index: 1;
+	}
+
+	:global(.dropdown-content-grid *) {
 		transform: translateY(-200px);
 		opacity: 0;
-		transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+		transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
 		transition-delay: 0.3s;
 	}
-	:global(.dropdown-content.visible > *) {
+	:global(.dropdown-content.visible .dropdown-content-grid  *) {
 		transform: translateY(0);
 		opacity: 1;
 	}
-	:global(.dropdown-content.hidden > *) {
+	:global(.dropdown-content.hidden .dropdown-content-grid  *) {
 		transform: translateY(-200px);
 		opacity: 0;
 		transition-delay: 0;
+		transition: opacity 1s ease-in-out, transform 0.5s ease;
 	}
 </style>
