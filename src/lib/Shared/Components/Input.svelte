@@ -29,7 +29,7 @@
 		--aug-clip-bl1: initial;
 		--aug-clip-br1: initial;
 		--aug-border: initial;
-		--aug-border-all: 0.25vh;
+		--aug-border-all: 1px;
 		--aug-tl1: 1vh;
 		--aug-tr1: 1vh;
 		--aug-br1: 1vh;

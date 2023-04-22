@@ -12,14 +12,33 @@
 
 	export let tokenId: string; // = $page.params.tokenId;
 	let character: ICharacter;
+	let originalCharacter: string;
 	let query = new Promise(() => {});
 	let isEditable = false;
+	let isEditing = false;
+	let isSaving = false;
 
 	$: isEditable = character && ownsToken(character?.token);
 
+	function startEditing() {
+		isEditing = true;
+		originalCharacter = JSON.stringify(character);
+	}
+
+	function saveChanges() {
+		isSaving = true;
+		// call API to save changes
+		isSaving = false;
+		isEditing = false;
+	}
+
+	function cancelChanges() {
+		character = JSON.parse(originalCharacter);
+		isEditing = false;
+	}
+
 	onMount(async () => {
-		//isEditable = await canEdit(tokenId);
-		character = $characters.find((c) => c.tokenId === tokenId && c.loaded) ?? new Character();
+		character = $characters.find((c) => c.tokenId === tokenId && c.loaded) ?? new Character(null);
 		if (character == null || character.id < 1) {
 			query = loadCharacter(tokenId).then((c) => {
 				character = c;
@@ -27,20 +46,49 @@
 				$pageImage = character.thumbnailImage;
 			});
 		} else {
-			query = new Promise((resolve) => resolve(new Character()));
+			query = new Promise((resolve) => {
+				resolve(new Character(null));
+			});
 		}
 	});
 </script>
 
 <Shell title="Citizen File" titleUrl="/citizens" fullscreen={true}>
 	{#await query}
-		<LoadingIndicator>Extracting character data...</LoadingIndicator>
+		<LoadingIndicator>
+			{#if isSaving}
+				Saving changes...
+			{:else}
+				Extracting character data...
+			{/if}
+		</LoadingIndicator>
 	{:then}
-		<Sheet {character} />
+		<Sheet {character} {isEditing} />
 	{/await}
 	<svelte:fragment slot="action-menu">
-		<a href="/console/characters/update/{character?.tokenId}" class="aug-button animate__fadeInDownBig" data-augmented-ui=""><i class="bi bi-pencil" /></a>
-		<TwitterButton ></TwitterButton>
-		<a href="/citizens/{character?.tokenId}/print" class="aug-button fade-in animate__fadeInDownBig" data-augmented-ui=""><i class="bi bi-printer" /></a>
+		{#if isEditing}
+			<button on:click={saveChanges} class="aug-button animate__fadeInDownBig" data-augmented-ui=""
+				><i class="bi bi-check" /></button
+			>
+			<button
+				on:click={cancelChanges}
+				class="aug-button animate__fadeInDownBig"
+				data-augmented-ui=""><i class="bi bi-x" /></button
+			>
+		{:else}
+			{#if isEditable}
+				<button
+					on:click={startEditing}
+					class="aug-button animate__fadeInDownBig"
+					data-augmented-ui=""><i class="bi bi-pencil" /></button
+				>
+			{/if}
+			<TwitterButton />
+			<a
+				href="/citizens/{character?.tokenId}/print"
+				class="aug-button animate__fadeInDownBig"
+				data-augmented-ui=""><i class="bi bi-printer" /></a
+			>
+		{/if}
 	</svelte:fragment>
 </Shell>

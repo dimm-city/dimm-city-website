@@ -5,6 +5,7 @@ export class Character implements ICharacter {
 		if (token) this.importToken(token);
 		this.id = -1;
 	}
+	scripts: ISummaryItem[];
 	hp: number;
 	ap: number;
 	id: number;
@@ -146,6 +147,7 @@ export interface ICharacter {
 	currentLocation: ISummaryItem;
 	selectedAbilities: ISummaryItem[];
 	items: ISummaryItem[];
+	scripts: ISummaryItem[];
 	thumbnailUrl: string;
 	imageUrl: string;
 }
