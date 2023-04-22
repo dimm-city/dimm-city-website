@@ -39,8 +39,8 @@
 		<Sheet {character} />
 	{/await}
 	<svelte:fragment slot="action-menu">
-		<a href="/console/characters/update/{character?.tokenId}" class="aug-button" data-augmented-ui=""><i class="bi bi-pencil" /></a>
+		<a href="/console/characters/update/{character?.tokenId}" class="aug-button animate__fadeInDownBig" data-augmented-ui=""><i class="bi bi-pencil" /></a>
 		<TwitterButton ></TwitterButton>
-		<a href="/citizens/{character?.tokenId}/print" class="aug-button" data-augmented-ui=""><i class="bi bi-printer" /></a>
+		<a href="/citizens/{character?.tokenId}/print" class="aug-button fade-in animate__fadeInDownBig" data-augmented-ui=""><i class="bi bi-printer" /></a>
 	</svelte:fragment>
 </Shell>

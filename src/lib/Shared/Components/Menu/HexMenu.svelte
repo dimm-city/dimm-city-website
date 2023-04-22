@@ -108,6 +108,7 @@
 	.dropdown-content.hidden {
 		opacity: 0;
 		z-index: -1000;
+		display: none;
 		transform: translateY(-100px);
 		transition: opacity 0.1s ease-in-out, transform 0.2s ease-in-out;
 		transition-delay: 0.2s;
