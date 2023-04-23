@@ -28,8 +28,13 @@
 	function saveChanges() {
 		isSaving = true;
 		// call API to save changes
-		isSaving = false;
-		isEditing = false;
+		query = new Promise((resolve) => {
+			setTimeout(() => {
+				resolve(null);
+				isSaving = false;
+				isEditing = false;
+			}, 500);
+		});
 	}
 
 	function cancelChanges() {

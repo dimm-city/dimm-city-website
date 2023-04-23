@@ -1,8 +1,13 @@
+<div class="loading-indicator fade-in" data-augmented-ui>
+	<slot>Loading...</slot>
+</div>
 <style>
-    
 	.loading-indicator {
 		display: flex;
 		width: 100%;
+		height: 100%;
+		justify-content: center;
+		align-items: center;
 		cursor: none;
 		padding: 1rem;
 		min-height: max-content;
@@ -30,14 +35,10 @@
 		--aug-inlay: initial;
 		--aug-inlay-bg: var(--menu-inlay-bg-color);
 		background-color: transparent;
-        --transition-in-delay: 0;
+		--transition-in-delay: 0;
 	}
 
 	.loading-indicator > * {
 		display: flex;
 	}
 </style>
-
-<div class="loading-indicator fade-in" data-augmented-ui>
-	<slot>Loading...</slot>
-</div>

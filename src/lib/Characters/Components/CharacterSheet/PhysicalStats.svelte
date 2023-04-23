@@ -1,59 +1,87 @@
 <script lang="ts">
 	import type { ICharacter } from '$lib/Characters/Models/Character';
-
+	import Input from '$lib/Shared/Components/Input.svelte';
 	export let character: ICharacter;
-
 	export let isEditing = false;
 </script>
 
 <div class="physical-stats">
-	<div>
-		Pronouns:
-		<span>{character.pronouns || 'they/them'}</span>
-	</div>
-	<div>
-		Age:
-		<span>{character.age ?? 'Unknown'} </span>
-	</div>
-	<div>
-		Race:
-		<span>
+	<div class="grid-container">
+		<div class="label">Race:</div>
+		<div class="value">
 			{#if character.race}
 				{character.race.data?.attributes?.name}
 			{/if}
-		</span>
-	</div>
-	<div>
-		Height:
-		<span>{character.height || 0} m</span>
-	</div>
-	<div>
-		Weight:
-		<span>{character.weight || 0} kg</span>
-	</div>
-	<div>
-		Eyes:
-		<span>{character.eyes || ''}</span>
-	</div>
-	<div>
-		Skin:
-		<span>{character.skin || ''}</span>
+		</div>
+		<div class="label">Pronouns:</div>
+		<div class="value">
+			{#if isEditing}
+				<Input bind:value={character.pronouns} class="inline" maxlength="50" />
+			{:else}
+				{character.pronouns || 'they/them'}
+			{/if}
+		</div>
+		<div class="label">Age:</div>
+		<div class="value">
+			{#if isEditing}
+				<Input bind:value={character.age} class="inline" maxlength="50" />
+			{:else}
+				{character.age || 'Unknown'}
+			{/if}
+		</div>
+		<div class="label">Height:</div>
+		<div class="value">
+			{#if isEditing}
+				<Input bind:value={character.height} class="inline" />
+			{:else}
+				{character.height || 0}
+			{/if} cm
+		</div>
+		<div class="label">Weight:</div>
+		<div class="value">
+			{#if isEditing}
+				<Input bind:value={character.weight} class="inline" />
+			{:else}
+				{character.weight || 0}
+			{/if}kg
+		</div>
+		<div class="label">Eyes:</div>
+		<div class="value">{character.eyes || ''}</div>
+		<div class="label">Skin:</div>
+		<div class="value">{character.skin || ''}</div>
 	</div>
 </div>
 
 <style>
-	span {
-		margin-left: 0.5rem;
-	}
-
 	.physical-stats {
 		width: 100%;
 		height: 100%;
 		display: grid;
-		margin-left: 0.25rem;
 		align-content: start;
 		gap: 1rem;
+	}
+
+	.grid-container {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1rem;
+	}
+
+	.label {
+		text-align: right;
+		margin-right: 0.5rem;
+		font-weight: bold;
+		align-items: center;
+		justify-content: end;
+		display: flex;
+	}
+
+	.value {
 		white-space: nowrap;
-		text-overflow: ellipsis;
+		margin-left: 0.25rem;
+	}
+
+	:global(input.inline) {
+		display: inline;
 	}
 </style>

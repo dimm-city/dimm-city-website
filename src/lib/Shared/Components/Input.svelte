@@ -39,6 +39,16 @@
 		--aug-inlay: initial;
 		--aug-inlay-bg: var(--menu-inlay-bg-color);
 	}
+
+	.inline{
+		display: inline;
+		padding: 0;
+		padding-inline: 0.25rem;
+		--aug-tr1: 0.33rem;
+		--aug-br1: 0.33rem;
+		--aug-tl1: 0.33rem;
+		--aug-bl1: 0.33rem;
+	}
 </style>
 
-<div data-augmented-ui class="aug-input" disabled={$$props.disabled}><input readonly={$$props.disabled} {type} on:change={onChange}  {...$$props}/></div>
+<div data-augmented-ui class="aug-input {$$props.class}" disabled={$$props.disabled}><input readonly={$$props.disabled} {type} on:change={onChange}  {...$$props}/></div>

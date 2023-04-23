@@ -13,6 +13,7 @@
 	import Image from '$lib/Shared/Components/Image.svelte';
 	import type { ICharacter } from '$lib/Characters/Models/Character';
 	import List from '$lib/Shared/Components/List.svelte';
+	import ProfileImage from '../ProfileImage.svelte';
 
 	export let character: ICharacter;
 	export let isEditing = false;
@@ -60,7 +61,7 @@
 				</div>
 				<div class="stats-container">
 					<div class="image">
-						<Image imageUrl={character.imageUrl} title={character.name} />
+						<ProfileImage {character}  />
 					</div>
 					<PhysicalStats {character} {isEditing} />
 				</div>
@@ -77,7 +78,7 @@
 					</List>
 				</div>
 			</div>
-			<ProfileRow {character} {isEditing} {viewText}/>
+			<ProfileRow {character} {isEditing}/>
 			<ListsRow  {character} {isEditing} {viewAbility}></ListsRow>
 		</div>
 	</div>
@@ -175,13 +176,14 @@
 	
 	.stats-row {
 		display: grid;
-		grid-template-columns: repeat(3, 1fr);
+		grid-template-columns: 1fr 0.75fr 1fr;
 		grid-template-rows: min-content 1fr;
 		grid-template-areas:
 			'stats-heading scores-heading cyber-heading'
 			'stats-cell scores-cell cyber-cell';
 		padding-inline: 1rem;
 		padding-block: 0.25rem;
+		column-gap: 2rem;
 		--aug-border-all: 1px;
 		--aug-border-bg: var(--secondary-accent-muted);
 		--aug-tl: 13px;
@@ -200,10 +202,11 @@
 		position: relative;
 		display: flex;
 		flex-direction: row;
+		gap: 2rem;
 		grid-area: stats-cell;
 	}
 	.image {
-		padding: 0.5rem;
+		padding: 0.5rem;		
 		--dc-image-aspect-ratio: 3/4;
 		--dc-image-height: 240px;
 	}
@@ -225,7 +228,7 @@
 		display: flex;
 		flex-direction: row;
 		justify-content: space-evenly;
-		align-items: center;
+		align-items: start;
 		grid-area: scores-cell;
 	}
 

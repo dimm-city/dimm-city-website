@@ -1,103 +1,70 @@
 <script>
+	import TextSection from './TextSection.svelte';
+
 	// @ts-nocheck
 
 	import Input from '$lib/Shared/Components/Input.svelte';
+	import Textarea from '$lib/Shared/Components/Textarea.svelte';
 
 	/**
-	 * @type {ICharacter}}
+	 * @type {import('$lib/Characters/Models/Character').ICharacter}}
 	 */
 	export let character;
 	export let isEditing = false;
-	export let viewText = (text) => {};
 </script>
 
 <div class="profile-row" data-augmented-ui="tl-clip-x tr-clip-x br-clip bl-clip border">
 	<div class="profile-heading"><h3>Profile</h3></div>
-	<section class="section-container">
-		<div>
-			Vibe:
-			{#if isEditing}
-				<span contenteditable bind:textContent={character.vibe} />
-			{:else}
-				<span>{character.vibe} </span>
-			{/if}
-		</div>
-		<div>
-			Beliefs:
-			{#if isEditing}
-				<span contenteditable bind:textContent={character.beliefs} />
-			{:else}
-				<span>{character.beliefs ?? 'Unknown'} </span>
-			{/if}
-		</div>
-		<div>
-			Flaws:
-			{#if isEditing}
-				<span contenteditable bind:textContent={character.flaws} />
-			{:else}
-				<span>{character.flaws ?? 'Unknown'} </span>
-			{/if}
-		</div>
-		<div>
-			Origin:<span>{character.currentLocation?.name ?? 'Unknown'} </span>
-		</div>
-		<div>
-			Current District:
+	<section class="section-container profile">
+		<div class="label">Origin:</div>
+		<div class="value"><span>{character.currentLocation?.name ?? 'Unknown'}</span></div>
+
+		<div class="label">Residency:</div>
+		<div class="value">
 			{#if isEditing}
 				<span>[Location selector]</span>
 			{:else}
-				<span>{character.currentLocation?.name ?? 'Unknown'} </span>
+				<span>{character.currentLocation?.name ?? 'Unknown'}</span>
+			{/if}
+		</div>
+
+		<div class="label">Vibe:</div>
+		<div class="value">
+			{#if isEditing}
+				<Input bind:value={character.vibe} maxlength="50" class="inline" />
+			{:else}
+				<span>{character.vibe}</span>
+			{/if}
+		</div>
+
+		<div class="label">Beliefs:</div>
+		<div class="value">
+			{#if isEditing}
+				<Textarea maxlength="150" bind:value={character.beliefs} />
+			{:else}
+				<span>{character.beliefs ?? 'Unknown'}</span>
+			{/if}
+		</div>
+
+		<div class="label">Flaws:</div>
+		<div class="value">
+			{#if isEditing}
+				<Textarea maxlength="150" bind:value={character.flaws} />
+			{:else}
+				<span>{character.flaws ?? 'Unknown'}</span>
 			{/if}
 		</div>
 	</section>
-	<section class="section-container">
-		<div class="text-section">
-			<div class="text-section-header">
-				<span>Backstory:</span>
-				<i
-					class="btn inline bi bi-fullscreen"
-					on:keypress={() => viewText(character.backstory)}
-					on:click={() => viewText(character.backstory)}
-				/>
-			</div>
-			<div class="text-container" data-augmented-ui=" tr-clip bl-clip border">
-				{character.backstory}
-			</div>
-		</div>
-	</section>
-	<section class="section-container">
-		<div class="text-section">
-			<div class="text-section-header">
-				<span>Dreams:</span>
-				<i
-					class="btn inline bi bi-fullscreen"
-					on:keypress={() => viewText(character.dreams)}
-					on:click={() => viewText(character.dreams)}
-				/>
-			</div>
-			<div class="text-container" data-augmented-ui="tr-clip bl-clip  border">
-				{character.dreams}
-			</div>
-		</div>
-	</section>
+	<TextSection header="Backstory" {isEditing} bind:data={character.backstory}/>
+	<TextSection header="Dreams" {isEditing} bind:data={character.dreams}/>
 </div>
 
 <style>
-	*[contenteditable]{
-		border: var(--fourth-accent) solid thin;
-		border-radius: 0.25rem;
-		min-width: 5ch;
-		content: '';
-		display: inline-block;
-		padding-inline: 0.25rem;
-	}
 	h3 {
 		margin: 0;
 		color: var(--fourth-accent);
 	}
-	span {
-		margin-left: 0.5rem;
-	}
+
 	.section-container {
 		position: relative;
 		display: flex;
@@ -107,7 +74,21 @@
 		justify-content: space-evenly;
 		gap: 0.5rem;
 	}
+	.section-container.profile {
+		display: grid;
+		grid-template-columns: min-content 1fr;
+		grid-column-gap: 0.5rem;
+	}
 
+	.label {
+		text-align: left;
+		font-weight: bold;
+	}
+
+	.value {
+		display: flex;
+		text-align: left;
+	}
 	.profile-row {
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
@@ -124,7 +105,7 @@
 		--aug-bl: 13px;
 		--aug-br: 13px;
 		--aug-inlay: 0;
-		padding-block: 1rem;
+		padding-block: 2rem;
 		padding-inline: 2rem;
 		gap: 1.5rem;
 		row-gap: 0.25rem;
@@ -134,34 +115,7 @@
 	.profile-heading {
 		grid-area: heading;
 	}
-	.text-section {
-		display: grid;
-		height: 100%;
-		align-content: start;
-
-	}
-	.text-section-header {
-		display: flex;
-		width: 100%;
-		justify-content: space-between;
-	}
-
-	.text-section span {
-		display: block;
-		margin-bottom: 0.5rem;
-		margin-left: 0;
-	}
-	.text-container {
-		display: grid;
-		width: 100%;
-		min-height: 7rem;
-		max-height: 12rem;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		padding: 0.5rem;
-		--aug-border-all: 1px;
-		--aug-border-bg: var(--fourth-accent);
-	}
+	
 
 	@media (max-width: 768px) {
 		.profile-row {
