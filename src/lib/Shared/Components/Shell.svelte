@@ -92,8 +92,8 @@
 		display: grid;
 		grid-template-columns: 1fr;
 		grid-template-rows: min-content auto;
-		height: 100vh;
-		width: 100vw;
+		height: 100dvh;
+		width: 100dvw;
 	}
 
 	.content-panel {
