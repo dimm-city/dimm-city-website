@@ -10,7 +10,7 @@
 	import { type ICharacter, Character } from './Models/Character';
 	import Sheet from './Components/CharacterSheet/Sheet.svelte';
 
-	export let tokenId: string; // = $page.params.tokenId;
+	export let tokenId: string;
 	let character: ICharacter;
 	let originalCharacter: string;
 	let query = new Promise(() => {});

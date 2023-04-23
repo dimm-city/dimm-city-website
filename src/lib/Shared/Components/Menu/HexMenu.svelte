@@ -24,7 +24,7 @@
 	}
 </script>
 
-<div class="dropdown">
+<div class="dropdown {$$props.class}">
 	<button
 		bind:this={button}
 		class="dropdown-button aug-button"
@@ -55,7 +55,7 @@
 	.aug-button:hover,
 	.aug-button:focus {
 		color: white;
-		opacity: 0.75;
+		/* opacity: 0.75; */
 
 		--aug-border-bg: var(--yellow);
 	}
@@ -67,6 +67,8 @@
 		--aug-all-width: max(5vh, 2vw);
 		--aug-inlay-bg: var(--pink);
 		transition: transform var(--easing);
+		background-color: #363636b0;
+		opacity: 1;
 	}
 
 	.dropdown-content {
@@ -102,7 +104,7 @@
 	.dropdown-content.visible {
 		z-index: 1;
 		opacity: 1;
-		transform: translateY(0);
+		transform: translateY(0) translateX(-3rem);
 		transition: opacity 0.2s ease-in-out, transform 0.3s ease-in-out;
 	}
 	.dropdown-content.hidden {
@@ -112,6 +114,18 @@
 		transform: translateY(-100px);
 		transition: opacity 0.1s ease-in-out, transform 0.2s ease-in-out;
 		transition-delay: 0.2s;
+	}
+
+	@media (max-width: 750px) {
+		.dropdown-content {
+			
+			transform-origin: bottom right;
+		}
+		.dropdown-content.visible {
+			
+			transform: translateY(-30vh) translateX(-2rem);
+			
+		}
 	}
 
 	.dropdown-content-grid {
@@ -135,11 +149,11 @@
 		transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
 		transition-delay: 0.3s;
 	}
-	:global(.dropdown-content.visible .dropdown-content-grid  *) {
+	:global(.dropdown-content.visible .dropdown-content-grid *) {
 		transform: translateY(0);
 		opacity: 1;
 	}
-	:global(.dropdown-content.hidden .dropdown-content-grid  *) {
+	:global(.dropdown-content.hidden .dropdown-content-grid *) {
 		transform: translateY(-200px);
 		opacity: 0;
 		transition-delay: 0;

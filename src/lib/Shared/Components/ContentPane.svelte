@@ -88,7 +88,6 @@
 			position: relative;
 			height: 100%;
 			width: 100%;
-			margin-inline: 1rem;
 			aspect-ratio: 3/4;
 		}
 	}

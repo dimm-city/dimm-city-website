@@ -1,15 +1,10 @@
 <script>
 	import Textarea from '$lib/Shared/Components/Textarea.svelte';
-
-	/**
-	 * @type {string}}
-	 */
-	export let data;
+	export let data = '';
 	export let header = '';
 	export let isEditing = false;
 	let isFullscreen = false;
 	let aug = 'tr-clip bl-clip border';
-
 	$: aug = isFullscreen ? '' : 'tr-clip bl-clip border';
 </script>
 
@@ -18,7 +13,9 @@
 		<div class="text-section-header">
 			<span>{header}:</span>
 			<i
-				class="btn inline bi bi-fullscreen"
+				class="btn inline bi"
+                class:bi-fullscreen={!isFullscreen}
+                class:bi-fullscreen-exit={isFullscreen}
 				on:keypress={() => (isFullscreen = !isFullscreen)}
 				on:click={() => (isFullscreen = !isFullscreen)}
 			/>
@@ -93,6 +90,7 @@
 	.fullscreen .text-container {
 		overflow-y: scroll;
 		text-overflow: unset;
+		max-height: max-content;
 		--aug-border-all: 0px;
 		--aug-border-bg: var(--fourth-accent);
 	}

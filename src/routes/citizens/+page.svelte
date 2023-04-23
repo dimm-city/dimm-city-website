@@ -5,7 +5,14 @@
 </script>
 
 <Shell title="Citizen Files" enableSearch="{true}" fullscreen={false}>
+	
 	<ContentPane padding={1}>
 		<CharacterMenu />
 	</ContentPane>
 </Shell>
+<style>
+	div {
+		padding-inline: 1rem;
+		overflow-y: auto;
+	}
+</style>
