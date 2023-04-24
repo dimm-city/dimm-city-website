@@ -31,7 +31,7 @@
 			{/if}
 		</div>
 		<div>
-			<div class="version"><small>DCC v{config.version}</small></div>
+			<div class="version"><small><span>DCC</span> <span>v{config.version}</span></small></div>
 			<HexMenu>
 				<slot name="action-menu" />
 			</HexMenu>
@@ -129,6 +129,7 @@
 		right: 3.25rem;
 		transition: all var(--transition-in-time);
 		font-size: 0.75rem;
+		white-space: nowrap;
 	}
 
 	.search-container {
@@ -213,8 +214,11 @@
 			align-items: center;
 		}
 		.version {
-			right: 0.5rem;
+			right: 0.05rem;
 			bottom: -1rem;
+		}
+		.version span:first-of-type{
+			display: none;
 		}
 	}
 </style>

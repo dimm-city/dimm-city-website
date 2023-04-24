@@ -77,6 +77,7 @@
 		right: 0;
 		z-index: -10;
 		width: max-content;
+		max-width: 90dvw;
 		max-height: 80dvh;
 		overflow-y: hidden;
 		--aug-inlay-bg: var(--dark);
