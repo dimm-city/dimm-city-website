@@ -100,7 +100,7 @@
     :global(.main-menu .dropdown-content.visible) {
 		z-index: 1;
 		opacity: 1;
-		transform: translateY(0) translateX(0rem) !important;
+		transform: translateY(0) translateX(23rem) !important;
 		transition: all 0.2s ease-in-out;
 	}
 	@media (max-width: 768px) {
