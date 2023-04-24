@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { config } from '$lib/Shared//config';
+	import { config } from '$lib/Shared/config';
 	import { searchText } from '$lib/Shared/Stores/ShellStore';
 	import HexMenu from './Menu/HexMenu.svelte';
 	import MainMenu from './Menu/MainMenu.svelte';
@@ -7,7 +7,6 @@
 	export let enableSearch = false;
 	export let title = '';
 	export let titleUrl = '';
-	export let fullscreen = false;
 </script>
 
 <div class="top-panel fade-in animate__animated animate__fadeInDown">
@@ -18,10 +17,8 @@
 		&nbsp;
 	</div>
 
-	<div class="version"><small>DCC v{config.version}</small></div>
-
 	<div class="global-toolbar">
-		<MainMenu />
+		<div><MainMenu /></div>
 		<div class="search-container">
 			{#if enableSearch}
 				<div data-augmented-ui class="aug-input">
@@ -33,9 +30,12 @@
 				<h4><a href={titleUrl}>{title}</a></h4>
 			{/if}
 		</div>
-		<HexMenu>
-			<slot name="action-menu" />
-		</HexMenu>
+		<div>
+			<div class="version"><small>DCC v{config.version}</small></div>
+			<HexMenu>
+				<slot name="action-menu" />
+			</HexMenu>
+		</div>
 	</div>
 </div>
 
@@ -64,7 +64,7 @@
 	.top-panel-decoration::before,
 	.top-panel-decoration::after,
 	.top-panel {
-		height: 5vh;
+		height: 5dvh;
 		width: 100vw;
 		transition: all var(--easing);
 	}
@@ -97,7 +97,23 @@
 		position: absolute;
 		width: 100vw;
 		display: flex;
-		justify-content: space-between;
+		display: grid;
+		grid-template-columns: 1fr 7fr 1fr;
+		align-items: center;
+		justify-items: center;
+		transition: all var(--easing);
+	}
+
+	.global-toolbar > div:first-of-type {
+		display: flex;
+		justify-content: start;
+		width: 100%;
+	}
+	.global-toolbar > div:last-of-type {
+		display: flex;
+		justify-content: end;
+		width: 100%;
+		height: 100%;
 	}
 
 	.top-panel .global-toolbar a {
@@ -109,44 +125,47 @@
 	.version {
 		color: var(--third-accent);
 		position: absolute;
-		bottom: 0.1rem;
-		padding-right: 3.5rem;
-		width: 100%;
-		display: flex;
-		justify-content: end;
+		bottom: 0.5rem;
+		right: 3.25rem;
 		transition: all var(--transition-in-time);
 		font-size: 0.75rem;
 	}
 
 	.search-container {
+		position: relative;
 		display: flex;
+		width: 100%;
+		height: 100%;
 		justify-content: center;
-		align-items: center;
-		width: 70%;
+		align-items: start;
+		transition: all 150ms 50ms var(--easing);
 	}
 
 	.search-container > .aug-input {
 		--aug-border-bg: var(--secondary-accent);
 		color: var(--secondary-accent);
 		background-color: transparent;
+		--aug-border-all: 1px;
+		transition: all 150ms 50ms var(--easing);
 	}
 	.search-container > .aug-input > input {
 		text-align: center;
+		font-size: 0.75rem;
+		padding: 0.5rem;
 	}
 	.search-container > .aug-input > i.bi {
 		position: absolute;
 		color: var(--third-accent);
+		font-size: 0.75rem;
 		top: 1ch;
 		cursor: pointer;
 	}
-	/* .search-container > .aug-input > i.bi-gear {
-		left: 1rem;
-	} */
+
 	.search-container > .aug-input > i.bi-search {
 		right: 1rem;
 	}
 
-	@media (max-width: 750px) {
+	@media (max-width: 768px) {
 		.top-panel {
 			margin-bottom: 0;
 			bottom: 0;
@@ -175,22 +194,27 @@
 		.top-panel .global-toolbar {
 			width: 100vw;
 		}
-		:global(.global-toolbar div.dropdown:first-of-type) {
+		.global-toolbar > div:first-of-type {
+			display: flex;
+			justify-content: start;
+			width: 100%;
 			transform: translateX(0.5rem) translateY(-1.5rem);
 		}
-
-		:global(.global-toolbar div.dropdown:last-of-type) {
+		.global-toolbar > div:last-of-type {
+			display: flex;
+			justify-content: end;
+			width: 100%;
+			height: 100%;
 			transform: translateX(-0.5rem) translateY(-1.5rem);
 		}
+
+
 		.search-container {
-			display: flex;
-			justify-content: center;
-			align-items: start;
-			width: 80%;
-			margin: auto;
+			align-items: center;
 		}
 		.version {
-			padding-right: 1rem;
+			right: 0.5rem;
+			bottom: -1rem;
 		}
 	}
 </style>

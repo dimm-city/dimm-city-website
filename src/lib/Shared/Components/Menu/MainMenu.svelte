@@ -101,11 +101,18 @@
 		z-index: 1;
 		opacity: 1;
 		transform: translateY(0) translateX(0rem) !important;
-		transition: opacity 0.2s ease-in-out, transform 0.3s ease-in-out;
+		transition: all 0.2s ease-in-out;
 	}
-	@media (max-width: 750px) {
+	@media (max-width: 768px) {
 		:global(.main-menu .dropdown-content.visible) {
-			transform: translateY(-80vh) translateX(-2rem) !important;
+			transform: translateY(0) translateX(0) !important; 
+            bottom: 3rem !important;
+            left: 1rem !important;
+		}
+        :global(.main-menu .dropdown-content.hidden) {
+			transform: translateY(-80dvh) translateX(0rem) !important;
+            bottom: -100vh !important;
+            left: 1rem !important;
 		}
 	}
 </style>

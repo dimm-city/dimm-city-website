@@ -24,7 +24,7 @@
 	}
 </script>
 
-<div class="dropdown {$$props.class}">
+<div class="dropdown {$$props.class ?? ''}">
 	<button
 		bind:this={button}
 		class="dropdown-button aug-button"
@@ -34,7 +34,7 @@
 		<i class={icon} /></button
 	>
 	<div
-		class="dropdown-content {position}"
+		class="dropdown-content"
 		data-augmented-ui="tl-clip-x tr-clip-x br-clip-x bl-clip-x both"
 		class:visible
 		class:hidden={!visible}
@@ -74,37 +74,37 @@
 	.dropdown-content {
 		display: grid;
 		position: absolute;
-		z-index: -10;
-		left: 0;
 		right: 0;
+		z-index: -10;
 		width: max-content;
-		max-height: 80vh;
+		max-height: 80dvh;
 		overflow-y: hidden;
 		--aug-inlay-bg: var(--dark);
 		--aug-border-all: 1px;
 		--aug-border-bg: var(--blue);
-		transform: translateY(-100px);
+		/* transform: translateY(-100px); */
 		transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
 	}
 
-	.dropdown-content.bottom {
-		top: 100%;
+	.dropdown:has(.dropdown-content-grid:empty) {
+		display: none;
+	}
+	/* .dropdown-content.bottom {
+		bottom: 3rem;
+		right: 0;
 		transform-origin: top left;
 	}
 	.dropdown-content.bottom.left {
-		top: 100%;
 		transform-origin: top right;
-		left: unset;
-		right: 0;
 	}
 	.dropdown-content.top {
 		transform-origin: bottom left;
-	}
+	} */
 
 	.dropdown-content.visible {
 		z-index: 1;
 		opacity: 1;
-		transform: translateY(0) translateX(-3rem);
+		transform: translateY(0) translateX(0);
 		transition: opacity 0.2s ease-in-out, transform 0.3s ease-in-out;
 	}
 	.dropdown-content.hidden {
@@ -113,18 +113,18 @@
 		display: none;
 		transform: translateY(-100px);
 		transition: opacity 0.1s ease-in-out, transform 0.2s ease-in-out;
-		transition-delay: 0.2s;
 	}
 
-	@media (max-width: 750px) {
+	@media (max-width: 768px) {
 		.dropdown-content {
-			
 			transform-origin: bottom right;
+			bottom: 3rem;
 		}
 		.dropdown-content.visible {
-			
-			transform: translateY(-30vh) translateX(-2rem);
-			
+			transform: translateY(0) translateX(0);
+		}
+		.dropdown-content.hidden {
+			transform: translateY(100rem) translateX(0);
 		}
 	}
 
@@ -135,7 +135,7 @@
 		gap: 1rem;
 		padding: 2rem;
 		width: fit-content;
-		max-height: 80vh;
+		max-height: 80dvh;
 		overflow-y: auto;
 	}
 
@@ -144,17 +144,17 @@
 	}
 
 	:global(.dropdown-content-grid *) {
-		transform: translateY(-200px);
+		/* transform: translateY(-200px); */
 		opacity: 0;
 		transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
-		transition-delay: 0.3s;
+		/* transition-delay: 0.3s; */
 	}
 	:global(.dropdown-content.visible .dropdown-content-grid *) {
-		transform: translateY(0);
+		/* transform: translateY(0); */
 		opacity: 1;
 	}
 	:global(.dropdown-content.hidden .dropdown-content-grid *) {
-		transform: translateY(-200px);
+		/* transform: translateY(-200px); */
 		opacity: 0;
 		transition-delay: 0;
 		transition: opacity 1s ease-in-out, transform 0.5s ease;

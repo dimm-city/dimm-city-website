@@ -6,7 +6,7 @@
 	import '$lib/Shared/Styles/main.css';
 	import 'animate.css';
 	import { onMount } from 'svelte';
-	import Toolbar from './TopMenu.svelte';
+	import MenuBar from './MenuBar.svelte';
 	import { config } from '$lib/Shared/config';
 
 	export let title = '';
@@ -53,11 +53,11 @@
 		<slot><ContentPane fullsize={true}>404</ContentPane></slot>
 	</div>
 	<div class="menu-container">
-		<Toolbar {title} {enableSearch} {titleUrl} {fullscreen}>
+		<MenuBar {title} {enableSearch} {titleUrl}>
 			<svelte:fragment slot="action-menu">
 				<slot name="action-menu" />
 			</svelte:fragment>
-		</Toolbar>
+		</MenuBar>
 	</div>
 </div>
 
