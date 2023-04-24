@@ -37,9 +37,13 @@
 	>
 		<div class="heading">
 			<div>
-				<h1>
+				{#if isEditing}
+					<h1 contenteditable="true" bind:textContent={character.name}></h1>
+				{:else}
+				<h1>					
 					{character.name}
 				</h1>
+				{/if}
 			</div>
 			<div>
 				<button class="aug-button" data-augmented-ui="all-hex"><i class="bi bi-menu-app" /></button>
@@ -128,10 +132,12 @@
 	}
 	div.heading > div {
 		width: 100%;
-		overflow: hidden;
+		overflow: hidden;		
 	}
 	div.heading > div:first-of-type {
 		text-align: left;
+		align-items: end;
+		padding: 0;
 	}
 	div.heading > div:nth-last-of-type(2) {
 		text-align: center;
@@ -146,10 +152,16 @@
 	}
 	h1 {
 		font-size: 1.5rem;
-		margin: 0;
-		padding-inline: 0.25rem;
+		 margin: 0;
+		/*padding-inline: 0.25rem; 
 		display: inline;
+		align-items: end;*/
 		text-align: left;
+		/* padding: 0.2rem; */
+	}
+
+	h1[contenteditable]{
+		border: 1px var(--fourth-accent) solid;
 	}
 	h2 {
 		margin: 0;
