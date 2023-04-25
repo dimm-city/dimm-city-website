@@ -217,7 +217,7 @@
 	}
 
 
-	@media (max-width: 768px) {
+	@media (max-width: 767px) {
 		.scroll-wrapper {
 			overflow-y: auto;
 			padding-inline: 0.5rem;

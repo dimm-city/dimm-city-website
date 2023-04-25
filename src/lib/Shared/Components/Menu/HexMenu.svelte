@@ -105,7 +105,7 @@
 		transition: opacity 0.1s ease-in-out, transform 0.2s ease-in-out;
 	}
 
-	@media (max-width: 768px) {
+	@media (max-width: 767px) {
 		.dropdown-content {
 			transform-origin: bottom right;
 			bottom: 3rem;

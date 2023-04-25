@@ -166,7 +166,7 @@
 		right: 1rem;
 	}
 
-	@media (max-width: 768px) {
+	@media (max-width: 767px) {
 		.top-panel {
 			margin-bottom: 0;
 			bottom: 0;

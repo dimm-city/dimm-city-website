@@ -103,7 +103,7 @@
 		transform: translateY(0) translateX(23rem) !important;
 		transition: all 0.2s ease-in-out;
 	}
-	@media (max-width: 768px) {
+	@media (max-width: 767px) {
 		:global(.main-menu .dropdown-content.visible) {
 			transform: translateY(0) translateX(0) !important; 
             bottom: 3rem !important;

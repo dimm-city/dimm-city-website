@@ -58,7 +58,7 @@
 		--aug-border-bg: var(--fourth-accent);
 	}
 
-	@media (max-width: 768px) {
+	@media (max-width: 767px) {
 		.lists-row {
 			padding-top: 2rem;
 			grid-template-columns: 1fr;

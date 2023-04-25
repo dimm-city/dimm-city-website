@@ -55,8 +55,12 @@
 			{/if}
 		</div>
 	</section>
-	<TextSection header="Backstory" {isEditing} bind:data={character.backstory}/>
-	<TextSection header="Dreams" {isEditing} bind:data={character.dreams}/>
+	<div class="backstory">
+		<TextSection header="Backstory" {isEditing} bind:data={character.backstory} />
+	</div>
+	<div class="dreams">
+		<TextSection header="Dreams" {isEditing} bind:data={character.dreams} />
+	</div>
 </div>
 
 <style>
@@ -76,10 +80,16 @@
 	}
 	.section-container.profile {
 		display: grid;
+		grid-area: profile;
 		grid-template-columns: min-content 1fr;
 		grid-column-gap: 0.5rem;
 	}
-
+	.dreams {
+		grid-area: dreams;
+	}
+	.backstory {
+		grid-area: backstory;
+	}
 	.label {
 		text-align: left;
 		font-weight: bold;
@@ -96,7 +106,7 @@
 		grid-auto-flow: row;
 		grid-template-areas:
 			'heading heading heading'
-			'. . .';
+			'profile backstory dreams';
 		width: 100%;
 		--aug-border-all: 1px;
 		--aug-border-bg: var(--secondary-accent-muted);
@@ -115,9 +125,21 @@
 	.profile-heading {
 		grid-area: heading;
 	}
-	
 
-	@media (max-width: 768px) {
+	@media (max-width: 1199px) {
+		.profile-row {
+			padding-top: 2rem;
+			grid-template-columns: 1fr 1fr;
+			grid-template-rows: min-content repeat(2, 1fr);
+			grid-auto-flow: row;
+			row-gap: 1rem;
+			grid-template-areas:
+				'heading heading'
+				'profile profile'
+				'backstory dreams';
+		}
+	}
+	@media (max-width: 767px) {
 		.profile-row {
 			padding-top: 2rem;
 			grid-template-columns: 1fr;
@@ -126,9 +148,10 @@
 			row-gap: 1rem;
 			grid-template-areas:
 				'heading'
-				'.'
-				'.'
-				'.';
+				'profile'
+				'backstory'
+				'dreams';
 		}
 	}
+		
 </style>

@@ -14,14 +14,13 @@
 </script>
 
 <div class="stats-row" data-augmented-ui="tl-clip tr-clip br-clip-x bl-clip-x both">
-	
 	<div class="image-cell">
 		<div class="image">
 			<ProfileImage {character} />
 		</div>
 	</div>
 	<div class="stats-container">
-        <!-- <h3>Physical Stats</h3> -->
+		<!-- <h3>Physical Stats</h3> -->
 		<PhysicalStats {character} {isEditing} />
 	</div>
 	<div class="scores-container">
@@ -42,14 +41,14 @@
 <style>
 	.stats-row {
 		display: grid;
-		grid-template-columns: repeat(4fr);
-		grid-template-rows: min-content;
+		grid-template-columns: min-content 1fr 2fr;
+		grid-template-rows: min-content auto;
 		grid-template-areas:
-			'image-cell stats-cell scores-cell cyber-cell';
-		padding-inline: 1rem;
-		padding-block: 0.25rem;
-		padding-bottom: 1rem;
+			'image-cell stats-cell cyber-cell'
+			'scores-cell stats-cell cyber-cell';
+		padding: 1rem;
 		column-gap: 2rem;
+        row-gap: 1rem;
 		--aug-border-all: 1px;
 		--aug-border-bg: var(--secondary-accent-muted);
 		--aug-tl: 13px;
@@ -58,14 +57,8 @@
 		--aug-br: 13px;
 		--aug-inlay: 0;
 	}
-	.stats-heading {
-		grid-area: stats-heading;
-	}
-	.stats-heading h3 {
-		padding-left: 1rem;
-	}
+
 	.stats-container {
-		position: relative;
 		display: flex;
 		flex-direction: row;
 		gap: 2rem;
@@ -75,7 +68,6 @@
 		grid-area: 'image-cell';
 	}
 	.image {
-		padding: 0.5rem;
 		--dc-image-aspect-ratio: 3/4;
 		--dc-image-height: 240px;
 	}
@@ -89,10 +81,6 @@
 		--aug-border-bg: var(--fourth-accent);
 	}
 
-	.scores-heading {
-		grid-area: scores-heading;
-	}
-
 	.scores-container {
 		display: flex;
 		flex-direction: row;
@@ -103,32 +91,34 @@
 
 	.cybernetics-container {
 		grid-area: 'cyber-cell';
-		padding: 0.5rem;
 		padding-bottom: 1rem;
 	}
-	@media (max-width: 768px) {
+	@media (max-width: 900px) {
+		.stats-row {
+			grid-template-columns: min-content 1fr;
+			grid-template-rows: min-content auto;
+			grid-template-areas:
+				'image-cell stats-cell'
+				'scores-cell cyber-cell';
+		}
+	}
+	@media (max-width: 767px) {
 		.stats-row {
 			display: grid;
 			grid-template-columns: 1fr;
 			grid-template-rows: repeat(7, min-content);
 			row-gap: 0.5rem;
 			grid-template-areas:
-				'stats-heading '
 				'image-cell'
-				'scores-heading'
 				'scores-cell'
 				'stats-cell'
-				'cyber-heading'
 				'cyber-cell';
-		}
-		.stats-heading h3 {
-			padding-left: 0;
 		}
 		.image {
 			padding: 0.5rem;
 			--dc-image-aspect-ratio: 3/4;
 			--dc-image-height: min-content;
-            --dc-image-width: 75dvw;
+			--dc-image-width: 75dvw;
 		}
 
 		:global(.image > div) {

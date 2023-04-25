@@ -116,7 +116,7 @@
 		
 	}
 
-	@media screen and (max-width: 768px), (max-aspect-ratio: 0.74) {
+	@media screen and (max-width: 767px), (max-aspect-ratio: 0.74) {
 		.main-container {
 			grid-template-rows: auto min-content;
 		}

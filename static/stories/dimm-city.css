@@ -211,7 +211,7 @@ a:active {
     padding-left: 0.25em;
 }*/
 
-@media all and (max-width: 768px), (max-aspect-ratio: 3/4) {
+@media all and (max-width: 767px), (max-aspect-ratio: 3/4) {
     .passage {
         padding-top: 3em;
     }

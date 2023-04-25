@@ -78,7 +78,7 @@
 		text-overflow: clip;
 	}
 
-	@media (max-width: 768px) {
+	@media (max-width: 767px) {
 		.subtitle {
 			display: none;
 		}

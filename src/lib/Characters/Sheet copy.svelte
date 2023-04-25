@@ -86,7 +86,7 @@
 		white-space: pre-wrap;
 	}
 
-	@media screen and (max-width: 768px) {
+	@media screen and (max-width: 767px) {
 		/* If screen width is less than 768px, use a single
       column layout */
 		.character-sheet {

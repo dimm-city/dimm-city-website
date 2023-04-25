@@ -57,7 +57,7 @@
 		align-items: center;
 	}
 
-	@media (max-width: 768px) {
+	@media (max-width: 767px) {
 		.container {
 			height: 100%;
 			display: flex;

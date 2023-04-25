@@ -63,7 +63,7 @@
 
 	.grid-container {
 		display: grid;
-		grid-template-columns: repeat(2, minmax(0, 1fr));
+		grid-template-columns: min-content auto;
 		gap: 1rem;
 	}
 
@@ -72,19 +72,20 @@
 		margin-right: 0.5rem;
 		font-weight: bold;
 		align-items: center;
-		justify-content: end;
+		justify-content: start;
 		display: flex;
 	}
 
 	.value {
 		white-space: nowrap;
 		margin-left: 0.25rem;
+		text-transform: capitalize;
 	}
 
 	:global(input.inline) {
 		display: inline;
 	}
-	@media (max-width: 768px) {
+	@media (max-width: 767px) {
 		.physical-stats {
 			padding-bottom: 2rem;
 		}
