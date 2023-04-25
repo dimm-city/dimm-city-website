@@ -84,4 +84,17 @@
 	:global(input.inline) {
 		display: inline;
 	}
+	@media (max-width: 768px) {
+		.physical-stats {
+			padding-bottom: 2rem;
+		}
+		.grid-container {
+			grid-template-columns: min-content auto;
+		}
+		.label {
+			align-items: center;
+			justify-content: start;
+			display: flex;
+		}
+	}
 </style>

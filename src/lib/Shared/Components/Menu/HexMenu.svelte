@@ -90,17 +90,6 @@
 	.dropdown:has(.dropdown-content-grid:empty) {
 		display: none;
 	}
-	/* .dropdown-content.bottom {
-		bottom: 3rem;
-		right: 0;
-		transform-origin: top left;
-	}
-	.dropdown-content.bottom.left {
-		transform-origin: top right;
-	}
-	.dropdown-content.top {
-		transform-origin: bottom left;
-	} */
 
 	.dropdown-content.visible {
 		z-index: 1;

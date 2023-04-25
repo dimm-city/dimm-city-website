@@ -1,5 +1,7 @@
 <!-- CharacterSheet.svelte -->
 <script lang="ts">
+  import StatsRow from './StatsRow.svelte';
+
   import ListsRow from './ListsRow.svelte';
 
 	import ProfileRow from './ProfileRow.svelte';
@@ -57,31 +59,7 @@
 			</div>
 		</div>
 		<div class="container" data-augmented-ui-reset>
-			<div class="stats-row" data-augmented-ui="tl-clip tr-clip br-clip-x bl-clip-x both">
-				<div class="stats-heading"><h3>Physical Stats</h3></div>
-				<div class="scores-heading" />
-				<div class="cyber-heading">
-					<h3>Cybernetics</h3>
-				</div>
-				<div class="stats-container">
-					<div class="image">
-						<ProfileImage {character}  />
-					</div>
-					<PhysicalStats {character} {isEditing} />
-				</div>
-				<div class="scores-container">
-					<Points {character} {isEditing} />
-				</div>
-				<div class="cybernetics-container">
-					<List data={skills} maxItems={5} noItemsText="no cybernetics registered">
-						<div let:item slot="item">
-							<button data-augmented-ui class="aug-button" on:click={() => viewAbility(item)}
-								>{item.attributes.name}</button
-							>
-						</div>
-					</List>
-				</div>
-			</div>
+			<StatsRow  {character} {isEditing} />
 			<ProfileRow {character} {isEditing}/>
 			<ListsRow  {character} {isEditing} {viewAbility}></ListsRow>
 		</div>
@@ -122,7 +100,7 @@
 		display: grid;
 		width: 100%;
 		grid-template-columns: 1fr 0.3fr 1fr;
-		padding-inline: 1.5rem;
+		padding-inline: 1rem;
 		padding-block: 0.5rem;
 		justify-items: center;
 		align-items: end;
@@ -151,13 +129,8 @@
 		padding: 0;
 	}
 	h1 {
-		font-size: 1.5rem;
+	
 		 margin: 0;
-		/*padding-inline: 0.25rem; 
-		display: inline;
-		align-items: end;*/
-		text-align: left;
-		/* padding: 0.2rem; */
 	}
 
 	h1[contenteditable]{
@@ -180,7 +153,6 @@
 		display: grid;
 		grid-auto-flow: row;
 		grid-template-columns: 1fr;
-		/* grid-template-rows: 0.5fr 0.2fr 0.3fr; */
 		grid-template-rows: min-content min-content auto;
 		gap: 0.5rem;
 	}

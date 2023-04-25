@@ -106,7 +106,7 @@
 		--aug-br: 13px;
 		--aug-inlay: 0;
 		padding-block: 2rem;
-		padding-inline: 2rem;
+		padding-inline: 1rem;
 		gap: 1.5rem;
 		row-gap: 0.25rem;
 		align-content: center;
@@ -123,6 +123,7 @@
 			grid-template-columns: 1fr;
 			grid-template-rows: min-content repeat(3, 1fr);
 			grid-auto-flow: row;
+			row-gap: 1rem;
 			grid-template-areas:
 				'heading'
 				'.'
