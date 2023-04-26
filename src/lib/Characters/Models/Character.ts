@@ -143,8 +143,9 @@ export interface ICharacter {
 	thumbnailImage: string;
 	cybernetics: ISummaryItem[] | any;
 	race: IRaceSummaryItem | any;
-	specialties: ISummaryItem[] | any;
+	specialties: ISummaryItem[] | any[];
 	currentLocation: ISummaryItem;
+	originLocation: ISummaryItem;
 	selectedAbilities: ISummaryItem[];
 	items: ISummaryItem[];
 	scripts: ISummaryItem[];

@@ -1,10 +1,13 @@
 <script>
 	import TextSection from './TextSection.svelte';
+	import Select from 'svelte-select';
 
 	// @ts-nocheck
 
 	import Input from '$lib/Shared/Components/Input.svelte';
 	import Textarea from '$lib/Shared/Components/Textarea.svelte';
+	import { getDistricts } from '$lib/Locations/getDistricts';
+	import { getSpecialties } from '$lib/Specialties/getSpecialties';
 
 	/**
 	 * @type {import('$lib/Characters/Models/Character').ICharacter}}
@@ -16,13 +19,54 @@
 <div class="profile-row" data-augmented-ui="tl-clip-x tr-clip-x br-clip bl-clip border">
 	<div class="profile-heading"><h3>Profile</h3></div>
 	<section class="section-container profile">
+		<div class="label">Specialties:</div>
+		<div class="value">
+			{#if isEditing}
+				<div class="aug-select">
+					<Select
+						loadOptions={getSpecialties}
+						placeholder="Select up to two specialties"
+						label="name"
+						itemId="id"
+						multiple={true}
+						bind:value={character.specialties}
+					/>
+				</div>
+			{:else}
+				<span>{character.specialties?.length > 0
+					? character.specialties?.map((s) => s.name).join(', ')
+					: 'Unknown'}</span>
+			{/if}
+		</div>
 		<div class="label">Origin:</div>
-		<div class="value"><span>{character.currentLocation?.name ?? 'Unknown'}</span></div>
+		<div class="value">
+			{#if isEditing}
+				<div class="current-location aug-select">
+					<Select
+						loadOptions={getDistricts}
+						placeholder="Select a district"
+						label="name"
+						itemId="id"
+						bind:value={character.originLocation}
+					/>
+				</div>
+			{:else}
+				<span>{character.originLocation?.name ?? 'Unknown'}</span>
+			{/if}
+		</div>
 
 		<div class="label">Residency:</div>
 		<div class="value">
 			{#if isEditing}
-				<span>[Location selector]</span>
+				<div class="current-location aug-select">
+					<Select
+						loadOptions={getDistricts}
+						placeholder="Select a district"
+						label="name"
+						itemId="id"
+						bind:value={character.currentLocation}
+					/>
+				</div>
 			{:else}
 				<span>{character.currentLocation?.name ?? 'Unknown'}</span>
 			{/if}
@@ -126,6 +170,12 @@
 		grid-area: heading;
 	}
 
+	.current-location {
+		display: flex;
+		width: 100%;
+		color: var(--third-accent);
+		font-family: var(--main-font-family);
+	}
 	@media (max-width: 1199px) {
 		.profile-row {
 			padding-top: 2rem;
@@ -153,5 +203,4 @@
 				'dreams';
 		}
 	}
-		
 </style>

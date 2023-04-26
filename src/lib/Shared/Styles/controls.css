@@ -9,7 +9,7 @@ i.btn {
 	padding-bottom: 0.2rem;
 	text-align: center;
 }
-i.btn.inline{
+i.btn.inline {
 	font-size: inherit;
 	transition: color 300ms;
 }
@@ -45,6 +45,32 @@ input:read-only,
 .aug-input[disabled='true'] {
 	--aug-border-bg: var(--blue-accent);
 }
+.aug-select {
+	/* https://github.com/rob-balfre/svelte-select/blob/master/docs/theming_variables.md */
+	--background: rgba(17, 17, 17, 0.75);
+	--border: 1px solid var(--fourth-accent);
+	--border-radius: 0.25rem;
+	--font-size: 1rem;
+	--height: 1.25rem;
+	--padding: 0 0.5rem;
+	--selected-item-padding: 0 0.5rem;
+	--item-first-border-radius: 0;
+
+	--border-focused: var(--border);
+	--border-hover: var(--border);
+	--item-background: var(--background);
+	--list-border: var(--border);
+	--list-background: var(--background);
+	--placeholder-color: var(--fourth-accent);
+	--item-is-active-bg: var(--background);
+	--item-is-active-color: var(--light);
+	--item-hover-bg: var(--fourth-accent);
+	--item-hover-color: var(--pink);
+	--list-border: var(--border);
+	--item-is-not-selectable-color: var(--light);
+	--selected-item-color: var(--pink);
+	--multi-item-bg:var(--background);
+}
 .aug-input {
 	width: 100%;
 
@@ -69,7 +95,7 @@ input:read-only,
 	padding: 0.75rem;
 	white-space: nowrap;
 	display: inline-block;
-	cursor: pointer;	
+	cursor: pointer;
 	color: white;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -78,8 +104,7 @@ input:read-only,
 	transition: all var(--quick-in);
 	text-transform: uppercase;
 
-	    
-	border: none;   
+	border: none;
 
 	--aug-clip-tl1: initial;
 	--aug-clip-tr1: initial;
@@ -122,8 +147,8 @@ input:read-only,
 	font-size: 0.7em;
 }
 @media (max-width: 500px) {
-	.aug-button{
-		padding: .85rem;
+	.aug-button {
+		padding: 0.85rem;
 		width: 100%;
 	}
 	.aug-button.square {

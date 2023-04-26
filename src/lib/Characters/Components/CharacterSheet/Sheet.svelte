@@ -1,8 +1,8 @@
 <!-- CharacterSheet.svelte -->
 <script lang="ts">
-  import StatsRow from './StatsRow.svelte';
+	import StatsRow from './StatsRow.svelte';
 
-  import ListsRow from './ListsRow.svelte';
+	import ListsRow from './ListsRow.svelte';
 
 	import ProfileRow from './ProfileRow.svelte';
 	import PhysicalStats from './PhysicalStats.svelte';
@@ -17,6 +17,7 @@
 	import List from '$lib/Shared/Components/List.svelte';
 	import ProfileImage from '../ProfileImage.svelte';
 
+	
 	export let character: ICharacter;
 	export let isEditing = false;
 
@@ -40,11 +41,11 @@
 		<div class="heading">
 			<div>
 				{#if isEditing}
-					<h1 contenteditable="true" bind:textContent={character.name}></h1>
+					<h1 contenteditable="true" bind:textContent={character.name} />
 				{:else}
-				<h1>					
-					{character.name}
-				</h1>
+					<h1>
+						{character.name}
+					</h1>
 				{/if}
 			</div>
 			<div>
@@ -52,16 +53,16 @@
 			</div>
 			<div>
 				<h2>
-					Specialty: {character.specialties?.data?.length > 0
-						? character.specialties?.data.join(', ')
+					Specialty: {character.specialties?.length > 0
+						? character.specialties?.map((s) => s.name).join(', ')
 						: 'Unknown'}
 				</h2>
 			</div>
 		</div>
 		<div class="container" data-augmented-ui-reset>
-			<StatsRow  {character} {isEditing} />
-			<ProfileRow {character} {isEditing}/>
-			<ListsRow  {character} {isEditing} {viewAbility}></ListsRow>
+			<StatsRow {character} {isEditing} />
+			<ProfileRow {character} {isEditing} />
+			<ListsRow {character} {isEditing} {viewAbility} />
 		</div>
 	</div>
 </div>
@@ -110,7 +111,7 @@
 	}
 	div.heading > div {
 		width: 100%;
-		overflow: hidden;		
+		overflow: hidden;
 	}
 	div.heading > div:first-of-type {
 		text-align: left;
@@ -129,12 +130,14 @@
 		padding: 0;
 	}
 	h1 {
-	
-		 margin: 0;
+		margin: 0;
 	}
 
-	h1[contenteditable]{
+	h1[contenteditable],
+	h1[contenteditable]:focus-visible {
 		border: 1px var(--fourth-accent) solid;
+		outline-color: var(--fourth-accent);
+		outline-width: 1px;
 	}
 	h2 {
 		margin: 0;
@@ -142,11 +145,6 @@
 		font-size: 0.8rem;
 		padding-left: 0.5rem;
 	}
-	h3 {
-		margin: 0;
-		color: var(--fourth-accent);
-	}
-	
 	.container {
 		height: max-content;
 		width: 100%;
@@ -157,44 +155,6 @@
 		gap: 0.5rem;
 	}
 
-	
-	.stats-row {
-		display: grid;
-		grid-template-columns: 1fr 0.75fr 1fr;
-		grid-template-rows: min-content 1fr;
-		grid-template-areas:
-			'stats-heading scores-heading cyber-heading'
-			'stats-cell scores-cell cyber-cell';
-		padding-inline: 1rem;
-		padding-block: 0.25rem;
-		column-gap: 2rem;
-		--aug-border-all: 1px;
-		--aug-border-bg: var(--secondary-accent-muted);
-		--aug-tl: 13px;
-		--aug-tr: 13px;
-		--aug-bl: 13px;
-		--aug-br: 13px;
-		--aug-inlay: 0;
-	}
-	.stats-heading {
-		grid-area: stats-heading;
-	}
-	.stats-heading h3 {
-		padding-left: 1rem;
-	}
-	.stats-container {
-		position: relative;
-		display: flex;
-		flex-direction: row;
-		gap: 2rem;
-		grid-area: stats-cell;
-	}
-	.image {
-		padding: 0.5rem;		
-		--dc-image-aspect-ratio: 3/4;
-		--dc-image-height: 240px;
-	}
-
 	:global(.image > div) {
 		--aug-b: 3px;
 		--aug-l: 3px;
@@ -203,19 +163,6 @@
 		--aug-border-all: 2px;
 		--aug-border-bg: var(--fourth-accent);
 	}
-
-	.scores-heading {
-		grid-area: scores-heading;
-	}
-
-	.scores-container {
-		display: flex;
-		flex-direction: row;
-		justify-content: space-evenly;
-		align-items: start;
-		grid-area: scores-cell;
-	}
-
 
 	@media (max-width: 767px) {
 		.scroll-wrapper {
@@ -235,26 +182,5 @@
 		.container {
 			grid-template-rows: auto;
 		}
-		.stats-row {
-			display: grid;
-			grid-template-columns: 1fr;
-			grid-template-rows: repeat(6, min-content);
-			row-gap: 0.5rem;
-			grid-template-areas:
-				'stats-heading '
-				'stats-cell'
-				'scores-heading'
-				'scores-cell'
-				'cyber-heading'
-				'cyber-cell';
-		}
-		.scores-container {
-			display: flex;
-			flex-direction: row;
-			justify-content: center;
-			align-items: center;
-			margin-bottom: 1rem;
-		}
-
 	}
 </style>
