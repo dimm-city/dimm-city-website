@@ -49,11 +49,8 @@
 				{/if}
 			</div>
 			<div>
-				<button class="aug-button" data-augmented-ui="all-hex"><i class="bi bi-menu-app" /></button>
-			</div>
-			<div>
 				<h2>
-					Specialty: {character.specialties?.length > 0
+					{character.specialties?.length > 0
 						? character.specialties?.map((s) => s.name).join(', ')
 						: 'Unknown'}
 				</h2>
@@ -100,7 +97,7 @@
 		filter: var(--content-container-filter);
 		display: grid;
 		width: 100%;
-		grid-template-columns: 1fr 0.3fr 1fr;
+		grid-template-columns: 1fr 1fr;
 		padding-inline: 1rem;
 		padding-block: 0.5rem;
 		justify-items: center;
@@ -118,17 +115,11 @@
 		align-items: end;
 		padding: 0;
 	}
-	div.heading > div:nth-last-of-type(2) {
-		text-align: center;
-		visibility: hidden; /*TODO: remove to enable button */
-	}
+
 	div.heading > div:last-of-type {
 		text-align: right;
 	}
 
-	div.heading button {
-		padding: 0;
-	}
 	h1 {
 		margin: 0;
 	}

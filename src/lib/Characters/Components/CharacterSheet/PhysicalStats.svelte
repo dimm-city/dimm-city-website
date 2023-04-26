@@ -1,8 +1,18 @@
 <script lang="ts">
 	import type { ICharacter } from '$lib/Characters/Models/Character';
 	import Input from '$lib/Shared/Components/Input.svelte';
+	import Select from 'svelte-select/Select.svelte';
 	export let character: ICharacter;
 	export let isEditing = false;
+	const ageOptions = [
+		'Childhood',
+		'Adolescence',
+		'Young Adulthood',
+		'Adulthood',
+		'Middle-Age',
+		'Old Age',
+		'Ancient'
+	];
 </script>
 
 <div class="physical-stats">
@@ -22,9 +32,9 @@
 			{/if}
 		</div>
 		<div class="label">Age:</div>
-		<div class="value">
+		<div class="value aug-select">
 			{#if isEditing}
-				<Input bind:value={character.age} class="inline" maxlength="50" />
+				<Select value={character.age} bind:justValue={character.age} items={ageOptions} />
 			{:else}
 				{character.age || 'Unknown'}
 			{/if}
