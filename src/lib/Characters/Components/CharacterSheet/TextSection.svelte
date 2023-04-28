@@ -3,21 +3,29 @@
 	export let data = '';
 	export let header = '';
 	export let isEditing = false;
-	let isFullscreen = false;
+	export let isFullscreen = false;
 	let aug = 'tr-clip bl-clip border';
 	$: aug = isFullscreen ? '' : 'tr-clip bl-clip border';
+	/**
+	 * @type {HTMLDivElement}
+	 */
+	let content;
+	function toggleFullscreen() {
+		isFullscreen = !isFullscreen;	
+		content.scrollIntoView();
+	}
 </script>
 
 <section class="section-container" class:fullscreen={isFullscreen}>
 	<div class="text-section">
-		<div class="text-section-header">
+		<div class="text-section-header" bind:this={content}>
 			<span>{header}:</span>
 			<i
 				class="btn inline bi"
-                class:bi-fullscreen={!isFullscreen}
-                class:bi-fullscreen-exit={isFullscreen}
-				on:keypress={() => (isFullscreen = !isFullscreen)}
-				on:click={() => (isFullscreen = !isFullscreen)}
+				class:bi-fullscreen={!isFullscreen}
+				class:bi-fullscreen-exit={isFullscreen}
+				on:keypress={toggleFullscreen}
+				on:click={toggleFullscreen}
 			/>
 		</div>
 		<div class="text-section-content">
@@ -41,15 +49,16 @@
 		align-items: stretch;
 		justify-content: stretch;
 		gap: 0.5rem;
-        transition: all 200ms;
+		transition: all 200ms;
 	}
 
 	.section-container.fullscreen {
 		position: absolute;
 		top: 0;
+		left: 0;
 		display: flex;
-        align-items: start;
-		padding: 1rem;
+		align-items: start;
+		padding: 1.5rem;
 		background-color: rgba(17, 17, 17, 1);
 		height: 100%;
 		width: 100%;
@@ -57,7 +66,7 @@
 	}
 	.text-section {
 		height: 90%;
-        width: 100%;
+		width: 100%;
 		align-content: start;
 	}
 	.text-section-header {
@@ -65,10 +74,10 @@
 		width: 100%;
 		justify-content: space-between;
 	}
-    .text-section-content{
-        display: flex;
-        height: 100%;
-    }
+	.text-section-content {
+		display: flex;
+		height: 100%;
+	}
 
 	.text-section span {
 		display: block;
@@ -94,4 +103,13 @@
 		--aug-border-all: 0px;
 		--aug-border-bg: var(--fourth-accent);
 	}
+	/* .fullscreen .text-section-content{
+		width: 50%;
+	} */
+
+	/* @media (max-width: 1199px) {
+		.fullscreen .text-section {
+			width: 90%;
+		}
+	} */
 </style>

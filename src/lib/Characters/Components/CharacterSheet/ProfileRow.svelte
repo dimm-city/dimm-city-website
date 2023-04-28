@@ -1,4 +1,6 @@
 <script>
+	import StoryRow from './StoryRow.svelte';
+
 	import TextSection from './TextSection.svelte';
 	import Select from 'svelte-select';
 
@@ -33,9 +35,11 @@
 					/>
 				</div>
 			{:else}
-				<span>{character.specialties?.length > 0
-					? character.specialties?.map((s) => s.name).join(', ')
-					: 'Unknown'}</span>
+				<span
+					>{character.specialties?.length > 0
+						? character.specialties?.map((s) => s.name).join(', ')
+						: 'Unknown'}</span
+				>
 			{/if}
 		</div>
 		<div class="label">Origin:</div>
@@ -99,12 +103,6 @@
 			{/if}
 		</div>
 	</section>
-	<div class="backstory">
-		<TextSection header="Backstory" {isEditing} bind:data={character.backstory} />
-	</div>
-	<div class="dreams">
-		<TextSection header="Dreams" {isEditing} bind:data={character.dreams} />
-	</div>
 </div>
 
 <style>
@@ -127,13 +125,7 @@
 		grid-area: profile;
 		grid-template-columns: min-content 1fr;
 		grid-column-gap: 0.5rem;
-	}
-	.dreams {
-		grid-area: dreams;
-	}
-	.backstory {
-		grid-area: backstory;
-	}
+	}	
 	.label {
 		text-align: left;
 		font-weight: bold;
@@ -144,13 +136,7 @@
 		text-align: left;
 	}
 	.profile-row {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		grid-template-rows: min-content 1fr;
-		grid-auto-flow: row;
-		grid-template-areas:
-			'heading heading heading'
-			'profile backstory dreams';
+		
 		width: 100%;
 		--aug-border-all: 1px;
 		--aug-border-bg: var(--secondary-accent-muted);

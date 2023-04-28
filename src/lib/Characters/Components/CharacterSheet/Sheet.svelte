@@ -16,8 +16,8 @@
 	import type { ICharacter } from '$lib/Characters/Models/Character';
 	import List from '$lib/Shared/Components/List.svelte';
 	import ProfileImage from '../ProfileImage.svelte';
+	import StoryRow from './StoryRow.svelte';
 
-	
 	export let character: ICharacter;
 	export let isEditing = false;
 
@@ -59,6 +59,7 @@
 		<div class="container" data-augmented-ui-reset>
 			<StatsRow {character} {isEditing} />
 			<ProfileRow {character} {isEditing} />
+			<StoryRow {character} {isEditing} />
 			<ListsRow {character} {isEditing} {viewAbility} />
 		</div>
 	</div>
@@ -142,7 +143,7 @@
 		display: grid;
 		grid-auto-flow: row;
 		grid-template-columns: 1fr;
-		grid-template-rows: min-content min-content auto;
+		grid-template-rows: min-content min-content min-content auto;
 		gap: 0.5rem;
 	}
 
