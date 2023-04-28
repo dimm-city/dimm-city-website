@@ -6,7 +6,6 @@
 
 	import { openModal } from 'svelte-modals';
 	import AbilityModal from '../AbilityModal.svelte';
-	import ContentModal from '../ContentModal.svelte';
 	import type { ICharacter } from '$lib/Characters/Models/Character';
 	import StoryRow from './StoryRow.svelte';
 
@@ -14,8 +13,6 @@
 	export let isEditing = false;
 
 	const viewAbility = (ability: any) => openModal(AbilityModal, { data: ability });
-
-	const viewText = (text: string) => openModal(ContentModal, { data: text ?? '' });
 
 	const skills: object[] = [];
 

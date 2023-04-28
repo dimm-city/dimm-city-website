@@ -5,7 +5,7 @@
 	export let data = {};
 	export let fullscreen = true;
 
-	function dismiss() {
+	export let dismiss = () => {
 		closeModal();
 	}
 </script>

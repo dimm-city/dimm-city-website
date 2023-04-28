@@ -1,29 +1,41 @@
 <script>
 	import Textarea from '$lib/Shared/Components/Textarea.svelte';
+	import markdownit from 'markdown-it';
+
+	import { openModal, closeAllModals } from 'svelte-modals';
+	import ContentModal from '../ContentModal.svelte';
 	export let data = '';
 	export let header = '';
 	export let isEditing = false;
-	export let isFullscreen = false;
+
+	const md = new markdownit();
 	let aug = 'tr-clip bl-clip border';
-	$: aug = isFullscreen ? '' : 'tr-clip bl-clip border';
+
 	/**
-	 * @type {HTMLDivElement}
+	 * @type {import("svelte-modals/store").SvelteModalComponent<any, any, any> | import("svelte-modals/store").LazySvelteModalComponent<any, any, any> | ContentModal}
 	 */
-	let content;
+	let modal;
 	function toggleFullscreen() {
-		isFullscreen = !isFullscreen;	
-		content.scrollIntoView();
+		openModal(ContentModal, {
+			data,
+			isEditing,
+			onClose: (x) => {
+				console.log('confirmed modal', x);
+				data = x;
+				closeAllModals();
+			}
+		});
 	}
 </script>
 
-<section class="section-container" class:fullscreen={isFullscreen}>
+<section class="section-container">
 	<div class="text-section">
-		<div class="text-section-header" bind:this={content}>
+		<div class="text-section-header">
 			<span>{header}:</span>
 			<i
 				class="btn inline bi"
-				class:bi-fullscreen={!isFullscreen}
-				class:bi-fullscreen-exit={isFullscreen}
+				class:bi-fullscreen={toggleFullscreen}
+				class:bi-fullscreen-exit={toggleFullscreen}
 				on:keypress={toggleFullscreen}
 				on:click={toggleFullscreen}
 			/>
@@ -33,7 +45,7 @@
 				<Textarea bind:value={data} />
 			{:else}
 				<div class="text-container" data-augmented-ui={aug}>
-					{data ?? ''}
+					{@html md.render(data ?? '')}
 				</div>
 			{/if}
 		</div>
@@ -52,18 +64,6 @@
 		transition: all 200ms;
 	}
 
-	.section-container.fullscreen {
-		position: absolute;
-		top: 0;
-		left: 0;
-		display: flex;
-		align-items: start;
-		padding: 1.5rem;
-		background-color: rgba(17, 17, 17, 1);
-		height: 100%;
-		width: 100%;
-		z-index: 1000;
-	}
 	.text-section {
 		height: 90%;
 		width: 100%;
@@ -95,21 +95,4 @@
 		--aug-border-all: 1px;
 		--aug-border-bg: var(--fourth-accent);
 	}
-
-	.fullscreen .text-container {
-		overflow-y: scroll;
-		text-overflow: unset;
-		max-height: max-content;
-		--aug-border-all: 0px;
-		--aug-border-bg: var(--fourth-accent);
-	}
-	/* .fullscreen .text-section-content{
-		width: 50%;
-	} */
-
-	/* @media (max-width: 1199px) {
-		.fullscreen .text-section {
-			width: 90%;
-		}
-	} */
 </style>

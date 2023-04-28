@@ -1,13 +1,7 @@
 <script lang="ts">
-	import ItemsList from './ItemsList.svelte';
-
-	import { openModal } from 'svelte-modals';
-	import AbilityModal from '../AbilityModal.svelte';
-	import ContentModal from '../ContentModal.svelte';
-	import Image from '$lib/Shared/Components/Image.svelte';
+	
 	import type { ICharacter } from '$lib/Characters/Models/Character';
-	import List from '$lib/Shared/Components/List.svelte';
-
+	
 	export let character: ICharacter;
 	export let isEditing = false;
 </script>
