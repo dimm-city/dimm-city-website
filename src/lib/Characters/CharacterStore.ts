@@ -30,10 +30,14 @@ export async function updateCharacter(character: ICharacter) {
 	const importData = JSON.parse(JSON.stringify(character));
 	importData.playerUpdated = true;
 	//importData.slug = character.name.replace(' ', '-');
-	importData.currentLocation = { data: { id: character.currentLocation.data.id } };
+	
+	importData.currentLocation =  {...character.currentLocation, connect: [character.currentLocation?.data?.id] };
+	importData.originLocation = {...character.originLocation, connect: [character.originLocation?.data?.id] };
+
+	// { connect: [character.currentLocation?.data?.id] };
 	// importData.specialties = character.specialties.map(r => r.id);
 
-	fetch(`${config.apiBaseUrl}/characters/${character.id}`, {
+	fetch(`${config.apiBaseUrl}/characters/${character.id}?populate=*`, {
 		method: 'PUT',
 		headers: {
 			Authorization: `Bearer ${get(jwt)}`,

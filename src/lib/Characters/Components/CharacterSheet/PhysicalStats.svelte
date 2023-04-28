@@ -34,7 +34,7 @@
 		<div class="label">Age:</div>
 		<div class="value aug-select">
 			{#if isEditing}
-				<Select bind:value={character.age} bind:justValue={character.age} items={ageOptions} />
+				<Select value={character.age} bind:justValue={character.age} items={ageOptions} />
 			{:else}
 				{character.age || 'Unknown'}
 			{/if}

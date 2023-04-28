@@ -26,7 +26,7 @@
 						label="name"
 						itemId="id"
 						multiple={true}
-						hideEmptyState={true}						
+						hideEmptyState={true}
 						bind:value={character.specialties.data}
 					/>
 				</div>
@@ -47,11 +47,11 @@
 						placeholder="Select a district"
 						label="name"
 						itemId="id"
-						bind:value={character.originLocation}
+						bind:value={character.originLocation.data.id}
 					/>
 				</div>
 			{:else}
-				<span>{character.originLocation?.name ?? 'Unknown'}</span>
+				<span>{character.originLocation?.data?.attributes?.name ?? 'Unknown'}</span>
 			{/if}
 		</div>
 
@@ -68,8 +68,8 @@
 					/>
 				</div>
 			{:else}
-				<span>{character.currentLocation?.data?.name ?? 'Unknown'}</span>
-			{/if}
+				<span>{character.currentLocation?.data?.attributes?.name ?? 'Unknown'}</span>
+			{/if}			
 		</div>
 
 		<div class="label">Vibe:</div>
