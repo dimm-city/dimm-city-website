@@ -1,11 +1,6 @@
 <script>
-	import StoryRow from './StoryRow.svelte';
-
-	import TextSection from './TextSection.svelte';
-	import Select from 'svelte-select';
-
-	// @ts-nocheck
-
+	//@ts-nocheck
+	import Select from 'svelte-select';	
 	import Input from '$lib/Shared/Components/Input.svelte';
 	import Textarea from '$lib/Shared/Components/Textarea.svelte';
 	import { getDistricts } from '$lib/Locations/getDistricts';
@@ -31,13 +26,14 @@
 						label="name"
 						itemId="id"
 						multiple={true}
-						bind:value={character.specialties}
+						hideEmptyState={true}						
+						bind:value={character.specialties.data}
 					/>
 				</div>
 			{:else}
 				<span
-					>{character.specialties?.length > 0
-						? character.specialties?.map((s) => s.name).join(', ')
+					>{character.specialties?.data?.length > 0
+						? character.specialties?.data?.map((s) => s.name).join(', ')
 						: 'Unknown'}</span
 				>
 			{/if}
@@ -68,11 +64,11 @@
 						placeholder="Select a district"
 						label="name"
 						itemId="id"
-						bind:value={character.currentLocation}
+						bind:value={character.currentLocation.data}
 					/>
 				</div>
 			{:else}
-				<span>{character.currentLocation?.name ?? 'Unknown'}</span>
+				<span>{character.currentLocation?.data?.name ?? 'Unknown'}</span>
 			{/if}
 		</div>
 
@@ -119,16 +115,26 @@
 		align-items: stretch;
 		justify-content: space-evenly;
 		gap: 0.5rem;
+		
+	}
+
+	:global(.aug-select){
+		--multi-item-clear-icon-color: var(--pink);
+		--multi-item-outline: 1px solid var(--pink);
+		--clear-select-color: var(--pink);
 	}
 	.section-container.profile {
 		display: grid;
 		grid-area: profile;
-		grid-template-columns: min-content 1fr;
+		grid-template-columns: min-content 1fr min-content 1fr;
+		grid-template-rows: repeat(4, min-content);
 		grid-column-gap: 0.5rem;
-	}	
+	}
 	.label {
 		text-align: left;
 		font-weight: bold;
+		display: flex;
+		align-items: center;
 	}
 
 	.value {
@@ -136,7 +142,6 @@
 		text-align: left;
 	}
 	.profile-row {
-		
 		width: 100%;
 		--aug-border-all: 1px;
 		--aug-border-bg: var(--secondary-accent-muted);
@@ -162,31 +167,11 @@
 		color: var(--third-accent);
 		font-family: var(--main-font-family);
 	}
-	@media (max-width: 1199px) {
-		.profile-row {
-			padding-top: 2rem;
-			grid-template-columns: 1fr 1fr;
-			grid-template-rows: min-content repeat(2, 1fr);
-			grid-auto-flow: row;
-			row-gap: 1rem;
-			grid-template-areas:
-				'heading heading'
-				'profile profile'
-				'backstory dreams';
-		}
-	}
+
 	@media (max-width: 767px) {
-		.profile-row {
-			padding-top: 2rem;
-			grid-template-columns: 1fr;
-			grid-template-rows: min-content repeat(3, 1fr);
-			grid-auto-flow: row;
-			row-gap: 1rem;
-			grid-template-areas:
-				'heading'
-				'profile'
-				'backstory'
-				'dreams';
+		.section-container.profile {
+			grid-template-columns: min-content 1fr;
+			grid-template-rows: repeat(8, min-content);
 		}
 	}
 </style>

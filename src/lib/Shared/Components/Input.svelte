@@ -41,9 +41,9 @@
 	}
 
 	.inline{
-		display: inline;
-		padding: 0;
-		padding-inline: 0.25rem;
+		display: inline-block;
+		/* padding: 0; */
+		/* padding-inline: 0.25rem; */
 		--aug-tr1: 0.33rem;
 		--aug-br1: 0.33rem;
 		--aug-tl1: 0.33rem;

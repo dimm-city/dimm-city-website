@@ -132,7 +132,7 @@
 		.scores-container {
 			display: flex;
 			flex-direction: row;
-			justify-content: center;
+			justify-content: space-evenly;
 			align-items: center;
 			margin-bottom: 1rem;
 		}

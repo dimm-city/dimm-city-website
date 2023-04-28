@@ -127,7 +127,7 @@
 
 		.content-panel {
 			grid-row: 1;
-			margin: 0 auto 4vh;
+			margin: 0 auto 6vh;
 		}
 	}
 </style>

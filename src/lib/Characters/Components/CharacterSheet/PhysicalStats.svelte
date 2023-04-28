@@ -40,15 +40,16 @@
 			{/if}
 		</div>
 		<div class="label">Height:</div>
-		<div class="value">
-			{#if isEditing}
-				<Input bind:value={character.height} class="inline" />
-			{:else}
-				{character.height || 0}
-			{/if} cm
+		<div class="value suffix">
+				{#if isEditing}
+					<Input bind:value={character.height} class="inline" />
+				{:else}
+					{character.height || 0}
+				{/if} cm
 		</div>
 		<div class="label">Weight:</div>
-		<div class="value">
+		<div class="value suffix">
+
 			{#if isEditing}
 				<Input bind:value={character.weight} class="inline" />
 			{:else}
@@ -90,6 +91,13 @@
 		white-space: nowrap;
 		margin-left: 0.25rem;
 		text-transform: capitalize;
+	}
+
+	.value.suffix {
+		display: flex;
+		align-items: center;
+		gap: 0.25rem;
+		width: 100%;
 	}
 
 	:global(input.inline) {

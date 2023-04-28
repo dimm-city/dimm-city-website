@@ -1,21 +1,13 @@
 <!-- CharacterSheet.svelte -->
 <script lang="ts">
 	import StatsRow from './StatsRow.svelte';
-
 	import ListsRow from './ListsRow.svelte';
-
 	import ProfileRow from './ProfileRow.svelte';
-	import PhysicalStats from './PhysicalStats.svelte';
-	import Points from './Points.svelte';
-	import ItemsList from './ItemsList.svelte';
 
 	import { openModal } from 'svelte-modals';
 	import AbilityModal from '../AbilityModal.svelte';
 	import ContentModal from '../ContentModal.svelte';
-	import Image from '$lib/Shared/Components/Image.svelte';
 	import type { ICharacter } from '$lib/Characters/Models/Character';
-	import List from '$lib/Shared/Components/List.svelte';
-	import ProfileImage from '../ProfileImage.svelte';
 	import StoryRow from './StoryRow.svelte';
 
 	export let character: ICharacter;
@@ -36,7 +28,7 @@
 <div class="scroll-wrapper">
 	<div
 		class="sheet"
-		data-augmented-ui="bl-2-clip-y br-2-clip-y tl-2-clip-xy tr-2-clip-xy l-rect r-rect t-clip both"
+		data-augmented-ui="bl-2-clip-y br-2-clip-y tl-clip tr-clip t-clip both"
 	>
 		<div class="heading">
 			<div>
@@ -48,10 +40,11 @@
 					</h1>
 				{/if}
 			</div>
-			<div>
+			<div class="specialties-heading">
 				<h2>
-					{character.specialties?.length > 0
-						? character.specialties?.map((s) => s.name).join(', ')
+					<!-- ts-ignore-->
+					{character.specialties?.data?.length > 0
+						? character.specialties?.data?.map((s) => s.name).join(', ')
 						: 'Unknown'}
 				</h2>
 			</div>
@@ -148,9 +141,9 @@
 	}
 
 	:global(.image > div) {
-		--aug-b: 3px;
-		--aug-l: 3px;
-		--aug-t: 3px;
+		--aug-b: 0px;
+		--aug-l: 0px;
+		--aug-t: 0px;
 		--aug-tr: 7px;
 		--aug-border-all: 2px;
 		--aug-border-bg: var(--fourth-accent);
@@ -161,18 +154,32 @@
 			overflow-y: auto;
 			padding-inline: 0.5rem;
 		}
-		.sheet {
+		/* .sheet {
 			--aug-border-all: 3px;
-			--aug-tl: 3px;
-			--aug-tr: 3px;
+			--aug-tl: 9px;
+			--aug-tr: 7px;
 			--aug-t-center: 50%;
 			--aug-t: 5px;
 			--aug-inlay-bg: transparent;
 			--aug-l: 0px;
 			--aug-r: 0px;
-		}
+		} */
 		.container {
 			grid-template-rows: auto;
 		}
+	}
+	@media (max-width: 500px) {
+		.specialties-heading {
+			display: none;
+		}
+
+		:global(.image > div) {
+		--aug-b: 0px;
+		--aug-l: 0px;
+		--aug-t: 0px;
+		--aug-tr: 7px;
+		--aug-border-all: 2px;
+		--aug-border-bg: var(--fourth-accent);
+	}
 	}
 </style>

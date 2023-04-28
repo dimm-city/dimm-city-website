@@ -4,11 +4,6 @@
 
 	// @ts-nocheck
 
-	import Input from '$lib/Shared/Components/Input.svelte';
-	import Textarea from '$lib/Shared/Components/Textarea.svelte';
-	import { getDistricts } from '$lib/Locations/getDistricts';
-	import { getSpecialties } from '$lib/Specialties/getSpecialties';
-
 	/**
 	 * @type {import('$lib/Characters/Models/Character').ICharacter}}
 	 */

@@ -43,7 +43,7 @@
 	h4 {
 		position: absolute;
 		color: var(--light);
-		margin-top: 0px;
+		margin-block: 0px;
 	}
 	h4 a {
 		text-decoration: none;
@@ -192,6 +192,12 @@
 			--aug-bl1: 0rem;
 			--aug-br1: 0rem;
 		}
+		.top-panel-decoration,
+		.top-panel-decoration::before,
+		.top-panel-decoration::after,
+		.top-panel {
+			height: 7dvh;
+		}
 		.top-panel .global-toolbar {
 			width: 100vw;
 		}
@@ -209,7 +215,6 @@
 			transform: translateX(-0.5rem) translateY(-1.5rem);
 		}
 
-
 		.search-container {
 			align-items: center;
 		}
@@ -217,7 +222,7 @@
 			right: 0.05rem;
 			bottom: -1rem;
 		}
-		.version span:first-of-type{
+		.version span:first-of-type {
 			display: none;
 		}
 	}

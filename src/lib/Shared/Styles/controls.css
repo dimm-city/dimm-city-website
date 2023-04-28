@@ -50,18 +50,20 @@ input:read-only,
 	--background: rgba(17, 17, 17, 0.75);
 	--border: 1px solid var(--fourth-accent);
 	--border-radius: 0.25rem;
-	--font-size: 1rem;
+	/* --font-size: 1rem;
 	--height: 1.25rem;
 	--padding: 0 0.5rem;
-	--selected-item-padding: 0 0.5rem;
+	--selected-item-padding: 0 0.5rem; */
 	--item-first-border-radius: 0;
 
+	/* --clear-select-height: var(--font-size); */
 	--border-focused: var(--border);
 	--border-hover: var(--border);
 	--item-background: var(--background);
 	--list-border: var(--border);
 	--list-background: var(--background);
 	--placeholder-color: var(--fourth-accent);
+	--item-color: var(--fourth-accent);
 	--item-is-active-bg: var(--background);
 	--item-is-active-color: var(--light);
 	--item-hover-bg: var(--fourth-accent);
@@ -70,6 +72,11 @@ input:read-only,
 	--item-is-not-selectable-color: var(--light);
 	--selected-item-color: var(--pink);
 	--multi-item-bg:var(--background);
+
+	/* --multi-select-input-margin: 0; */
+	/* --multi-select-padding: var(--padding); */
+	width: 100%;
+	
 }
 .aug-input {
 	width: 100%;
