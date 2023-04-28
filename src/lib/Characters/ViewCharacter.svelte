@@ -5,11 +5,10 @@
 	import { onMount } from 'svelte';
 	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
 	import TwitterButton from '$lib/Shared/Components/TwitterButton.svelte';
-	import { characters } from './CharacterStore';
+	import { characters, updateCharacter } from './CharacterStore';
 	import { ownsToken } from '$lib/Shared/Stores/UserStore';
 	import { type ICharacter, Character } from './Models/Character';
 	import Sheet from './Components/CharacterSheet/Sheet.svelte';
-
 	export let tokenId: string;
 	let character: ICharacter;
 	let originalCharacter: string;
@@ -26,16 +25,27 @@
 	}
 
 	function saveChanges() {
-		isSaving = true;
-		// call API to save changes
-		query = new Promise((resolve) => {
-			setTimeout(() => {
-				resolve(null);
-				isSaving = false;
-				isEditing = false;
-			}, 500);
-		});
+		if (ownsToken(character.token)) {
+			isSaving = true;
+			query = new Promise(async (resolve) => {
+				isSaving = true;
+				await updateCharacter(character)
+					.then(() => {
+						console.log('character saved', character);
+					})
+					.catch((reason) => {
+						console.error('Error updating citizen file', reason);
+					})
+					.finally(() => {
+						resolve(null);
+						isSaving = false;
+						isEditing = false;
+					});
+			});
+		}
 	}
+
+	async function save() {}
 
 	function cancelChanges() {
 		character = JSON.parse(originalCharacter);

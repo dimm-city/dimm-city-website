@@ -4,26 +4,23 @@ import { get } from 'svelte/store';
 import { jwt } from '$lib/Shared/Stores/UserStore';
 
 export async function updateCharacter(character: ICharacter) {
-	
 	const importData = JSON.parse(JSON.stringify(character));
 	importData.playerUpdated = true;
 	//importData.slug = character.name.replace(' ', '-');
 	// importData.currentLocation = character.currentLocation.id;
 	// importData.specialties = character.specialties.map(r => r.id);
 
-	window
-		.fetch(`${config.apiBaseUrl}/characters/${character.id}`, {
-			method: 'PUT',
-			headers: {
-				Authorization: `Bearer ${get(jwt)}`,
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ data: importData })
-		})
+	fetch(`${config.apiBaseUrl}/characters/${character.id}`, {
+		method: 'PUT',
+		headers: {
+			Authorization: `Bearer ${get(jwt)}`,
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({ data: importData })
+	})
 		.then(async (res) => {
 			const { data, errors } = await res.json();
 			if (res.ok) {
-
 				console.log('saved', data);
 				console.assert(data != null);
 				console.log('finding token');

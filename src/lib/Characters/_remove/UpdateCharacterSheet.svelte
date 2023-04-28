@@ -7,7 +7,7 @@
 	import { loadCharacter } from '$lib/Characters/Queries/getCharacterBySlug';
 	import { onMount } from 'svelte';
 	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
-	import { updateCharacter } from '$lib/Characters/Queries/updateCharacter';
+	import { updateCharacter } from '$lib/Characters/_remove/updateCharacter';
 	import { Character, type ICharacter, type IToken } from './Models/Character';
 	import { ownsToken } from '$lib/Shared/Stores/UserStore';
 	import Sheet from './Components/CharacterSheet/Sheet.svelte';

@@ -166,6 +166,9 @@
 		}
 	}
 	@media (max-width: 500px) {
+		div.heading {
+			grid-template-columns: 1fr;
+		}
 		.specialties-heading {
 			display: none;
 		}

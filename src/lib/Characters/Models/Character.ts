@@ -5,6 +5,7 @@ export class Character implements ICharacter {
 		if (token) this.importToken(token);
 		this.id = -1;
 	}
+	originLocation: ISummaryItem;
 	scripts: ISummaryItem[];
 	hp: number;
 	ap: number;
