@@ -40,7 +40,8 @@ export async function getSpecialties() : Promise<ISummaryItem[]> {
 						description: i.attributes.description ?? 'no information on this subject...',
 						shortDescription: i.attributes.shortDescription ?? 'no information on this subject...',
 						thumbnailUrl: i.attributes.mainImage?.data?.attributes?.previewUrl,
-						imageUrl: i.attributes.mainImage?.data?.attributes?.url
+						imageUrl: i.attributes.mainImage?.data?.attributes?.url,
+						attributes: i.attributes
 					};
 				}).sort((a,b) => a.name > b.name ? 1 : -1);
 			}

@@ -73,6 +73,7 @@
 		display: flex;
 		width: 100%;
 		justify-content: space-between;
+		font-weight: bold;
 	}
 	.text-section-content {
 		display: flex;

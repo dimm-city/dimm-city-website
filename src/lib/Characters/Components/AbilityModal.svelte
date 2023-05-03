@@ -23,7 +23,7 @@
 				</div>
 
 				<hr />
-				<div>{@html md.render(ability.attributes.description)}</div>
+				<div>{@html md.render(ability.attributes?.description ?? "")}</div>
 			{:else}
 				<span>Not found</span>
 			{/if}

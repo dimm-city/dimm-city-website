@@ -10,7 +10,7 @@
 	/**
 	 * @type {object[]}
 	 */
-	export const data = [];
+	export let data = [];
 </script>
 
 <h3 class="section-title">{header}</h3>
@@ -38,7 +38,6 @@
 		width: 100%;
 		position: relative;
 		font-size: 1rem;
-		text-transform: lowercase;
 	}
 
 	button {

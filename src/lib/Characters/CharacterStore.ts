@@ -30,12 +30,13 @@ export async function updateCharacter(character: ICharacter) {
 	const importData = JSON.parse(JSON.stringify(character));
 	importData.playerUpdated = true;
 	//importData.slug = character.name.replace(' ', '-');
-	
-	importData.currentLocation =  {...character.currentLocation, connect: [character.currentLocation?.data?.id] };
-	importData.originLocation = {...character.originLocation, connect: [character.originLocation?.data?.id] };
 
-	// { connect: [character.currentLocation?.data?.id] };
-	// importData.specialties = character.specialties.map(r => r.id);
+	importData.currentLocation =  character.currentLocation?.data?.id;
+	importData.originLocation = character.originLocation?.data?.id;
+
+	importData.specialties = [
+		...character.specialties?.data?.map((r) => ({ id: Number.parseInt(r.id) }))
+	];
 
 	fetch(`${config.apiBaseUrl}/characters/${character.id}?populate=*`, {
 		method: 'PUT',
@@ -43,21 +44,23 @@ export async function updateCharacter(character: ICharacter) {
 			Authorization: `Bearer ${get(jwt)}`,
 			'Content-Type': 'application/json'
 		},
-		body: JSON.stringify({ data: importData })
+		body: JSON.stringify({ data: { id: character.id, ...importData } })
 	})
 		.then(async (res) => {
 			const { data, errors } = await res.json();
 			if (res.ok) {
-				console.log('saved', data);
 				console.assert(data != null);
+				console.log('saved', data);
 				characters.update((c) => {
-					return [...c.filter((l) => l.id != character.id), data];
+					return [
+						...c.filter((l) => l.id != character.id),
+						Object.assign(character, data.attributes)
+					];
 				});
-				console.log('refreshing token');
 				await refreshToken(data.attributes.tokenId);
 			} else {
 				//TODO: display error
-				console.log('failed', errors, data);
+				console.error('failed', errors, data);
 			}
 		})
 		.catch((reason) => {

@@ -15,25 +15,25 @@
 <div class="lists-row" data-augmented-ui-reset>
 	<div class="skills-container" data-augmented-ui="tl-clip tr-clip br-clip bl-clip none">
 		<ItemsList
-			header="skills"
+			header="Skills"
 			noItemsText="no skills registered"
-			data={character.selectedAbilities}
+			data={character.selectedAbilities?.data}
 			viewItem={viewAbility}
 		/>
 	</div>
 	<div class="items-container" data-augmented-ui="tl-clip tr-clip br-clip bl-clip none">
 		<ItemsList
-			header="items"
+			header="Items"
 			noItemsText="no inventory recorded"
-			data={character.items}
+			data={character.items?.data}
 			viewItem={viewAbility}
 		/>
 	</div>
 	<div class="scripts-container" data-augmented-ui="tl-clip tr-clip br-clip bl-clip none">
 		<ItemsList
-			header="scripts"
+			header="Scripts"
 			noItemsText="no scripts detected"
-			data={character.scripts}
+			data={character.scripts?.data}
 			viewItem={viewAbility}
 		/>
 	</div>

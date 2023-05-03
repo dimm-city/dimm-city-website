@@ -41,7 +41,7 @@
 				<h2>
 					<!-- ts-ignore-->
 					{character.specialties?.data?.length > 0
-						? character.specialties?.data?.map((s) => s.name).join(', ')
+						? character.specialties?.data?.map((s) => s?.attributes?.name).join(', ')
 						: 'Unknown'}
 				</h2>
 			</div>

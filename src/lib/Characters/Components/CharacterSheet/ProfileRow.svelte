@@ -33,7 +33,7 @@
 			{:else}
 				<span
 					>{character.specialties?.data?.length > 0
-						? character.specialties?.data?.map((s) => s.name).join(', ')
+						? character.specialties?.data?.map((s) => s.attributes?.name).join(', ')
 						: 'Unknown'}</span
 				>
 			{/if}
@@ -47,7 +47,7 @@
 						placeholder="Select a district"
 						label="name"
 						itemId="id"
-						bind:value={character.originLocation.data.id}
+						bind:value={character.originLocation.data}
 					/>
 				</div>
 			{:else}
@@ -100,7 +100,6 @@
 		</div>
 	</section>
 </div>
-
 <style>
 	h3 {
 		margin: 0;
