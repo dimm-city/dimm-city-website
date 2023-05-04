@@ -1,5 +1,6 @@
 import { config as prod } from './Config/config.prod';
 import { config as staging } from './Config/config.staging';
+import { config as beta } from './Config/config.beta';
 import { config as dev } from './Config/config.dev';
 import { browser } from '$app/environment';
 
@@ -16,6 +17,7 @@ function getCurrentConfig() {
 	if (!browser && process && process.env && process.env.NODE_ENV === 'production') output = prod;
 	if (browser && window.location.href.includes(prod.baseUrl)) output = prod;
 	if (browser && window.location.href.includes(staging.baseUrl)) output = staging;
+	if (browser && window.location.href.includes(beta.baseUrl)) output = beta;
 	if (browser && window.location.href.includes(dev.baseUrl)) output = dev;
 	if (output.googleKey <= '') {
 		output.googleKey = 'testing';
