@@ -32,6 +32,11 @@
 		var(--page-background-color)
 	);
 
+	/* ToDo: set and check reasonable defaults*/
+	--dc-image-height: auto;
+	--dc-image-width: 300px;
+	--dc-image-aspect-ratio: 3/4; 
+
 	--easing: 0.75s ease-in-out;
 	--quick-in: 0.5s ease-in;
 
@@ -61,7 +66,6 @@
 		radial-gradient(circle at top right, var(--blue) 20px, transparent 30px),
 		radial-gradient(circle at bottom right, var(--pink) 40px, transparent 50px),
 		radial-gradient(circle at bottom left, var(--blue) 20px, transparent 30px);
-
 }
 
 @-webkit-keyframes background-gradient {

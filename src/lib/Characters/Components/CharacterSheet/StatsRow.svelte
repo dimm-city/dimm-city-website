@@ -70,6 +70,7 @@
 	.image {
 		--dc-image-aspect-ratio: 3/4;
 		--dc-image-height: 240px;
+		--dc-image-width: auto;
 	}
 
 	:global(.image > div) {

@@ -58,11 +58,7 @@
 </div>
 
 <style>
-	:root {
-		--dc-image-height: 400px;
-		--dc-image-width: auto;
-		--dc-image-aspect-ratio: 16/9;
-	}
+
 	img,
 	video,
 	.image-wrapper {
