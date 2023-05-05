@@ -7,9 +7,10 @@
 	import type { ICharacter } from './Models/Character';
 	import { characters } from './CharacterStore';
 	import { filterAndSort } from '$lib/Shared/Stores/StoreUtils';
+	import { ownsToken } from '$lib/Shared/Stores/UserStore';
 
 	const dispatcher = createEventDispatcher();
-	
+	export let ownedCharactersOnly = false;
 	function loadCharacters() {
 		$characters = [];
 		return fetch(config.graphUrl, {
@@ -53,8 +54,8 @@
 			//} else resolve($characters);
 		});
 	});
-	
-	$: filteredCharacters  = filterAndSort($characters, $searchText);
+	//ToDo: move filter to server side endpoint for "owned characters"
+	$: filteredCharacters  = filterAndSort($characters.filter(c => !ownedCharactersOnly || ownsToken(c.token)), $searchText);
 
 	function selectCharacter(e) {
 		let character = e.detail;

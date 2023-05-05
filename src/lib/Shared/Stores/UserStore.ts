@@ -5,7 +5,10 @@ import { get } from 'svelte/store';
 
 export async function loadProfile() {
 	const token = get(jwt);
-	if (token > '') {
+	const p = get(profile);
+	console.log(p);
+	
+	if (token > '' && p.username == null) {
 		let data = null;
 		const response = await fetch(`${config.apiBaseUrl}/users/me?fields=*&populate=*`, {
 			headers: {

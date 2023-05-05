@@ -5,8 +5,13 @@ query {
        id
        attributes{
          tokenId
+         token{
+          data{
+            id
+          }
+         }
          name
-         playerUpdated
+         playerUpdated         
          race {
           data {
             attributes {

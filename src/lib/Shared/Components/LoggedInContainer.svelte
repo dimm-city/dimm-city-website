@@ -9,9 +9,9 @@
 	let ethereumEnabled =  false; 
 	onMount(async ()=>{
 		ethereumEnabled = window && window?.ethereum;
-		if(!$connected && ethereumEnabled){
-			connect();
-		}
+		// if(!$connected && ethereumEnabled){
+		// 	connect();
+		// }
 
 	});
 </script>
