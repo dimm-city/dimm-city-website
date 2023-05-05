@@ -32,7 +32,7 @@
 		</div>
 		<div>
 			<div class="version"><small><span>DCC</span> <span>v{config.version}</span></small></div>
-			<HexMenu>
+			<HexMenu title="action menu">
 				<slot name="action-menu" />
 			</HexMenu>
 		</div>

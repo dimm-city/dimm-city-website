@@ -82,11 +82,12 @@
 	{/await}
 	<svelte:fragment slot="action-menu">
 		{#if isEditing}
-			<button on:click={saveChanges} class="aug-button animate__fadeInDownBig" data-augmented-ui=""
+			<button title="save changes" on:click={saveChanges} class="aug-button animate__fadeInDownBig" data-augmented-ui=""
 				><i class="bi bi-check" /></button
 			>
 			<button
-				on:click={cancelChanges}
+			 	title="cancel changes"
+ 				on:click={cancelChanges}
 				class="aug-button animate__fadeInDownBig"
 				data-augmented-ui=""><i class="bi bi-x" /></button
 			>
@@ -94,16 +95,18 @@
 			{#if isEditable}
 				<button
 					on:click={startEditing}
+					title="edit character"
 					class="aug-button animate__fadeInDownBig"
 					data-augmented-ui=""><i class="bi bi-pencil" /></button
 				>
 			{/if}
-			<TwitterButton />
-			<a
+			<TwitterButton title="share character" />
+			<!-- <a
+				title="print character"
 				href="/citizens/{character?.tokenId}/print"
 				class="aug-button animate__fadeInDownBig"
 				data-augmented-ui=""><i class="bi bi-printer" /></a
-			>
+			> -->
 		{/if}
 	</svelte:fragment>
 </Shell>

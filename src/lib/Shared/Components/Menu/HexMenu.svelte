@@ -2,6 +2,7 @@
 	export let visible = false;
 	export let icon = 'bi bi-lightning-charge';
 	export let position = 'bottom';
+	export let title = "";
 	/**
 	 * @type {HTMLDivElement}
 	 */
@@ -12,7 +13,7 @@
 	 */
 	let button;
 	/**
-	 * @param {MouseEvent} event
+	 * @param {MouseEvent|KeyboardEvent} event
 	 */
 	function toggleDropdown(event) {
 		visible = !visible;
@@ -22,6 +23,7 @@
 		const buttonRect = button.getBoundingClientRect();
 		dropdownContent.style.bottom = `${buttonRect.height}px`;
 	}
+
 </script>
 
 <div class="dropdown {$$props.class ?? ''}">
@@ -29,6 +31,7 @@
 		bind:this={button}
 		class="dropdown-button aug-button"
 		data-augmented-ui="all-hex"
+		{title}
 		on:click={toggleDropdown}
 	>
 		<i class={icon} /></button
@@ -37,7 +40,7 @@
 		class="dropdown-content"
 		data-augmented-ui="tl-clip-x tr-clip-x br-clip-x bl-clip-x both"
 		class:visible
-		class:hidden={!visible}
+		class:hidden={!visible} on:click={toggleDropdown} on:keyup={toggleDropdown}
 		bind:this={dropdownContent}
 	>
 		<div class="dropdown-content-grid">
@@ -80,10 +83,16 @@
 		max-width: 90dvw;
 		max-height: 80dvh;
 		overflow-y: hidden;
-		--aug-inlay-bg: var(--dark);
+		--aug-inlay-bg: #141414ad;  
+		/* var(--dark); */
 		--aug-border-all: 1px;
 		--aug-border-bg: var(--blue);
 		/* transform: translateY(-100px); */
+
+		--aug-bl: 0.33rem;
+		--aug-br: 0.33rem;
+		--aug-tl: 0.33rem;
+		--aug-tr: 0.33rem;
 		transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
 	}
 

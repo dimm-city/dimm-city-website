@@ -5,7 +5,7 @@
 	import MenuItem from './MenuItem.svelte';
 </script>
 
-<HexMenu icon="bi bi-menu-button" class="main-menu">
+<HexMenu icon="bi bi-menu-button" class="main-menu" title="main menu">
 	<div class="menu-toolbar">
 		<a href="/" data-augmented-ui="all-hex border" title="home">
 			<i class="bi bi-globe2 fade-in" />
