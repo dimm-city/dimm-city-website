@@ -78,12 +78,18 @@
 		text-overflow: clip;
 	}
 
-	@media (max-width: 650px) {
+	@media (max-width: 767px) {
 		.subtitle {
 			display: none;
 		}
 		.title-container {
 			max-width: 350px;
+		}
+
+		.flex-menu {
+			height: 100%;
+			align-items: end;
+			padding-bottom: 1rem;
 		}
 	}
 	@media (max-width: 450px) {

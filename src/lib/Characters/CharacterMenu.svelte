@@ -2,14 +2,15 @@
 	import FlexMenu from '$lib/Shared/Components/Menu/FlexMenu.svelte';
 	import { searchText } from '$lib/Shared/Stores/ShellStore';
 	import { createEventDispatcher, onMount } from 'svelte';
-	import { getCharactersQuery } from '../Queries/getCharacters';
+	import { getCharactersQuery } from './Queries/getCharacters';
 	import { config } from '$lib/Shared/config';
-	import type { ICharacter } from '../Models/Character';
-	import { characters } from '../CharacterStore';
+	import type { ICharacter } from './Models/Character';
+	import { characters } from './CharacterStore';
 	import { filterAndSort } from '$lib/Shared/Stores/StoreUtils';
+	import { ownsToken } from '$lib/Shared/Stores/UserStore';
 
 	const dispatcher = createEventDispatcher();
-	
+	export let ownedCharactersOnly = false;
 	function loadCharacters() {
 		$characters = [];
 		return fetch(config.graphUrl, {
@@ -53,8 +54,8 @@
 			//} else resolve($characters);
 		});
 	});
-	
-	$: filteredCharacters  = filterAndSort($characters, $searchText);
+	//ToDo: move filter to server side endpoint for "owned characters"
+	$: filteredCharacters  = filterAndSort($characters.filter(c => !ownedCharactersOnly || ownsToken(c.token)), $searchText);
 
 	function selectCharacter(e) {
 		let character = e.detail;

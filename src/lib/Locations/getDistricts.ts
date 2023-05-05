@@ -35,6 +35,7 @@ export async function getDistricts(): Promise<ISummaryItem[]> {
 				return json.data.locations.data
 					.map((i) => {
 						const item = { ...i.attributes };
+						item.attributes = i.attributes;
 						item.id = i.id;
 						return item;
 					})

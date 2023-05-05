@@ -85,6 +85,16 @@ export const getCharacterBySlugQuery = `
           }         
           currentLocation {
             data {
+              id
+              attributes {
+                name
+                slug
+              }
+            }
+          }
+          originLocation {
+            data {
+              id
               attributes {
                 name
                 slug
@@ -145,7 +155,6 @@ export function loadCharacter(tokenId): Promise<Character> {
 						: null;
 
 				if (character != null) {
-
 					// const token = new Token();
 					// token.tokenId = character.token.data.attributes.tokenId;
 					// token.contract = {
@@ -158,10 +167,13 @@ export function loadCharacter(tokenId): Promise<Character> {
 						character.imageUrl = '/assets/missing-image.png';
 					if (character.thumbnailUrl == null || character.thumbnailUrl.length === 0)
 						character.thumbnailUrl = '/assets/missing-image.png';
+					if (!character.currentLocation?.data) character.currentLocation = { data: { id: null } };
+					if (!character.originLocation?.data) character.originLocation = { data: { id: null } };
 				} else {
 					character = new Character();
 					character.name = 'Not found';
 				}
+
 				return character;
 			}
 			return new Character();

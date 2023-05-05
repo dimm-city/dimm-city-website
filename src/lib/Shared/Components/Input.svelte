@@ -29,7 +29,7 @@
 		--aug-clip-bl1: initial;
 		--aug-clip-br1: initial;
 		--aug-border: initial;
-		--aug-border-all: 0.25vh;
+		--aug-border-all: 1px;
 		--aug-tl1: 1vh;
 		--aug-tr1: 1vh;
 		--aug-br1: 1vh;
@@ -39,6 +39,16 @@
 		--aug-inlay: initial;
 		--aug-inlay-bg: var(--menu-inlay-bg-color);
 	}
+
+	.inline{
+		display: inline-block;
+		/* padding: 0; */
+		/* padding-inline: 0.25rem; */
+		--aug-tr1: 0.33rem;
+		--aug-br1: 0.33rem;
+		--aug-tl1: 0.33rem;
+		--aug-bl1: 0.33rem;
+	}
 </style>
 
-<div data-augmented-ui class="aug-input" disabled={$$props.disabled}><input readonly={$$props.disabled} {type} on:change={onChange}  {...$$props}/></div>
+<div data-augmented-ui class="aug-input {$$props.class}" disabled={$$props.disabled}><input readonly={$$props.disabled} {type} on:change={onChange}  {...$$props}/></div>

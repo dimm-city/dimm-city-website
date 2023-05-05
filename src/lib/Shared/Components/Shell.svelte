@@ -1,19 +1,14 @@
 <script>
-	// @ts-nocheck
-
+	import PageBackground from './PageBackground.svelte';
 	import ContentPane from './ContentPane.svelte';
-
 	import { Modals, closeModal, closeAllModals } from 'svelte-modals';
 	import { pageImage, pageTitle } from '$lib/Shared/Stores/ShellStore';
 	import '$lib/Shared/Styles/main.css';
 	import 'animate.css';
 	import { onMount } from 'svelte';
-	import TopMenu from './TopMenu.svelte';
+	import MenuBar from './MenuBar.svelte';
 	import { config } from '$lib/Shared/config';
 
-	/**
-	 * type: string
-	 */
 	export let title = '';
 	export let titleUrl = '';
 	export let fullscreen = false;
@@ -49,32 +44,25 @@
 	<meta name="twitter:image" content={$pageImage} />
 	<link rel="icon" type="image/x-icon" href="/assets/icons/shroom256.png" />
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-TJ2LB9K4M4"></script>
-	<link
-		as="font"
-		href="/assets/dimm-city.woff2"
-		type="font/woff2"
-		crossorigin="anonymous"
-	/>
+	<link as="font" href="/assets/dimm-city.woff2" type="font/woff2" crossorigin="anonymous" />
 	<slot name="head" />
 </svelte:head>
-<div class="page-background" />
+<PageBackground />
 <div class="main-container {title.toLowerCase()}" class:fullscreen>
 	<div class="content-panel animate__animated animate__fadeInUp">
-		<div class="content-panel-grid">
-			<div class="content-panel-content-row">
-				<slot><ContentPane fullsize={true}>404</ContentPane></slot>
-			</div>
-			<div class="content-panel-toolbar-row">
-				<slot name="content-toolbar" />
-			</div>
-		</div>
+		<slot><ContentPane fullsize={true}>404</ContentPane></slot>
 	</div>
 	<div class="menu-container">
-		<TopMenu {title} {enableSearch} {titleUrl} {fullscreen} />
+		<MenuBar {title} {enableSearch} {titleUrl}>
+			<svelte:fragment slot="action-menu">
+				<slot name="action-menu" />
+			</svelte:fragment>
+		</MenuBar>
 	</div>
-	<slot name="scripts" />
 </div>
 
+
+<slot name="scripts" />
 <Modals>
 	<div
 		slot="backdrop"
@@ -100,134 +88,46 @@
 		--transition-in-duration: 1s;
 		filter: blur(10rem);
 	}
-	.page-background {
-		background: var(--page-background);
-		background-size: 400% 400%;
-		animation: background-gradient 30s ease infinite;
-	}
-
-	.page-background {
-		/*https://www.gradient-animator.com*/
-		position: fixed;
-		top: 0;
-		bottom: 0;
-		right: 0;
-		left: 0;
-		background: linear-gradient(
-			33deg,
-			var(--primary-accent),
-			var(--primary-accent),
-			var(--dark),
-			var(--dark),
-			var(--dark),
-			var(--secondary-accent-muted),
-			var(--secondary-accent-muted)
-		);
-		background-size: calc(100vh * 3) calc(100vw * 3);
-
-		--bg-animation-duration: 40s;
-		-webkit-animation: background-gradient var(--bg-animation-duration)
-			cubic-bezier(0.375, 0.5, 0.32, 0.9) infinite alternate-reverse;
-		-moz-animation: background-gradient var(--bg-animation-duration)
-			cubic-bezier(0.375, 0.5, 0.32, 0.9) infinite alternate-reverse;
-		animation: background-gradient var(--bg-animation-duration) cubic-bezier(0.375, 0.5, 0.32, 0.9)
-			infinite alternate-reverse;
-	}
-
 	.main-container {
-		position: absolute;
-		left: 50%;
-		width: 90vw;
-		max-width: calc(90vh / 9 * 16);
-		top: 0;
-		bottom: 0;
-		transform: translateX(-50%);
-	}
-	.content-panel {
-		height: calc(100vh - var(--divider-height));
-		margin-top: 8vh;
-		transition: all var(--easing);
-		overflow: hidden;
-		padding-top: 1rem;
-		animation-duration: 400ms;
-		animation-delay: 200ms;
-		--animate-delay: 200ms;
-	}
-
-	.search-results-panel {
-		position: absolute;
-		margin-top: 8vh;
-		transition: all var(--easing);
-		overflow: hidden;
-		padding-top: 1rem;
-		animation-duration: 400ms;
-		animation-delay: 200ms;
-		--animate-delay: 200ms;
-	}
-
-	.fullscreen .content-panel {
-		height: 100vh;
-		margin-top: 0;
-	}
-	.fullscreen .content-panel-content-row {
-		padding-top: 3rem;
-	}
-	.fullscreen .menu-container {
-		height: 0px;
-		overflow: hidden;
-	}
-	.content-panel-grid {
-		height: 100%;
 		display: grid;
-		grid-template-rows: 1fr min-content;
+		grid-template-columns: 1fr;
+		grid-template-rows: min-content auto;
+		height: 100dvh;
+		width: 100dvw;
 	}
 
-	.content-panel-content-row {
+	.content-panel {
+		grid-row: 2;
 		display: flex;
-		height: 100%;
-		width: 100%;
+		width: 95vw;
+		margin: 5.5vh auto 0;
+		flex-direction: column;
 		overflow: hidden;
-		padding-top: 0.5rem;
+		transition: all var(--easing);
+		animation-duration: 400ms;
+		animation-delay: 200ms;
+		--animate-delay: 200ms;
 	}
-	.content-panel-toolbar-row {
-		width: 100%;
-		overflow: hidden;
-		padding: 1rem;
+
+	.menu-container {
+		grid-row: 1;
+		height: min-content;
+		z-index: 10;
+		
 	}
-	@media screen and (max-width: 768px), (max-aspect-ratio: 0.74) {
-		:root {
-			--divider-gap: 3em;
-		}
+
+	@media screen and (max-width: 767px), (max-aspect-ratio: 0.74) {
 		.main-container {
-			overflow: hidden;
+			grid-template-rows: auto min-content;
 		}
+
+		.menu-container {
+			grid-row: 2;
+		}
+
 		.content-panel {
-			height: calc(95vh - var(--divider-height));
+			grid-row: 1;
+			margin: 0 auto 6vh;
 		}
-	}
-
-	@media (max-width: 750px) {
-		.page-background {
-			background-size: calc(100vh * 5.5) calc(100vw * 5.3);
-		}
-		.main-container {
-			width: 98vw;
-		}
-		.content-toolbar {
-			width: 100%;
-			padding: 1rem;
-			bottom: 1rem;
-		}
-
-		.content-panel-toolbar-row {
-			width: 100%;
-			overflow: hidden;
-			padding-top: 0.5rem;
-			padding-bottom: 3rem;
-		}
-	}
-
-	.hidden {
-		visibility: hidden;
 	}
 </style>

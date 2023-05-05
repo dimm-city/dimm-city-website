@@ -5,6 +5,7 @@
 
 	--pink: #ef1ebf;
 	--blue: #3e6ab3;
+	--yellow: #f8f400da;
 	--bs-body-font-family: var(--main-font-family);
 	--bg-main: #01242f;
 	--bg-secondary: #190030;
@@ -18,7 +19,7 @@
 	--secondary-accent-muted: #c743ffad;
 	/* #ff8300; */
 	--third-accent: #ff15cb;
-	--fourth-accent: #f8f400da;
+	--fourth-accent: var(--yellow);
 	--disabled-color: rgb(196, 192, 192);
 	--disabled-color-dark: rgb(75, 75, 75);
 
@@ -30,6 +31,11 @@
 		var(--translucent-dark),
 		var(--page-background-color)
 	);
+
+	/* ToDo: set and check reasonable defaults*/
+	--dc-image-height: auto;
+	--dc-image-width: 300px;
+	--dc-image-aspect-ratio: 3/4; 
 
 	--easing: 0.75s ease-in-out;
 	--quick-in: 0.5s ease-in;
@@ -56,6 +62,10 @@
 		radial-gradient(circle at bottom left, var(--blue) 20px, transparent 30px);
 
 	--aug-border-all: 1px;
+	--menu-item-aug-border-bg: radial-gradient(circle at top left, var(--pink) 40px, transparent 50px),
+		radial-gradient(circle at top right, var(--blue) 20px, transparent 30px),
+		radial-gradient(circle at bottom right, var(--pink) 40px, transparent 50px),
+		radial-gradient(circle at bottom left, var(--blue) 20px, transparent 30px);
 }
 
 @-webkit-keyframes background-gradient {

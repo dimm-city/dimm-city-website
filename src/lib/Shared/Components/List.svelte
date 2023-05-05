@@ -2,12 +2,12 @@
 	import ListItemLink from './ListItemLink.svelte';
 
 	export let data: Array<any> = [];
-	export let maxHeight = 'auto';
 	export let maxItems = 5;
-	export let viewAllLink: String;
+	export let viewAllLink: String = "";
+	export let noItemsText = "No items found";
 
 	let items: any[] = [];
-	$: if (data && data?.length > maxItems) {
+	$: if (data && maxItems > 0 && data?.length > maxItems) {
 		items = [...data?.slice(0, maxItems)];
 	} else if (data?.length > 0) {
 		items = [...data?.slice(0, data?.length)];
@@ -29,16 +29,18 @@
 			</div>
 		{/if}
 	{:else}
-		<div class="list-item" data-augmented-ui>No items found</div>
+		<div class="list-item" data-augmented-ui>{noItemsText}</div>
 	{/if}
 </div>
 
 <style>
-	div.list {
+	:root{	
+		--list-gap: 1rem;
+	}	
+	.list {		
 		display: flex;
 		flex-direction: column;
-		gap: 1rem;
-		margin-block: 1rem;
+		gap: var(--list-gap) 1rem;
 	}
 
 </style>

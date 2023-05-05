@@ -1,10 +1,14 @@
 import type { ISummaryItem } from '$lib/Shared/Models/ISummaryItem';
 
 export class Character implements ICharacter {
-	constructor(token: IToken = null) {
+	constructor(token: IToken | null) {
 		if (token) this.importToken(token);
 		this.id = -1;
 	}
+	originLocation: ISummaryItem;
+	scripts: ISummaryItem[];
+	hp: number;
+	ap: number;
 	id: number;
 	slug: string;
 	name: string;
@@ -126,6 +130,8 @@ export interface ICharacter {
 	tokenId: string;
 	name: string;
 	age: number;
+	hp: number;
+	ap: number;
 	height: number;
 	weight: number;
 	pronouns: string;
@@ -138,10 +144,12 @@ export interface ICharacter {
 	thumbnailImage: string;
 	cybernetics: ISummaryItem[] | any;
 	race: IRaceSummaryItem | any;
-	specialties: ISummaryItem[] | any;
+	specialties: ISummaryItem[] | any[];
 	currentLocation: ISummaryItem;
+	originLocation: ISummaryItem;
 	selectedAbilities: ISummaryItem[];
 	items: ISummaryItem[];
+	scripts: ISummaryItem[];
 	thumbnailUrl: string;
 	imageUrl: string;
 }

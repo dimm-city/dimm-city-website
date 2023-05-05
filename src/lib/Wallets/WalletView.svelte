@@ -2,11 +2,11 @@
 	import { config } from '$lib/Shared/config';
 	import { jwt, loadWallets } from '$lib/Shared/Stores/UserStore';
 
-	export let wallet = { address: '', network: { chainId: 0 } };
+	export let wallet = { address: '', chain: '' };
 
 	async function detachWallet() {
 		const response = await fetch(
-			`${config.apiBaseUrl}/chain-wallets/wallets/detach/${wallet.network.chainId}/${wallet.address}`,
+			`${config.apiBaseUrl}/chain-wallets/wallets/detach/${wallet.chain}/${wallet.address}`,
 			{
 				method: 'POST',
 				headers: {

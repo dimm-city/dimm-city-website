@@ -5,10 +5,13 @@
 	import Button from './Button.svelte';
 	import { defaultEvmStores, chainId, connected, signerAddress } from 'svelte-ethers-store';
 	import { onMount } from 'svelte';
+
+	let ethereumEnabled =  false; 
 	onMount(async ()=>{
-		if(!$connected && window.ethereum){
-			connect();
-		}
+		ethereumEnabled = window && window?.ethereum;
+		// if(!$connected && ethereumEnabled){
+		// 	connect();
+		// }
 
 	});
 </script>
@@ -21,7 +24,7 @@
 			<Button height="5rem" url={config.apiBaseUrl + '/connect/reddit'}
 				><i class="bi bi-reddit" />Login with Reddit</Button
 			>
-			{#if window.ethereum}
+			{#if ethereumEnabled}
 				{#if $connected && $signerAddress}
 					<Button height="5rem" on:click={loginWithWallet}
 						><i class="bi bi-safe" />

@@ -5,7 +5,7 @@
 	export let data = {};
 	export let fullscreen = true;
 
-	function dismiss() {
+	export let dismiss = () => {
 		closeModal();
 	}
 </script>
@@ -47,7 +47,7 @@
 	}
 
 	.modal-content-container {
-		max-height: 80vh;
+		height: 80vh;
 		width: 100%;
 		overflow-y: scroll;
 		overflow-x: hidden;
@@ -105,7 +105,7 @@
 	<div class="contents" class:fullscreen data-augmented-ui="tl-2-clip-xy tr-2-clip-xy br-2-clip-y bl-2-clip-y both">
 		<div class="actions">
 			<slot name="actions" />
-			<div on:click={dismiss}><i class="bi bi-x-octagon" /></div>
+			<div on:click={dismiss} on:keypress={dismiss}><i class="bi bi-x-octagon" /></div>
 		</div>
 		<div class="modal-content-container">
 			<slot {data} />

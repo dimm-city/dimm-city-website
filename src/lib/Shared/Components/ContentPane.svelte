@@ -83,12 +83,11 @@
 		width: 0rem; /* width of the entire scrollbar */
 	}
 
-	@media all and (max-width: 768px), (max-aspect-ratio: 0.74) {
+	@media all and (max-width: 767px), (max-aspect-ratio: 0.74) {
 		.content-container {
 			position: relative;
 			height: 100%;
 			width: 100%;
-			margin-inline: 1rem;
 			aspect-ratio: 3/4;
 		}
 	}

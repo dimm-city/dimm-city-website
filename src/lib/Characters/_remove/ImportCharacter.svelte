@@ -1,13 +1,13 @@
 <script lang="ts">
-	import CharacterStats from './Components/Tabs/CharacterStats.svelte';
+	import CharacterStats from '../Components/Tabs/CharacterStats.svelte';
 	import StepWizard from 'svelte-step-wizard';
-	import { Character } from './Models/Character';
-	import CharacterBiography from './Components/Tabs/CharacterBiography.svelte';
+	import { Character } from '../Models/Character';
+	import CharacterBiography from '../Components/Tabs/CharacterBiography.svelte';
 	import Button from '$lib/Shared/Components/Button.svelte';
 	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
 	import type { ISummaryItem } from '$lib/Shared/Models/ISummaryItem';
 	import { tokens } from '$lib/Shared/Stores/UserStore';
-	import { createCitizenFile } from './CharacterStore';
+	import { createCitizenFile } from '../CharacterStore';
 	import LoggedInContainer from '$lib/Shared/Components/LoggedInContainer.svelte';
 	export let tokenId: string;
 

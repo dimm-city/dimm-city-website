@@ -4,4 +4,5 @@ export const config = {
 	baseUrl:   "http://localhost:1337/",
 	graphUrl:  "http://localhost:1337/graphql",
 	apiBaseUrl: 'http://localhost:1337/api',
+	"stripePublicKey": ""
 };

@@ -1,8 +1,9 @@
 <script lang="ts">
 	import Image from '$lib/Shared/Components/Image.svelte';
-	import { districts } from '$lib/Shared/Stores/ShellStore';
+	import { districts } from '$lib/Locations/LocationStore';
 	import { getDistricts } from '$lib/Locations/getDistricts';
 	import { onMount } from 'svelte';
+	import ModalShell from '$lib/Shared/Components/ModalShell.svelte';
 
 	$: selectedItem = $districts.find((l) => l.id == value || l.slug == value);
 
@@ -56,9 +57,11 @@
 	}
 </style>
 
+
+
 <div class="container">
 	<div class="image-area">
-		<Image imageUrl={selectedItem?.thumbnailUrl ?? selectedItem?.imageUrl} title={selectedItem?.name} />
+		<Image imageUrl={selectedItem?.thumbnailUrl ?? selectedItem?.imageUrl ?? ""} title={selectedItem?.name ?? ""} />
 	</div>
 	<div class="description-area">
 		<p>{selectedItem?.description || ''}</p>
@@ -75,6 +78,7 @@
 					on:mouseout={() => resetPreview()}
 					on:blur={resetPreview}
 					on:click={() => selectItem(item)}
+					on:keydown={() => selectItem(item)}
 				>
 					{item.name} <small />
 				</li>

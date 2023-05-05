@@ -18,7 +18,10 @@
 	}
 
 	.main-image {
-		min-height: 300px;
+		/* min-height: 300px; */
+		width: 3rem;
+		aspect-ratio: 4/3;
+		width: min-content;
 		float: left;
 		margin-inline-end: 0.75rem;
 		margin-block-end: 0.2rem;
@@ -33,20 +36,20 @@
 	}
 
 	@media (max-width: 745px) {
-		.main-image {
+		/* .main-image {
 			max-width: 80vw;
 			min-height: min-content;
 			height: auto;
 			margin-bottom: 1rem;
 			float: unset;
-		}
-		:global(.main-image .image-wrapper) {
+		} */
+		/* :global(.main-image .image-wrapper) {
 			width: 100%;
 		}
 		:global(.main-image img, .main-image video) {
 			width: 100%;
 			height: auto;
-		}
+		} */
 	}
 </style>
 
@@ -62,8 +65,6 @@
 			<div class="main-image">
 				<slot name="main-image">
 					<Image
-						height={imageHeight}
-						width=""
 						imageUrl={model.imageUrl}
 						title={model.name}
 						videoUrl={model.videoUrl}

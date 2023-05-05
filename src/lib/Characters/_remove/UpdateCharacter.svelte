@@ -11,7 +11,7 @@
 	import Toolbar from '$lib/Shared/Components/Toolbar.svelte';
 	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
 	import Button from '$lib/Shared/Components/Button.svelte';
-	import { updateCharacter } from '$lib/Characters/Queries/updateCharacter';
+	import { updateCharacter } from '$lib/Characters/_remove/updateCharacter';
 	import { Character, type ICharacter } from './Models/Character';
 	import { ownsToken } from '$lib/Shared/Stores/UserStore';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';

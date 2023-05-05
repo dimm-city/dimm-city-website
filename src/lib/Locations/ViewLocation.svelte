@@ -1,11 +1,10 @@
 <script lang="ts">
-	import './locations.css';
 	import Shell from '$lib/Shared/Components/Shell.svelte';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import { getLocation } from './getLocationBySlug';
 	import { Location } from './Location';
 	import Article from '$lib/Shared/Components/Article.svelte';
-	export let slug;
+	export let slug: string;
 	let location = new Location();
 
 	$: if (slug > '') {
@@ -20,3 +19,8 @@
 		</div>
 	</ContentPane>
 </Shell>
+<style>
+	.location{
+		--dc-image-aspect-ratio: 3/4;
+	}
+</style>

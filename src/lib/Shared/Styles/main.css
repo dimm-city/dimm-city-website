@@ -42,6 +42,17 @@ body {
 	min-height: fill-available;
 	min-height: -webkit-fill-available;
 }
+h1{
+	font-size: clamp(22px, 24px, 26px);
+}
+h2{
+	font-size: clamp(18px, 20px, 22px);
+}
+h3 {
+	font-size: clamp(16px, 18px, 20px);
+	margin-block: 0;
+	color: var(--fourth-accent);
+}
 
 a {
 	text-decoration: none;
@@ -70,11 +81,13 @@ li > a:focus {
 
 /* https://css-tricks.com/custom-scrollbars-in-webkit/ */
 *::-webkit-scrollbar {
-	width: 0.2rem; /* width of the entire scrollbar */
+	width: 0.1rem; /* width of the entire scrollbar */	
 }
 
 *::-webkit-scrollbar-track {
 	background: transparent; /* var(--third-accent); /* color of the tracking area */
+	margin-top: 10vh;
+	margin-bottom: 10vh;
 }
 
 *::-webkit-scrollbar-thumb {
@@ -84,10 +97,10 @@ li > a:focus {
 		90deg,
 		rgba(0, 0, 0, 0) 0%,
 		var(--fourth-accent) 29%,
-		var(--fourth-accent) 65%,
+		var(--fourth-accent) 50%,
 		rgba(0, 0, 0, 0) 100%
 	);
-	border-radius: 1rem; /* roundness of the scroll thumb */
+	border-radius: 100vw; /* roundness of the scroll thumb */
 	border: 1px solid var(--fourth-accent); /* creates padding around scroll thumb */
 }
 
@@ -129,6 +142,10 @@ ul.unstyled-list li {
 .text-highlight {
 	color: var(--third-accent) !important;
 }
+.text-warning {
+	color: var(--fourth-accent) !important;
+}
+
 
 .centered-container {
 	display: flex;

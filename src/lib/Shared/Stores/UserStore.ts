@@ -5,7 +5,10 @@ import { get } from 'svelte/store';
 
 export async function loadProfile() {
 	const token = get(jwt);
-	if (token > '') {
+	const p = get(profile);
+	console.log(p);
+	
+	if (token > '' && p.username == null) {
 		let data = null;
 		const response = await fetch(`${config.apiBaseUrl}/users/me?fields=*&populate=*`, {
 			headers: {
@@ -48,8 +51,9 @@ export function ownsToken(token: any): boolean {
 	const userWallets = get(wallets) ?? [];
 	const id = (token?.id || token?.data?.id || -1).toString();
 	const result =
-		id != '-1' && Array.isArray(userWallets) 
-		&& userWallets?.some((w) => w.tokens?.some((t) => t.id.toString() === id));
+		id != '-1' &&
+		Array.isArray(userWallets) &&
+		userWallets?.some((w) => w.tokens?.some((t) => t.id.toString() === id));
 
 	return result;
 }
@@ -71,11 +75,8 @@ export async function loadWallets(force = false) {
 		for (let index = 0; index < data.results?.length; index++) {
 			const wallet = data.results[index];
 
-			for (const token of wallet.tokens) {
-				const metaResponse = await fetch(
-					`${config.apiBaseUrl}/chain-wallets/metadata/${token.contract.slug}/${token.tokenId}`
-				);
-				if (metaResponse.ok) token.metadata = await metaResponse.json();
+			for (const token of wallet.tokens.filter((t) => t.contract != null)) {
+				await loadTokenMetadata(token);
 			}
 		}
 
@@ -96,3 +97,29 @@ export const logout = () => {
 
 	setSessionValue('wallets', []);
 };
+async function loadTokenMetadata(token: any) {
+	const metaResponse = await fetch(
+		`${config.apiBaseUrl}/chain-wallets/metadata/${token.contract.slug}/${token.tokenId}`
+	);
+	if (metaResponse.ok) token.metadata = await metaResponse.json();
+
+	return token.metadata;
+}
+
+export async function refreshToken(tokenId: any) {
+	const token = get(wallets)
+		.flatMap((w) => w.tokens)
+		.find((t) => {
+			return `${t?.contract?.slug}-${t?.tokenId}` === tokenId;
+		});
+	if (!token) return;
+	token.metadata = await loadTokenMetadata(token);
+	wallets.update((w) => {
+		return [
+			...w.map((w) => {
+				w.tokens = [...w.tokens.filter((t) => t.id !== token.id), token];
+				return w;
+			})
+		];
+	});
+}

@@ -1,33 +1,59 @@
 <script lang="ts">
 	import Shell from '$lib/Shared/Components/Shell.svelte';
 	import { pageImage } from '$lib/Shared/Stores/ShellStore';
-	import Tab from '$lib/Shared/Components/Tab.svelte';
-	import CharacterStats from '$lib/Characters/Components/Tabs/CharacterStats.svelte';
-	import CharacterSheet from '$lib/Characters/Components/Tabs/CharacterSheet.svelte';
 	import { loadCharacter } from '$lib/Characters/Queries/getCharacterBySlug';
 	import { onMount } from 'svelte';
-	import CharacterBiography from '$lib/Characters/Components/Tabs/CharacterBiography.svelte';
-	import TabPanel from '$lib/Shared/Components/TabPanel.svelte';
-	import Toolbar from '$lib/Shared/Components/Toolbar.svelte';
 	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
-	import Button from '$lib/Shared/Components/Button.svelte';
 	import TwitterButton from '$lib/Shared/Components/TwitterButton.svelte';
-	import { characters } from './CharacterStore';
+	import { characters, updateCharacter } from './CharacterStore';
 	import { ownsToken } from '$lib/Shared/Stores/UserStore';
 	import { type ICharacter, Character } from './Models/Character';
-	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
-
-	export let tokenId: string; // = $page.params.tokenId;
+	import Sheet from './Components/CharacterSheet/Sheet.svelte';
+	export let tokenId: string;
 	let character: ICharacter;
+	let originalCharacter: string;
 	let query = new Promise(() => {});
-	let tabs: TabPanel;
 	let isEditable = false;
+	let isEditing = false;
+	let isSaving = false;
 
 	$: isEditable = character && ownsToken(character?.token);
 
+	function startEditing() {
+		isEditing = true;
+		originalCharacter = JSON.stringify(character);
+	}
+
+	function saveChanges() {
+		if (ownsToken(character.token)) {
+			isSaving = true;
+			query = new Promise(async (resolve) => {
+				isSaving = true;
+				await updateCharacter(character)
+					.then(() => {
+						console.log('character saved', character);
+					})
+					.catch((reason) => {
+						console.error('Error updating citizen file', reason);
+					})
+					.finally(() => {
+						resolve(null);
+						isSaving = false;
+						isEditing = false;
+					});
+			});
+		}
+	}
+
+	async function save() {}
+
+	function cancelChanges() {
+		character = JSON.parse(originalCharacter);
+		isEditing = false;
+	}
+
 	onMount(async () => {
-		//isEditable = await canEdit(tokenId);
-		character = $characters.find((c) => c.tokenId === tokenId && c.loaded) ?? new Character();
+		character = $characters.find((c) => c.tokenId === tokenId && c.loaded) ?? new Character(null);
 		if (character == null || character.id < 1) {
 			query = loadCharacter(tokenId).then((c) => {
 				character = c;
@@ -35,59 +61,52 @@
 				$pageImage = character.thumbnailImage;
 			});
 		} else {
-			query = new Promise((resolve) => resolve(new Character()));
+			query = new Promise((resolve) => {
+				resolve(new Character(null));
+			});
 		}
 	});
 </script>
 
-<Shell title="Citizens" titleUrl="/citizens" fullscreen={true}>
-	<div slot="content-toolbar">
-		{#await query then}
-			<Toolbar>
-				<Button on:click={() => tabs.setTab('stats')} shape="square" title="Citizen Stats">
-					<i class="btn bi bi-person-badge" />
-				</Button>
-				<Button on:click={() => tabs.setTab('story')} shape="square" title="Citizen Biography">
-					<i class="fade-in btn bi bi-book" />
-				</Button>
-				<!-- <Button on:click={() => tabs.setTab('sheet')} shape="square">
-					<i class="fade-in btn bi bi-gpu-card" />
-				</Button> -->
-				<TwitterButton
-					text="Check out this Dimm City citizen file"
-					hashTags="Sporos,DimmCity"
-					shape="square"
-					title="Share citizen file"
+<Shell title="Citizen File" titleUrl="/citizens" fullscreen={true}>
+	{#await query}
+		<LoadingIndicator>
+			{#if isSaving}
+				Saving changes...
+			{:else}
+				Extracting character data...
+			{/if}
+		</LoadingIndicator>
+	{:then}
+		<Sheet {character} {isEditing} />
+	{/await}
+	<svelte:fragment slot="action-menu">
+		{#if isEditing}
+			<button title="save changes" on:click={saveChanges} class="aug-button animate__fadeInDownBig" data-augmented-ui=""
+				><i class="bi bi-check" /></button
+			>
+			<button
+			 	title="cancel changes"
+ 				on:click={cancelChanges}
+				class="aug-button animate__fadeInDownBig"
+				data-augmented-ui=""><i class="bi bi-x" /></button
+			>
+		{:else}
+			{#if isEditable}
+				<button
+					on:click={startEditing}
+					title="edit character"
+					class="aug-button animate__fadeInDownBig"
+					data-augmented-ui=""><i class="bi bi-pencil" /></button
 				>
-					<i class="fade-in btn bi bi-share" />
-				</TwitterButton>
-				{#if isEditable}
-					<Button
-						url="/console/characters/update/{character.tokenId}"
-						shape="square"
-						title="Edit citizen profile"
-					>
-						<i class="fade-in btn bi bi-device-ssd" />
-					</Button>
-				{/if}
-			</Toolbar>
-		{/await}
-	</div>
-	<ContentPane padding={1}>
-		{#await query}
-			<LoadingIndicator>Extracting character data...</LoadingIndicator>
-		{:then}
-			<TabPanel bind:this={tabs} initialTab="story">
-				<Tab id="stats" padding={2}>
-					<CharacterStats {character} title={character.name} />
-				</Tab>
-				<Tab id="story" padding={2}>
-					<CharacterBiography {character} />
-				</Tab>
-				<Tab id="sheet" padding={1}>
-					<CharacterSheet {character} />
-				</Tab>
-			</TabPanel>
-		{/await}
-	</ContentPane>
+			{/if}
+			<TwitterButton title="share character" />
+			<!-- <a
+				title="print character"
+				href="/citizens/{character?.tokenId}/print"
+				class="aug-button animate__fadeInDownBig"
+				data-augmented-ui=""><i class="bi bi-printer" /></a
+			> -->
+		{/if}
+	</svelte:fragment>
 </Shell>

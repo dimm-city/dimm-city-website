@@ -17,7 +17,26 @@
 	onMount(async () => {
 		const data = await getCharacterReleases();
 		releases = data;
-		selectedRelease = releases.find((r) => r.slug == releaseKey) as ICharacterRelease;	
+		selectedRelease = releases.find((r) => r.slug == releaseKey) as ICharacterRelease;
+
+		const ssProduct = document.querySelectorAll('.SS_ProductCheckout');
+		if (ssProduct) {
+			ssProduct.forEach((product) => {
+				product.addEventListener('click', function handleClick(event) {
+					SS_ProductCheckout(
+						event.target.dataset.id,
+						event.target.dataset.url,
+						event.target.dataset.email
+					);
+				});
+			});
+		}
+		// for storing product payment order in strapi
+		const params = new URLSearchParams(document.location.search);
+		const checkoutSessionId = params.get('sessionId');
+		if (checkoutSessionId) {
+			SS_GetProductPaymentDetails(checkoutSessionId);
+		}
 	});
 
 	let selectedRelease: ICharacterRelease = {
@@ -48,30 +67,10 @@
 	}
 </script>
 
-<style>
-	.step-container {
-		height: 100%;
-		width: 100%;
-		display: grid;
-		grid-template-columns: 1fr;
-		grid-template-rows: auto 0.1fr;
-		padding: 1rem 0;
-	}
-	.step-container div:nth-child(1) {
-		min-height: max-content;
-		height: 100%;
-		width: 100%;
-		justify-content: space-between;
-		overflow-y: auto;
-	}
-	.button-row {
-		display: flex;
-		justify-content: space-between;
-	}
-	.step-container div:nth-child(1) .centered-container {
-		height: fit-content;
-	}
-</style>
+<svelte:head>
+	<script type="text/javascript" src="http://localhost:1337/plugins/strapi-stripe/static/stripe.js">
+	</script>
+</svelte:head>
 
 <LoggedInContainer>
 	<StepWizard initialStep={1}>
@@ -81,9 +80,20 @@
 					<!-- <Article model={selectedRelease} imageHeight="300px" /> -->
 					<small>
 						{#if selectedRelease?.id > 0}
-								<span>{selectedRelease.totalSupply} sporos created our of {selectedRelease.maxSupply} in this release</span>
-							
+							<span
+								>{selectedRelease.totalSupply} sporos created our of {selectedRelease.maxSupply} in this
+								release</span
+							>
 						{/if}
+						<button
+							type="button"
+							class="SS_ProductCheckout"
+							data-id="1"
+							data-email="itlackey@gmail.com"
+							data-url="http://localhost:1337"
+						>
+							Buy Now
+						</button>
 					</small>
 				</div>
 				<div class="button-row">
@@ -117,16 +127,19 @@
 						<h2>Sporo Generated</h2>
 
 						<p>
-							Click the <strong>complete</strong> button to complete their citizen file and submit it to the Dimm City Archive.
+							Click the <strong>complete</strong> button to complete their citizen file and submit it
+							to the Dimm City Archive.
 						</p>
 
 						<p>
-							Please note that submitting this information to the Dimm City Archive will make it freely available to the
-							public. All information submitted to the archive will be considered to be available on the CC-BY license
-							unless otherwise stated. Contact the founders if you would like more information.
+							Please note that submitting this information to the Dimm City Archive will make it
+							freely available to the public. All information submitted to the archive will be
+							considered to be available on the CC-BY license unless otherwise stated. Contact the
+							founders if you would like more information.
 						</p>
 						{#if isSaving}
-							<LoadingIndicator><div class="centered-container">compiling...</div></LoadingIndicator>
+							<LoadingIndicator><div class="centered-container">compiling...</div></LoadingIndicator
+							>
 						{/if}
 					</div>
 				</div>
@@ -152,3 +165,28 @@
 		</StepWizard.Step> -->
 	</StepWizard>
 </LoggedInContainer>
+
+<style>
+	.step-container {
+		height: 100%;
+		width: 100%;
+		display: grid;
+		grid-template-columns: 1fr;
+		grid-template-rows: auto 0.1fr;
+		padding: 1rem 0;
+	}
+	.step-container div:nth-child(1) {
+		min-height: max-content;
+		height: 100%;
+		width: 100%;
+		justify-content: space-between;
+		overflow-y: auto;
+	}
+	.button-row {
+		display: flex;
+		justify-content: space-between;
+	}
+	.step-container div:nth-child(1) .centered-container {
+		height: fit-content;
+	}
+</style>
