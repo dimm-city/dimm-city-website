@@ -1,6 +1,6 @@
 <script>
 	//@ts-nocheck
-	import Select from 'svelte-select';	
+	import Select from 'svelte-select';
 	import Input from '$lib/Shared/Components/Input.svelte';
 	import Textarea from '$lib/Shared/Components/Textarea.svelte';
 	import { getDistricts } from '$lib/Locations/getDistricts';
@@ -13,7 +13,8 @@
 	export let isEditing = false;
 </script>
 
-<div class="profile-row" data-augmented-ui="tl-clip-x tr-clip-x br-clip bl-clip border">
+<div class="profile-row">
+	<div class="row-frame" data-augmented-ui="tl-clip-x tr-clip-x br-clip bl-clip border" />
 	<div class="profile-heading"><h3>Profile</h3></div>
 	<section class="section-container profile">
 		<div class="label">Specialties:</div>
@@ -28,7 +29,14 @@
 						multiple={true}
 						hideEmptyState={true}
 						bind:value={character.specialties.data}
-					/>
+					>
+						<div slot="selection" let:selection>
+							<span>{selection.name ?? selection.attributes?.name ?? 'Unknown'}</span>
+						</div>
+						<div slot="item" let:item let:index>
+							<span>{item.name ?? item.attributes?.name ?? 'Unknown'}</span>
+						</div>
+					</Select>
 				</div>
 			{:else}
 				<span
@@ -48,7 +56,14 @@
 						label="name"
 						itemId="id"
 						bind:value={character.originLocation.data}
-					/>
+					>
+						<div slot="selection" let:selection>
+							<span>{selection.name ?? selection.attributes?.name ?? 'Unknown'}</span>
+						</div>
+						<div slot="item" let:item let:index>
+							<span>{item.name ?? item.attributes?.name ?? 'Unknown'}</span>
+						</div>
+					</Select>
 				</div>
 			{:else}
 				<span>{character.originLocation?.data?.attributes?.name ?? 'Unknown'}</span>
@@ -64,12 +79,20 @@
 						placeholder="Select a district"
 						label="name"
 						itemId="id"
+						--list-z-index="8888888"
 						bind:value={character.currentLocation.data}
-					/>
+					>
+						<div slot="selection" let:selection>
+							<span>{selection.name ?? selection.attributes?.name ?? 'Unknown'}</span>
+						</div>
+						<div slot="item" let:item let:index>
+							<span>{item.name ?? item.attributes?.name ?? 'Unknown'}</span>
+						</div>
+					</Select>
 				</div>
 			{:else}
 				<span>{character.currentLocation?.data?.attributes?.name ?? 'Unknown'}</span>
-			{/if}			
+			{/if}
 		</div>
 
 		<div class="label">Vibe:</div>
@@ -100,6 +123,7 @@
 		</div>
 	</section>
 </div>
+
 <style>
 	h3 {
 		margin: 0;
@@ -114,13 +138,13 @@
 		align-items: stretch;
 		justify-content: space-evenly;
 		gap: 0.5rem;
-		
 	}
 
-	:global(.aug-select){
+	:global(.aug-select) {
 		--multi-item-clear-icon-color: var(--pink);
 		--multi-item-outline: 1px solid var(--pink);
 		--clear-select-color: var(--pink);
+		--list-z-index: 999;
 	}
 	.section-container.profile {
 		display: grid;
@@ -141,14 +165,9 @@
 		text-align: left;
 	}
 	.profile-row {
+		position: relative;
 		width: 100%;
-		--aug-border-all: 1px;
-		--aug-border-bg: var(--secondary-accent-muted);
-		--aug-tl: 13px;
-		--aug-tr: 13px;
-		--aug-bl: 13px;
-		--aug-br: 13px;
-		--aug-inlay: 0;
+
 		padding-block: 2rem;
 		padding-inline: 1rem;
 		gap: 1.5rem;
@@ -156,6 +175,21 @@
 		align-content: center;
 	}
 
+	.row-frame {
+		position: absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+
+		--aug-border-all: 1px;
+		--aug-border-bg: var(--secondary-accent-muted);
+		--aug-tl: 13px;
+		--aug-tr: 13px;
+		--aug-bl: 13px;
+		--aug-br: 13px;
+		--aug-inlay: 0;
+	}
 	.profile-heading {
 		grid-area: heading;
 	}

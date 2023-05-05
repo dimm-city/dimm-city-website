@@ -31,12 +31,14 @@ export async function updateCharacter(character: ICharacter) {
 	importData.playerUpdated = true;
 	//importData.slug = character.name.replace(' ', '-');
 
-	importData.currentLocation =  character.currentLocation?.data?.id;
+	importData.currentLocation = character.currentLocation?.data?.id;
 	importData.originLocation = character.originLocation?.data?.id;
 
-	importData.specialties = [
-		...character.specialties?.data?.map((r) => ({ id: Number.parseInt(r.id) }))
-	];
+	if (character.specialties.data?.length > 0)
+		importData.specialties = [
+			...character.specialties.data.map((r) => ({ id: Number.parseInt(r.id) }))
+		];
+	else importData.specialties = [];
 
 	fetch(`${config.apiBaseUrl}/characters/${character.id}?populate=*`, {
 		method: 'PUT',
