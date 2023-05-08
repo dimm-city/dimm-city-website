@@ -21,6 +21,6 @@
 </Shell>
 <style>
 	.location{
-		--dc-image-aspect-ratio: 3/4;
+		--dc-image-aspect-ratio: 4/4;
 	}
 </style>
