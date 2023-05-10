@@ -19,14 +19,19 @@
 	let stripe: StripePayment;
 	let processing = false;
 	let isSaving = false;
-	let character: ICharacter;
+	let character: ICharacter = {
+		name: 'test', 
+		tokenId: 'dcta-23'
+	};
 	let releases: ICharacterRelease[] = [];
 	let selectedRelease: ICharacterRelease = new CharacterRelease();
 
+	let currentStep = 3;
 	let metadata = {
 		slug: selectedRelease.slug,
 		user: $profile?.id
 	};
+
 	$: {
 		metadata = {
 			slug: selectedRelease.slug,
@@ -45,6 +50,7 @@
 	}
 
 	async function processPayment(nextStep: Function) {
+		isSaving = true;
 		metadata = {
 			slug: selectedRelease.slug,
 			user: $profile?.id
@@ -68,14 +74,17 @@
 			imageUrl: response.token.metadata.image
 		};
 
-		nextStep();
+		isSaving = false;
+
+		if (currentStep == 3) nextStep();
 	}
+	
 </script>
 
 <LoggedInContainer>
-	<StepWizard initialStep={1}>
+	<StepWizard initialStep={1} step={currentStep}>
 		<StepWizard.Step num={1} let:previousStep let:nextStep>
-			<div class="step-container release-step  fade-in">
+			<div class="step-container release-step fade-in">
 				<div class="step-container-header">
 					<h4>Select which collection you would like to create a character from</h4>
 					<div class="toolbar">
@@ -92,15 +101,15 @@
 					<small>
 						{#if selectedRelease?.id > 0}
 							<span
-								>{selectedRelease.contract?.totalSupply}/{selectedRelease.contract?.maxSupply ?? 'Unknown'} sporos created
-								in this release</span
+								>{selectedRelease.contract?.totalSupply}/{selectedRelease.contract?.maxSupply ??
+									'Unknown'} sporos created in this release</span
 							>
 						{/if}
 					</small>
 				</div>
 				<div class="step-container-content">
 					<div class="release-container">
-						<Article model={selectedRelease}  />
+						<Article model={selectedRelease} />
 					</div>
 				</div>
 				<div class="button-row">
@@ -139,10 +148,10 @@
 						{metadata}
 						bind:processing
 					/>
-					<blockquote class="text-warning">
+					<div class="text-warning">
 						<h4>You will be charged for your character when you press continue.</h4>
 						<p>Once your payment has been processed, character creation will begin...</p>
-					</blockquote>
+					</div>
 					{#if processing}
 						<div class="padding-1">
 							<LoadingIndicator>processing...</LoadingIndicator>
@@ -167,27 +176,33 @@
 			</div>
 		</StepWizard.Step>
 		<StepWizard.Step num={3} let:previousStep let:nextStep>
-			<h2>Generating sporo...</h2>
-			<Image videoUrl="https://files.dimm.city/assets/connecting.mp4" title="Generating character"/>
+			<div class="video-container">
+				<!-- svelte-ignore a11y-media-has-caption -->
+				<video class="video" autoplay loop>
+					<!-- <source src="small.mp4" type="video/mp4" media="(max-width: 480px)"> -->
+					<source src="https://files.dimm.city/stories/prologue-1/scene-4.mp4" type="video/mp4" />
+				</video>
+			</div>
 		</StepWizard.Step>
 		<StepWizard.Step num={4} let:previousStep let:nextStep>
 			<div class="step-container fade-in">
 				<div class="centered-container h-100">
 					<div class="character-created-container">
-						<h2>Sporo Generated</h2>
+						{#if character?.name > ""}
+						<h2>Your Sporo has been generated!</h2>
 						<h3>{character.name}</h3>
 						<Image imageUrl={character.imageUrl} title="character image" />
 						<p>
-							Click the <strong>complete</strong> button to complete their citizen file in your Dimm
-							City Archive.
+							Click the <strong>view citizen file</strong> button to edit their citizen file
 						</p>
 
-						<p>
+						<!-- <p>
 							Please note that submitting this information to the Dimm City Archive will make it
 							freely available to the public. All information submitted to the archive will be
 							considered to be available on the CC-BY license unless otherwise stated. Contact the
 							founders if you would like more information.
-						</p>
+						</p> -->
+						{/if}
 						{#if isSaving}
 							<LoadingIndicator><div class="centered-container">compiling...</div></LoadingIndicator
 							>
@@ -208,7 +223,7 @@
 </LoggedInContainer>
 
 <style>
-	:root{
+	:root {
 		--focusBoxShadow: 0;
 	}
 	.step-container {
@@ -261,19 +276,37 @@
 		display: flex;
 		justify-content: space-between;
 	}
-	.release-container{
+	.release-container {
 		--dc-image-aspect-ratio: 3/4;
+	}
+	.video-container {
+		--dc-image-aspect-ratio: 16/9;
+		--dc-image-height: auto;
+		--dc-image-width: 100%;
+	}
+	.video {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		min-height: 100%;
+		min-width: 100%;
+		width: auto;
+		height: auto;
+		object-fit: cover;
 	}
 	.character-created-container {
 		--dc-image-height: 400px;
 		--dc-image-width: auto;
 		--dc-image-aspect-ratio: 3/4;
+
+		text-align: center;
 	}
 	/* .step-container div:nth-child(1) .centered-container {
 		height: fit-content;
 	} */
 
-	:global(.Input, .Input--invalid, .p-Input-input.Input.p-CardNumberInput-input){
+	:global(.Input, .Input--invalid, .p-Input-input.Input.p-CardNumberInput-input) {
 		padding: 0;
 		box-shadow: 0;
 	}

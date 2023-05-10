@@ -23,7 +23,7 @@ export async function createCharacter(paymentId: string) : Promise<any> {
 
 			} else {
 				//TODO: display error
-				console.log('failed', data);
+				console.log('payment failed', data);
 				return null;
 			}
 		})
