@@ -18,7 +18,7 @@
 	<!-- <p>{@html $profile?.settings?.bio ?? ''}</p> -->
 </div>
 <div class="menu">
-	<!-- <a href="/console/characters/create"><small>create character</small></a> -->
+	<a href="/console/characters/create"><small>create character</small></a>
 	<a href="/console/archive"><small>manage archives</small></a>
 </div>
 
