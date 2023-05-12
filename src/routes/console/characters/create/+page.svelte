@@ -4,7 +4,7 @@
 	import Shell from '$lib/Shared/Components/Shell.svelte';
 </script>
 
-<Shell title="Select a release" fullscreen={true}>
+<Shell title="Create a Character" fullscreen={true}>
 	<ContentPane>
 		<CreateCharacter />
 	</ContentPane>

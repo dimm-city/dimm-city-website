@@ -2,16 +2,14 @@
 	import StepWizard from 'svelte-step-wizard';
 	import Button from '$lib/Shared/Components/Button.svelte';
 	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
-	import { CharacterRelease, type ICharacterRelease } from './Models/ICharacterRelease';
+	import type { ICharacterRelease } from './Models/ICharacterRelease';
 	import { getCharacterReleases } from './Queries/getCharacterReleases';
 	import { onMount } from 'svelte';
 	import LoggedInContainer from '$lib/Shared/Components/LoggedInContainer.svelte';
 	import type { ICharacter, IToken } from './Models/Character';
 	import StripePayment from '$lib/Shared/Components/StripePayment.svelte';
 	import Article from '$lib/Shared/Components/Article.svelte';
-	import Toolbar from '$lib/Shared/Components/Toolbar.svelte';
 	import { loadWallets, profile } from '$lib/Shared/Stores/UserStore';
-	import { loadCharacter } from './Queries/getCharacterBySlug';
 	import { createCharacter } from './Queries/createCharacter';
 	import Image from '$lib/Shared/Components/Image.svelte';
 	import ProfileImage from './Components/ProfileImage.svelte';
@@ -117,7 +115,7 @@
 					<div class="release-container">
 						<Article model={selectedRelease}>
 							<svelte:fragment slot="header">
-								<span></span>
+								<span />
 							</svelte:fragment>
 						</Article>
 					</div>
@@ -331,8 +329,8 @@
 	}
 
 	@media (max-width: 500px) {
-		.step-container{
-			padding: .5rem;
+		.step-container {
+			padding: 0.5rem;
 		}
 		.button-row {
 			display: flex;
