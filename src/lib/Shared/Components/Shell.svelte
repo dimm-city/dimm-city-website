@@ -8,6 +8,7 @@
 	import { onMount } from 'svelte';
 	import MenuBar from './MenuBar.svelte';
 	import { config } from '$lib/Shared/config';
+	import MainMenu from './Menu/MainMenu.svelte';
 
 	export let title = '';
 	export let titleUrl = '';
@@ -54,6 +55,11 @@
 	</div>
 	<div class="menu-container">
 		<MenuBar {title} {enableSearch} {titleUrl}>
+			<svelte:fragment slot="left-button">
+				<slot name="left-button" >
+					<MainMenu />
+				</slot>
+			</svelte:fragment>
 			<svelte:fragment slot="action-menu">
 				<slot name="action-menu" />
 			</svelte:fragment>

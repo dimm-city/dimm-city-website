@@ -8,4 +8,15 @@
 	<ContentPane>
 		<CreateCharacter />
 	</ContentPane>
+	<div slot="left-button">
+		<!-- <a
+		
+		class="aug-button"
+		data-augmented-ui="all-hex"
+		title="cancel"
+		href="/console"
+	>
+		<i class="bi bi-x-octagon" /></a
+	> -->
+	</div>
 </Shell>

@@ -1,19 +1,17 @@
 <script lang="ts">
 	import StepWizard from 'svelte-step-wizard';
-	import Button from '$lib/Shared/Components/Button.svelte';
+	import Select from 'svelte-select';
 	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
 	import type { ICharacterRelease } from './Models/ICharacterRelease';
 	import { getCharacterReleases } from './Queries/getCharacterReleases';
 	import { onMount } from 'svelte';
 	import LoggedInContainer from '$lib/Shared/Components/LoggedInContainer.svelte';
-	import type { ICharacter, IToken } from './Models/Character';
+	import type { ICharacter } from './Models/Character';
 	import StripePayment from '$lib/Shared/Components/StripePayment.svelte';
 	import Article from '$lib/Shared/Components/Article.svelte';
 	import { loadWallets, profile } from '$lib/Shared/Stores/UserStore';
 	import { createCharacter } from './Queries/createCharacter';
-	import Image from '$lib/Shared/Components/Image.svelte';
 	import ProfileImage from './Components/ProfileImage.svelte';
-	import Select from 'svelte-select/Select.svelte';
 
 	let stripe: StripePayment;
 	let processing = false;
@@ -22,7 +20,6 @@
 		name: 'test',
 		tokenId: 'dcta-23'
 	};
-	let releases: ICharacterRelease[] = [];
 	let selectedRelease: ICharacterRelease | null = null; //new CharacterRelease();
 
 	let currentStep = 3;
@@ -39,8 +36,6 @@
 	}
 	onMount(async () => {
 		const data = await getCharacterReleases();
-		releases = data;
-		// selectedRelease = releases?.at(0) ?? new CharacterRelease();
 	});
 
 	function cancel() {
@@ -56,8 +51,12 @@
 				user: $profile?.id
 			};
 
-			await stripe.process();
-			nextStep();
+			try {
+				await stripe.process();
+				nextStep();
+			} catch (error) {
+				console.error('Failed to process payment:', error);				
+			}
 		}
 	}
 	async function onPaymentProcessed(result: any, nextStep: Function, previousStep: Function) {
@@ -199,10 +198,10 @@
 						{#if character?.name > ''}
 							<h2>Your Sporo has been generated!</h2>
 							<h3>{character.name}</h3>
-							<Image imageUrl={character.imageUrl} title="character image" />
-							<p>
+							<ProfileImage {character} />
+							<!-- <p>
 								Click the <strong>view citizen file</strong> button to edit their citizen file
-							</p>
+							</p> -->
 
 							<!-- <p>
 							Please note that submitting this information to the Dimm City Archive will make it
@@ -217,12 +216,14 @@
 						{/if}
 					</div>
 				</div>
-				<div class="button-row">
+				<div class="character-created button-row">
 					<!-- <Button on:click={previousStep}>Back</Button> -->
 					<!-- <Button on:click={cancel}>skip</Button> -->
 					<!-- <Button on:click={() => }>Complete</Button> -->
-					<Button url="/console">Return to Op Console</Button>
-					<Button url={'/citizens/' + character.tokenId}>View Citizen File</Button>
+					<a class="aug-button" data-augmented-ui href="/console">Return to Op Console</a>
+					<a class="aug-button" data-augmented-ui href={'/citizens/' + character.tokenId}
+						>Edit Citizen File</a
+					>
 					<!-- <Button url={'/console/characters/import/' + token.tokenId}>Create Citizen File</Button> -->
 				</div>
 			</div>
@@ -233,6 +234,12 @@
 <style>
 	:root {
 		--focusBoxShadow: 0;
+	}
+	h2 {
+		font-size: max(1rem, min(1.5vw, 2.5rem));
+	}
+	p {
+		font-size: max(0.8rem, min(1.5vw, 1.25rem));
 	}
 	:global(.aug-select) {
 		--multi-item-clear-icon-color: var(--pink);
@@ -334,10 +341,14 @@
 		}
 		.button-row {
 			display: flex;
-			justify-content: space-around;
+			gap: 1rem;
+			justify-content: flex-start;
+			align-items: start;
 		}
-		.aug-button {
-			width: auto;
+
+		.character-created.button-row {
+			margin-top: 1.5rem;
+			flex-direction: column;
 		}
 	}
 </style>

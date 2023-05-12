@@ -18,7 +18,9 @@
 	</div>
 
 	<div class="global-toolbar">
-		<div><MainMenu /></div>
+		<div>
+			<slot name="left-button" />
+		</div>
 		<div class="search-container">
 			{#if enableSearch}
 				<div data-augmented-ui class="aug-input">
@@ -31,12 +33,12 @@
 			{/if}
 		</div>
 		<div>
-			<div class="version"><small><span>DCC</span> <span>v{config.version}</span></small></div>
 			<HexMenu title="action menu">
 				<slot name="action-menu" />
 			</HexMenu>
 		</div>
 	</div>
+	<div class="version"><small><span>DCC</span> <span>v{config.version}</span></small></div>
 </div>
 
 <style>
@@ -95,7 +97,8 @@
 
 	.top-panel .global-toolbar {
 		position: absolute;
-		width: 100vw;
+		width: 100dvw;
+		height: 100%;
 		display: flex;
 		display: grid;
 		grid-template-columns: 1fr 7fr 1fr;
@@ -125,7 +128,7 @@
 	.version {
 		color: var(--third-accent);
 		position: absolute;
-		bottom: 0.5rem;
+		bottom: 0.255rem;
 		right: 3.25rem;
 		transition: all var(--transition-in-time);
 		font-size: 0.75rem;
@@ -216,11 +219,11 @@
 		}
 
 		.search-container {
-			align-items: center;
+			align-items: end;
 		}
 		.version {
-			right: 0.05rem;
-			bottom: -1rem;
+			right: 0.5rem;
+			bottom: 0rem;
 		}
 		.version span:first-of-type {
 			display: none;

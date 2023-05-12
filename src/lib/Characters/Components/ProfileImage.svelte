@@ -1,11 +1,13 @@
-<script lang="ts">
-	import type { ICharacter } from '$lib/Characters/Models/Character';
+<script>	
 	import Image from '$lib/Shared/Components/Image.svelte';
 	import { config } from '$lib/Shared/config';
 
-	export let character: ICharacter;
+	/**
+	 * @type {import('../Models/Character').ICharacter}
+	 */
+	 export let character;
 	let imageUrl = '';
-	$: if (character.token?.data) {
+	$: if (character?.tokenId) {
 		// //HACK: this should not be done by splitting strings!!
 		let imagePath = `${character.tokenId.split('-').at(0)}/${character.tokenId
 			.split('-')
@@ -15,5 +17,4 @@
 		imageUrl = character.imageUrl;
 	}
 </script>
-
 <Image {imageUrl} title={character.name} on:click />
