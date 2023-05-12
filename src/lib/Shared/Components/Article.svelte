@@ -1,13 +1,43 @@
-<script lang="ts">
-	import Image from '$lib/Shared/Components/Image.svelte';
-	import type { IArticle } from '$lib/Shared/Models/IArticle';
+<script>
+	import Image from '$lib/Shared/Components/Image.svelte';	
 	import { marked } from 'marked';
-	export let model: IArticle;
+	/**
+	 * @type {import('../Models/IArticle').IArticle | null}
+	 */
+	 export let model;
 	export let imageAug = 'tl-clip tr-clip br-clip bl-clip border';
 	export let imageHeight = '';
 	let html = '';
 	$: html = model != null ? marked.parse(model.description || ' ') : '';
 </script>
+
+{#if model != null}
+	<div class="article-grid">
+		<div class="title-area">
+			<slot name="header">
+				<h1>{model.name}</h1>
+				<hr />
+			</slot>
+		</div>
+		<article class="text-area">
+			<div class="main-image">
+				<slot name="main-image">
+					<Image
+						imageUrl={model.imageUrl}
+						title={model.name}
+						videoUrl={model.videoUrl}
+						aug={imageAug}
+					/>
+				</slot>
+			</div>
+			<section>
+				<slot>
+					{@html html}
+				</slot>
+			</section>
+		</article>
+	</div>
+{/if}
 
 <style>
 	.article-grid {
@@ -52,31 +82,3 @@
 		} */
 	}
 </style>
-
-{#if model != null}
-	<div class="article-grid">
-		<div class="title-area">
-			<slot name="header">
-				<h1>{model.name}</h1>
-			</slot>
-			<hr />
-		</div>
-		<article class="text-area">
-			<div class="main-image">
-				<slot name="main-image">
-					<Image
-						imageUrl={model.imageUrl}
-						title={model.name}
-						videoUrl={model.videoUrl}
-						aug={imageAug}
-					/>
-				</slot>
-			</div>
-			<section>
-				<slot>
-					{@html html}
-				</slot>
-			</section>
-		</article>
-	</div>
-{/if}

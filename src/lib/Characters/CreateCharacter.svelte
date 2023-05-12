@@ -15,33 +15,34 @@
 	import { createCharacter } from './Queries/createCharacter';
 	import Image from '$lib/Shared/Components/Image.svelte';
 	import ProfileImage from './Components/ProfileImage.svelte';
+	import Select from 'svelte-select/Select.svelte';
 
 	let stripe: StripePayment;
 	let processing = false;
 	let isSaving = false;
 	let character: ICharacter = {
-		name: 'test', 
+		name: 'test',
 		tokenId: 'dcta-23'
 	};
 	let releases: ICharacterRelease[] = [];
-	let selectedRelease: ICharacterRelease = new CharacterRelease();
+	let selectedRelease: ICharacterRelease | null = null; //new CharacterRelease();
 
 	let currentStep = 3;
 	let metadata = {
-		slug: selectedRelease.slug,
+		slug: selectedRelease?.slug,
 		user: $profile?.id
 	};
 
 	$: {
 		metadata = {
-			slug: selectedRelease.slug,
+			slug: selectedRelease?.slug,
 			user: $profile?.id
 		};
 	}
 	onMount(async () => {
 		const data = await getCharacterReleases();
 		releases = data;
-		selectedRelease = releases?.at(0) ?? new CharacterRelease();
+		// selectedRelease = releases?.at(0) ?? new CharacterRelease();
 	});
 
 	function cancel() {
@@ -50,14 +51,16 @@
 	}
 
 	async function processPayment(nextStep: Function) {
-		isSaving = true;
-		metadata = {
-			slug: selectedRelease.slug,
-			user: $profile?.id
-		};
+		if (selectedRelease) {
+			isSaving = true;
+			metadata = {
+				slug: selectedRelease?.slug,
+				user: $profile?.id
+			};
 
-		await stripe.process();
-		nextStep();
+			await stripe.process();
+			nextStep();
+		}
 	}
 	async function onPaymentProcessed(result: any, nextStep: Function, previousStep: Function) {
 		console.log('onPP', result);
@@ -78,7 +81,6 @@
 
 		if (currentStep == 3) nextStep();
 	}
-	
 </script>
 
 <LoggedInContainer>
@@ -86,30 +88,38 @@
 		<StepWizard.Step num={1} let:previousStep let:nextStep>
 			<div class="step-container release-step fade-in">
 				<div class="step-container-header">
-					<h4>Select which collection you would like to create a character from</h4>
-					<div class="toolbar">
-						{#each releases as release}
-							<button
-								class="aug-button hex"
-								class:selected={selectedRelease == release}
-								data-augmented-ui
-								on:click={() => (selectedRelease = release)}
-								><i class={release.icon} /><span>{release.name}</span></button
-							>
-						{/each}
+					<!-- <h4>Select which collection you would like to create a character from</h4> -->
+					<div class="toolbar aug-select">
+						<Select
+							loadOptions={getCharacterReleases}
+							placeholder="Select a character collection"
+							label="name"
+							itemId="id"
+							bind:value={selectedRelease}
+						>
+							<div slot="selection" let:selection>
+								<i class={selection.icon} /><span>{selection.name ?? 'Unknown'}</span><span
+									class="release-token-summary"
+									>&nbsp; ({selection.contract?.totalSupply}/{selection.contract?.maxSupply ??
+										'Unknown'} sporos)</span
+								>
+							</div>
+							<div slot="item" let:item let:index>
+								<i class={item.icon} /><span>{item.name ?? 'Unknown'}</span><span
+									class="release-token-summary"
+									>&nbsp; ({item.contract?.totalSupply}/{item.contract?.maxSupply ?? 'Unknown'} sporos)</span
+								>
+							</div>
+						</Select>
 					</div>
-					<small>
-						{#if selectedRelease?.id > 0}
-							<span
-								>{selectedRelease.contract?.totalSupply}/{selectedRelease.contract?.maxSupply ??
-									'Unknown'} sporos created in this release</span
-							>
-						{/if}
-					</small>
 				</div>
 				<div class="step-container-content">
 					<div class="release-container">
-						<Article model={selectedRelease} />
+						<Article model={selectedRelease}>
+							<svelte:fragment slot="header">
+								<span></span>
+							</svelte:fragment>
+						</Article>
 					</div>
 				</div>
 				<div class="button-row">
@@ -188,15 +198,15 @@
 			<div class="step-container fade-in">
 				<div class="centered-container h-100">
 					<div class="character-created-container">
-						{#if character?.name > ""}
-						<h2>Your Sporo has been generated!</h2>
-						<h3>{character.name}</h3>
-						<Image imageUrl={character.imageUrl} title="character image" />
-						<p>
-							Click the <strong>view citizen file</strong> button to edit their citizen file
-						</p>
+						{#if character?.name > ''}
+							<h2>Your Sporo has been generated!</h2>
+							<h3>{character.name}</h3>
+							<Image imageUrl={character.imageUrl} title="character image" />
+							<p>
+								Click the <strong>view citizen file</strong> button to edit their citizen file
+							</p>
 
-						<!-- <p>
+							<!-- <p>
 							Please note that submitting this information to the Dimm City Archive will make it
 							freely available to the public. All information submitted to the archive will be
 							considered to be available on the CC-BY license unless otherwise stated. Contact the
@@ -226,6 +236,12 @@
 	:root {
 		--focusBoxShadow: 0;
 	}
+	:global(.aug-select) {
+		--multi-item-clear-icon-color: var(--pink);
+		--multi-item-outline: 1px solid var(--pink);
+		--clear-select-color: var(--pink);
+		--list-z-index: 999;
+	}
 	.step-container {
 		height: 100%;
 		width: 100%;
@@ -239,6 +255,9 @@
 		grid-template-rows: min-content auto min-content;
 	} */
 
+	.release-token-summary {
+		font-size: 0.75rem;
+	}
 	.character-details-container span:nth-child(odd) {
 		padding-right: 1rem;
 	}
@@ -309,5 +328,18 @@
 	:global(.Input, .Input--invalid, .p-Input-input.Input.p-CardNumberInput-input) {
 		padding: 0;
 		box-shadow: 0;
+	}
+
+	@media (max-width: 500px) {
+		.step-container{
+			padding: .5rem;
+		}
+		.button-row {
+			display: flex;
+			justify-content: space-around;
+		}
+		.aug-button {
+			width: auto;
+		}
 	}
 </style>

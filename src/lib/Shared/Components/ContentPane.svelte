@@ -100,7 +100,12 @@
 		.augmented-content-decoration {
 			--aug-border-all: 0.25vh;
 		}
+		.padding-3{
+			padding: 0.3rem !important;
+		}
 	}
+
+	
 </style>
 
 <div class="content-container" class:full-size={fullsize}>
