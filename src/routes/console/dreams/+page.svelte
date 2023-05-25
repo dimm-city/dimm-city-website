@@ -18,8 +18,8 @@
 </script>
 
 <Shell title="Console">
-	<ContentPane padding={2}>
-		<div class="content-container">
+	<ContentPane padding={0}>
+		<!-- <div class="content-container"> -->
 			<!-- <LoggedInContainer>
 				<div class="fade-in"> -->
 			<link rel="stylesheet" href="/assets/styles/WAAStyles.css" />
@@ -27,6 +27,6 @@
 
 			<!-- </div>
 			</LoggedInContainer> -->
-		</div>
+		<!-- </div> -->
 	</ContentPane>
 </Shell>
