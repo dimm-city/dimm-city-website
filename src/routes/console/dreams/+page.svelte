@@ -37,11 +37,11 @@
 	});
 </script>
 
-<Shell title="Console">
+<Shell title="Dream Console">
 	<ContentPane padding={0}>
 		<link rel="stylesheet" href="/assets/styles/WAAStyles.css" />
-		<!-- <LoggedInContainer> -->
+		<LoggedInContainer>
 			<Game {games} {players} {selectedPlayer} {selectedGame} {diceThemes} {selectedDice} />
-		<!-- </LoggedInContainer> -->
+		 </LoggedInContainer> 
 	</ContentPane>
 </Shell>

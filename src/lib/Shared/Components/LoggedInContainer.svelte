@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { setSessionValue } from '$lib/Shared/Stores/StoreUtils';
 	import { loggedIn } from '$lib/Shared/Stores/UserStore';
 	import { config } from '$lib/Shared/config';
 	import { connect, loginWithWallet } from '$lib/Shared/Stores/ContractsStore';
@@ -9,11 +10,17 @@
 	export let redirect = "";
 	let ethereumEnabled =  false; 
 	onMount(async ()=>{
+		console.log('login container mounted', $loggedIn);
+		
+		if(!$loggedIn){
+			console.log('setting redirect', document.location);
+			
+			setSessionValue('redirect', document.location);
+		}
 		ethereumEnabled = window && window?.ethereum;
 		// if(!$connected && ethereumEnabled){
 		// 	connect();
 		// }
-		redirect = document.location;
 
 	});
 </script>
@@ -23,7 +30,7 @@
 {:else}
 	<slot name="public">
 		<div class="content-container fade-in">
-			<Button height="5rem" url={config.apiBaseUrl + '/connect/reddit?redirect=' + redirect}
+			<Button height="5rem" url={config.apiBaseUrl + '/connect/reddit'}
 				><i class="bi bi-reddit" />Login with Reddit</Button
 			>
 			{#if ethereumEnabled}
