@@ -2,6 +2,7 @@
 	import Shell from '$lib/Shared/Components/Shell.svelte';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import LoggedInContainer from '$lib/Shared/Components/LoggedInContainer.svelte';
+	import { tokens } from '$lib/Shared/Stores/UserStore';
 	import { Game } from '@dimm-city/dc-solo-rpg';
 	import { onMount } from 'svelte';
 	let selectedPlayer = null;
@@ -27,22 +28,20 @@
 	];
 
 	onMount(() => {
+		players = [{ name: 'Guest' }, ...$tokens.filter((t) => t != null)];
+		console.log(players);
+
 		selectedDice = diceThemes.at(0);
-		selectedPlayer = players.at(1);
+		selectedPlayer = players.at(0);
 		selectedGame = games.at(1);
 	});
 </script>
 
 <Shell title="Console">
 	<ContentPane padding={0}>
-		<!-- <div class="content-container"> -->
-		<!-- <LoggedInContainer>
-				<div class="fade-in"> -->
 		<link rel="stylesheet" href="/assets/styles/WAAStyles.css" />
-		<Game {games} {players} {selectedPlayer} {selectedGame} {diceThemes} {selectedDice} />
-
-		<!-- </div>
-			</LoggedInContainer> -->
-		<!-- </div> -->
+		<!-- <LoggedInContainer> -->
+			<Game {games} {players} {selectedPlayer} {selectedGame} {diceThemes} {selectedDice} />
+		<!-- </LoggedInContainer> -->
 	</ContentPane>
 </Shell>

@@ -7,6 +7,7 @@
 	import { jwt, profile } from '$lib/Shared/Stores/UserStore';
 	import { onMount } from 'svelte';
 	const token =  $page.url.searchParams.get('access_token');
+	const redirect =  $page.url.searchParams.get('redirect');
 
 	onMount(async () => {
 		const callback = await fetch(config.apiBaseUrl + '/auth/reddit/callback?access_token=' + token);
@@ -16,7 +17,7 @@
 
 		$profile = { ...cbData };
 		if (document) {
-			document.location = '/console';
+			document.location = redirect ?? '/console';
 		}
 	});
 </script> 
