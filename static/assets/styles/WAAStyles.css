@@ -5,7 +5,7 @@
 	--dc-default-container-bg: rgba(255, 255, 255, 0.3);
 
 	--dc-accent-color: var(--third-accent);
-	 /* rgb(58, 159, 199); */
+	/* rgb(58, 159, 199); */
 	--dc-toolbar-height: 3rem;
 	--dc-header-block-margin: 0.25rem;
 
@@ -13,7 +13,7 @@
 	--dc-card-border: 1px solid #000000;
 	--dc-card-border-radius: 1rem;
 	--dc-card-back-bg: var(--secondary-accent-muted);
-	 /* #1387b9; */
+	/* #1387b9; */
 	--dc-card-front-bg: rgb(235, 235, 235);
 	--dc-card-front-color: var(--third-accent);
 
@@ -32,7 +32,7 @@ h4 {
 background: radial-gradient(circle, rgba(19,135,185,1) 0%, rgba(29,63,78,1) 71%, rgba(136,136,136,1) 100%); */
 }
 .dc-health-meter-stroke {
-	stroke: rgba(0, 0, 0, 0.801);
+	stroke: var(--translucent-dark);
 }
 
 /*utils*/
@@ -59,27 +59,40 @@ background: radial-gradient(circle, rgba(19,135,185,1) 0%, rgba(29,63,78,1) 71%,
 	animation: fadeIn 1s ease-in;
 }
 
-
-
 /*NEEDS CLEANING*/
 
-.toolbar-area > .toolbar{
+.toolbar-area > .toolbar {
 	background-color: transparent;
 }
 
-.card-front{
+.card-front {
 	color: var(--dc-card-front-color);
 }
 
-
 /*dc specific*/
-div:focus, div:focus-visible{
+.dc-game-container {
+	margin: 1rem;
+	display: grid !important;
+}
+div:focus,
+div:focus-visible {
 	outline: none;
 }
-.profile-container{
-	row-gap: 0 !important;
-}
-.status-display-area{
-	right: 0 !important;
-	bottom: 0.25rem;
+
+
+@media (max-width: 768px) {
+	.dc-game-container {
+		margin: 0rem;
+		display: grid !important;
+	}
+
+	.status-display-area {
+		right: 0 !important;
+		bottom: 0.25rem;
+		width: 5rem;
+	}
+	.status-display-container{
+		padding: 0.25rem !important;
+		row-gap: 0.25rem !important;
+	}
 }
