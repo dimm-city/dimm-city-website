@@ -3,6 +3,8 @@
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import LoggedInContainer from '$lib/Shared/Components/LoggedInContainer.svelte';
 	import { Game } from '@dimm-city/dc-solo-rpg';
+
+	let selectedPlayer = null;
 	const games = [
 		{ title: 'WAA Game Template', url: '/waa/Example.json' },
 		{ title: 'Future Lost', url: '/waa/future-lost.json' }
