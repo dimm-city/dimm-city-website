@@ -6,12 +6,14 @@
 	import { defaultEvmStores, chainId, connected, signerAddress } from 'svelte-ethers-store';
 	import { onMount } from 'svelte';
 
+	export let redirect = "";
 	let ethereumEnabled =  false; 
 	onMount(async ()=>{
 		ethereumEnabled = window && window?.ethereum;
 		// if(!$connected && ethereumEnabled){
 		// 	connect();
 		// }
+		redirect = document.location;
 
 	});
 </script>
@@ -21,7 +23,7 @@
 {:else}
 	<slot name="public">
 		<div class="content-container fade-in">
-			<Button height="5rem" url={config.apiBaseUrl + '/connect/reddit'}
+			<Button height="5rem" url={config.apiBaseUrl + '/connect/reddit?redirect=' + redirect}
 				><i class="bi bi-reddit" />Login with Reddit</Button
 			>
 			{#if ethereumEnabled}
