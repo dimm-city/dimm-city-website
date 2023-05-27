@@ -2,7 +2,7 @@
 	import Shell from '$lib/Shared/Components/Shell.svelte';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import LoggedInContainer from '$lib/Shared/Components/LoggedInContainer.svelte';
-	import { tokens } from '$lib/Shared/Stores/UserStore';
+	import { wallets } from '$lib/Shared/Stores/UserStore';
 	import { Game } from '@dimm-city/dc-solo-rpg';
 	import { onMount } from 'svelte';
 	let selectedPlayer = null;
@@ -21,6 +21,7 @@
 		}
 	];
 
+	$:tokens = $wallets.flatMap(w => w.tokens);
 	let diceThemes = [
 		{
 			name: 'pink',
@@ -46,8 +47,8 @@
 	];
 
 	onMount(() => {
-		players = [{ name: 'Guest' }, ...$tokens.filter((t) => t != null)];
-		console.log(players);
+		players = [{ name: 'Guest' }, ...tokens.filter((t) => t != null).map(t => t.metadata)];
+		console.log(players, tokens, $wallets);
 
 		selectedDice = diceThemes.at(0);
 		selectedPlayer = players.at(0);
