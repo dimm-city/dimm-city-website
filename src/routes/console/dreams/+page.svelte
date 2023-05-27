@@ -22,9 +22,27 @@
 	];
 
 	let diceThemes = [
-		{ name: 'pink', color: '#ef1ebf' },
-		{ name: 'blue', color: '#3e6ab3' },
-		{ name: 'purple', color: '#c743ff' }
+		{
+			name: 'pink',
+			foreground: 'white',
+			background: '#ef1ebf',
+			texture: 'glass',
+			description: 'Default pink dice'
+		},
+		{
+			name: 'blue',
+			foreground: 'white',
+			background: '#3e6ab3',
+			texture: 'glass',
+			description: 'Default blue dice'
+		},
+		{
+			name: 'pruple',
+			foreground: 'white',
+			background: '#c743ff',
+			texture: 'glass',
+			description: 'Default dice'
+		}
 	];
 
 	onMount(() => {
@@ -40,8 +58,8 @@
 <Shell title="Dream Console">
 	<ContentPane padding={0}>
 		<link rel="stylesheet" href="/assets/styles/WAAStyles.css" />
-		<LoggedInContainer>
+		<!-- <LoggedInContainer> -->
 			<Game {games} {players} {selectedPlayer} {selectedGame} {diceThemes} {selectedDice} />
-		 </LoggedInContainer> 
+		 <!-- </LoggedInContainer>  -->
 	</ContentPane>
 </Shell>
