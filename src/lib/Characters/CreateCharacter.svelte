@@ -297,6 +297,7 @@
 		margin-right: 0.5rem;
 	}
 	.button-row {
+		height: min-content;
 		display: flex;
 		justify-content: space-between;
 	}

@@ -21,7 +21,7 @@
 		}
 	];
 
-	$:tokens = $wallets.flatMap(w => w.tokens);
+	$:tokens = $wallets?.flatMap(w => w.tokens) ?? [];
 	let diceThemes = [
 		{
 			name: 'pink',
@@ -48,7 +48,7 @@
 
 	onMount(() => {
 		players = [{ name: 'Guest' }, ...tokens.filter((t) => t != null).map(t => t.metadata)];
-		console.log(players, tokens, $wallets);
+		//console.log(players, tokens, $wallets);
 
 		selectedDice = diceThemes.at(0);
 		selectedPlayer = players.at(0);
