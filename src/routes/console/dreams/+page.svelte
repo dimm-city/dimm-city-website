@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
 	import Shell from '$lib/Shared/Components/Shell.svelte';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import LoggedInContainer from '$lib/Shared/Components/LoggedInContainer.svelte';
@@ -21,7 +21,9 @@
 		}
 	];
 
-	$:tokens = $wallets?.flatMap(w => w.tokens) ?? [];
+	let tokens = [];
+	$: if($wallets?.length > 0)
+		tokens = $wallets?.flatMap(w => w.tokens) ?? [];
 	let diceThemes = [
 		{
 			name: 'pink',
