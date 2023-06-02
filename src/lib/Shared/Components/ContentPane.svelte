@@ -29,8 +29,10 @@
 	.content-container .content-wrapper {
 		--aug-bl: 2vmin;
 		--aug-br: 2vmin;
-		--aug-l: 1vmin;
-		--aug-r: 1vmin;
+		--aug-tl: 2vmin;
+		--aug-tr: 2vmin;
+		--aug-l: 0.5vmin;
+		--aug-r: 0.5vmin;
 		--aug-l-extend1: 10vmin;
 		--aug-r-extend1: 10vmin;
 		--aug-l-offset: 10vmin;

@@ -1,10 +1,10 @@
 <script>
-	import Image from '$lib/Shared/Components/Image.svelte';	
+	import Image from '$lib/Shared/Components/Image.svelte';
 	import { marked } from 'marked';
 	/**
 	 * @type {import('../Models/IArticle').IArticle | null}
 	 */
-	 export let model;
+	export let model;
 	export let imageAug = 'tl-clip tr-clip br-clip bl-clip border';
 	export let imageHeight = '';
 	let html = '';
@@ -48,8 +48,6 @@
 	}
 
 	.main-image {
-		/* min-height: 300px; */
-		width: 3rem;
 		aspect-ratio: 4/3;
 		width: min-content;
 		float: left;
@@ -66,19 +64,16 @@
 	}
 
 	@media (max-width: 745px) {
-		/* .main-image {
-			max-width: 80vw;
-			min-height: min-content;
-			height: auto;
-			margin-bottom: 1rem;
-			float: unset;
-		} */
-		/* :global(.main-image .image-wrapper) {
-			width: 100%;
+		.article-grid {
+			justify-content: center;
 		}
-		:global(.main-image img, .main-image video) {
-			width: 100%;
-			height: auto;
-		} */
+
+		.main-image {
+			--dc-image-width: 400px;
+			--dc-image-aspect-ratio: 4/3;
+			float: none;
+			margin-inline: auto;
+			margin-block-end: 1rem;
+		}
 	}
 </style>

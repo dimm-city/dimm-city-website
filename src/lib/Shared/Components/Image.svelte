@@ -64,7 +64,7 @@
 	.image-wrapper {
 		height: var(--dc-image-height);
 		width: var(--dc-image-width);
-		aspect-ratio: var(--dc-image-aspect-ratio);
+		/* aspect-ratio: var(--dc-image-aspect-ratio); */
 	}
 	img,
 	video {
@@ -98,6 +98,8 @@
 		overflow: hidden;
 
 		aspect-ratio: var(--dc-image-aspect-ratio);
+
+		--aug-border-all: 1px;
 	}
 
 	/* @media (max-width: 745px) {

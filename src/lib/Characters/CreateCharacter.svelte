@@ -13,6 +13,7 @@
 	import { createCharacter } from './Queries/createCharacter';
 	import ProfileImage from './Components/ProfileImage.svelte';
 
+	let logs = [];
 	let stripe: StripePayment;
 	let processing = false;
 	let isSaving = false;
@@ -28,16 +29,19 @@
 		user: $profile?.id
 	};
 
-	$: {
+	$: if (selectedRelease) {
 		metadata = {
-			slug: selectedRelease?.slug,
+			slug: selectedRelease.slug,
 			user: $profile?.id
-		};
+		};		
 	}
 	onMount(async () => {
 		const data = await getCharacterReleases();
 	});
 
+	function itemSelected(params) {
+		logs = [...logs, `${params.detail.name} was selected`];
+	}
 	function cancel() {
 		if (window.history.length > 0) window.history.back();
 		else window.location.href = '/console';
@@ -55,7 +59,7 @@
 				await stripe.process();
 				nextStep();
 			} catch (error) {
-				console.error('Failed to process payment:', error);				
+				console.error('Failed to process payment:', error);
 			}
 		}
 	}
@@ -81,6 +85,11 @@
 </script>
 
 <LoggedInContainer>
+	<div class="status text-warning" data-augmented-ui="border">
+		{#each logs as log}
+			<div class="fade-in">{log}</div>
+		{/each}
+	</div>
 	<StepWizard initialStep={1} step={currentStep}>
 		<StepWizard.Step num={1} let:previousStep let:nextStep>
 			<div class="step-container release-step fade-in">
@@ -92,6 +101,7 @@
 							placeholder="Select a character collection"
 							label="name"
 							itemId="id"
+							on:change={itemSelected}
 							bind:value={selectedRelease}
 						>
 							<div slot="selection" let:selection>
@@ -247,6 +257,22 @@
 		--clear-select-color: var(--pink);
 		--list-z-index: 999;
 	}
+	.status {
+		position: fixed;
+		display: grid;
+		width: 100%;
+		/* top: 50%; */
+		/* left: 50%; */
+		/* margin: auto; */
+		justify-content: center;
+		pointer-events: none;
+		bottom: 0.17rem;
+		--aug-border-all: 1px;
+		--aug-border-bg: var(--pink);
+		--aug-all-width: max(5vh, 2vw);
+		--aug-inlay-bg: var(--pink);
+		transition: all 300ms ease-in-out;
+	}
 	.step-container {
 		height: 100%;
 		width: 100%;
@@ -254,7 +280,7 @@
 		grid-template-columns: 1fr;
 		/* grid-template-rows: auto 0.1fr; */
 		grid-template-rows: min-content auto min-content;
-		padding: 1rem 0;
+		padding: 2rem 0.5rem;
 	}
 	/* .step-container.release-step {
 		grid-template-rows: min-content auto min-content;
@@ -339,6 +365,7 @@
 	@media (max-width: 500px) {
 		.step-container {
 			padding: 0.5rem;
+			justify-content: center;
 		}
 		.button-row {
 			display: flex;
