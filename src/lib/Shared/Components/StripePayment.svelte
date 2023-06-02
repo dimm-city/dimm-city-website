@@ -1,16 +1,16 @@
 <script lang="ts">
 	import { loadStripe, type Stripe, type StripeElements } from '@stripe/stripe-js';
-	import {
-		Elements,
-		PaymentElement
-	} from 'svelte-stripe';
-	import { onMount } from 'svelte';
+	import { Elements, PaymentElement } from 'svelte-stripe';
+	import { createEventDispatcher, onMount } from 'svelte';
 	import { config } from '../config';
 	import { jwt } from '../Stores/UserStore';
 	import { get } from 'svelte/store';
-	export let callback: Function;
+	//export let callback: Function;
 	export let metadata: any;
 	export const process = submit;
+
+	const dispatcher = createEventDispatcher();
+
 	let stripe: Stripe | null = null;
 	let clientSecret: string | null = null;
 	let error = null;
@@ -43,6 +43,7 @@
 				metadata
 			})
 		});
+		dispatcher('stripe.onPaymentIntentCreated', metadata);
 		const { clientSecret } = await response.json();
 		return clientSecret;
 	}
@@ -52,6 +53,8 @@
 		if (processing) return;
 		processing = true;
 
+		console.log('submitting stripe payment');
+
 		const result = await stripe.confirmPayment({
 			elements,
 			redirect: 'if_required'
@@ -60,10 +63,12 @@
 		//console.log({ result });
 		if (result.error) {
 			// payment failed, notify user
-			error = result.error;
-			callback(error);
+			
+			dispatcher('stripe.onPaymentFailed', result.error);
+			//callback(error);
 		} else {
-			callback(result);
+			dispatcher('stripe.onPaymentConfirmed', result);
+			//callback(result);
 		}
 		processing = false;
 	}

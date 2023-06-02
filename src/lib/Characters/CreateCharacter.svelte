@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { getNotificationsContext } from 'svelte-notifications';
 	import StepWizard from 'svelte-step-wizard';
 	import Select from 'svelte-select';
 	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
@@ -13,7 +14,10 @@
 	import { createCharacter } from './Queries/createCharacter';
 	import ProfileImage from './Components/ProfileImage.svelte';
 
+	const { addNotification } = getNotificationsContext();
 	let logs = [];
+	$: filteredLogs = logs.slice(-3);
+
 	let stripe: StripePayment;
 	let processing = false;
 	let isSaving = false;
@@ -33,14 +37,14 @@
 		metadata = {
 			slug: selectedRelease.slug,
 			user: $profile?.id
-		};		
+		};
 	}
 	onMount(async () => {
 		const data = await getCharacterReleases();
 	});
 
 	function itemSelected(params) {
-		logs = [...logs, `${params.detail.name} was selected`];
+		//logs = [...logs, `${params.detail.name} was selected`];
 	}
 	function cancel() {
 		if (window.history.length > 0) window.history.back();
@@ -57,36 +61,85 @@
 
 			try {
 				await stripe.process();
-				nextStep();
+				//nextStep();
 			} catch (error) {
 				console.error('Failed to process payment:', error);
+				addNotification({
+					id: `${new Date().getTime()}-${Math.floor(Math.random() * 9999)}`,
+					position: 'bottom-right',
+					heading: 'issue with payment',
+					type: 'error',
+					description: 'failed to process payment'
+				});
 			}
 		}
 	}
 	async function onPaymentProcessed(result: any, nextStep: Function, previousStep: Function) {
-		console.log('onPP', result);
+		// logs.push('payment confirmed');
+		// logs = [...logs];
+		addNotification({
+			id: `${new Date().getTime()}-${Math.floor(Math.random() * 9999)}`,
+			position: 'bottom-right',
+			heading: 'payment processed',
+			type: 'success',
+			removeAfter: 3000,
+			text: 'creating character'
+		});
 
-		if (result.paymentIntent.status != 'succeeded') previousStep();
+		if (currentStep == 3) nextStep();
+		//if (result.paymentIntent.status != 'succeeded') previousStep();
 
-		const response = await createCharacter(result.paymentIntent.id);
+		try {
+			const response = await createCharacter(result.detail.paymentIntent.id);
 
-		loadWallets(true);
+			loadWallets(true);
 
-		character = {
-			tokenId: response.token.slug,
-			name: response.token.metadata.name,
-			imageUrl: response.token.metadata.image
-		};
+			character = {
+				tokenId: response.token.slug,
+				name: response.token.metadata.name,
+				imageUrl: response.token.metadata.image
+			};
+
+			nextStep();
+		} catch (error) {
+			addNotification({
+				id: `${new Date().getTime()}-${Math.floor(Math.random() * 9999)}`,
+				position: 'bottom-right',
+				heading: 'payment processed',
+				type: 'error',
+				removeAfter: 3000,
+				text: error
+			});
+			if (currentStep == 3) previousStep();
+		}
 
 		isSaving = false;
 
-		if (currentStep == 3) nextStep();
+		//if (currentStep == 3) nextStep();
+	}
+	async function onPaymentFailed(result: any, previousStep: Function) {
+		// logs.push('payment failed');
+		// logs.push(result.detail.message);
+		// logs = [...logs];
+
+		addNotification({
+			position: 'bottom-right',
+			removeAfter: 3000,
+			allowRemove: true,
+			id: `${new Date().getTime()}-${Math.floor(Math.random() * 9999)}`,
+			heading: 'payment failed',
+			type: 'error',
+			text: result.detail.message
+		});
+		isSaving = false;
+
+		// if (currentStep == 3) previousStep();
 	}
 </script>
 
 <LoggedInContainer>
 	<div class="status text-warning" data-augmented-ui="border">
-		{#each logs as log}
+		{#each filteredLogs as log}
 			<div class="fade-in">{log}</div>
 		{/each}
 	</div>
@@ -161,7 +214,10 @@
 					<h4>Enter Payment Details</h4>
 					<StripePayment
 						bind:this={stripe}
-						callback={(data) => onPaymentProcessed(data, nextStep, previousStep)}
+						on:stripe.onPaymentIntentCreated={(data) => console.log('intent created', data)}
+						on:stripe.onPaymentConfirmed={(data) =>
+							onPaymentProcessed(data, nextStep, previousStep)}
+						on:stripe.onPaymentFailed={(data) => onPaymentFailed(data, previousStep)}
 						{metadata}
 						bind:processing
 					/>
@@ -261,14 +317,16 @@
 		position: fixed;
 		display: grid;
 		width: 100%;
-		/* top: 50%; */
+		padding-inline: 20%;
+		left: 0;
+		/* top: 50%;  */
 		/* left: 50%; */
-		/* margin: auto; */
+		/* margin: auto;*/
 		justify-content: center;
 		pointer-events: none;
 		bottom: 0.17rem;
 		--aug-border-all: 1px;
-		--aug-border-bg: var(--pink);
+		--aug-border-bg: var(--dark);
 		--aug-all-width: max(5vh, 2vw);
 		--aug-inlay-bg: var(--pink);
 		transition: all 300ms ease-in-out;

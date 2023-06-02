@@ -49,24 +49,23 @@
 	<slot name="head" />
 </svelte:head>
 <PageBackground />
-<div class="main-container {title.toLowerCase()}" class:fullscreen>
-	<div class="content-panel animate__animated animate__fadeInUp">
-		<slot><ContentPane fullsize={true}>404</ContentPane></slot>
+	<div class="main-container {title.toLowerCase()}" class:fullscreen>
+		<div class="content-panel animate__animated animate__fadeInUp">
+			<slot><ContentPane fullsize={true}>404</ContentPane></slot>
+		</div>
+		<div class="menu-container">
+			<MenuBar {title} {enableSearch} {titleUrl}>
+				<svelte:fragment slot="left-button">
+					<slot name="left-button">
+						<MainMenu />
+					</slot>
+				</svelte:fragment>
+				<svelte:fragment slot="action-menu">
+					<slot name="action-menu" />
+				</svelte:fragment>
+			</MenuBar>
+		</div>
 	</div>
-	<div class="menu-container">
-		<MenuBar {title} {enableSearch} {titleUrl}>
-			<svelte:fragment slot="left-button">
-				<slot name="left-button" >
-					<MainMenu />
-				</slot>
-			</svelte:fragment>
-			<svelte:fragment slot="action-menu">
-				<slot name="action-menu" />
-			</svelte:fragment>
-		</MenuBar>
-	</div>
-</div>
-
 
 <slot name="scripts" />
 <Modals>
@@ -119,7 +118,6 @@
 		grid-row: 1;
 		height: min-content;
 		z-index: 10;
-		
 	}
 
 	@media screen and (max-width: 767px), (max-aspect-ratio: 0.74) {

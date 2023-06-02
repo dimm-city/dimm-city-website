@@ -45,6 +45,7 @@
 	"type": "module",
 	"dependencies": {
 		"@3d-dice/dice-box-threejs": "^0.0.12",
-		"svelte-adapter-azure-swa": "^0.13.0"
+		"svelte-adapter-azure-swa": "^0.13.0",
+		"svelte-notifications": "^0.9.98"
 	}
 }
