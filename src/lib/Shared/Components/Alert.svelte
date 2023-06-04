@@ -5,7 +5,7 @@
 	export let withoutStyles = false;
 	export let onRemove = null;
 
-	const { id, text, type } = notification;
+	const { id, text, type, heading } = notification;
 
 	const getClass = (suffix) => {
 		const defaultSuffix = suffix ? `-${suffix}` : '';
@@ -29,7 +29,11 @@
 		data-augmented-ui="  tl-clip-x tr-clip br-clip bl-clip both"
 	>
 		<div class={getClass('content')}>
-			<slot>{text}</slot>
+			<slot>
+                <h4>{heading}</h4>
+                <p>
+                {text}</p>
+            </slot>
 		</div>
 		{#if notification.allowRemove}
 			<button class={getClass('button')} on:click={onRemove} aria-label="delete notification">
@@ -40,6 +44,9 @@
 {/if}
 
 <style>
+    h4{
+        margin-block: 0;
+    }
 	.default-notification-style {
 		--aug-border-all: 1px;
 		--aug-bl: 0.35rem;

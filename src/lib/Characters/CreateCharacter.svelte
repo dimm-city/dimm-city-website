@@ -75,19 +75,27 @@
 		}
 	}
 	async function onPaymentProcessed(result: any, nextStep: Function, previousStep: Function) {
-		// logs.push('payment confirmed');
-		// logs = [...logs];
 		addNotification({
 			id: `${new Date().getTime()}-${Math.floor(Math.random() * 9999)}`,
 			position: 'bottom-right',
-			heading: 'payment processed',
+			heading: 'establishing connection',
 			type: 'success',
 			removeAfter: 3000,
-			text: 'creating character'
+			text: 'connecting your sporo to you op console...'
 		});
 
 		if (currentStep == 3) nextStep();
-		//if (result.paymentIntent.status != 'succeeded') previousStep();
+
+		const waitingTimer = setInterval(() => {
+			addNotification({
+				id: `${new Date().getTime()}-${Math.floor(Math.random() * 9999)}`,
+				position: 'bottom-right',
+				heading: 'still working',
+				type: 'warning',
+				removeAfter: 3000,
+				text: 'it is taking some time the founders are hard at work connecting to your sporo'
+			});
+		}, 10000);
 
 		try {
 			const response = await createCharacter(result.detail.paymentIntent.id);
@@ -99,13 +107,13 @@
 				name: response.token.metadata.name,
 				imageUrl: response.token.metadata.image
 			};
-
+			clearInterval(waitingTimer);
 			nextStep();
 		} catch (error) {
 			addNotification({
 				id: `${new Date().getTime()}-${Math.floor(Math.random() * 9999)}`,
 				position: 'bottom-right',
-				heading: 'payment processed',
+				heading: 'connection error',
 				type: 'error',
 				removeAfter: 3000,
 				text: error
@@ -202,8 +210,7 @@
 						<small>
 							{#if selectedRelease?.id > 0}
 								<span
-									>{selectedRelease.contract?.totalSupply}/{selectedRelease.contract?.maxSupply} sporos
-									created in this release</span
+									>{selectedRelease.contract?.totalSupply}/{selectedRelease.contract?.maxSupply ?? 'unknown'} connection established</span
 								>
 							{/if}
 						</small>
@@ -223,7 +230,7 @@
 					/>
 					<div class="text-warning">
 						<h4>You will be charged for your character when you press continue.</h4>
-						<p>Once your payment has been processed, character creation will begin...</p>
+						<p>Once your payment has been processed, a connection will be established to your sporo...</p>
 					</div>
 					{#if processing}
 						<div class="padding-1">
@@ -258,26 +265,26 @@
 			</div>
 		</StepWizard.Step>
 		<StepWizard.Step num={4} let:previousStep let:nextStep>
-			<div class="step-container fade-in">
-				<div class="centered-container h-100">
+			<div class="character-created step-container fade-in">
+				<div class="step-container-header">
+					<h2>Connection established!</h2>
+				</div>
+				<div class="step-container-content centered-container h-100">
 					<div class="character-created-container">
 						{#if character?.name > ''}
-							<h2>Your Sporo has been generated!</h2>
 							<h3>{character.name}</h3>
 							<ProfileImage {character} />
 							<!-- <p>
 								Click the <strong>view citizen file</strong> button to edit their citizen file
 							</p> -->
 
-							<!-- <p>
-							Please note that submitting this information to the Dimm City Archive will make it
-							freely available to the public. All information submitted to the archive will be
-							considered to be available on the CC-BY license unless otherwise stated. Contact the
-							founders if you would like more information.
-						</p> -->
+							<small>
+								You may now edit your sporo's citizen file and begin providing their backstory,
+								specialties, and more! You the 'edit citizen file' button below to get started.
+							</small>
 						{/if}
 						{#if isSaving}
-							<LoadingIndicator><div class="centered-container">compiling...</div></LoadingIndicator
+							<LoadingIndicator><div class="centered-container">connecting...</div></LoadingIndicator
 							>
 						{/if}
 					</div>
@@ -384,6 +391,7 @@
 		height: min-content;
 		display: flex;
 		justify-content: space-between;
+		align-self: flex-end;
 	}
 	.release-container {
 		--dc-image-aspect-ratio: 3/4;
@@ -410,6 +418,16 @@
 		--dc-image-aspect-ratio: 3/4;
 
 		text-align: center;
+		display: grid;
+		row-gap: 0.5rem;
+		align-content: space-around;
+	}
+	.character-created .step-container-header{
+		text-align: center;
+	}
+	.character-created small{
+		max-width: 60ch;
+		margin-block: 1rem;
 	}
 	/* .step-container div:nth-child(1) .centered-container {
 		height: fit-content;
