@@ -64,13 +64,16 @@
 	}
 
 	@media (max-width: 745px) {
+		:root{
+
+			--dc-image-width: 400px;
+			--dc-image-aspect-ratio: 4/3;
+		}
 		.article-grid {
 			justify-content: center;
 		}
 
 		.main-image {
-			--dc-image-width: 400px;
-			--dc-image-aspect-ratio: 4/3;
 			float: none;
 			margin-inline: auto;
 			margin-block-end: 1rem;

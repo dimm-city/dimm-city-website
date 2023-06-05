@@ -210,7 +210,8 @@
 						<small>
 							{#if selectedRelease?.id > 0}
 								<span
-									>{selectedRelease.contract?.totalSupply}/{selectedRelease.contract?.maxSupply ?? 'unknown'} connection established</span
+									>{selectedRelease.contract?.totalSupply}/{selectedRelease.contract?.maxSupply ??
+										'unknown'} connection established</span
 								>
 							{/if}
 						</small>
@@ -230,7 +231,10 @@
 					/>
 					<div class="text-warning">
 						<h4>You will be charged for your character when you press continue.</h4>
-						<p>Once your payment has been processed, a connection will be established to your sporo...</p>
+						<p>
+							Once your payment has been processed, a connection will be established to your
+							sporo...
+						</p>
 					</div>
 					{#if processing}
 						<div class="padding-1">
@@ -284,7 +288,8 @@
 							</small>
 						{/if}
 						{#if isSaving}
-							<LoadingIndicator><div class="centered-container">connecting...</div></LoadingIndicator
+							<LoadingIndicator
+								><div class="centered-container">connecting...</div></LoadingIndicator
 							>
 						{/if}
 					</div>
@@ -344,9 +349,10 @@
 		display: grid;
 		grid-template-columns: 1fr;
 		/* grid-template-rows: auto 0.1fr; */
-		grid-template-rows: min-content auto min-content;
+		grid-template-rows: min-content min(90%, auto) min-content;
 		padding: 2rem 0.5rem;
 	}
+
 	/* .step-container.release-step {
 		grid-template-rows: min-content auto min-content;
 	} */
@@ -422,10 +428,10 @@
 		row-gap: 0.5rem;
 		align-content: space-around;
 	}
-	.character-created .step-container-header{
+	.character-created .step-container-header {
 		text-align: center;
 	}
-	.character-created small{
+	.character-created small {
 		max-width: 60ch;
 		margin-block: 1rem;
 	}
@@ -443,6 +449,15 @@
 			padding: 0.5rem;
 			justify-content: center;
 		}
+
+		.release-step {
+			padding-top: 1.25rem;
+		}
+		/* .release-container {
+			--dc-image-width: 80svw;
+			--dc-image-aspect-ratio: 9/16;
+		} */
+
 		.button-row {
 			display: flex;
 			gap: 1rem;
