@@ -9,8 +9,8 @@
 	let selectedDice = null;
 	let selectedGame = null;
 	const games = [
-		{ title: 'WAA Game Template', url: '/waa/Example.json' },
-		{ title: 'Future Lost', url: '/waa/future-lost.json' }
+		{ title: 'WAA Game Template', url: '/waa/example' },
+		{ title: 'Future Lost', url: '/waa/future-lost' }
 	];
 	let players = [
 		{
