@@ -1,0 +1,41 @@
+:root {
+
+	--dc-default-text-color: black;
+	--dc-default-border-radius: 1rem;
+	--dc-default-padding: 1rem;
+	--dc-default-boxshadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+	--dc-default-container-bg: rgba(255, 255, 255, 0.3);
+
+	--dc-accent-color: rgb(58, 159, 199);
+	--dc-toolbar-height: 3rem;
+	--dc-header-block-margin: 0.25rem;
+
+	--dc-dice-roller-bg: #299eec;
+	--dc-card-border: 1px solid #000000;
+	--dc-card-border-radius: 1rem;
+	--dc-card-back-bg: #1387b9;
+	--dc-card-front-bg: rgb(235, 235, 235);
+	--dc-card-front-color: #1387b9;
+
+	--dc-status-display-padding: 0.25rem;
+}
+
+
+.dc-table-bg {
+	border-radius: 0.5rem;
+	background: var(--dc-dice-roller-bg);
+}
+.dc-health-meter-stroke {
+	stroke: rgba(0, 0, 0, 0.801);
+}
+
+/*utils*/
+.dc-header {
+	position: absolute;
+	display: grid;
+	justify-self: center;
+	width: calc(100% - var(--dc-default-padding));
+	border-radius: var(--dc-default-border-radius);
+	box-shadow: var(--dc-default-box-shadow);
+	background-color: var(--dc-default-container-bg);
+}

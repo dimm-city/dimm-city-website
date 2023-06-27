@@ -13,7 +13,7 @@
 	},
 	"devDependencies": {
 		"@dimm-city/dc-cyberwar": "^0.0.5",
-		"@dimm-city/dc-solo-rpg": "^0.0.11",
+		"@dimm-city/dc-solo-rpg": "file:../dc-solo-rpg",
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.5.0",
 		"@types/markdown-it": "^12.2.3",
@@ -45,6 +45,7 @@
 	"type": "module",
 	"dependencies": {
 		"@3d-dice/dice-box-threejs": "^0.0.12",
+		"@google/model-viewer": "^3.1.1",
 		"svelte-adapter-azure-swa": "^0.13.0",
 		"svelte-notifications": "^0.9.98"
 	}

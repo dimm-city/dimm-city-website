@@ -1,9 +1,12 @@
 <script lang="ts">
 	import { onMount, afterUpdate } from 'svelte';
+	import '@google/model-viewer';
 
 	export let title: string;
 	export let imageUrl: string;
 	export let videoUrl = '';
+	export let modelUrl = ''; ///assets/pink-dagger.glb
+	export let skyboxUrl = '';
 	export let aug = 'tl-clip t-clip-x tr-clip-y br-clip b-rect bl-clip l-scoop border';
 	export let classes = '';
 
@@ -41,33 +44,46 @@
 	data-augmented-ui={aug}
 	style="position: relative;"
 >
+	<!-- svelte-ignore a11y-media-has-caption -->
+	<video
+		bind:this={video}
+		id={title}
+		autoplay
+		on:canplay={onCanPlay}
+		on:loadeddata={onVideoLoaded}
+		class="fade-in"
+		disablepictureinpicture
+		playsinline
+		loop
+	>
+		<source src={mediaUrl} type="video/mp4" />
 
-		<!-- svelte-ignore a11y-media-has-caption -->
-		<video
-			bind:this={video}
-			id={title}
+		Your browser does not support the video tag.
+	</video>
+	{#if modelUrl > ''}
+		<model-viewer
+			src={modelUrl}
+			on:load={() => (video.style.display = 'none')}
+			alt="{title}"
+			auto-rotate
 			autoplay
-			on:canplay={onCanPlay}
-			on:loadeddata={onVideoLoaded}
-			class="fade-in"
-			disablepictureinpicture
-			playsinline
-			loop
-		>
-			<source src={mediaUrl} type="video/mp4" />
-
-			Your browser does not support the video tag.
-		</video>
-		{#if !hasVideo}
-		<img
-			src={imageUrl}
-			class="fade-in"
-			alt={title}
+			camera-controls
+			environment-image={skyboxUrl}
+			poster={imageUrl}
 		/>
+	{:else if !hasVideo}
+		<img src={imageUrl} class="fade-in" alt={title} />
 	{/if}
 </div>
 
 <style>
+	model-viewer {
+		width: 100%;
+		height: 100%;
+		--progress-bar-color: rgba(255, 255, 255, 0.5);
+		--poster-color: transparent;
+	}
+
 	img,
 	video,
 	.image-wrapper {
@@ -82,7 +98,10 @@
 		transition-property: all;
 		transition-timing-function: ease-in-out;
 
-		position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
 	}
 	img:hover,
 	video:hover {

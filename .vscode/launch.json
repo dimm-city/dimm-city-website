@@ -7,7 +7,7 @@
       "name": "dc - chrome",
       "url": "http://localhost:5173",
       "webRoot": "${workspaceFolder}",
-      "preLaunchTask": "npm run dev"
+      "preLaunchTask": "npm run dev",
     }
   ]
 }
