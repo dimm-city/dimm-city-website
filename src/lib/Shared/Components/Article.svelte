@@ -6,7 +6,6 @@
 	 */
 	export let model;
 	export let imageAug = 'tl-clip tr-clip br-clip bl-clip border';
-	export let imageHeight = '';
 	let html = '';
 	$: html = model != null ? marked.parse(model.description || ' ') : '';
 </script>

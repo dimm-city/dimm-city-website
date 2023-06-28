@@ -2,7 +2,7 @@
 	export const prerender = true;
 </script>
 
-<script lang="ts">
+<script>
 	import Shell from '$lib/Shared/Components/Shell.svelte';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import FlexMenu from '$lib/Shared/Components/Menu/FlexMenu.svelte';
@@ -26,24 +26,6 @@
 		padding-inline: 2rem;
 	}
 
-	/* :global(.spore-container .menu-item) {
-		padding-inline: 0;
-	} */
-	.item-container {
-		display: grid;
-		grid-auto-flow: column;
-		width: 100%;
-		font-size: 0.75rem;
-		padding: 0.25rem;
-	}
-	:global(.item-container:nth-child(odd)) {
-		justify-content: left;
-	}
-	.item-container .content {
-		align-items: center;
-		display: flex;
-		padding: 0.5rem;
-	}
 </style>
 
 <Shell title="Spores">
@@ -77,48 +59,6 @@
 			</div>
 
 			<FlexMenu data={spores} icon="bi-map" />
-			<!-- <MenuItem
-					url="https://files.dimm.city/spores/the-dark.pdf"
-					icon="bi-map"
-					title="The Dark"
-					description="Districts and locations identified within Dimm City"
-				>
-					<div class="item-container">
-						<Image
-							height="100%"
-							width="135px"
-							imageUrl="https://files.dimm.city/assets/locations/the-dark-thumbnail.png"
-							title="The Dark"
-							videoUrl=""
-							aug=""
-						/>
-						<div class="content">
-							To view The Dark from above is to see a spiral of main city streets intersected by anarchy on the
-							outskirts and moderate uniformity as one gets closer to the bottom. I say, “you would see” because the
-							skyscrapers filled center of this part of Dimm City is pitched black to the naked eye.
-						</div>
-					</div>
-				</MenuItem> -->
-
-			<!-- <MenuItem
-					url="https://files.dimm.city/spores/the-dark.pdf"
-					target="_blank"
-					icon="bi-map"
-					title="The Dark"
-					description="Districts and locations identified within Dimm City"
-				>
-					<div class="item-container">
-						<Image
-							height="100%"
-							width="135px"
-							imageUrl="https://files.dimm.city/assets/locations/the-dark-thumbnail.png"
-							title="The Dark"
-							videoUrl=""
-							aug=""
-						/>
-						<div class="content" />
-					</div>
-				</MenuItem> -->
 		</div>
 	</ContentPane>
 </Shell>

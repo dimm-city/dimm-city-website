@@ -1,17 +1,17 @@
-<script lang="ts">
+<script>
 	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
 	import MenuItem from '$lib/Shared/Components/Menu/MenuItem.svelte';
 	import { createEventDispatcher } from 'svelte';
-	export let query: any = null; // new Promise();
-	export let data: any[];
+	export let query= null; // new Promise();
+	export let data;
 	export let selectedItem = '';
 	export let icon = 'bi-file-text';
 
-	const dispather = createEventDispatcher();
+	const dispatcher = createEventDispatcher();
 
 	function selectItem(item) {
 		selectedItem = item.detail;
-		dispather('itemSelected', item);
+		dispatcher('itemSelected', item);
 		return true;
 	}
 </script>
@@ -36,7 +36,7 @@
 		bottom: 1rem;
 		right: 1rem;
 	}
-	.toolbar a,
+	/* .toolbar a,
 	.toolbar a:visited {
 		color: var(--third-accent);
 		transition: color 500ms ease-in-out;
@@ -45,7 +45,7 @@
 	.toolbar a:active {
 		color: var(--primary-accent);
 		transition: color 500ms ease-in-out;
-	}
+	} */
 
 	
 	

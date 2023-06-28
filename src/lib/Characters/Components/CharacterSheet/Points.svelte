@@ -1,20 +1,17 @@
-<script lang="ts">
-	
-	import type { ICharacter } from '$lib/Characters/Models/Character';
-	
-	export let character: ICharacter;
-	export let isEditing = false;
+<script>
+	export let character;
+	export const isEditing = false;
 </script>
 
 <div class="hp">
 	<h4>HP</h4>
 	<div data-augmented-ui="all-hex border">
-		<span>10</span><small>10</small>
+		<span>{character?.hp ?? 10}</span><small>10</small>
 	</div>
 </div>
 <div class="ap">
 	<h4>AP</h4>
-	<div data-augmented-ui="all-hex border">10</div>
+	<div data-augmented-ui="all-hex border">{character?.ap ?? 10}</div>
 </div>
 
 <style>

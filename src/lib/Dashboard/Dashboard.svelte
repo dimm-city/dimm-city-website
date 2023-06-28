@@ -65,9 +65,9 @@
 			</List>
 		</div>
 	</div>
-	<div class="footer">
-		<!-- <a href="/system-map" class="small-menu-item" data-augmented-ui>&lt;system map&gt;</a> -->
-	</div>
+	<!-- <div class="footer">
+		<a href="/system-map" class="small-menu-item" data-augmented-ui>&lt;system map&gt;</a> 
+	</div>-->
 </div>
 
 <style>
@@ -113,12 +113,12 @@
 		grid-area: col3;
 	}
 
-	.footer {
+	/* .footer {
 		grid-area: footer;
 	}
 	.footer .small-menu-item {
 		text-align: center;
-	}
+	} */
 
 	.col {
 		padding-inline: 1rem;
@@ -138,8 +138,6 @@
 			radial-gradient(circle at bottom left, var(--blue) 20px, transparent 30px);
 
 		--aug-inlay: initial;
-		/* --aug-inlay-bg: transparent;
-		background: #ffffff00; */
 		--aug-inlay-bg: #05050552;
 		background: #0505051e;
 	}
@@ -148,11 +146,10 @@
 		color: var(--light);
 	}
 
-	.hero-body,
-	.footer {
+	.hero-body {
 		margin-top: 1.25rem;
 	}
-	.footer a {
+	/* .footer a {
 		height: min-content;
 	}
 	.footer a:hover,
@@ -161,7 +158,7 @@
 		--aug-inlay-bg: transparent;
 		background: #050505b4;
 		transition: background 500ms;
-	}
+	} */
 	h4 {
 		margin-bottom: 0.25rem;
 	}

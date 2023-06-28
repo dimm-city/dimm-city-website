@@ -51,18 +51,6 @@
 		gap: 1rem;
 		margin: auto;
 	}
-	@media (max-width: 745px) {
-		.token-attributes div {
-			font-size: 0.8rem;
-		}
-		.image-wrapper {
-			height: fit-content;
-			width: fit-content;
-		}
-		.image-wrapper img {
-			max-width: 220px;
-		}
-	}
 
 	.release-details {
 		grid-column: 1 / span 2;
@@ -78,9 +66,6 @@
 		justify-self: center;
 	}
 
-	:global(.toolbar-row .aug-button) {
-		width: 5rem;
-	}
 	@media (min-width: 768px) {
 		.token-container {
 			grid-template-columns: repeat(2, 1fr);

@@ -7,7 +7,7 @@
 	 * @type {{ selectedAbilities: object[]; items: object[]; scripts: object[]; }}}
 	 */
 	export let character;
-	export let isEditing = false;
+	export const isEditing = false;
 	// @ts-ignore
 	export let viewAbility = (ability) => {};
 </script>

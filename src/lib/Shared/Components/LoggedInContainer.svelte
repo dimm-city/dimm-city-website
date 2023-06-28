@@ -7,7 +7,6 @@
 	import { defaultEvmStores, chainId, connected, signerAddress } from 'svelte-ethers-store';
 	import { onMount } from 'svelte';
 
-	export let redirect = "";
 	let ethereumEnabled =  false; 
 	onMount(async ()=>{
 		console.log('login container mounted', $loggedIn);

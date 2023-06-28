@@ -28,8 +28,8 @@
 					>svelte-ethers-store</a
 				>
 			</li>
-			<li><a rel="noreferrer" target="_blank" href="">TypeScript</a></li>
-			<li><a rel="noreferrer" target="_blank" href="">web3modal</a></li>
+			<li><a rel="noreferrer" target="_blank" href="https://www.typescriptlang.org">TypeScript</a></li>
+			<li><a rel="noreferrer" target="_blank" href="https://web3modal.com">web3modal</a></li>
 			<li><a rel="noreferrer" target="_blank" href="https://eslint.org">eslint</a></li>
 			<li><a rel="noreferrer" target="_blank" href="https://prettier.io">prettier</a></li>
 			<li><a rel="noreferrer" target="_blank" href="https://strapi.io">Strapi</a></li>

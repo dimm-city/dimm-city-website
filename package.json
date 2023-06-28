@@ -12,11 +12,12 @@
 		"format": "prettier --plugin-search-dir . --write ."
 	},
 	"devDependencies": {
-		"@dimm-city/dc-cyberwar": "^0.0.5",
+		"@dimm-city/dc-cyberwar": "*",
 		"@dimm-city/dc-solo-rpg": "*",
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.5.0",
 		"@types/markdown-it": "^12.2.3",
+		"@types/marked": "^5.0.0",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
 		"@typescript-eslint/parser": "^5.45.0",
 		"animate.css": "^4.1.1",
@@ -46,6 +47,7 @@
 	"dependencies": {
 		"@3d-dice/dice-box-threejs": "^0.0.12",
 		"@google/model-viewer": "^3.1.1",
+		"csv-parse": "^5.4.0",
 		"svelte-adapter-azure-swa": "^0.13.0",
 		"svelte-notifications": "^0.9.98"
 	}

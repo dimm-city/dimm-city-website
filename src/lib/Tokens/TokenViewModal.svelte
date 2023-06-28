@@ -6,5 +6,7 @@
 	export let isOpen;
 </script>
 <ModalShell>
+	{#if isOpen}
 	<TokenView token={token} />
+	{/if}
 </ModalShell>
