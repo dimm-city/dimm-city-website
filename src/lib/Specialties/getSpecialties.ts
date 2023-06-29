@@ -17,7 +17,7 @@ query {
 	}
 }`;
 
-export async function getSpecialties() : Promise<ISummaryItem[]> {
+export async function getSpecialties(searchText = "") : Promise<ISummaryItem[]> {
 	return fetch(config.graphUrl, {
 		method: 'POST',
 		headers: {
@@ -35,15 +35,21 @@ export async function getSpecialties() : Promise<ISummaryItem[]> {
 				return json.data.specialties.data.map((i) => {
 					return {
 						id: i.id,
+						type: 'specialty',
 						slug: i.attributes.slug,
 						name: i.attributes.name,
 						description: i.attributes.description ?? 'no information on this subject...',
 						shortDescription: i.attributes.shortDescription ?? 'no information on this subject...',
 						thumbnailUrl: i.attributes.mainImage?.data?.attributes?.previewUrl,
 						imageUrl: i.attributes.mainImage?.data?.attributes?.url,
-						attributes: i.attributes
+						attributes: i.attributes,
+						url: `/archive/specialties/${i.attributes.slug}`,
+						tags: ['specialty'],
+					
 					};
-				}).sort((a,b) => a.name > b.name ? 1 : -1);
+				})
+				.filter((i) => i.name.toLowerCase().includes(searchText.toLowerCase()))
+				.sort((a,b) => a.name > b.name ? 1 : -1);
 			}
 			return [];
 		})

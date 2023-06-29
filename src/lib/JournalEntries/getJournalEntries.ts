@@ -20,7 +20,7 @@ query {
 	}
 }`;
 
-export async function getJournalEntries() : Promise<ISummaryItem[]> {
+export async function getJournalEntries(searchText = "") : Promise<ISummaryItem[]> {
 	return fetch(config.graphUrl, {
 		method: 'POST',
 		headers: {
@@ -36,16 +36,28 @@ export async function getJournalEntries() : Promise<ISummaryItem[]> {
 				const json = await response.json();
 
 				return json.data.journalEntries.data.map((i) => {
-					return {
+					const item = {
 						id: i.id,
 						slug: i.attributes.slug,
 						name: i.attributes.title,
 						description: i.attributes.shortDescription ?? 'no information on this subject...',
 						thumbnailUrl: i.attributes.thumbnailUrl,
 						imageUrl: i.attributes.imageUrl,
-						recordedAt: i.attributes.recordedAt
+						recordedAt: i.attributes.recordedAt,
+						type: 'journalEntry',
+						tags: [''],
+						url: `/archive/journal-entries/${i.attributes.slug}`
+
 					};
-				}).sort((a,b) => a.name > b.name ? 1 : -1);
+					if (i.attributes.tags) {
+						item.tags =  [...i.attributes.tags];
+					}
+					if(!item.tags.includes('journalEntry')) item.tags.push('journalEntry');
+					
+					return item;
+				}
+
+				).sort((a,b) => a.name > b.name ? 1 : -1);
 			}
 			return [];
 		})

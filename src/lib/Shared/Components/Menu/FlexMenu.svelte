@@ -2,13 +2,29 @@
 	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
 	import MenuItem from '$lib/Shared/Components/Menu/MenuItem.svelte';
 	import { createEventDispatcher } from 'svelte';
+	
+
+	/**
+	 * @type {null|Promise<unknown|any>}
+	 */
 	export let query= null; // new Promise();
+	/**
+	 * @type {ArrayLike<any> | null}
+	 */
 	export let data;
-	export let selectedItem = '';
+	
+	/**
+	 *  @type {any | null}
+	*/
+	export let selectedItem;
+
 	export let icon = 'bi-file-text';
 
 	const dispatcher = createEventDispatcher();
 
+	/**
+	 * @param {{ detail: object|string; }} item
+	 */
 	function selectItem(item) {
 		selectedItem = item.detail;
 		dispatcher('itemSelected', item);

@@ -17,7 +17,7 @@ query {
 	}
 }`;
 
-export async function getDistricts(): Promise<ISummaryItem[]> {
+export async function getDistricts(searchText = ''): Promise<ISummaryItem[]> {
 	return fetch(config.graphUrl, {
 		method: 'POST',
 		headers: {
@@ -37,6 +37,12 @@ export async function getDistricts(): Promise<ISummaryItem[]> {
 						const item = { ...i.attributes };
 						item.attributes = i.attributes;
 						item.id = i.id;
+						item.type = 'location';
+						item.url = `/archive/locations/${item.slug}`;
+						if (!item.tags) item.tags = [];
+						if (!item.tags?.some((t) => t == 'district')) item.tags.push('district');
+						if (!item.tags?.some((t) => t == 'region')) item.tags.push('location');
+
 						return item;
 					})
 					.sort((a, b) => (a.name > b.name ? 1 : -1));
