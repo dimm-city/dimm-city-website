@@ -33,7 +33,7 @@
 		"stripe": "^11.14.0",
 		"svelte": "^3.54.0",
 		"svelte-check": "^3.0.1",
-		"svelte-ethers-store": "^2.5.10",
+		"svelte-ethers-store": "^2.6.1",
 		"svelte-modals": "^1.2.1",
 		"svelte-select": "^5.6.0",
 		"svelte-step-wizard": "^0.0.2",
