@@ -1,14 +1,19 @@
-<script lang="ts">
+<script>
 	import './journal-entries.css';
 	import Shell from '$lib/Shared/Components/Shell.svelte';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import { getJournalEntry } from './getJournalEntryBySlug';
 	import Article from '$lib/Shared/Components/Article.svelte';
 	import Image from '$lib/Shared/Components/Image.svelte';
-	import type { JournalEntry } from './JournalEntry';
 	import { formatDate } from '$lib/Shared/FormatFunctions';
-	export let slug;
-	let model: JournalEntry = null;
+	/**
+	 * @type {string}
+	 */
+	 export let slug;
+	/**
+	 * @type {import("./JournalEntry").JournalEntry | null}
+	 */
+	let model = null;
 
 	$: if (slug > '') {
 		model = null;

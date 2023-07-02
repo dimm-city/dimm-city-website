@@ -1,13 +1,18 @@
-<script lang="ts">
+<script>
 	import './specialties.css';
-	import type { Specialty } from './Specialty';
 	import Shell from '$lib/Shared/Components/Shell.svelte';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import { getSpecialty } from './getSpecialtyBySlug';
 	import Article from '$lib/Shared/Components/Article.svelte';
-	
-	export let slug: string;
-	let specialty: Specialty | null = null;
+
+	/**
+	 * @type {string}
+	 */
+	 export let slug;
+	/**
+	 * @type {import("./Specialty").Specialty | null}
+	 */
+	let specialty = null;
 
 	$: if (slug > '') {
 		specialty = null;

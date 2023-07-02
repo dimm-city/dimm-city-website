@@ -1,10 +1,7 @@
 <script lang="ts">
 	import Shell from '$lib/Shared/Components/Shell.svelte';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
-	import { districts } from '$lib/Locations/LocationStore';
 	import { config } from '$lib/Shared/config';
-	import { characters } from '$lib/Characters/CharacterStore';
-	import { specialties } from '$lib/Specialties/SpecialtyStore';
 </script>
 
 <Shell title="Console Stats">
@@ -13,9 +10,9 @@
 		<ul class="unstyled-list">
 			<li>Current Version: {config.version}</li>
 			<li>Connection Status: Weak</li>
-			<li>Citizen Profiles recorded: {$characters.length}</li>
-			<li>Citizen Specialities recorded: {$specialties.length}</li>
-			<li>Districts recorded: {$districts.length}</li>
+			<li>Citizen Profiles recorded: ?</li>
+			<li>Citizen Specialties recorded: ?</li>
+			<li>Districts recorded: ?</li>
 			<!-- <li>License: <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
                 CC-BY
               </a>

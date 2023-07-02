@@ -1,11 +1,17 @@
-<script lang="ts">
+<script>
 	import Shell from '$lib/Shared/Components/Shell.svelte';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
-	import { getLocation } from './getLocationBySlug';
-	import { Location } from './Location';
+	import { getLocation } from './getLocationBySlug';	
 	import Article from '$lib/Shared/Components/Article.svelte';
-	export let slug: string;
-	let location = new Location();
+	
+	/**
+	 * @type {string}
+	 */
+	 export let slug;
+	/**
+	 * @type {import('./Location').Location}
+	 */
+	let location;
 
 	$: if (slug > '') {
 		getLocation(slug).then((data) => (location = data));

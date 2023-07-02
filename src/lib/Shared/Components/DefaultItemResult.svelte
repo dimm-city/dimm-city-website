@@ -3,16 +3,18 @@
 	 * @type {{ name: any; type: any; shortDescription: any; description: string; }}
 	 */
 	export let item;
+	export let icon = 'bi-box';
+	export let subtitle = "";
 </script>
 
 <div>
 	<div>
 		<div class="menu-item-header" style="">
 			<div class="title-container">
-				<i class="bi bi-tools text-light" />{item.name}
+				<i class="bi {icon} text-light" />{item.name}
 			</div>
 			<div class="subtitle">
-				{item.type}
+				{subtitle}
             </div>
 		</div>
 	</div>

@@ -47,7 +47,7 @@
 			</div>
 			<svelte:fragment slot="result" let:result>
 				<MenuItem
-					icon="bi-map"
+					icon="bi-file-code"
 					url={`/specialties/${result.attributes.slug}`}
 					title={result.attributes.name}
 					description={result.attributes.shortDescription ?? ""}

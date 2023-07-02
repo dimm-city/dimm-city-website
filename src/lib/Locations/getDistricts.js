@@ -1,4 +1,3 @@
-import type { ISummaryItem } from '$lib/Shared/Models/ISummaryItem';
 import { config } from '$lib/Shared/config';
 export const getDistrictsQuery = `
 query {
@@ -17,7 +16,7 @@ query {
 	}
 }`;
 
-export async function getDistricts(searchText = ''): Promise<ISummaryItem[]> {
+export async function getDistricts(searchText = '') {
 	return fetch(config.graphUrl, {
 		method: 'POST',
 		headers: {

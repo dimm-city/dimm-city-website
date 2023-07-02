@@ -2,7 +2,7 @@
 	import Image from '$lib/Shared/Components/Image.svelte';
 	import { marked } from 'marked';
 	/**
-	 * @type {import('../Models/IArticle').IArticle | null}
+	 * @type {import('../Models/IArticle').IArticle | any | null}
 	 */
 	export let model;
 	export let imageAug = 'tl-clip tr-clip br-clip bl-clip border';
