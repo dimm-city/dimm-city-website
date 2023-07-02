@@ -1,28 +1,19 @@
 <script>
-	export let data;
+	import ItemResult from '$lib/Items/ItemResult.svelte';
 	import { config } from '$lib/Shared/config';
 	import Shell from '$lib/Shared/Components/Shell.svelte';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import SearchPage from '$lib/Shared/Components/SearchPage.svelte';
 	import MenuItem from '$lib/Shared/Components/Menu/MenuItem.svelte';
-	import CharacterResult from '$lib/Characters/CharacterResult.svelte';
 
-	const endpoint = config.apiBaseUrl + '/characters';
+	const endpoint = config.apiBaseUrl + '/items';
 	/**
 	 * @type {string}
 	 */
 	let searchText;
 
 	$: query = {
-		fields: ['tokenId', 'name', 'vibe', 'hp', 'ap'],
-		populate: {
-			race: {
-				fields: ['name']
-			},
-			specialties: {
-				fields: ['name']
-			}
-		},
+		fields: ['name', 'slug', 'shortDescription', 'type'],
 		filters: {
 			$or: [
 				{
@@ -31,7 +22,7 @@
 					}
 				},
 				{
-					vibe: {
+					description: {
 						$containsi: searchText
 					}
 				}
@@ -40,7 +31,7 @@
 	};
 </script>
 
-<Shell title="Citizen Files" fullscreen={false}>
+<Shell title="Items" fullscreen={false}>
 	<ContentPane padding={0}>
 		<SearchPage {query} {endpoint}>
 			<div class="search-container" slot="search" let:resultsComponent>
@@ -49,15 +40,15 @@
 					<input
 						bind:value={searchText}
 						type="text"
-						placeholder="Search citizen files..."
+						placeholder="Search items..."
 						on:keyup={resultsComponent.search}
 					/>
 					<i class="bi bi-search" />
 				</div>
 			</div>
 			<svelte:fragment slot="result" let:result>
-				<MenuItem url={`/citizens/${result.attributes.tokenId}`}>
-					<CharacterResult item={result.attributes} />
+				<MenuItem url={`/archive/${result.attributes.slug}`}>
+					<ItemResult item={result.attributes} />
 				</MenuItem>
 			</svelte:fragment>
 		</SearchPage>

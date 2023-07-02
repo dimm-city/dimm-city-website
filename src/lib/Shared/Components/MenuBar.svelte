@@ -135,39 +135,7 @@
 		white-space: nowrap;
 	}
 
-	.search-container {
-		position: relative;
-		display: flex;
-		width: 100%;
-		height: 100%;
-		justify-content: center;
-		align-items: start;
-		transition: all 150ms 50ms var(--easing);
-	}
-
-	.search-container > .aug-input {
-		--aug-border-bg: var(--secondary-accent);
-		color: var(--secondary-accent);
-		background-color: transparent;
-		--aug-border-all: 1px;
-		transition: all 150ms 50ms var(--easing);
-	}
-	.search-container > .aug-input > input {
-		text-align: center;
-		font-size: 0.75rem;
-		padding: 0.5rem;
-	}
-	.search-container > .aug-input > i.bi {
-		position: absolute;
-		color: var(--third-accent);
-		font-size: 0.75rem;
-		top: 1ch;
-		cursor: pointer;
-	}
-
-	.search-container > .aug-input > i.bi-search {
-		right: 1rem;
-	}
+	
 
 	@media (max-width: 767px) {
 		.top-panel {
