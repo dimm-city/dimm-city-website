@@ -5,6 +5,12 @@
 
 <Shell title="Change Log">
 	<ContentPane>
+		<h4 class="">Dimm City Console v0.9.0</h4>
+		<ul class="unstyled-list">
+			<li><a href="/items">Item data connection added</a></li>
+			<li><a href="/console/dreams">Dream Console created</a></li>
+			<li><a href="/console">Login with Google established</a></li>
+		</ul>
 		<h4 class="">Dimm City Console v0.5.0</h4>
 		<ul class="unstyled-list">
 			<li><a href="/spores">Dimm City spores now available</a></li>

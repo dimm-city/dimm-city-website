@@ -1,25 +1,27 @@
-<script lang="ts">
+<script>
 	import Shell from '$lib/Shared/Components/Shell.svelte';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import { config } from '$lib/Shared/config';
+	export let data;
 </script>
 
 <Shell title="Console Stats">
 	<ContentPane>
 		<h4 class="">Console Stats:</h4>
 		<ul class="unstyled-list">
-			<li>Current Version: {config.version}</li>
+			<li>Console Version: {config.version}</li>
+			<li>Data Connection Version: {data.version}</li>
 			<li>Connection Status: Weak</li>
-			<li>Citizen Profiles recorded: ?</li>
-			<li>Citizen Specialties recorded: ?</li>
-			<li>Districts recorded: ?</li>
-			<!-- <li>License: <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+			<li>Citizen Profiles recorded: {data.character}</li>
+			<li>Citizen Specialties recorded: {data.specialty}</li>
+			<li>Districts recorded: {data.location}</li>
+			<li>Journal entries recorded: {data["journal-entry"]}</li>		
+		</ul>
+	<!-- <li>License: <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
                 CC-BY
               </a>
-			</li> -->
-			dependencies 
-		</ul>
-
+			</li> 
+			dependencies -->
 		<h4>technologies, projects, and contributions</h4>
 		<p>A true thank you to all of the people that poured hours of passion into these projects!</p>
 		<ul class="unstyled-list">
