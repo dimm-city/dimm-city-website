@@ -2,20 +2,19 @@
 	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
 	import MenuItem from '$lib/Shared/Components/Menu/MenuItem.svelte';
 	import { createEventDispatcher } from 'svelte';
-	
 
 	/**
 	 * @type {null|Promise<unknown|any>}
 	 */
-	export let query= null; // new Promise();
+	export let query = null; // new Promise();
 	/**
 	 * @type {ArrayLike<any> | null}
 	 */
 	export let data;
-	
+
 	/**
 	 *  @type {any | null}
-	*/
+	 */
 	export let selectedItem;
 
 	export let icon = 'bi-file-text';
@@ -32,13 +31,62 @@
 	}
 </script>
 
+<div class="flex-menu">
+	{#await query}
+		<LoadingIndicator>
+			<div>Loading data...</div>
+		</LoadingIndicator>
+	{:then}
+		{#if data != null}
+			{#each data as item}
+				<div class="flex-menu-item">
+					<MenuItem on:click={() => selectItem(item)} classes="small" url={item.url}>
+						<div class="menu-item-header" style="">
+							<slot name="item-header" {item}>
+								<div class="title-container">
+									<i class="bi {item.icon || icon} text-light" />{item.name}
+								</div>
+							</slot>
+							<slot name="subtitle" {item}>
+								<div class="subtitle" />
+							</slot>
+						</div>
+						<div class="description">
+							<slot {item} name="description">
+								<small>{item.description || ''}</small>
+							</slot>
+						</div>
+						<slot name="item-toolbar" {item}>
+							<div class="toolbar">
+								<!-- <a
+                target="_blank"
+                on:click|stopPropagation={() => true}
+                href="/console/characters/print/{character.attributes.tokenId}"
+            >
+                <i class="bi bi-printer" />
+            </a> -->
+							</div>
+						</slot>
+					</MenuItem>
+				</div>
+			{/each}
+		{/if}
+	{:catch e}
+		<div>{e}</div>
+	{/await}
+</div>
+
 <style>
 	.flex-menu {
 		display: flex;
 		flex-wrap: wrap;
-		margin-block: 1.5rem;
+		/* margin-block: 1.5rem; */
+		/* gap: 0rem; */
 		min-width: 300px;
-		justify-content: space-evenly;
+		align-content: flex-start;
+		justify-content: flex-start;
+		align-items: flex-start;
+		min-height: 100%;
 	}
 	.flex-menu > div {
 		flex: 1 1 350px;
@@ -62,9 +110,6 @@
 		color: var(--primary-accent);
 		transition: color 500ms ease-in-out;
 	} */
-
-	
-	
 
 	.subtitle {
 		min-width: min-content;
@@ -103,8 +148,8 @@
 		}
 
 		.flex-menu {
-			height: 100%;
-			align-items: end;
+			min-height: 100%;
+			align-content: flex-end;
 			padding-bottom: 1rem;
 		}
 	}
@@ -117,46 +162,3 @@
 		}
 	}
 </style>
-
-<div class="flex-menu">
-	{#await query}
-		<LoadingIndicator>
-			<div>Loading data...</div>
-		</LoadingIndicator>
-	{:then}
-		{#if data != null}
-			{#each data as item}
-				<div class="flex-menu-item">
-					<MenuItem on:click={() => selectItem(item)} classes="small" url={item.url}>
-						<div class="menu-item-header" style="">
-							<slot name="item-header" {item}>
-								<div class="title-container"><i class="bi {item.icon || icon} text-light" />{item.name}</div>
-							</slot>
-							<slot name="subtitle" {item}>
-								<div class="subtitle" />
-							</slot>
-						</div>
-						<div class="description">
-							<slot {item} name="description">
-								<small>{item.description || ''}</small>
-							</slot>
-						</div>
-						<slot name="item-toolbar" {item}>
-							<div class="toolbar">
-								<!-- <a
-                target="_blank"
-                on:click|stopPropagation={() => true}
-                href="/console/characters/print/{character.attributes.tokenId}"
-            >
-                <i class="bi bi-printer" />
-            </a> -->
-							</div>
-						</slot>
-					</MenuItem>
-				</div>
-			{/each}
-		{/if}
-	{:catch e}
-		<div>{e}</div>
-	{/await}
-</div>

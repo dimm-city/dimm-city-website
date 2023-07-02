@@ -1,6 +1,6 @@
-<script lang="ts">
+<script>
 	export let icon = 'bi bi-missing';
-	export let title = 'Title';
+	export let title = '';
 	export let url = '#';
 	export let description = '';
 	export let disabled = false;
@@ -11,6 +11,7 @@
 <style>
 	.menu-item {
 		background-color: rgba(33, 0, 43, 0.55);
+		padding-block: 0.5rem;
 	}
 	.menu-item i {
 		margin-right: 0.5rem;

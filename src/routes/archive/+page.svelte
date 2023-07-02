@@ -47,12 +47,12 @@
 		searchTypes = ['all'];
 	}
 
-	$: if ($searchText || searchTypes?.length > 0) {
-		searchArchive($searchText, searchTypes?.join(',') ?? 'all').then(
-			(data) => (searchResults = [...data])
-		);
-	} else {
-		searchArchive('', searchTypes?.join(',') ?? 'all').then((data) => (searchResults = [...data]));
+	function search() {
+		if ($searchText || searchTypes?.length > 0) {
+			searchArchive($searchText, searchTypes).then((data) => (searchResults = [...data]));
+		} else {
+			searchArchive('', searchTypes).then((data) => (searchResults = [...data]));
+		}
 	}
 
 	function getIconByType(itemType: string) {
@@ -64,58 +64,97 @@
 	}
 </script>
 
-<Shell title="Archive" enableSearch={true} fullscreen={false}>
-	<ContentPane padding={1}>
-		<h1>Dimm City Archive</h1>
-		<div>
-			<div>
-				<input type="text" placeholder="Search archive" bind:value={$searchText} />
-			</div>
-			<div class="aug-select">
-				<Select
-					loadOptions={() => new Promise((resolve) => resolve(options))}
-					placeholder="Filter results by type"
-					label="name"
-					itemId="id"
-					multiple={true}
-					hideEmptyState={true}
-					bind:value={selectedOptions}
+<Shell title="Dimm City Archive" fullscreen={false}>
+	<ContentPane padding={0}>
+		<div class="archive-grid">			
+			<div class="results-wrapper">
+				<FlexMenu
+					on:itemSelected={(e) => onItemSelected(e)}
+					bind:selectedItem
+					data={searchResults}
+					{query}
 				>
-					<div slot="selection" let:selection>
-						<span>{selection.name ?? selection.attributes?.name ?? 'Unknown'}</span>
+					<svelte:fragment let:item slot="item-header">
+						<div class="title-container">
+							<i class="bi {item.icon || getIconByType(item.type)} text-light" />
+							{item.name}
+							{item.type}
+						</div>
+					</svelte:fragment>
+					<svelte:fragment let:item slot="subtitle">
+						<div />
+					</svelte:fragment>
+					<div slot="description" let:item>
+						<div>{item.description?.substring(0, 50)}</div>
 					</div>
-					<div slot="item" let:item let:index>
-						<span>{item.name ?? item.attributes?.name ?? 'Unknown'}</span>
-					</div>
-				</Select>
-				<small>Selected types: {searchTypes.join(', ')}</small>
+				</FlexMenu>
+			</div>
+			<div class="archive-wrapper">
+				<div>
+					<input
+						type="text"
+						placeholder="Search archive"
+						bind:value={$searchText}
+						on:change={search}
+					/>
+				</div>
+				<div class="aug-select">
+					<Select
+						loadOptions={() => new Promise((resolve) => resolve(options))}
+						placeholder="Filter results by type"
+						label="name"
+						itemId="id"
+						multiple={true}
+						hideEmptyState={true}						
+						on:change={search}
+						on:input={search}
+						bind:value={selectedOptions}
+					>
+						<div slot="selection" let:selection>
+							<span>{selection.name ?? selection.attributes?.name ?? 'Unknown'}</span>
+						</div>
+						<div slot="item" let:item let:index>
+							<span>{item.name ?? item.attributes?.name ?? 'Unknown'}</span>
+						</div>
+					</Select>
+				</div>
 			</div>
 		</div>
-		<FlexMenu
-			on:itemSelected={(e) => onItemSelected(e)}
-			bind:selectedItem
-			data={searchResults}
-			{query}
-		>
-			<svelte:fragment let:item slot="item-header">
-				<div class="title-container">
-					<i class="bi {item.icon || getIconByType(item.type)} text-light" />
-					{item.name}
-					{item.type}
-				</div>
-			</svelte:fragment>
-			<svelte:fragment let:item slot="subtitle">
-				<div />
-			</svelte:fragment>
-			<div slot="description" let:item>
-				<div>{item.description?.substring(0, 50)}</div>
-			</div>
-		</FlexMenu>
 	</ContentPane>
 </Shell>
 
 <style>
+	.archive-grid {
+		display: grid;
+		grid-template-rows: min-content auto;
+		grid-template-areas:
+			'search'
+			'results';
+		margin-inline: 2rem;
+		overflow: hidden;
+	}
+	.archive-wrapper {
+		grid-area: search;
+		margin-block: 0.5rem;
+		display: grid;
+		gap: 1rem;
+	}
+
+	.results-wrapper {
+		grid-area: results;
+		overflow: overlay;
+	}
 	.title-container i {
 		margin-right: 0.25rem;
+	}
+
+	@media (max-width: 767px) {
+		.archive-grid {
+			max-height: 100%;
+			grid-template-rows: auto min-content;
+			grid-template-areas:
+				'results'
+				'search';
+		}
 	}
 </style>
