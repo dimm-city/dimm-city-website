@@ -6,14 +6,14 @@
 	import MenuItem from '$lib/Shared/Components/Menu/MenuItem.svelte';
 	import DefaultItemResult from '$lib/Shared/Components/DefaultItemResult.svelte';
 
-	const endpoint = config.apiBaseUrl + '/items';
+	const endpoint = config.apiBaseUrl + '/factions';
 	/**
 	 * @type {string}
 	 */
 	let searchText;
 
 	$: query = {
-		fields: ['name', 'slug', 'shortDescription', 'type'],
+		fields: ['name', 'slug', 'shortDescription'],
 		filters: {
 			$or: [
 				{
@@ -31,7 +31,7 @@
 	};
 </script>
 
-<Shell title="Items" fullscreen={false}>
+<Shell title="Races" fullscreen={false}>
 	<ContentPane padding={0}>
 		<SearchPage {query} {endpoint}>
 			<div class="search-container" slot="search" let:resultsComponent>
@@ -40,15 +40,15 @@
 					<input
 						bind:value={searchText}
 						type="text"
-						placeholder="Search items..."
+						placeholder="Search races..."
 						on:keyup={resultsComponent.search}
 					/>
 					<i class="bi bi-search" />
 				</div>
 			</div>
 			<svelte:fragment slot="result" let:result>
-				<MenuItem url={`/items/${result.attributes.slug}`}>
-					<DefaultItemResult icon="bi-tools" subtitle={result.attributes.type} item={result.attributes} />
+				<MenuItem url={`/factions/${result.attributes.slug}`}>
+					<DefaultItemResult item={result.attributes} icon="bi-shield-lock" />
 				</MenuItem>
 			</svelte:fragment>
 		</SearchPage>

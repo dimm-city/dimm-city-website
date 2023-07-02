@@ -43,6 +43,12 @@
 		title="Specialties"
 		description="Documenting the true skills of the Sporos"
 	/>
+	<MenuItem
+		url="/items"
+		icon="bi-tools"
+		title="Items"
+		description="Search the items of Dimm City"
+	/>
 <MenuItem url="/console/dreams" icon="bi-controller" title="Dream Console" description="Dimm City solo campaigns" />
 	<MenuItem url="/spores" icon="bi-hypnotize" title="Spores" description="Dreams of Dimm City" />
 	<MenuItem

@@ -20,7 +20,7 @@ const getLocationBySlugQuery = `
   }
 `;
 
-export function getLocation(slug): Promise<Location> {
+export function getLocation(slug){
 	let location = new Location();
 	return fetch(config.graphUrl, {
 		method: 'POST',

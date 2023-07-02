@@ -20,7 +20,10 @@ const getSpecialtyBySlugQuery = `
   }
 `;
 
-export function getSpecialty(slug): Promise<Specialty> {
+/**
+ * @param {any} slug
+ */
+export function getSpecialty(slug){
 	let specialty = new Specialty();
 	return fetch(config.graphUrl, {
 		method: 'POST',
