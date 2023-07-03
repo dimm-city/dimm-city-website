@@ -5,13 +5,14 @@
 
 	export let endpoint = '';
 	export let query = {};
+	export let autoLoad = true;
 
 	let page = 1;
 	let totalPages = 1;
 	/**
 	 * @type {any[]}
 	 */
-	let results = [];
+	export let results = [];
 	let resultsPerPage = 10;
 	$: if (resultsPerPage) page = 1;
 
@@ -67,7 +68,7 @@
 	/**
 	 * @param {{ target: { scrollTop: any; clientHeight: any; scrollHeight: any; }; }} event
 	 */
-	 export function handleScroll(event) {
+	export function handleScroll(event) {
 		const { scrollTop, clientHeight, scrollHeight } = event.target;
 		console.log('handleScroll');
 		if (scrollHeight - scrollTop === clientHeight) {
@@ -86,7 +87,7 @@
 		}
 	}
 
-	onMount(search);
+	if (autoLoad) onMount(search);
 </script>
 
 <div class="toolbar">
