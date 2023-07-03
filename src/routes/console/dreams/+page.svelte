@@ -85,7 +85,6 @@
 
 <Shell title="Dream Console">
 	<ContentPane padding={3}>
-		<link rel="stylesheet" href="/assets/styles/WAAStyles.css" />
 		<!-- <LoggedInContainer> 
 			<Game {games} {players} {selectedPlayer} {selectedGame} {diceThemes} {selectedDice} />
 		  </LoggedInContainer>  -->

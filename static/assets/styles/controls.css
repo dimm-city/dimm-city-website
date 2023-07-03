@@ -31,6 +31,22 @@ hr {
 	width: 100%;
 }
 
+button {
+	cursor: pointer;
+	width: 100%;
+	padding: 0.5rem 1rem;
+	background-color: rgba(17, 17, 17, 0.75);
+	border: 0;
+	color: var(--third-accent);
+	font-size: 1rem;
+	font-family: var(--main-font-family);
+
+	border: 1px var(--third-accent) solid;
+}
+button:hover, button:focus-visible{
+	outline: none;
+}
+
 input, select {
 	width: 100%;
 	padding: 0.5rem 1rem;
