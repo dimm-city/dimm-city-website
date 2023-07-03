@@ -31,14 +31,22 @@ hr {
 	width: 100%;
 }
 
-input {
+input, select {
 	width: 100%;
 	padding: 0.5rem 1rem;
 	background-color: rgba(17, 17, 17, 0.75);
-	border: 0;
+	
+	border-width: 1px;
+	border-color: var(--third-accent);
 	color: var(--third-accent);
 	font-size: 1rem;
 	font-family: var(--main-font-family);
+}
+
+input:focus-visible,
+select:focus-visible{
+	outline-width: 0;
+	border-color: var(--fourth-accent);
 }
 
 input:read-only,
@@ -153,6 +161,29 @@ input:read-only,
 	font-size: 0.7em;
 }
 
+.text-button{
+	font-family: var(--main-font-family);
+	font-size: 1rem;
+	border: 0;
+	background: transparent;
+	white-space: nowrap;
+	display: inline-block;
+	cursor: pointer;
+	color: var(--secondary-accent);
+}
+.text-button:hover,
+.text-button:focus-visible{
+	color: var(--fourth-accent);
+}
+
+
+
+.pagination, .toolbar button, .toolbar input, .toolbar select {
+	font-size: 0.8rem;
+}
+.toolbar select{
+	padding: 0.5rem;
+}
 .search-container {
 	position: relative;
 	display: flex;

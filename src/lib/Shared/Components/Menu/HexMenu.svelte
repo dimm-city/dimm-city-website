@@ -64,10 +64,11 @@
 	}
 	.dropdown-button {
 		cursor: pointer;
+		aspect-ratio: 1/1;
 		/* background: var(--pink); */
 		--aug-border-all: 1px;
 		--aug-border-bg: var(--yellow);
-		--aug-all-width: max(5vh, 2vw);
+		--aug-all-width: max(6vh, 2vw);
 		--aug-inlay-bg: var(--pink);
 		transition: transform var(--easing);
 		
@@ -124,6 +125,9 @@
 		}
 		.dropdown-content.hidden {
 			transform: translateY(100rem) translateX(0);
+		}
+		.dropdown-button{
+			--aug-all-width: max(6vh, 5vw);
 		}
 	}
 

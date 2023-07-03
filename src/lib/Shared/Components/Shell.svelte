@@ -49,11 +49,7 @@
 	<!-- <link rel="icon" type="image/x-icon" href="/assets/icons/shroom256.png" /> -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-TJ2LB9K4M4"></script>
 	<!-- <link rel="stylesheet" type="text/css" href="https://unpkg.com/augmented-ui@2/augmented-ui.min.css"> -->
-	<link
-		rel="stylesheet"
-		href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-	/>
-	<link as="font" href="/assets/dimm-city.woff2" type="font/woff2" crossorigin="anonymous" />
+
 	<slot name="head" />
 </svelte:head>
 <PageBackground />

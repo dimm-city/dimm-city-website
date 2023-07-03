@@ -67,7 +67,7 @@
 	.content-container {
 		display: flex;
 		flex-direction: column;
-		gap: 0.5rem;
+		gap: 1.5rem;
 		padding-inline: 1rem;
 		align-items: center;
 		justify-content: center;

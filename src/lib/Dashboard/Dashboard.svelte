@@ -122,6 +122,7 @@
 
 	.col {
 		padding-inline: 1rem;
+		padding-bottom: 1.5rem;
 		--aug-clip-tl1: initial;
 		--aug-clip-tr1: initial;
 		--aug-clip-bl1: initial;

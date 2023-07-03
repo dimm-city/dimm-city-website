@@ -187,7 +187,7 @@
 		}
 
 		.search-container {
-			align-items: end;
+			align-items: center;
 		}
 		.version {
 			right: 0.5rem;

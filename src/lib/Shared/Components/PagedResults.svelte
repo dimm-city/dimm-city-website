@@ -70,7 +70,6 @@
 	 */
 	export function handleScroll(event) {
 		const { scrollTop, clientHeight, scrollHeight } = event.target;
-		console.log('handleScroll');
 		if (scrollHeight - scrollTop === clientHeight) {
 			nextPage();
 		}
@@ -94,21 +93,23 @@
 </script>
 
 <div class="toolbar">
-	<select data-augmented-ui bind:value={resultsPerPage} on:change={search}>
-		<option value="10">10</option>
-		<option value="20">20</option>
-		<option value="50">50</option>
-	</select>
+	<div>
+		<select class="aug-select" data-augmented-ui bind:value={resultsPerPage} on:change={search}>
+			<option value={10}>10</option>
+			<option value={20}>20</option>
+			<option value={50}>50</option>
+		</select>
+	</div>
 
 	<div class="pagination">
 		{#if page > 1}
-			<button data-page={page - 1} class="aug-button" data-augmented-ui on:click={handlePagination}
+			<button data-page={page - 1} class="text-button" data-augmented-ui on:click={handlePagination}
 				>Previous</button
 			>
 		{/if}
 		<span>Page {page} of {totalPages}</span>
 		{#if page < totalPages}
-			<button data-page={page + 1} class="aug-button" data-augmented-ui on:click={handlePagination}
+			<button data-page={page + 1} class="text-button" data-augmented-ui on:click={handlePagination}
 				>Next</button
 			>
 		{/if}
@@ -135,6 +136,7 @@
 		justify-content: space-between;
 		align-items: center;
 		margin-bottom: 20px;
+		margin-inline: 0.5rem;
 	}
 
 	.results-list {
@@ -158,9 +160,4 @@
 		display: none;
 	}
 
-	@media (max-width: 600px) {
-		.toolbar .pagination {
-			display: none;
-		}
-	}
 </style>
