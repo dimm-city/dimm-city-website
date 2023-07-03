@@ -76,7 +76,7 @@
 			poster={imageUrl}
 		/>
 	{:else if !hasVideo}
-		<img src={imageUrl} class="fade-in" alt={title} />
+		<img src={imageUrl} class="fade-in" class:hidden={!imageUrl} alt={title} />
 	{/if}
 </div>
 
@@ -92,7 +92,8 @@
 	video,
 	.image-wrapper {
 		height: var(--dc-image-height);
-		width: var(--dc-image-width);
+		width: min(80dvw, var(--dc-image-width));
+		background-image: url('/assets/missing-image.png');
 	}
 	img,
 	video {

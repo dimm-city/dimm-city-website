@@ -47,17 +47,19 @@
 	}
 
 	.main-image {
-		aspect-ratio: 4/3;
 		width: min-content;
 		float: left;
 		margin-inline-end: 0.75rem;
 		margin-block-end: 0.2rem;
+		
 	}
 
 	.text-area {
 		margin-top: 1rem;
 		height: min-content;
 	}
+
+	
 	:global(.text-area p) {
 		margin-block-start: 0;
 	}
@@ -76,6 +78,9 @@
 			float: none;
 			margin-inline: auto;
 			margin-block-end: 1rem;
+		}
+		:global(.main-image .image-wrapper){
+			margin: auto;
 		}
 	}
 </style>

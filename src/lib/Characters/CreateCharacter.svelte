@@ -353,6 +353,9 @@
 		padding: 2rem 0.5rem;
 	}
 
+	.step-container {
+		margin: auto;
+	}
 	/* .step-container.release-step {
 		grid-template-rows: min-content auto min-content;
 	} */
@@ -378,11 +381,13 @@
 		min-height: max-content;
 		height: 100%;
 		width: 100%;
+		overflow: hidden;
 		/* justify-content: space-between; */
 		/* overflow-y: auto; */
 	}
 	.step-container-content {
 		width: 100%;
+		overflow: hidden;
 	}
 	.toolbar {
 		display: flex;
