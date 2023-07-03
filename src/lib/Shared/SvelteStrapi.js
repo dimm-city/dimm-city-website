@@ -21,3 +21,14 @@ export async function loadSearchPageFromStrapi(page, contentType, fields = ['slu
 
 	return results;
 }
+
+/**
+ * @param {{ params: { slug: any; }; }} page
+ * @param {string} contentType
+ */
+export async function loadEntityPageFromStrapi(page, contentType) {
+	const slug = page.params.slug;
+	const strapi = new Strapi(config.apiBaseUrl);
+	const item = await strapi.loadBySlug(contentType, slug);
+	return item;
+}
