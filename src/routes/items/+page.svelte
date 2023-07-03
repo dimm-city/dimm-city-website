@@ -6,6 +6,8 @@
 	import MenuItem from '$lib/Shared/Components/Menu/MenuItem.svelte';
 	import DefaultItemResult from '$lib/Shared/Components/DefaultItemResult.svelte';
 
+	export let data;
+
 	const endpoint = config.apiBaseUrl + '/items';
 	/**
 	 * @type {string}
@@ -33,7 +35,7 @@
 
 <Shell title="Items" fullscreen={false}>
 	<ContentPane padding={0}>
-		<SearchPage {query} {endpoint}>
+		<SearchPage {query} {endpoint} initialData={data.data}>
 			<div class="search-container" slot="search" let:resultsComponent>
 				<div data-augmented-ui class="aug-input">
 					<!-- <i class="bi bi-gear" /> -->

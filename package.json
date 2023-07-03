@@ -21,7 +21,6 @@
 		"@types/qs": "^6.9.7",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
 		"@typescript-eslint/parser": "^5.45.0",
-		"animate.css": "^4.1.1",
 		"augmented-ui": "^2.0.0",
 		"date-fns": "^2.29.3",
 		"eslint": "^8.28.0",

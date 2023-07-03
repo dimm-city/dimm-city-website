@@ -5,7 +5,12 @@
 	 * @type {any}
 	 */
 	export let query;
-	export let endpoint = config.apiBaseUrl + '/characters';
+	export let endpoint = config.apiBaseUrl + '/items';
+	/**
+	 * @type {any}
+	 */
+	 export let initialData = {};
+	 export let autoLoad =false;
 
 	let resultsComponent;
 
@@ -18,7 +23,7 @@
 
 <div class="search-grid">
 	<div class="search-results-wrapper">
-		<PagedResults bind:this={resultsComponent} {endpoint} {query}>
+		<PagedResults bind:this={resultsComponent} {endpoint} {query} results={initialData} {autoLoad}>
 			<svelte:fragment slot="result" let:result>
 				<slot name="result" {result} />
 			</svelte:fragment>
