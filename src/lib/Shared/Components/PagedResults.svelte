@@ -87,7 +87,10 @@
 		}
 	}
 
-	if (autoLoad) onMount(search);
+	onMount(() => {
+		console.log('mounting paged results', autoLoad);
+		if (autoLoad) search();
+	});
 </script>
 
 <div class="toolbar">
@@ -115,7 +118,7 @@
 <ul class="results-list" on:scroll={handleScroll}>
 	{#if loading}
 		<span>...</span>
-	{:else}
+	{:else if Array.isArray(results)}
 		{#each results as result (result.id)}
 			<li>
 				<slot name="result" {result}>

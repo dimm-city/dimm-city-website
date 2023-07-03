@@ -1,12 +1,11 @@
-<script context="module">
-	export const prerender = true;
-</script>
-
 <script>
 	import Shell from '$lib/Shared/Components/Shell.svelte';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import FlexMenu from '$lib/Shared/Components/Menu/FlexMenu.svelte';
 	import { getSpores } from './Queries/getSpores';
+	/**
+	 * @type {import("../Shared/Models/ISummaryItem").ISummaryItem[]}
+	 */
 	let spores;
 	getSpores().then((s) => (spores = s));
 </script>
@@ -23,14 +22,14 @@
 	.spore-container {
 		height: min-content;
 		width: 100%;
-		padding-inline: 2rem;
+		padding: 2rem;
 	}
 
 </style>
 
 <Shell title="Spores">
 	<ContentPane padding={0}>
-		<div class="spore-container animate__animated animate__backInDown">
+		<div class="spore-container">
 			<h3 class="">Dimm City Spores</h3>
 			<small>&lt;The Dimm City 1-Page RPG&gt;</small>
 
