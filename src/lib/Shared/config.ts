@@ -14,22 +14,21 @@ export const config = getCurrentConfig();
 
 function getCurrentConfig() {
 	let output = dev;
-	
-	if(browser){
-	console.log('Loading client config');
-	}
-	else if(process){
-		console.log('Loading server config', process?.env)
+
+	if (browser) {
+		console.log('Loading client config');
+		if (window.location.href.includes(prod.baseUrl)) output = prod;
+		if (window.location.href.includes(staging.baseUrl)) output = staging;
+		if (window.location.href.includes(beta.baseUrl)) output = beta;
+		if (window.location.href.includes(dev.baseUrl)) output = dev;
+	} else if (process) {
+		console.log('Loading server config');
+		if (process.env && process.env.NODE_ENV === 'production') output = prod;
+		if (process.env && process.env.NODE_ENV === 'staging') output = staging;
+		if (process.env && process.env.NODE_ENV === 'beta') output = beta;
+		if (process.env && process.env.NODE_ENV === 'development') output = dev;
 	}
 
-	if (!browser && process && process.env && process.env.NODE_ENV === 'production') output = prod;
-	if (!browser && process && process.env && process.env.NODE_ENV === 'staging') output = staging;
-	if (!browser && process && process.env && process.env.NODE_ENV === 'beta') output = beta;
-	if (!browser && process && process.env && process.env.NODE_ENV === 'development') output = dev;
-	if (browser && window.location.href.includes(prod.baseUrl)) output = prod;
-	if (browser && window.location.href.includes(staging.baseUrl)) output = staging;
-	if (browser && window.location.href.includes(beta.baseUrl)) output = beta;
-	if (browser && window.location.href.includes(dev.baseUrl)) output = dev;
 	if (output.googleKey <= '') {
 		output.googleKey = 'testing';
 	}

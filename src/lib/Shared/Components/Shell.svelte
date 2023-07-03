@@ -3,7 +3,7 @@
 	import ContentPane from './ContentPane.svelte';
 	import { Modals, closeModal, closeAllModals } from 'svelte-modals';
 	import { pageImage, pageTitle } from '$lib/Shared/Stores/ShellStore';
-	import '$lib/Shared/Styles/main.css';
+	// import '$lib/Shared/Styles/main.css';
 	// import 'animate.css';
 	import { onMount } from 'svelte';
 	import MenuBar from './MenuBar.svelte';
@@ -34,16 +34,19 @@
 </script>
 
 <svelte:head>
-	<meta charset="UTF-8" />
+	<!-- <meta charset="UTF-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta
 		name="viewport"
 		content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0"
 	/>
+	<link rel="stylesheet" type="text/css" href="/assets/styles/main.css"> -->
 	<title>{$pageTitle ?? title} - Dimm City</title>
+
+	
 	<meta name="description" content="" />
 	<meta name="twitter:image" content={$pageImage} />
-	<link rel="icon" type="image/x-icon" href="/assets/icons/shroom256.png" />
+	<!-- <link rel="icon" type="image/x-icon" href="/assets/icons/shroom256.png" /> -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-TJ2LB9K4M4"></script>
 	<!-- <link rel="stylesheet" type="text/css" href="https://unpkg.com/augmented-ui@2/augmented-ui.min.css"> -->
 	<link
