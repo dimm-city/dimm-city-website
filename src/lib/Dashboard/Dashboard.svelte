@@ -34,7 +34,7 @@
 			<Hero query={newsQuery} data={latestNews} />
 		</div>
 	</div>
-	<div style="grid-area: ref;">
+	<div  class="reference-header">
 		<h4>Dimm City Reference</h4>
 		<hr />
 	</div>
@@ -90,6 +90,7 @@
 	@media (min-width: 821px) {
 		.container {
 			grid-template-columns: 1fr 1fr 1fr;
+			grid-template-rows: min-content min-content auto min-content;
 			grid-template-areas:
 				'hero hero hero'
 				'ref ref ref'
@@ -99,6 +100,12 @@
 	}
 	.hero {
 		grid-area: hero;
+	}
+
+	.reference-header{
+		grid-area: ref;
+		height: min-content;
+		margin-block-end: 0;
 	}
 
 	.col1 {

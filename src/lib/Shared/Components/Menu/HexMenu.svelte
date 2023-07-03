@@ -68,7 +68,7 @@
 		/* background: var(--pink); */
 		--aug-border-all: 1px;
 		--aug-border-bg: var(--yellow);
-		--aug-all-width: max(6vh, 2vw);
+		--aug-all-width: max(45px, 2vw);
 		--aug-inlay-bg: var(--pink);
 		transition: transform var(--easing);
 		

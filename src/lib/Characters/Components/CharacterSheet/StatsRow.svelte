@@ -80,6 +80,7 @@
 		--aug-tr: 7px;
 		--aug-border-all: 2px;
 		--aug-border-bg: var(--fourth-accent);
+		margin: auto;
 	}
 
 	.scores-container {

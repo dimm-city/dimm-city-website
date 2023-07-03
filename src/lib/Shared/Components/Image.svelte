@@ -14,12 +14,13 @@
 	let mediaUrl: string | null;
 
 	function onVideoLoaded() {
+		hasVideo = true;
 		console.log('video loaded');
 	}
 	function onCanPlay() {
 		console.log('can play');
 	}
-	$: if (videoUrl) {
+	$: if (videoUrl > "") {
 		console.log('video changed', videoUrl, video);
 		mediaUrl = videoUrl;
 		hasVideo = mediaUrl != null;
@@ -47,12 +48,14 @@
 >
 	<!-- svelte-ignore a11y-media-has-caption -->
 	<video
+
 		bind:this={video}
 		id={title}
 		autoplay
 		on:canplay={onCanPlay}
 		on:loadeddata={onVideoLoaded}
 		class="fade-in"
+		class:hidden={!hasVideo}
 		disablepictureinpicture
 		playsinline
 		loop
@@ -109,6 +112,9 @@
 		transform: scale(1.3) translate(-30%, -30%);
 	}
 
+	.hidden{
+		visibility: hidden;
+	}
 	.image-wrapper {
 		display: flex;
 
