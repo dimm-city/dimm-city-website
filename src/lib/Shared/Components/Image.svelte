@@ -9,13 +9,19 @@
 	export let aug = 'tl-clip t-clip-x tr-clip-y br-clip b-rect bl-clip l-scoop border';
 	export let classes = '';
 
+	let image: HTMLImageElement;
 	let video: HTMLVideoElement;
 	let hasVideo = false;
+	let hasImage = false;
 	let mediaUrl: string | null;
 
 	function onVideoLoaded() {
 		hasVideo = true;
 		console.log('video loaded');
+	}
+	function onImageLoaded() {
+		hasImage = true;
+		console.log('image loaded');
 	}
 	function onCanPlay() {
 		console.log('can play');
@@ -34,8 +40,12 @@
 	}
 
 
+	
 	onMount(async () => {
 		mediaUrl = videoUrl;
+		if(image?.complete){
+			hasImage = true;
+		}
 	});
 </script>
 <svelte:head>
@@ -43,6 +53,7 @@
 </svelte:head>
 <div
 	class="m-3 p-4 d-flex image-wrapper {classes}"
+	class:missing={!hasImage}
 	data-augmented-ui={aug}
 	style="position: relative;"
 >
@@ -76,7 +87,7 @@
 			poster={imageUrl}
 		/>
 	{:else if !hasVideo}
-		<img src={imageUrl} class="fade-in" class:hidden={!imageUrl} alt={title} />
+		<img bind:this={image} src={imageUrl} class="fade-in" class:hidden={!imageUrl} alt={title} on:load={onImageLoaded} />
 	{/if}
 </div>
 
@@ -93,7 +104,14 @@
 	.image-wrapper {
 		height: var(--dc-image-height);
 		width: min(80dvw, var(--dc-image-width));
+	}
+
+	
+
+	.image-wrapper.missing {
 		background-image: url('/assets/missing-image.png');
+		background-repeat: no-repeat;
+		
 	}
 	img,
 	video {
