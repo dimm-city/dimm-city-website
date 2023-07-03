@@ -32,7 +32,7 @@
 
 <Shell title="Specialties" fullscreen={false}>
 	<ContentPane padding={0}>
-		<SearchPage {query} {endpoint}>
+		<SearchPage {query} {endpoint} autoLoad={true}>
 			<div class="search-container" slot="search" let:resultsComponent>
 				<div data-augmented-ui class="aug-input">
 					<!-- <i class="bi bi-gear" /> -->

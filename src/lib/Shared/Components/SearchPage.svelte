@@ -10,7 +10,7 @@
 	 * @type {any}
 	 */
 	 export let initialData = {};
-	 export let autoLoad =false;
+	 export let autoLoad = false;
 
 	let resultsComponent;
 
