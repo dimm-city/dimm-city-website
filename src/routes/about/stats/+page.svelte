@@ -2,7 +2,7 @@
 	import Shell from '$lib/Shared/Components/Shell.svelte';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import { config } from '$lib/Shared/config';
-	export let data;
+	export let data = {};
 </script>
 
 <Shell title="Console Stats">

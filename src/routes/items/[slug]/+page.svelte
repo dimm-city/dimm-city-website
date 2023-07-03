@@ -8,7 +8,7 @@
 	export let data;
 </script>
 
-<Shell title={data.attributes.name} fullscreen={false}>
+<Shell title={data.attributes?.name} fullscreen={false}>
 	<ContentPane padding={3}>
 		<ItemView item={data.attributes} />
 	</ContentPane>

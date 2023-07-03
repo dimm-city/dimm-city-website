@@ -30,5 +30,5 @@ export async function loadEntityPageFromStrapi(page, contentType) {
 	const slug = page.params.slug;
 	const strapi = new Strapi(config.apiBaseUrl);
 	const item = await strapi.loadBySlug(contentType, slug);
-	return item;
+	return item ?? { attributes: {} };
 }

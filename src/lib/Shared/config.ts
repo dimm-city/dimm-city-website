@@ -14,7 +14,18 @@ export const config = getCurrentConfig();
 
 function getCurrentConfig() {
 	let output = dev;
+	
+	if(browser){
+	console.log('Loading client config');
+	}
+	else if(process){
+		console.log('Loading server config', process?.env)
+	}
+
 	if (!browser && process && process.env && process.env.NODE_ENV === 'production') output = prod;
+	if (!browser && process && process.env && process.env.NODE_ENV === 'staging') output = staging;
+	if (!browser && process && process.env && process.env.NODE_ENV === 'beta') output = beta;
+	if (!browser && process && process.env && process.env.NODE_ENV === 'development') output = dev;
 	if (browser && window.location.href.includes(prod.baseUrl)) output = prod;
 	if (browser && window.location.href.includes(staging.baseUrl)) output = staging;
 	if (browser && window.location.href.includes(beta.baseUrl)) output = beta;
