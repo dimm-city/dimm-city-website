@@ -1,4 +1,5 @@
 <script>
+    
     export let race = {
         // Assuming you have a race object with the necessary properties
     };

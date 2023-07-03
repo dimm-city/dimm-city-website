@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { onMount, afterUpdate } from 'svelte';
-	import '@google/model-viewer';
 
 	export let title: string;
 	export let imageUrl: string;
@@ -33,12 +32,14 @@
 		mediaUrl = null;
 	}
 
-	onMount(() => {
-		console.log('mount');
+
+	onMount(async () => {
 		mediaUrl = videoUrl;
 	});
 </script>
-
+<svelte:head>
+	<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.0.1/model-viewer.min.js"></script>
+</svelte:head>
 <div
 	class="m-3 p-4 d-flex image-wrapper {classes}"
 	data-augmented-ui={aug}
@@ -64,7 +65,7 @@
 		<model-viewer
 			src={modelUrl}
 			on:load={() => (video.style.display = 'none')}
-			alt="{title}"
+			alt={title}
 			auto-rotate
 			autoplay
 			camera-controls
@@ -110,7 +111,7 @@
 
 	.image-wrapper {
 		display: flex;
-		margin: auto;
+
 		background-color: var(--translucent-dark);
 		background-size: contain;
 		background-position: center;
