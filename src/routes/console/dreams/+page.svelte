@@ -85,37 +85,42 @@
 
 <Shell title="Dream Console">
 	<ContentPane padding={1}>
-		<!-- <LoggedInContainer> 
-			<Game {games} {players} {selectedPlayer} {selectedGame} {diceThemes} {selectedDice} />
-		  </LoggedInContainer>  -->
-
-		<div class="game-container" class:hidden={!ready || $currentScreen == 'loadGame'}>
-			<Game
-				bind:this={gameComponent}
-				{systemSettings}
-				on:dc-solo-rpg.journalSaved={onJournalSaved}
-				on:dc-solo-rpg.gameOver={onGameOver}
-				on:dc-solo-rpg.exitGame={onExitGame}
-			/>
-		</div>
-		<div class="welcome-container" class:hidden={ready && $currentScreen != 'loadGame'}>
-			<section class="hero">
-				<h1>Dimm City Solo RPG</h1>
-				<p>Demo</p>
-			</section>
-			<GameSelector
-				{games}
-				{players}
-				bind:selectedPlayer
-				bind:selectedGame
-				on:dc-solo-rpg.gameSelected={loadGame}
-			/>
-		</div>
+		<LoggedInContainer>
+			<div class="login-header" slot="public-header">
+				<h2>Please sign in to get started</h2>
+			</div>
+			<div class="game-container" class:hidden={!ready || $currentScreen == 'loadGame'}>
+				<Game
+					bind:this={gameComponent}
+					{systemSettings}
+					on:dc-solo-rpg.journalSaved={onJournalSaved}
+					on:dc-solo-rpg.gameOver={onGameOver}
+					on:dc-solo-rpg.exitGame={onExitGame}
+				/>
+			</div>
+			<div class="welcome-container" class:hidden={ready && $currentScreen != 'loadGame'}>
+				<section class="hero">
+					<h1>Dimm City Solo RPG</h1>
+					<p>Demo</p>
+				</section>
+				<GameSelector
+					{games}
+					{players}
+					bind:selectedPlayer
+					bind:selectedGame
+					on:dc-solo-rpg.gameSelected={loadGame}
+				/>
+			</div>
+			</LoggedInContainer>
 	</ContentPane>
 </Shell>
 
 <style>
 	.hidden {
 		display: none;
+	}
+	.login-header{
+		display: grid;
+		justify-content: center;
 	}
 </style>

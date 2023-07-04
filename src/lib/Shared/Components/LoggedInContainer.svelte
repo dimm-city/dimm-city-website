@@ -26,6 +26,7 @@
 {#if $loggedIn}
 	<slot />
 {:else}
+	<slot name="public-header"></slot>
 	<slot name="public">
 		<div class="content-container fade-in">
 			<Button height="5rem" url={config.apiBaseUrl + '/connect/google'}
