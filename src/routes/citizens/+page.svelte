@@ -52,7 +52,7 @@
 						placeholder="Search citizen files..."
 						on:keyup={resultsComponent.search}
 					/>
-					<i class="bi bi-search" />
+					<!-- <i class="bi bi-search" /> -->
 				</div>
 			</div>
 			<svelte:fragment slot="result" let:result>

@@ -7,8 +7,8 @@
 	export let query = {};
 	export let autoLoad = true;
 
-	let page = 1;
-	let totalPages = 1;
+	export let page = 1;
+	export let totalPages = 1;
 	/**
 	 * @type {any[]}
 	 */
@@ -102,7 +102,7 @@
 	});
 </script>
 
-<div class="toolbar">
+<!-- <div class="toolbar">
 	<div>
 		<select class="aug-select" data-augmented-ui bind:value={resultsPerPage} on:change={search}>
 			<option value={10}>10</option>
@@ -112,19 +112,19 @@
 	</div>
 
 	<div class="pagination">
-		<!-- {#if page > 1}
+		{#if page > 1}
 			<button data-page={page - 1} class="text-button" data-augmented-ui on:click={handlePagination}
 				>Previous</button
 			>
-		{/if} -->
+		{/if} 
 		<span>Page {page} of {totalPages}</span>
-		<!-- {#if page < totalPages}
+		 {#if page < totalPages}
 			<button data-page={page + 1} class="text-button" data-augmented-ui on:click={handlePagination}
 				>Next</button
 			>
-		{/if} -->
+		{/if} 
 	</div>
-</div>
+</div> -->
 
 <ul class="results-list" on:scroll={handleScroll}>
 	{#if loading}
