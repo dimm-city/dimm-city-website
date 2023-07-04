@@ -57,13 +57,23 @@
 		loading = false;
 	}, 300);
 
+	export async function previousPage() {
+		if (page > 1) {
+			page--;
+			search();
+			// const result = await fetchData(page, resultsPerPage);
+			// results = [...results, ...(result.data ?? [])];
+		}
+	}
 	export async function nextPage() {
 		if (page < totalPages) {
 			page++;
-			const result = await fetchData(page, resultsPerPage);
-			results = [...results, ...(result.data ?? [])];
+			search();
+			// const result = await fetchData(page, resultsPerPage);
+			// results = [...results, ...(result.data ?? [])];
 		}
 	}
+
 
 	/**
 	 * @param {{ target: { scrollTop: any; clientHeight: any; scrollHeight: any; }; }} event
@@ -102,17 +112,17 @@
 	</div>
 
 	<div class="pagination">
-		{#if page > 1}
+		<!-- {#if page > 1}
 			<button data-page={page - 1} class="text-button" data-augmented-ui on:click={handlePagination}
 				>Previous</button
 			>
-		{/if}
+		{/if} -->
 		<span>Page {page} of {totalPages}</span>
-		{#if page < totalPages}
+		<!-- {#if page < totalPages}
 			<button data-page={page + 1} class="text-button" data-augmented-ui on:click={handlePagination}
 				>Next</button
 			>
-		{/if}
+		{/if} -->
 	</div>
 </div>
 
@@ -138,13 +148,16 @@
 		margin-bottom: 20px;
 		margin-inline: 0.5rem;
 	}
+	.pagination span{
+		white-space: nowrap;
+	}
 
 	.results-list {
 		display: flex;
 		flex-wrap: wrap;
 		min-width: 300px;
 		align-content: flex-start;
-		justify-content: flex-start;
+		justify-content: center;
 		align-items: flex-start;
 		padding: 0;
 	}

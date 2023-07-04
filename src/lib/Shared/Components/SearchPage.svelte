@@ -30,7 +30,9 @@
 		</PagedResults>
 	</div>
 	<div class="search-form-wrapper">
+		<button class="text-button" on:click={resultsComponent.previousPage}>&lt;</button>
 		<slot name="search" {resultsComponent} />
+		<button class="text-button" on:click={resultsComponent.nextPage}>&gt;</button>
 	</div>
 </div>
 
@@ -48,6 +50,7 @@
 		grid-area: search;
 		margin: 1rem;
 		display: grid;
+		grid-template-columns: min-content auto min-content;
 		gap: 1rem;
 	}
 
