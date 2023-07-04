@@ -1,7 +1,6 @@
 <script lang="ts">
-	import { pageDescription } from './../Shared/Stores/ShellStore.ts';
 	import Shell from '$lib/Shared/Components/Shell.svelte';
-	import { pageImage } from '$lib/Shared/Stores/ShellStore';
+	import { pageImage,pageDescription, pageTitle } from '$lib/Shared/Stores/ShellStore';
 	import { loadCharacter } from '$lib/Characters/Queries/getCharacterBySlug';
 	import { onMount } from 'svelte';
 	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
@@ -21,7 +20,8 @@
 	$: isEditable = character && ownsToken(character?.token);
 	$pageImage = character?.thumbnailImage;
 	$pageDescription = character?.vibe;
-
+	$pageTitle = character.name;
+	
 	function startEditing() {
 		isEditing = true;
 		originalCharacter = JSON.stringify(character);
@@ -63,6 +63,7 @@
 				query = loadCharacter(tokenId).then((c) => {
 					character = c;
 					$characters = [c, ...$characters.filter((l) => l.id != c.id)];
+					$pageTitle = character.name;
 					$pageImage = character.thumbnailImage;
 					$pageDescription = character?.vibe;	
 				});
@@ -75,7 +76,7 @@
 	});
 </script>
 
-<Shell title="{character?.name} - Citizen File" titleUrl="/citizens" fullscreen={true}>
+<Shell title="{character?.name}" titleUrl="/citizens" fullscreen={true}>
 	{#if character?.id}
 		<Sheet {character} {isEditing} />
 	{:else}
