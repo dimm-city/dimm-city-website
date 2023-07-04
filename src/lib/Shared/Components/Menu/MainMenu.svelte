@@ -29,7 +29,7 @@
 		url="/locations"
 		icon="bi-map"
 		title="Locations"
-		description="Districts and locations identified within Dimm City"
+		description="Locations identified within Dimm City"
 	/>
 	<MenuItem
 		url="/citizens"

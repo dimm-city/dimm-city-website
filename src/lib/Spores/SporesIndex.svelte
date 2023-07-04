@@ -22,6 +22,7 @@
 	.spore-container {
 		height: min-content;
 		width: 100%;
+		overflow-y: auto;
 	}
 
 </style>
