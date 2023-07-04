@@ -53,7 +53,7 @@
 </svelte:head>
 <div
 	class="m-3 p-4 d-flex image-wrapper {classes}"
-	class:missing={!hasImage}
+	class:missing={!hasImage && !hasVideo && modelUrl == ''}
 	data-augmented-ui={aug}
 	style="position: relative;"
 >
