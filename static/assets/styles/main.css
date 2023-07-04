@@ -81,24 +81,19 @@ li > a:focus {
 /* https://css-tricks.com/custom-scrollbars-in-webkit/ */
 *::-webkit-scrollbar {
 	width: 0.1rem; /* width of the entire scrollbar */	
+
 }
 
 *::-webkit-scrollbar-track {
 	background: transparent; /* var(--third-accent); /* color of the tracking area */
-	margin-top: 10vh;
-	margin-bottom: 10vh;
+	margin-top: 2vh;
+	margin-bottom: 2vh;
 }
 
 *::-webkit-scrollbar-thumb {
 	/* background-color: var(--fourth-accent); color of the scroll thumb */
 
-	background-color: linear-gradient(
-		90deg,
-		rgba(0, 0, 0, 0) 0%,
-		var(--fourth-accent) 29%,
-		var(--fourth-accent) 50%,
-		rgba(0, 0, 0, 0) 100%
-	);
+	background-color: var(--fourth-accent);
 	border-radius: 100vw; /* roundness of the scroll thumb */
 	border: 1px solid var(--fourth-accent); /* creates padding around scroll thumb */
 }

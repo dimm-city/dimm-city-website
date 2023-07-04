@@ -84,7 +84,7 @@
 </script>
 
 <Shell title="Dream Console">
-	<ContentPane padding={3}>
+	<ContentPane padding={1}>
 		<!-- <LoggedInContainer> 
 			<Game {games} {players} {selectedPlayer} {selectedGame} {diceThemes} {selectedDice} />
 		  </LoggedInContainer>  -->

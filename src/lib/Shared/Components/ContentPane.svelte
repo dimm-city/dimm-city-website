@@ -1,7 +1,6 @@
 <script lang="ts">
-	export let fullsize = true;
-	export let padding = 3;
-	export let scrollable: boolean = true;
+	export let padding = 1;
+	export let scrollable: boolean = false;
 </script>
 
 <style>
@@ -46,12 +45,9 @@
 		position: relative;
 		min-height: 100%;
 		width: 100%;
-		aspect-ratio: 16 / 9;
-		overflow: hidden;		
+		overflow: hidden;	
 	}
-	.content-container.full-size {
-		aspect-ratio: unset;
-	}
+	
 	.content-container .content-wrapper {
 		display: block;
 		width: 100%;
@@ -79,12 +75,17 @@
 	}
 	.content-wrapper::-webkit-scrollbar {
 		color: var(--secondary-accent);
+
 	}
 
 	/* https://css-tricks.com/custom-scrollbars-in-webkit/ */
 	*::-webkit-scrollbar {
-		width: 0rem; /* width of the entire scrollbar */
+		width: 0.35rem; /* width of the entire scrollbar */
 	}
+
+	.padding-1{
+			padding: 1.5rem !important;
+		}
 
 	@media all and (max-width: 767px), (max-aspect-ratio: 0.74) {
 		.content-container {
@@ -96,12 +97,12 @@
 	}
 
 	@media (max-width: 750px) {
-
-		.content-slot {
-			overflow-y: auto;
-		}
+	
 		.augmented-content-decoration {
 			--aug-border-all: 0.25vh;
+		}
+		.padding-1{
+			padding: 1rem !important;
 		}
 		.padding-3{
 			padding: 0.3rem !important;
@@ -111,7 +112,7 @@
 	
 </style>
 
-<div class="content-container" class:full-size={fullsize}>
+<div class="content-container">
 	<div
 		class="content-wrapper"
 		data-augmented-ui="bl-clip-inset br-clip-inset tl-2-clip-xy tr-2-clip-xy l-rect r-rect t-clip"

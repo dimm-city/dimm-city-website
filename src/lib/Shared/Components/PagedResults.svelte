@@ -102,30 +102,6 @@
 	});
 </script>
 
-<!-- <div class="toolbar">
-	<div>
-		<select class="aug-select" data-augmented-ui bind:value={resultsPerPage} on:change={search}>
-			<option value={10}>10</option>
-			<option value={20}>20</option>
-			<option value={50}>50</option>
-		</select>
-	</div>
-
-	<div class="pagination">
-		{#if page > 1}
-			<button data-page={page - 1} class="text-button" data-augmented-ui on:click={handlePagination}
-				>Previous</button
-			>
-		{/if} 
-		<span>Page {page} of {totalPages}</span>
-		 {#if page < totalPages}
-			<button data-page={page + 1} class="text-button" data-augmented-ui on:click={handlePagination}
-				>Next</button
-			>
-		{/if} 
-	</div>
-</div> -->
-
 <ul class="results-list" on:scroll={handleScroll}>
 	{#if loading}
 		<span>...</span>
@@ -141,16 +117,6 @@
 </ul>
 
 <style>
-	/* .toolbar {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		margin-bottom: 20px;
-		margin-inline: 0.5rem;
-	}
-	.pagination span{
-		white-space: nowrap;
-	} */
 
 	.results-list {
 		display: flex;

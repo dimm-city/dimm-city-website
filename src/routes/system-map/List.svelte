@@ -10,7 +10,7 @@
 		list-style-type: none;
 		position: relative;
 		list-style-type: none;
-		padding-left: 1rem;
+		padding-left: 0;
 		margin-bottom: 0.5rem;
 	}
 </style>

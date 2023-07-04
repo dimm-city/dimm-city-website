@@ -22,13 +22,12 @@
 	.spore-container {
 		height: min-content;
 		width: 100%;
-		padding: 2rem;
 	}
 
 </style>
 
 <Shell title="Spores">
-	<ContentPane padding={0}>
+	<ContentPane>
 		<div class="spore-container">
 			<h3 class="">Dimm City Spores</h3>
 			<small>&lt;The Dimm City 1-Page RPG&gt;</small>

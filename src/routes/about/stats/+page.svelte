@@ -6,11 +6,12 @@
 </script>
 
 <Shell title="Console Stats">
-	<ContentPane>
+	<ContentPane padding={1} scrollable={true}>
 		<h4 class="">Console Stats:</h4>
 		<ul class="unstyled-list">
 			<li>Console Version: {config.version}</li>
-			<li>Data Connection Version: {data.version}</li>
+			<li>Data Connection Version: {data.version}<br>
+		{data.url}</li>
 			<li>Connection Status: Weak</li>
 			<li>Citizen Profiles recorded: {data.character}</li>
 			<li>Citizen Specialties recorded: {data.specialty}</li>

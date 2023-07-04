@@ -192,11 +192,6 @@ input:read-only,
 	color: var(--fourth-accent);
 }
 
-
-
-.pagination, .toolbar button, .toolbar input, .toolbar select {
-	font-size: 0.8rem;
-}
 .toolbar select{
 	padding: 0.5rem;
 }
