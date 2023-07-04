@@ -9,12 +9,12 @@
 	/**
 	 * @type {any}
 	 */
-	 export let initialData = {};
-	 export let autoLoad = false;
+	export let initialData = {};
+	export let autoLoad = false;
 
-	 let currentPage = 1;
-	 let totalPages = 1;
-	 let resultsComponent;
+	let currentPage = 1;
+	let totalPages = 1;
+	let resultsComponent;
 
 	// @ts-ignore
 	export const search = resultsComponent?.search;
@@ -25,7 +25,15 @@
 
 <div class="search-grid">
 	<div class="search-results-wrapper">
-		<PagedResults bind:this={resultsComponent} bind:page={currentPage} bind:totalPages {endpoint} {query} results={initialData} {autoLoad}>
+		<PagedResults
+			bind:this={resultsComponent}
+			bind:page={currentPage}
+			bind:totalPages
+			{endpoint}
+			{query}
+			results={initialData}
+			{autoLoad}
+		>
 			<svelte:fragment slot="result" let:result>
 				<slot name="result" {result} />
 			</svelte:fragment>
@@ -34,9 +42,9 @@
 	<div class="search-form-wrapper">
 		<button class="text-button" on:click={resultsComponent.previousPage}>&lt;</button>
 		<slot name="search" {resultsComponent} />
-		<button class="text-button" on:click={resultsComponent.nextPage}>&gt;</button>		
+		<button class="text-button" on:click={resultsComponent.nextPage}>&gt;</button>
 	</div>
-	<div class="search-status-wrapper">		
+	<div class="search-status-wrapper">
 		<small>Page {currentPage} of {totalPages}</small>
 	</div>
 </div>
@@ -49,7 +57,7 @@
 			'search'
 			'status'
 			'results';
-		margin-inline: 2rem;
+		margin-inline: 0.5rem;
 		overflow: hidden;
 	}
 	.search-form-wrapper {
@@ -63,7 +71,7 @@
 		z-index: 2;
 	}
 
-	.search-form-wrapper button{
+	.search-form-wrapper button {
 		color: var(--fourth-accent);
 		font-size: x-large;
 		padding: 0;
@@ -84,6 +92,7 @@
 	@media (max-width: 767px) {
 		.search-grid {
 			max-height: 100%;
+			margin-inline: 0;
 			grid-template-rows: auto min-content min-content;
 			grid-template-areas:
 				'results'
@@ -92,6 +101,11 @@
 		}
 		.search-results-wrapper {
 			overflow: overlay;
+		}
+
+		.search-form-wrapper {
+			border-top: 1px solid var(--secondary-accent);
+			padding-block: 0.5rem;
 		}
 	}
 </style>

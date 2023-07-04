@@ -7,8 +7,34 @@
 	animation: fadeIn var(--transition-in-time) ease-in var(--transition-in-delay) 1 both;
 }
 
+@-webkit-keyframes fadeInUp {
+	0% {
+		opacity: 0;
+		-webkit-transform: translate3d(0, 120vh, -500px);
+		transform: translate3d(0, 120vh, -500px);
+	}
+	100% {
+		opacity: 1;
+		-webkit-transform: translateZ(0);
+		transform: translateZ(0);
+	}
+}
+
+@keyframes fadeInUp {
+	0% {
+		opacity: 0;
+		-webkit-transform: translate3d(0, 120vh, -500px);
+		transform: translate3d(0, 120vh, -500px);
+	}
+	100% {
+		opacity: 1;
+		-webkit-transform: translateZ(0);
+		transform: translateZ(0);
+	}
+}
+
 .slide-in-up {
-	animation: fadeInUpBig 380ms ease-in 5ms 1 both;
+	animation: fadeInUp 400ms ease-in-out 50ms 1 both;
 }
 
 .slide-in-down {

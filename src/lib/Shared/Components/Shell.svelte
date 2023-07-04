@@ -43,9 +43,9 @@
 	<link rel="stylesheet" type="text/css" href="/assets/styles/main.css"> -->
 	<title>{$pageTitle ?? title} - Dimm City</title>
 
-	
 	<meta name="description" content="" />
 	<meta name="twitter:image" content={$pageImage} />
+	<!-- <link rel="icon" type="image/x-icon" href="/assets/icons/shroom256.png" /> -->
 	<!-- <link rel="icon" type="image/x-icon" href="/assets/icons/shroom256.png" /> -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-TJ2LB9K4M4"></script>
 	<!-- <link rel="stylesheet" type="text/css" href="https://unpkg.com/augmented-ui@2/augmented-ui.min.css"> -->
@@ -54,7 +54,7 @@
 </svelte:head>
 <PageBackground />
 <div class="main-container {title.toLowerCase()}" class:fullscreen>
-	<div class="content-panel animate__animated animate__fadeInUp">
+	<div class="content-panel slide-in-up">
 		<slot><ContentPane fullsize={true}>404</ContentPane></slot>
 	</div>
 	<div class="menu-container">
@@ -86,6 +86,9 @@
 </Modals>
 
 <style>
+	:root {
+		--menu-bar-height: 7dvh;
+	}
 	.backdrop {
 		position: fixed;
 		top: 0;
@@ -99,17 +102,21 @@
 	}
 	.main-container {
 		display: grid;
-		grid-template-columns: 1fr;
+		grid-template-areas:
+			'menu'
+			'content';
 		grid-template-rows: min-content auto;
 		height: 100dvh;
 		width: 100dvw;
 	}
 
 	.content-panel {
-		grid-row: 2;
-		display: flex;
-		width: 95vw;
-		margin: 5.5vh auto 0;
+		grid-area: content;
+		display: flex;		
+		margin: auto;
+		width: 100%;
+		height: calc(100dvh - var(--menu-bar-height));
+		padding: 0.5rem;
 		flex-direction: column;
 		overflow: hidden;
 		transition: all var(--easing);
@@ -119,23 +126,20 @@
 	}
 
 	.menu-container {
-		grid-row: 1;
+		grid-area: menu;
 		height: min-content;
 		z-index: 10;
 	}
 
 	@media screen and (max-width: 767px), (max-aspect-ratio: 0.74) {
 		.main-container {
+			grid-template-areas:
+				'content'
+				'menu';
+			grid-template-columns: 1fr;
 			grid-template-rows: auto min-content;
 		}
 
-		.menu-container {
-			grid-row: 2;
-		}
-
-		.content-panel {
-			grid-row: 1;
-			margin: 0 auto 6vh;
-		}
+		
 	}
 </style>

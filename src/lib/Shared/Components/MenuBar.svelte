@@ -42,6 +42,9 @@
 </div>
 
 <style>
+	:root{
+		--menu-bar-height: 5dvh;
+	}
 	h4 {
 		position: absolute;
 		color: var(--light);
@@ -53,20 +56,18 @@
 	}
 
 	.top-panel {
-		position: fixed;
 		--ds: drop-shadow(0 0 0.2vh var(--secondary-accent));
 		filter: var(--ds);
 		animation-duration: 150ms;
 		animation-delay: 50ms;
 		--animate-delay: 50ms;
-		margin-bottom: 1rem;
 	}
 
 	.top-panel-decoration,
 	.top-panel-decoration::before,
 	.top-panel-decoration::after,
 	.top-panel {
-		height: 5dvh;
+		height: var(--menu-bar-height);
 		width: 100vw;
 		transition: all var(--easing);
 	}
@@ -135,9 +136,14 @@
 		white-space: nowrap;
 	}
 
-	
+	.search-container {
+			align-items: center;
+		}
 
 	@media (max-width: 767px) {
+		:root{
+			--menu-bar-height: 7dvh;
+		}
 		.top-panel {
 			margin-bottom: 0;
 			bottom: 0;
@@ -167,7 +173,7 @@
 		.top-panel-decoration::before,
 		.top-panel-decoration::after,
 		.top-panel {
-			height: 7dvh;
+			height: var(--menu-bar-height);
 		}
 		.top-panel .global-toolbar {
 			width: 100vw;
@@ -186,9 +192,7 @@
 			transform: translateX(-0.5rem) translateY(-1.5rem);
 		}
 
-		.search-container {
-			align-items: center;
-		}
+		
 		.version {
 			right: 0.5rem;
 			bottom: 0rem;

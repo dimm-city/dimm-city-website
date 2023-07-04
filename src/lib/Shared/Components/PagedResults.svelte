@@ -131,7 +131,7 @@
 		<span>...</span>
 	{:else if Array.isArray(results)}
 		{#each results as result (result.id)}
-			<li>
+			<li class="fade-in">
 				<slot name="result" {result}>
 					{result.attributes?.name}
 				</slot>
@@ -141,7 +141,7 @@
 </ul>
 
 <style>
-	.toolbar {
+	/* .toolbar {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
@@ -150,7 +150,7 @@
 	}
 	.pagination span{
 		white-space: nowrap;
-	}
+	} */
 
 	.results-list {
 		display: flex;
@@ -160,6 +160,7 @@
 		justify-content: center;
 		align-items: flex-start;
 		padding: 0;
+		margin-top: 0.25rem;
 	}
 	.results-list > li {
 		padding-left: 0;
