@@ -4,7 +4,7 @@
 </script>
 
 <Shell title="Change Log">
-	<ContentPane>
+	<ContentPane scrollable={true}>
 		<h4 class="">Dimm City Console v0.9.0</h4>
 		<ul class="unstyled-list">
 			<li><a href="/items">Item data connection added</a></li>

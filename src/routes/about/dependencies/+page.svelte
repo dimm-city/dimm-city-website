@@ -5,7 +5,7 @@
 </script>
 
 <Shell title="Dependencies and Integrations">
-	<ContentPane>
+	<ContentPane scrollable={true}>
 		<h4 class="">Dependencies and Integrations:</h4>
 		<ul class="unstyled-list">
 			<li><a rel="noreferrer" target="_blank" href="https://augmented-ui.com">augmented-ui</a></li>

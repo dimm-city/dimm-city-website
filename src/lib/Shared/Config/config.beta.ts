@@ -1,5 +1,6 @@
 export const config = {
 	version: '',
+	env: 'beta',
 	googleKey: '',
 	graphUrl: 'https://dimm-city-data-staging.azurewebsites.net/graphql',
 	apiBaseUrl: 'https://dimm-city-data-staging.azurewebsites.net/api',

@@ -1,5 +1,6 @@
 export const config = {
 	version: '',
+	env: 'dev',
 	googleKey: '',
 	baseUrl:   "http://localhost:1337/",
 	graphUrl:  "http://localhost:1337/graphql",

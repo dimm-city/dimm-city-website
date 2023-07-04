@@ -72,6 +72,7 @@
 
 <style>
 	.container {
+		overflow-y: auto;
 		margin-top: 1.5rem;
 		display: grid;
 		padding-inline: 1.5rem;
