@@ -2,7 +2,7 @@
 	import PageBackground from './PageBackground.svelte';
 	import ContentPane from './ContentPane.svelte';
 	import { Modals, closeModal, closeAllModals } from 'svelte-modals';
-	import { pageImage, pageTitle } from '$lib/Shared/Stores/ShellStore';
+	import { pageImage, pageTitle, pageDescription, pageKeywords } from '$lib/Shared/Stores/ShellStore';
 	// import '$lib/Shared/Styles/main.css';
 	// import 'animate.css';
 	import { onMount } from 'svelte';
@@ -43,7 +43,8 @@
 	<link rel="stylesheet" type="text/css" href="/assets/styles/main.css"> -->
 	<title>{$pageTitle ?? title} - Dimm City</title>
 
-	<meta name="description" content="" />
+	<meta name="description" content="{$pageDescription}" />
+	<meta name="keywords" content={$pageKeywords} />
 	<meta name="twitter:image" content={$pageImage} />
 	<!-- <link rel="icon" type="image/x-icon" href="/assets/icons/shroom256.png" /> -->
 	<!-- <link rel="icon" type="image/x-icon" href="/assets/icons/shroom256.png" /> -->

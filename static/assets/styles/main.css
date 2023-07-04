@@ -26,7 +26,9 @@ body {
 	margin: 0;
 	padding: 0;
 	overflow: hidden;
-	font-family: var(--main-font-family);
+	font-family: var(--header-font-family);
+	letter-spacing: 2px;
+	word-spacing: 3px;
 }
 
 html {

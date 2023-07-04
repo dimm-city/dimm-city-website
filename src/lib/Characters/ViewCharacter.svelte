@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { pageDescription } from './../Shared/Stores/ShellStore.ts';
 	import Shell from '$lib/Shared/Components/Shell.svelte';
 	import { pageImage } from '$lib/Shared/Stores/ShellStore';
 	import { loadCharacter } from '$lib/Characters/Queries/getCharacterBySlug';
@@ -10,7 +11,7 @@
 	import { type ICharacter, Character } from './Models/Character';
 	import Sheet from './Components/CharacterSheet/Sheet.svelte';
 	export let tokenId: string;
-	let character: ICharacter;
+	export let character: ICharacter;
 	let originalCharacter: string;
 	let query = new Promise(() => {});
 	let isEditable = false;
@@ -18,6 +19,8 @@
 	let isSaving = false;
 
 	$: isEditable = character && ownsToken(character?.token);
+	$pageImage = character?.thumbnailImage;
+	$pageDescription = character?.vibe;
 
 	function startEditing() {
 		isEditing = true;
@@ -53,41 +56,50 @@
 	}
 
 	onMount(async () => {
-		character = $characters.find((c) => c.tokenId === tokenId && c.loaded) ?? new Character(null);
-		if (character == null || character.id < 1) {
-			query = loadCharacter(tokenId).then((c) => {
-				character = c;
-				$characters = [c, ...$characters.filter((l) => l.id != c.id)];
-				$pageImage = character.thumbnailImage;
-			});
-		} else {
-			query = new Promise((resolve) => {
-				resolve(new Character(null));
-			});
+
+		if (character?.id == null && tokenId) {
+			character = $characters.find((c) => c.tokenId === tokenId && c.loaded) ?? new Character(null);
+			if (character == null || character.id < 1) {
+				query = loadCharacter(tokenId).then((c) => {
+					character = c;
+					$characters = [c, ...$characters.filter((l) => l.id != c.id)];
+					$pageImage = character.thumbnailImage;
+					$pageDescription = character?.vibe;	
+				});
+			} else {
+				query = new Promise((resolve) => {
+					resolve(new Character(null));
+				});
+			}
 		}
 	});
 </script>
 
-<Shell title="Citizen File" titleUrl="/citizens" fullscreen={true}>
-	{#await query}
-		<LoadingIndicator>
-			{#if isSaving}
-				Saving changes...
-			{:else}
-				Extracting character data...
-			{/if}
-		</LoadingIndicator>
-	{:then}
+<Shell title="{character?.name} - Citizen File" titleUrl="/citizens" fullscreen={true}>
+	{#if character?.id}
 		<Sheet {character} {isEditing} />
-	{/await}
+	{:else}
+		{#await query}
+			<LoadingIndicator>
+				{#if isSaving}
+					Saving changes...
+				{:else}
+					Extracting character data...
+				{/if}
+			</LoadingIndicator>
+		{/await}
+	{/if}
 	<svelte:fragment slot="action-menu">
 		{#if isEditing}
-			<button title="save changes" on:click={saveChanges} class="aug-button animate__fadeInDownBig" data-augmented-ui=""
-				><i class="bi bi-check" /></button
+			<button
+				title="save changes"
+				on:click={saveChanges}
+				class="aug-button animate__fadeInDownBig"
+				data-augmented-ui=""><i class="bi bi-check" /></button
 			>
 			<button
-			 	title="cancel changes"
- 				on:click={cancelChanges}
+				title="cancel changes"
+				on:click={cancelChanges}
 				class="aug-button animate__fadeInDownBig"
 				data-augmented-ui=""><i class="bi bi-x" /></button
 			>

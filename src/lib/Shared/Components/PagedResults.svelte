@@ -52,6 +52,7 @@
 
 	export const search = debounce(async () => {
 		loading = true;
+		page = 1;
 		const result = await fetchData(page, resultsPerPage);
 		results = [...(result.data ?? [])];
 		loading = false;
@@ -60,17 +61,15 @@
 	export async function previousPage() {
 		if (page > 1) {
 			page--;
-			search();
-			// const result = await fetchData(page, resultsPerPage);
-			// results = [...results, ...(result.data ?? [])];
+			const result = await fetchData(page, resultsPerPage);
+			results = [ ...(result.data ?? [])];
 		}
 	}
 	export async function nextPage() {
 		if (page < totalPages) {
 			page++;
-			search();
-			// const result = await fetchData(page, resultsPerPage);
-			// results = [...results, ...(result.data ?? [])];
+			const result = await fetchData(page, resultsPerPage);
+			results = [...(result.data ?? [])];
 		}
 	}
 
@@ -78,26 +77,27 @@
 	/**
 	 * @param {{ target: { scrollTop: any; clientHeight: any; scrollHeight: any; }; }} event
 	 */
-	export function handleScroll(event) {
+	export async function handleScroll(event) {
 		const { scrollTop, clientHeight, scrollHeight } = event.target;
 		if (scrollHeight - scrollTop === clientHeight) {
-			nextPage();
+			const result = await fetchData(page, resultsPerPage);
+			results = [...results, ...(result.data ?? [])];
 		}
 	}
 
 	/**
 	 * @param {{ target: { dataset: { page: any; }; }; }} event
 	 */
-	function handlePagination(event) {
-		const temp = Number(event.target.dataset.page);
-		if (temp > 0 && temp <= totalPages) {
-			page = temp;
-			search();
-		}
-	}
+	// function handlePagination(event) {
+	// 	const temp = Number(event.target.dataset.page);
+	// 	if (temp > 0 && temp <= totalPages) {
+	// 		page = temp;
+	// 		search();
+	// 	}
+	// }
 
 	onMount(() => {
-		console.log('mounting paged results', autoLoad);
+		// console.log('mounting paged results', autoLoad);
 		if (autoLoad) search();
 	});
 </script>

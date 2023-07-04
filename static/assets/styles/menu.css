@@ -1,9 +1,7 @@
 .menu-item {
-	height: 7em;
 	cursor: pointer;
-	padding-inline: 1rem;
-	min-height: 20%;
-	font-size: 1.2rem;
+	padding: 1rem;
+	font-size: 1rem;
 	color: white;
 	overflow: hidden;
 	opacity: 0.75;
@@ -27,6 +25,9 @@
 	--aug-inlay: initial;
 	--aug-inlay-bg: var(--menu-inlay-bg-color);
 	background-color: transparent;
+}
+.menu-item {
+	background-color: rgba(33, 0, 43, 0.55);
 }
 
 .menu-item:hover,
@@ -55,6 +56,9 @@
 
 .menu-item small {
 	font-size: 0.7em;
+}
+.menu-item i {
+	margin-right: 0.5rem;
 }
 
 .small-menu-item {

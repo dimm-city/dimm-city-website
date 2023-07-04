@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
 	import { setSessionValue } from '$lib/Shared/Stores/StoreUtils';
 	import { loggedIn } from '$lib/Shared/Stores/UserStore';
 	import { config } from '$lib/Shared/config';
@@ -16,6 +16,7 @@
 
 			setSessionValue('redirect', document.location);
 		}
+		// @ts-ignore
 		ethereumEnabled = window && window?.ethereum;
 		// if(!$connected && ethereumEnabled){
 		// 	connect();

@@ -8,20 +8,6 @@
 	export let target = '_self';
 </script>
 
-<style>
-	.menu-item {
-		background-color: rgba(33, 0, 43, 0.55);
-		padding-block: 0.5rem;
-	}
-	.menu-item i {
-		margin-right: 0.5rem;
-	}
-
-	/* .menu-item-container {
-		min-width: 50ch;
-	} */
-</style>
-
 <div on:mouseenter on:mouseleave class="menu-item-container">
 	{#if disabled}
 		<div class="fade-zoom-in" {disabled}>
