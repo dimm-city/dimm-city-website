@@ -2,7 +2,7 @@
 	import Image from '$lib/Shared/Components/Image.svelte';
 
 	/**
-	 * @type {{ name: any; type: any; shortDescription: any; imageUrl: any; modelUrl: any; videoUrl: any; description: any; }}
+	 * @type {{ name: any; type: any; shortDescription: any; imageUrl: any; modelUrl: any; videoUrl: any; description: any; mainImage: any; }}
 	 */
 	export let item;
 </script>
@@ -11,7 +11,7 @@
 	<section>
 		<h1>{item.name}</h1>
 		<Image
-			imageUrl={item.imageUrl}
+			imageUrl={item.mainImage.data.attributes.formats.large.url}
 			modelUrl={item.modelUrl}
 			videoUrl={item.videoUrl}
 			title={item.name}

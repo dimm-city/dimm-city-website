@@ -66,11 +66,13 @@ export class Strapi {
 	 */
 	async loadBySlug(contentType, slug, query = {}) {
 		query.slug = slug;
-		query.filter = {
-			slug: {
-				$eq: slug
-			}
-		};
+		if (query.populate == null) query.populate = '*';
+		if (query.filters == null)
+			query.filters = {
+				slug: {
+					$eq: slug
+				}
+			};
 
 		const url = this._getUrlWithQuery(contentType, query);
 
