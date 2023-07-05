@@ -5,6 +5,8 @@
 		BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif, Apple Color Emoji,
 		Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
 
+
+	--default-letter-spacing: 1.5px;
 	--pink:   #ef1ebf;
 	--blue: #3e6ab3;
 	--yellow: #f8f400da;

@@ -11,7 +11,7 @@
 	<section>
 		<h1>{item.name}</h1>
 		<Image
-			imageUrl={item.mainImage.data.attributes.formats.large.url}
+			imageUrl={item.mainImage?.data?.attributes?.formats?.large?.url}
 			modelUrl={item.modelUrl}
 			videoUrl={item.videoUrl}
 			title={item.name}

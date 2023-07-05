@@ -1,11 +1,15 @@
-import { Strapi } from "./StrapiClient";
-import { config } from "./config";
+import { Strapi } from './StrapiClient';
+import { config } from './config';
 
 /**
  * @param {{params: {pagination: any;sort: any;};}} page
  * @param {string} contentType
  */
-export async function loadSearchPageFromStrapi(page, contentType, fields = ['slug', 'name', 'shortDescription', 'type']) {
+export async function loadSearchPageFromStrapi(
+	page,
+	contentType,
+	fields = ['slug', 'name', 'shortDescription', 'type']
+) {
 	// pull page number, results per page, and sort order from query params
 	const { pagination, sort } = page.params;
 
@@ -13,7 +17,13 @@ export async function loadSearchPageFromStrapi(page, contentType, fields = ['slu
 	const query = {
 		pagination,
 		sort,
-		fields
+		fields,
+		populate: {
+			mainImage: {
+				fields: ['url', 'formats', 'formats.thumbnail', 'formats.medium', 'formats.large']
+			},
+			
+		}
 	};
 
 	const strapi = new Strapi(config.apiBaseUrl);
