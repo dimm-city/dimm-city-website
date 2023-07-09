@@ -1,6 +1,15 @@
 <script>
-	import { page } from '$app/stores';
-	import ViewJournalEntry from '$lib/JournalEntries/ViewJournalEntry.svelte';
+	import FactionView from '$lib/Factions/FactionView.svelte';
+	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
+	import Shell from '$lib/Shared/Components/Shell.svelte';
+  
+
+	/** @type {Faction}*/
+	export let data;
 </script>
 
-<ViewJournalEntry slug={$page.params.slug} />
+<Shell title={data.attributes?.name} fullscreen={false}>
+	<ContentPane padding={3}>
+		<FactionView item={data} />
+	</ContentPane>
+</Shell>

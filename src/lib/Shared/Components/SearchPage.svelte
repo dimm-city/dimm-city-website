@@ -1,19 +1,24 @@
 <script>
 	import { config } from '$lib/Shared/config';
+	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
+	import MenuItem from '$lib/Shared/Components/Menu/MenuItem.svelte';
+	import DefaultItemResult from '$lib/Shared/Components/DefaultItemResult.svelte';
 	import PagedResults from '$lib/Shared/Components/PagedResults.svelte';
 	/**
 	 * @type {any}
 	 */
 	export let query;
-	export let endpoint = config.apiBaseUrl + '/items';
+	export let endpoint = config.apiBaseUrl + '/dimm-city/items';
+	export let itemResultBaseUrl = '';
 	/**
 	 * @type {any}
 	 */
 	export let initialData = {};
 	export let autoLoad = false;
 
-	let currentPage = 1;
-	let totalPages = 1;
+	let searchText = "";
+	let currentPage = initialData?.meta?.pagination?.page ?? 1;
+	let totalPages = initialData?.meta?.pagination?.pageCount ?? 1;
 	let resultsComponent;
 
 	// @ts-ignore
@@ -21,33 +26,94 @@
 	// @ts-ignore
 	export const nextPage = resultsComponent?.nextPage;
 	//search-results-wrapper on:scroll={resultsComponent.handleScroll}
+
+
+	$: query = {
+		...query,
+		filters: {
+			$or: [
+				{
+					name: {
+						$containsi: searchText
+					}
+				},
+				{
+					description: {
+						$containsi: searchText
+					}
+				}
+			]
+		}
+	};
 </script>
 
-<div class="search-grid">
-	<div class="search-results-wrapper">
-		<PagedResults
-			bind:this={resultsComponent}
-			bind:page={currentPage}
-			bind:totalPages
-			{endpoint}
-			{query}
-			results={initialData}
-			{autoLoad}
-		>
-			<svelte:fragment slot="result" let:result>
-				<slot name="result" {result} />
-			</svelte:fragment>
-		</PagedResults>
+<!-- <Shell title="Factions" fullscreen={false}> -->
+	<ContentPane padding={0}>
+		<div class="search-grid">
+			<div class="search-results-wrapper">
+				<PagedResults
+					bind:this={resultsComponent}
+					bind:page={currentPage}
+					bind:totalPages
+					endpoint={`${config.apiBaseUrl}${endpoint}`}
+					{query}
+					results={initialData?.data}
+					{autoLoad}
+				>
+					<svelte:fragment slot="result" let:result>
+						<slot name="result" {result}>
+							<MenuItem url={`${itemResultBaseUrl}/${result.attributes.slug}`}>
+								<DefaultItemResult item={result.attributes} icon="bi-shield-lock" />
+							</MenuItem>
+						</slot>
+					</svelte:fragment>
+				</PagedResults>
+			</div>
+			<div class="search-form-wrapper">
+				<button class="text-button" on:click={resultsComponent.previousPage}>&lt;</button>
+				<slot name="search" {resultsComponent}>
+					<div class="search-container">
+						<div data-augmented-ui class="aug-input">
+							<i class="bi bi-gear" />
+							<input
+								bind:value={searchText}
+								type="text"
+								placeholder="Search factions..."
+								on:keyup={resultsComponent.search}
+							/>
+							<i class="bi bi-search" />
+						</div>
+					</div>
+				</slot>
+				<button class="text-button" on:click={resultsComponent.nextPage}>&gt;</button>
+			</div>
+			<div class="search-status-wrapper">
+				<small>Page {currentPage} of {totalPages}</small>
+			</div>
+		</div>
+	</ContentPane>
+<!-- </Shell> -->
+
+
+<!-- <SearchPage initialData={data} {query} {endpoint}>
+	<div class="search-container" slot="search" let:resultsComponent>
+		<div data-augmented-ui class="aug-input">
+			<i class="bi bi-gear" />
+			<input
+				bind:value={searchText}
+				type="text"
+				placeholder="Search factions..."
+				on:keyup={resultsComponent.search}
+			/>
+			<i class="bi bi-search" />
+		</div>
 	</div>
-	<div class="search-form-wrapper">
-		<button class="text-button" on:click={resultsComponent.previousPage}>&lt;</button>
-		<slot name="search" {resultsComponent} />
-		<button class="text-button" on:click={resultsComponent.nextPage}>&gt;</button>
-	</div>
-	<div class="search-status-wrapper">
-		<small>Page {currentPage} of {totalPages}</small>
-	</div>
-</div>
+	<svelte:fragment slot="result" let:result>
+		<MenuItem url={`/factions/${result.attributes.slug}`}>
+			<DefaultItemResult item={result.attributes} icon="bi-shield-lock" />
+		</MenuItem>
+	</svelte:fragment>
+</SearchPage> -->
 
 <style>
 	.search-grid {

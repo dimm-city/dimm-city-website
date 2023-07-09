@@ -8,7 +8,7 @@ export async function loadProfile() {
 	const p = get(profile);
 	console.log(p);
 	
-	if (token > '' && p.username == null) {
+	if (token && p.username == null) {
 		let data = null;
 		const response = await fetch(`${config.apiBaseUrl}/users/me?fields=*&populate=*`, {
 			headers: {
@@ -48,6 +48,7 @@ export const loggedIn = derived(
 );
 
 export function ownsToken(token: any): boolean {
+	return true;
 	const userWallets = get(wallets) ?? [];
 	const id = (token?.id || token?.data?.id || -1).toString();
 	const result =

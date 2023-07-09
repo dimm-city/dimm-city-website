@@ -1,20 +1,20 @@
 <!-- CharacterSheet.svelte -->
-<script lang="ts">
+<script>
 	import StatsRow from './StatsRow.svelte';
 	import ListsRow from './ListsRow.svelte';
 	import ProfileRow from './ProfileRow.svelte';
 
 	import { openModal } from 'svelte-modals';
 	import AbilityModal from '../AbilityModal.svelte';
-	import type { ICharacter } from '$lib/Characters/Models/Character';
 	import StoryRow from './StoryRow.svelte';
 
-	export let character: ICharacter;
+	/**@type {DC.Character}*/
+	export let character;
 	export let isEditing = false;
 
-	const viewAbility = (ability: any) => openModal(AbilityModal, { data: ability });
+	const viewAbility = (/** @type {DC.Ability} */ ability) => openModal(AbilityModal, { data: ability });
 
-	const skills: object[] = [];
+	const skills = [];
 
 	let originalData = '';
 	$: if (character) {
@@ -30,18 +30,18 @@
 		<div class="heading">
 			<div>
 				{#if isEditing}
-					<h1 contenteditable="true" bind:textContent={character.name} />
+					<h1 contenteditable="true" bind:textContent={character.attributes.name} />
 				{:else}
 					<h1>
-						{character.name}
+						{character.attributes.name}
 					</h1>
 				{/if}
 			</div>
 			<div class="specialties-heading">
 				<h2>
 					<!-- ts-ignore-->
-					{character.specialties?.data?.length > 0
-						? character.specialties?.data?.map((s) => s?.attributes?.name).join(', ')
+					{character.attributes.specialties?.data?.length > 0
+						? character.attributes.specialties?.data?.map((s) => s?.attributes?.name).join(', ')
 						: 'Unknown'}
 				</h2>
 			</div>

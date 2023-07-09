@@ -8,7 +8,7 @@
 
 	export let data;
 
-	const endpoint = config.apiBaseUrl + '/items';
+	const endpoint = config.apiBaseUrl + '/dimm-city/items';
 	/**
 	 * @type {string}
 	 */

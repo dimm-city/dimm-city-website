@@ -3,9 +3,11 @@ import qs from 'qs';
 export class Strapi {
 	/**
 	 * @param {string} baseURL
+	 * @param {string|null} jwt
 	 */
-	constructor(baseURL) {
+	constructor(baseURL, jwt = null) {
 		this.baseURL = baseURL;
+		this.jwt = jwt;
 	}
 
 	/**
@@ -93,5 +95,35 @@ export class Strapi {
 		} catch (error) {
 			console.error('Error in loadBySlug:', error);
 		}
+	}
+
+	/**
+	 * @param {any} contentType
+	 * @param {{ id: any; attributes: any; }} entity
+	 */
+	async updateEntity(contentType, entity) {
+		console.log('updating entity', entity);
+
+		await fetch(`${this.baseURL}/${contentType}/${entity.id}?populate=*`, {
+			method: 'PUT',
+			headers: {
+				Authorization: `Bearer ${this.jwt}`,
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ data: entity.attributes })
+		})
+			.then(async (res) => {
+				const { data, errors } = await res.json();
+				if (res.ok) {
+					console.assert(data != null);
+					console.log('updated', data);
+				} else {
+					//TODO: display error
+					console.error('failed', errors, data);
+				}
+			})
+			.catch((reason) => {
+				console.log('could not update character', reason);
+			});
 	}
 }

@@ -24,7 +24,7 @@ export const filteredCharacters = derived(
 	}
 );
 
-export async function updateCharacter(character: ICharacter) {
+export async function updateCharacter(character /** @type {DC.Character} */) {
 	console.log('updateCharacter');
 
 	const importData = JSON.parse(JSON.stringify(character));

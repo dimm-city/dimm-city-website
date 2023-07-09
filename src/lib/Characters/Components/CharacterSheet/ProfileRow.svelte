@@ -7,10 +7,14 @@
 	import { getSpecialties } from '$lib/Specialties/getSpecialties';
 
 	/**
-	 * @type {import('$lib/Characters/Models/Character').ICharacter}}
+	 * @type {DC.Character}
 	 */
 	export let character;
 	export let isEditing = false;
+
+	let originLocation;
+
+	$: character.attributes.originLocation.set = [character.attributes.originLocation.data];
 </script>
 
 <div class="profile-row">
@@ -28,7 +32,7 @@
 						itemId="id"
 						multiple={true}
 						hideEmptyState={true}
-						bind:value={character.specialties.data}
+						bind:value={character.attributes.specialties.data}
 					>
 						<div slot="selection" let:selection>
 							<span>{selection.name ?? selection.attributes?.name ?? 'Unknown'}</span>
@@ -40,8 +44,8 @@
 				</div>
 			{:else}
 				<span
-					>{character.specialties?.data?.length > 0
-						? character.specialties?.data?.map((s) => s.attributes?.name).join(', ')
+					>{character.attributes.specialties?.data?.length > 0
+						? character.attributes.specialties?.data?.map((s) => s.attributes?.name).join(', ')
 						: 'Unknown'}</span
 				>
 			{/if}
@@ -55,7 +59,8 @@
 						placeholder="Select a district"
 						label="name"
 						itemId="id"
-						bind:value={character.originLocation.data}
+						bind:justValue={originLocation}
+						bind:value={character.attributes.originLocation.data}
 					>
 						<div slot="selection" let:selection>
 							<span>{selection.name ?? selection.attributes?.name ?? 'Unknown'}</span>
@@ -66,7 +71,7 @@
 					</Select>
 				</div>
 			{:else}
-				<span>{character.originLocation?.data?.attributes?.name ?? 'Unknown'}</span>
+				<span>{character.attributes.originLocation?.data?.attributes?.name ?? 'Unknown'}</span>
 			{/if}
 		</div>
 
@@ -80,7 +85,7 @@
 						label="name"
 						itemId="id"
 						--list-z-index="8888888"
-						bind:value={character.currentLocation.data}
+						bind:value={character.attributes.currentLocation.data}
 					>
 						<div slot="selection" let:selection>
 							<span>{selection.name ?? selection.attributes?.name ?? 'Unknown'}</span>
@@ -91,34 +96,34 @@
 					</Select>
 				</div>
 			{:else}
-				<span>{character.currentLocation?.data?.attributes?.name ?? 'Unknown'}</span>
+				<span>{character.attributes.currentLocation?.data?.attributes?.name ?? 'Unknown'}</span>
 			{/if}
 		</div>
 
 		<div class="label">Vibe:</div>
 		<div class="value">
 			{#if isEditing}
-				<Input bind:value={character.vibe} maxlength="50" class="inline" />
+				<Input bind:value={character.attributes.vibe} maxlength="50" class="inline" />
 			{:else}
-				<span>{character.vibe}</span>
+				<span>{character.attributes.vibe}</span>
 			{/if}
 		</div>
 
 		<div class="label">Beliefs:</div>
 		<div class="value">
 			{#if isEditing}
-				<Textarea maxlength="150" bind:value={character.beliefs} />
+				<Textarea maxlength="150" bind:value={character.attributes.beliefs} />
 			{:else}
-				<span>{character.beliefs ?? 'Unknown'}</span>
+				<span>{character.attributes.beliefs ?? 'Unknown'}</span>
 			{/if}
 		</div>
 
 		<div class="label">Flaws:</div>
 		<div class="value">
 			{#if isEditing}
-				<Textarea maxlength="150" bind:value={character.flaws} />
+				<Textarea maxlength="150" bind:value={character.attributes.flaws} />
 			{:else}
-				<span>{character.flaws ?? 'Unknown'}</span>
+				<span>{character.attributes.flaws ?? 'Unknown'}</span>
 			{/if}
 		</div>
 	</section>

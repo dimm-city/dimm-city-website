@@ -1,11 +1,8 @@
 <script>
 	import TextSection from './TextSection.svelte';
-	import Select from 'svelte-select';
-
-	// @ts-nocheck
 
 	/**
-	 * @type {import('$lib/Characters/Models/Character').ICharacter}}
+	 * @type {DC.Character}}
 	 */
 	export let character;
 	export let isEditing = false;
@@ -13,10 +10,10 @@
 
 <div class="story-row">
 	<div class="backstory">
-		<TextSection header="Backstory" {isEditing} bind:data={character.backstory} />
+		<TextSection header="Backstory" {isEditing} bind:data={character.attributes.backstory} />
 	</div>
 	<div class="dreams">
-		<TextSection header="Dreams" {isEditing} bind:data={character.dreams} />
+		<TextSection header="Dreams" {isEditing} bind:data={character.attributes.dreams} />
 	</div>
 </div>
 

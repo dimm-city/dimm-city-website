@@ -1,16 +1,18 @@
-<script lang="ts">
+<script>
 	import PhysicalStats from './PhysicalStats.svelte';
 	import Points from './Points.svelte';
 	import { openModal } from 'svelte-modals';
 	import AbilityModal from '../AbilityModal.svelte';
-	import type { ICharacter } from '$lib/Characters/Models/Character';
 	import List from '$lib/Shared/Components/List.svelte';
 	import ProfileImage from '../ProfileImage.svelte';
 
-	export let character: ICharacter;
+	/**
+	 * @type {DC.Character}
+	 */
+	 export let character;
 	export let isEditing = false;
 
-	const viewAbility = (ability: any) => openModal(AbilityModal, { data: ability });
+	const viewAbility = (/** @type {DC.Ability} */ ability) => openModal(AbilityModal, { data: ability });
 </script>
 
 <div class="stats-row" data-augmented-ui="tl-clip tr-clip br-clip-x bl-clip-x both">
@@ -28,7 +30,7 @@
 	</div>
 	<div class="cybernetics-container">
 		<h3>Cybernetics</h3>
-		<List data={character.cybernetics} maxItems={5} noItemsText="no cybernetics registered">
+		<List data={character.attributes.cybernetics.data} maxItems={5} noItemsText="no cybernetics registered">
 			<div let:item slot="item">
 				<button data-augmented-ui class="aug-button" on:click={() => viewAbility(item)}
 					>{item.attributes.name}</button

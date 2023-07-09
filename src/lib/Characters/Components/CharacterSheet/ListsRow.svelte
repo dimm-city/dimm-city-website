@@ -4,7 +4,7 @@
 	import ItemsList from './ItemsList.svelte';
 
 	/**
-	 * @type {{ selectedAbilities: object[]; items: object[]; scripts: object[]; }}}
+	 * @type {DC.Character}}
 	 */
 	export let character;
 	export const isEditing = false;
@@ -17,7 +17,7 @@
 		<ItemsList
 			header="Skills"
 			noItemsText="no skills registered"
-			data={character.selectedAbilities?.data}
+			data={character.attributes.selectedAbilities?.data}
 			viewItem={viewAbility}
 		/>
 	</div>
@@ -25,7 +25,7 @@
 		<ItemsList
 			header="Items"
 			noItemsText="no inventory recorded"
-			data={character.items?.data}
+			data={character.attributes.items?.data}
 			viewItem={viewAbility}
 		/>
 	</div>
@@ -33,7 +33,7 @@
 		<ItemsList
 			header="Scripts"
 			noItemsText="no scripts detected"
-			data={character.scripts?.data}
+			data={character.attributes.scripts?.data}
 			viewItem={viewAbility}
 		/>
 	</div>
