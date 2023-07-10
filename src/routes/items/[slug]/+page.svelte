@@ -1,9 +1,9 @@
 <script>
-	import ItemView from '$lib/Items/ItemView.svelte';
+	import ItemView from '$lib/Shared/Components/Views/ItemView.svelte';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import Shell from '$lib/Shared/Components/Shell.svelte';
     /**
-	 * @type { {id: Number, attributes: { name: any; type: any; shortDescription: any; imageUrl: any; modelUrl: any; videoUrl: any; description: any; }}}
+	 * @type {DC.Item}
 	 */
 	export let data;
 </script>

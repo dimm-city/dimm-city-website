@@ -2,7 +2,7 @@
 	import Image from '$lib/Shared/Components/Image.svelte';
 
 	/**
-	 * @type {{ name: any; type: any; shortDescription: any; imageUrl: any; modelUrl: any; videoUrl: any; description: any; mainImage: any; }}
+	 * @type {DC.Item}
 	 */
 	export let item;
 </script>

@@ -44,8 +44,11 @@
 		console.log('video changed', videoUrl, video);
 		mediaUrl = videoUrl;
 		hasVideo = mediaUrl != null;
-		if (video != null) {
-			video.querySelector('source').src = mediaUrl;
+		if (video != null && video.querySelector('source') != null) {
+			
+			const source = video.querySelector('source');
+			if (source) source.src = mediaUrl;
+
 			video.load();
 		}
 	} else {

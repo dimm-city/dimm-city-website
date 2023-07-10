@@ -2,7 +2,7 @@
 	import Shell from '$lib/Shared/Components/Shell.svelte';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import LoggedInContainer from '$lib/Shared/Components/LoggedInContainer.svelte';
-	import ProfileView from '$lib/Profile/ProfileView.svelte';
+	import ProfileView from '$lib/Shared/Components/Views/ProfileView.svelte';
 </script>
 
 <Shell title="Console">
