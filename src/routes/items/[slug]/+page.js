@@ -1,6 +1,7 @@
 import { loadEntityPageFromStrapi } from '$lib/Shared/SvelteStrapi';
 /**
- * @returns {{id: Number, attributes: { slug: string, name: any; type: any; shortDescription: any; imageUrl: any; modelUrl: any; videoUrl: any; description: any; }}}
+ * @param {import('../$types').PageData} page
+ * @returns {DC.Item}
  */
-export const load = (async (page) => await loadEntityPageFromStrapi(page, 'items'));
+export const load = (async (page) => await loadEntityPageFromStrapi(page, 'dimm-city/items'));
 

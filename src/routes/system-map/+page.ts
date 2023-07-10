@@ -1,4 +1,4 @@
-import { getDistricts } from '$lib/Locations/getDistricts';
+import { getDistricts } from '$lib/Shared/Stores/getDistricts';
 import { getSpecialties } from '$lib/Specialties/getSpecialties';
 
 const _systemMap = {

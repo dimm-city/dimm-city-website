@@ -1,6 +1,22 @@
 <script>
-	import { page } from '$app/stores';
-	import ViewJournalEntry from '$lib/JournalEntries/ViewJournalEntry.svelte';
+	import Article from '$lib/Shared/Components/Article.svelte';
+	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
+	import Shell from '$lib/Shared/Components/Shell.svelte';
+
+	/** @type {DC.JournalEntry}*/
+	export let data;
 </script>
 
-<ViewJournalEntry slug={$page.params.slug} />
+<Shell title={data.attributes?.name}>
+	<ContentPane padding={2} scrollable={true}>
+		<div class="journal-entry">
+			<Article model={data} />
+		</div>
+	</ContentPane>
+</Shell>
+
+<style>
+	.journal-entry {
+		--dc-image-aspect-ratio: 4/3;
+	}
+</style>

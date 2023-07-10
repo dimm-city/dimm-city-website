@@ -2,9 +2,8 @@
 	import FactionView from '$lib/Factions/FactionView.svelte';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import Shell from '$lib/Shared/Components/Shell.svelte';
-  
 
-	/** @type {Faction}*/
+	/** @type {DC.Faction}*/
 	export let data;
 </script>
 

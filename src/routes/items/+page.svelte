@@ -1,14 +1,12 @@
 <script>
-	import { config } from '$lib/Shared/config';
 	import Shell from '$lib/Shared/Components/Shell.svelte';
-	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import SearchPage from '$lib/Shared/Components/SearchPage.svelte';
 	import MenuItem from '$lib/Shared/Components/Menu/MenuItem.svelte';
 	import DefaultItemResult from '$lib/Shared/Components/DefaultItemResult.svelte';
 
 	export let data;
 
-	const endpoint = config.apiBaseUrl + '/dimm-city/items';
+	const endpoint = '/dimm-city/items';
 	/**
 	 * @type {string}
 	 */
@@ -34,25 +32,27 @@
 </script>
 
 <Shell title="Items" fullscreen={false}>
-	<ContentPane padding={0}>
-		<SearchPage {query} {endpoint} initialData={data.data}>
-			<div class="search-container" slot="search" let:resultsComponent>
-				<div data-augmented-ui class="aug-input">
-					<!-- <i class="bi bi-gear" /> -->
-					<input
-						bind:value={searchText}
-						type="text"
-						placeholder="Search items..."
-						on:keyup={resultsComponent.search}
-					/>
-					<i class="bi bi-search" />
-				</div>
+	<SearchPage {query} {endpoint} initialData={data}>
+		<div class="search-container" slot="search" let:resultsComponent>
+			<div data-augmented-ui class="aug-input">
+				<!-- <i class="bi bi-gear" /> -->
+				<input
+					bind:value={searchText}
+					type="text"
+					placeholder="Search items..."
+					on:keyup={resultsComponent.search}
+				/>
+				<i class="bi bi-search" />
 			</div>
-			<svelte:fragment slot="result" let:result>
-				<MenuItem url={`/items/${result.attributes.slug}`}>
-					<DefaultItemResult icon="bi-tools" subtitle={result.attributes.type} item={result.attributes} />
-				</MenuItem>
-			</svelte:fragment>
-		</SearchPage>
-	</ContentPane>
+		</div>
+		<svelte:fragment slot="result" let:result>
+			<MenuItem url={`/items/${result.attributes.slug}`}>
+				<DefaultItemResult
+					icon="bi-tools"
+					subtitle={result.attributes.type}
+					item={result.attributes}
+				/>
+			</MenuItem>
+		</svelte:fragment>
+	</SearchPage>
 </Shell>

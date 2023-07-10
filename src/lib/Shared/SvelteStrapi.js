@@ -9,7 +9,7 @@ import { config } from './config';
 export async function loadSearchPageFromStrapi(
 	page,
 	contentType,
-	fields = ['slug', 'name', 'shortDescription', 'type']
+	fields = ['slug', 'name', 'shortDescription', 'type', 'tags']
 ) {
 	// pull page number, results per page, and sort order from query params
 	const { pagination, sort } = page.params;
@@ -53,10 +53,7 @@ export async function updateEntity(contentType, entity) {
 
 	let data = JSON.parse(JSON.stringify(entity));
 	
-	delete data.attributes.mainImage;
-	delete data.attributes.mainModel;
-	delete data.attributes.mainVideo;
-	delete data.attributes.mainAudio;
+
 
 	const strapi = new Strapi(config.apiBaseUrl, getSessionValue('jwt'));
 	strapi.updateEntity(contentType, data);

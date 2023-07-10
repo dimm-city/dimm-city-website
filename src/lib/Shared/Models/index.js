@@ -40,6 +40,37 @@
  * @property {string} attributes.createdAt - The timestamp of image media creation
  * @property {string} attributes.updatedAt - The timestamp of the last image media update
  */
+/**
+ * @typedef {Object} DC.BaseEntity
+ * @property {number} id - Unique ID of the item
+ * @property {Object} attributes - Detailed properties of the item
+ * @property {string} attributes.name - The name of the item
+ * @property {string} attributes.slug - The slug of the item
+ * @property {string} attributes.shortDescription - Short description of the item
+ * @property {string} attributes.description - Description of the item
+ * @property {string} attributes.createdAt - The timestamp of item creation
+ * @property {string} attributes.updatedAt - The timestamp of the last item update
+ * @property {string} attributes.publishedAt - The timestamp when the item was published
+ * @property {Object} attributes.mainImage - The main image of the item
+ * @property {Strapi.Media} attributes.mainImage.data - The data of the main image of the item
+ * @property {Object} attributes.mainVideo - The main video of the item
+ * @property {Strapi.Media} attributes.mainVideo.data - The data of the main video of the item
+ * @property {Object} attributes.mainModel - The main model of the item
+ * @property {Strapi.Media} attributes.mainModel.data - The data of the main model of the item
+ */
+
+
+/**
+ * @typedef DC.SummaryItem
+ * @property {number} id
+ * @property {Object} attributes 
+ * @property {string} attributes.name
+ * @property {string} attributes.slug
+ * @property {?string} attributes.type
+ * @property {?string} attributes.shortDescription
+ * @property {?Strapi.Media} attributes.mainImage.data
+ * @property {?string} attributes.tags
+ */
 
 /**
  * @typedef {Object} DC.AbilityAttributes
@@ -96,8 +127,10 @@
  * @property {Object} attributes.race
  * @property {DC.Race} attributes.race.data - The race of the character
  * @property {Object} attributes.originLocation
- * @property {DC.Location} attributes.originLocation.data - The origin location of the character
+ * @property {Number[]} attributes.originLocation.set
+ * @property {?DC.Location} attributes.originLocation.data - The origin location of the character
  * @property {Object} attributes.currentLocation
+ * @property {Number[]} attributes.currentLocation.set
  * @property {DC.Location} attributes.currentLocation.data - The current location of the character
  * @property {Object} attributes.faction
  * @property {DC.Faction} attributes.faction.data - The faction of the character
@@ -250,25 +283,14 @@
  * @property {Strapi.Media} attributes.mainAudio.data - Main audio of the journal.
  */
 
+
 /**
- * @typedef {Object} DC.Location
- * @property {number} id - Unique ID of the location
- * @property {Object} attributes - Detailed properties of the location
- * @property {string} attributes.name - The name of the location
- * @property {string} attributes.description - A long description of the location
- * @property {string} attributes.shortDescription - A short description of the location
- * @property {string} attributes.slug - The slug of the location
- * @property {string} attributes.createdAt - The timestamp of location creation
- * @property {string} attributes.updatedAt - The timestamp of the last location update
- * @property {string} attributes.publishedAt - The timestamp of the location publication
+ * @typedef {DC.BaseEntity} DC.Location
  * @property {Array<DC.Race>} attributes.races.data - Information about races in the location
  * @property {Array<DC.Location>} attributes.regions.data - Information about regions in the location
  * @property {DC.Location} attributes.region.data - Information about a region in the location
  * @property {DC.World} attributes.world.data - Information about the world in which the location is
  * @property {Array<DC.Faction>} attributes.factions.data - Information about factions in the location
- * @property {Strapi.Media} attributes.mainImage.data - Main image of the location
- * @property {Strapi.Media} attributes.mainVideo.data - Main video of the location
- * @property {Strapi.Media} attributes.mainModel.data - Main model of the location
  * @property {Strapi.Media} attributes.mainAudio.data - Main audio of the location
  */
 

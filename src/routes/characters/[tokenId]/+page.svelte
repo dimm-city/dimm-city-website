@@ -3,10 +3,9 @@
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import Shell from '$lib/Shared/Components/Shell.svelte';
 	import TwitterButton from '$lib/Shared/Components/TwitterButton.svelte';
-	import {  ownsToken } from '$lib/Shared/Stores/UserStore';
+	import { ownsToken } from '$lib/Shared/Stores/UserStore';
 	import { updateEntity } from '$lib/Shared/SvelteStrapi.js';
 
-	
 	export let data;
 	let originalCharacter = JSON.stringify(data);
 	let isEditable = true; //ownsToken(data.attributes.tokenId);
@@ -17,7 +16,6 @@
 		isEditing = true;
 		originalCharacter = JSON.stringify(data);
 	}
-
 
 	// async function updateCharacter(character) {
 	// 	console.log('updateCharacter');
@@ -45,21 +43,49 @@
 	// 		});
 	// }
 
-	
 	async function saveChanges() {
 		if (ownsToken(data.attributes.token)) {
 			isSaving = true;
-			await updateEntity('dimm-city/characters', data)
+
+			const importData = JSON.parse(JSON.stringify(data.attributes));
+			importData.playerUpdated = true;
+			//importData.slug = character.name.replace(' ', '-');
+
+			delete importData.mainImage;
+			delete importData.mainModel;
+			delete importData.mainVideo;
+			delete importData.mainAudio;
+
+			importData.currentLocation = data.attributes.currentLocation?.data?.id;
+			importData.originLocation = data.attributes.originLocation?.data?.id;
+
+			if (data.attributes.specialties.data?.length > 0)
+				importData.specialties = [
+					...data.attributes.specialties.data.map((r) => ({ id: Number.parseInt(r.id) }))
+				];
+			else importData.specialties = [];
+      
+			await updateEntity('dimm-city/characters', {
+				id: data.id,
+				...importData
+			})
 				.then(() => {
 					console.log('character saved', data);
 				})
 				.catch((reason) => {
 					console.error('Error updating citizen file', reason);
-				})
-				.finally(() => {
-					isSaving = false;
-					isEditing = false;
 				});
+
+			// await updateEntity('dimm-city/characters', {
+			// 	id: data.id,
+			// 	attributes: {
+			// 		originLocation:  data.attributes.originLocation.data?.id,
+			//     currentLocation: data.attributes.currentLocation.data?.id
+			// 	}
+			// });
+
+			isSaving = false;
+			isEditing = false;
 		}
 	}
 

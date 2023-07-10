@@ -5,9 +5,11 @@
 	import DefaultItemResult from '$lib/Shared/Components/DefaultItemResult.svelte';
 	import PagedResults from '$lib/Shared/Components/PagedResults.svelte';
 	/**
-	 * @type {any}
+	 * @type {?any}
 	 */
-	export let query;
+	export let query = {
+		populate: 'mainImage'
+	};
 	export let endpoint = config.apiBaseUrl + '/dimm-city/items';
 	export let itemResultBaseUrl = '';
 	/**
@@ -15,6 +17,7 @@
 	 */
 	export let initialData = {};
 	export let autoLoad = false;
+	export let searchPlaceholder = 'Search entries';
 
 	let searchText = "";
 	let currentPage = initialData?.meta?.pagination?.page ?? 1;
@@ -47,7 +50,6 @@
 	};
 </script>
 
-<!-- <Shell title="Factions" fullscreen={false}> -->
 	<ContentPane padding={0}>
 		<div class="search-grid">
 			<div class="search-results-wrapper">
@@ -78,7 +80,7 @@
 							<input
 								bind:value={searchText}
 								type="text"
-								placeholder="Search factions..."
+								placeholder="{searchPlaceholder}"
 								on:keyup={resultsComponent.search}
 							/>
 							<i class="bi bi-search" />
@@ -92,28 +94,6 @@
 			</div>
 		</div>
 	</ContentPane>
-<!-- </Shell> -->
-
-
-<!-- <SearchPage initialData={data} {query} {endpoint}>
-	<div class="search-container" slot="search" let:resultsComponent>
-		<div data-augmented-ui class="aug-input">
-			<i class="bi bi-gear" />
-			<input
-				bind:value={searchText}
-				type="text"
-				placeholder="Search factions..."
-				on:keyup={resultsComponent.search}
-			/>
-			<i class="bi bi-search" />
-		</div>
-	</div>
-	<svelte:fragment slot="result" let:result>
-		<MenuItem url={`/factions/${result.attributes.slug}`}>
-			<DefaultItemResult item={result.attributes} icon="bi-shield-lock" />
-		</MenuItem>
-	</svelte:fragment>
-</SearchPage> -->
 
 <style>
 	.search-grid {

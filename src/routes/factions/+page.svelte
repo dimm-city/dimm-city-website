@@ -2,16 +2,13 @@
 	import Shell from '$lib/Shared/Components/Shell.svelte';
 	import SearchPage from '$lib/Shared/Components/SearchPage.svelte';
 
-
 	export let data;
-	let query = {
-		fields: ['name', 'slug', 'shortDescription']
-	};
 </script>
 
 <Shell title="Factions">
-	<SearchPage bind:query 
+	<SearchPage 
 		initialData={data}
 		endpoint={'/dimm-city/factions'}
-		itemResultBaseUrl="/factions" />
+		itemResultBaseUrl="/factions"
+		searchPlaceholder="Search dimm city factions" />
 </Shell>

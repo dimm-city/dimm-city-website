@@ -110,7 +110,7 @@ export class Strapi {
 				Authorization: `Bearer ${this.jwt}`,
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({ data: entity.attributes })
+			body: JSON.stringify({ data: entity })
 		})
 			.then(async (res) => {
 				const { data, errors } = await res.json();

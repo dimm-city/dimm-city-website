@@ -3,7 +3,7 @@
 	import Select from 'svelte-select';
 	import Input from '$lib/Shared/Components/Input.svelte';
 	import Textarea from '$lib/Shared/Components/Textarea.svelte';
-	import { getDistricts } from '$lib/Locations/getDistricts';
+	import { getDistricts } from '$lib/Shared/Stores/getDistricts';
 	import { getSpecialties } from '$lib/Specialties/getSpecialties';
 
 	/**

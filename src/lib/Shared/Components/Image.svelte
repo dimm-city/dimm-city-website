@@ -1,19 +1,33 @@
-<script lang="ts">
+<script>
 	import { onMount, afterUpdate } from 'svelte';
 
-	export let title: string;
-	export let imageUrl: string;
+	/**
+	 * @type {?string | null}
+	 */
+	export let title;
+	/**
+	 * @type {?string | null | undefined}
+	 */
+	export let imageUrl;
 	export let videoUrl = '';
 	export let modelUrl = ''; ///assets/pink-dagger.glb
 	export let skyboxUrl = '';
 	export let aug = 'tl-clip t-clip-x tr-clip-y br-clip b-rect bl-clip l-scoop border';
 	export let classes = '';
 
-	let image: HTMLImageElement;
-	let video: HTMLVideoElement;
+	/**
+	 * @type {HTMLImageElement}
+	 */
+	let image;
+
+	/** @type {HTMLVideoElement}*/
+	let video;
 	let hasVideo = false;
 	let hasImage = false;
-	let mediaUrl: string | null;
+	/**
+	 * @type {string | null}
+	 */
+	let mediaUrl;
 
 	function onVideoLoaded() {
 		hasVideo = true;
@@ -26,7 +40,7 @@
 	function onCanPlay() {
 		console.log('can play');
 	}
-	$: if (videoUrl > "") {
+	$: if (videoUrl > '') {
 		console.log('video changed', videoUrl, video);
 		mediaUrl = videoUrl;
 		hasVideo = mediaUrl != null;
@@ -39,17 +53,19 @@
 		mediaUrl = null;
 	}
 
-
-	
 	onMount(async () => {
 		mediaUrl = videoUrl;
-		if(image?.complete){
+		if (image?.complete) {
 			hasImage = true;
 		}
 	});
 </script>
+
 <svelte:head>
-	<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.0.1/model-viewer.min.js"></script>
+	<script
+		type="module"
+		src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.0.1/model-viewer.min.js"
+	></script>
 </svelte:head>
 <div
 	class="m-3 p-4 d-flex image-wrapper {classes}"
@@ -59,7 +75,6 @@
 >
 	<!-- svelte-ignore a11y-media-has-caption -->
 	<video
-
 		bind:this={video}
 		id={title}
 		autoplay
@@ -87,7 +102,14 @@
 			poster={imageUrl}
 		/>
 	{:else if !hasVideo}
-		<img bind:this={image} src={imageUrl} class="fade-in" class:hidden={!imageUrl} alt={title} on:load={onImageLoaded} />
+		<img
+			bind:this={image}
+			src={imageUrl}
+			class="fade-in"
+			class:hidden={!imageUrl}
+			alt={title}
+			on:load={onImageLoaded}
+		/>
 	{/if}
 </div>
 
@@ -106,12 +128,9 @@
 		width: min(80dvw, var(--dc-image-width));
 	}
 
-	
-
 	.image-wrapper.missing {
 		background-image: url('/assets/missing-image.png');
 		background-repeat: no-repeat;
-		
 	}
 	img,
 	video {
@@ -131,7 +150,7 @@
 		transform: scale(1.3) translate(-30%, -30%);
 	}
 
-	.hidden{
+	.hidden {
 		visibility: hidden;
 	}
 	.image-wrapper {
