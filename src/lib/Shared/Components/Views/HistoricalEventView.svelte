@@ -1,9 +1,7 @@
 <script>
 	import Image from '$lib/Shared/Components/Image.svelte';
 
-	/**
-	 * @type {DC.Item}
-	 */
+	/** @type {DC.HistoricalEvent} */
 	export let item;
 </script>
 
@@ -12,15 +10,14 @@
 		<h1>{item.attributes.name}</h1>
 		<Image
 			imageUrl={item.attributes.mainImage?.data?.attributes?.formats?.large?.url}
-			modelUrl={item.attributes.mainModel?.data.attributes.url}
-			videoUrl={item.attributes.mainVideo?.data.attributes.url}
+			videoUrl={item.attributes.mainVideo?.data?.attributes?.url}
 			title={item.attributes.name}
 		/>
 	</section>
 	<section class="item-details-column">
         <div>
-		<h3 class="inline">Type:</h3>
-		<span>{item.attributes.type}</span></div>
+		<h3 class="inline">District:</h3>
+		<span>{item.attributes?.location?.data?.attributes?.name}</span></div>
 		<h3>Description</h3>
 		<p>{item.attributes.description}</p>
 	</section>

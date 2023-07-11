@@ -5,44 +5,11 @@
 
 	export let data;
 	const endpoint = '/dimm-city/locations';
-	/**
-	 * @type {string}
-	 */
-	let searchText;
 
-	$: query = {
-		fields: ['name', 'slug', 'shortDescription', 'type'],
-		filters: {
-			$or: [
-				{
-					name: {
-						$containsi: searchText
-					}
-				},
-				{
-					description: {
-						$containsi: searchText
-					}
-				}
-			]
-		}
-	};
 </script>
 
 <Shell title="Locations">
-	<SearchPage {query} {endpoint} initialData={data}>
-		<div class="search-container" slot="search" let:resultsComponent>
-			<div data-augmented-ui class="aug-input">
-				<!-- <i class="bi bi-gear" /> -->
-				<input
-					bind:value={searchText}
-					type="text"
-					placeholder="Search dimm city locations..."
-					on:keyup={resultsComponent.search}
-				/>
-				<i class="bi bi-search" />
-			</div>
-		</div>
+	<SearchPage {endpoint} initialData={data}>		
 		<svelte:fragment slot="result" let:result>
 			<MenuItem
 				icon="bi-map"

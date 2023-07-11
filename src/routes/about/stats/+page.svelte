@@ -1,7 +1,7 @@
 <script>
 	import Shell from '$lib/Shared/Components/Shell.svelte';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
-	import { config } from '$lib/Shared/config';
+	import { config } from '$lib/Shared/config.js';
 	export let data = {};
 </script>
 

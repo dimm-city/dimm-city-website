@@ -3,8 +3,6 @@
 	import ContentPane from './ContentPane.svelte';
 	import { Modals, closeModal, closeAllModals } from 'svelte-modals';
 	import { pageImage, pageTitle, pageDescription, pageKeywords } from '$lib/Shared/Stores/ShellStore';
-	// import '$lib/Shared/Styles/main.css';
-	// import 'animate.css';
 	import { onMount } from 'svelte';
 	import MenuBar from './MenuBar.svelte';
 	import { config } from '$lib/Shared/config';
@@ -56,7 +54,7 @@
 <PageBackground />
 <div class="main-container {title.toLowerCase()}" class:fullscreen>
 	<div class="content-panel slide-in-up">
-		<slot><ContentPane fullsize={true}>404</ContentPane></slot>
+		<slot><ContentPane>404</ContentPane></slot>
 	</div>
 	<div class="menu-container">
 		<MenuBar {title} {enableSearch} {titleUrl}>

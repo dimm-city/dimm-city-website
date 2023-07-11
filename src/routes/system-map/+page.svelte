@@ -3,11 +3,10 @@
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import List from './List.svelte';
 	export let data;
-
 </script>
 
-<Shell title="System Map" enableSearch={false}>
-	<ContentPane padding={1}>
-			<List data={data.pages} />
+<Shell title="System Map">
+	<ContentPane padding={1} scrollable={true}>
+		<List data={data.pages} />
 	</ContentPane>
 </Shell>

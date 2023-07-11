@@ -3,6 +3,7 @@
 	import SearchPage from '$lib/Shared/Components/SearchPage.svelte';
 	import MenuItem from '$lib/Shared/Components/Menu/MenuItem.svelte';
 
+	/** @type {DC.JournalEntry}*/
 	export let data;
 </script>
 

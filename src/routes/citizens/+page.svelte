@@ -1,6 +1,6 @@
 <script>
 	export let data;
-	import { config } from '$lib/Shared/config';
+	import { config } from '$lib/Shared/config.js';
 	import Shell from '$lib/Shared/Components/Shell.svelte';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import SearchPage from '$lib/Shared/Components/SearchPage.svelte';

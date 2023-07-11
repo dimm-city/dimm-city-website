@@ -1,20 +1,34 @@
-<script lang="ts">
+<script>
 	import { onMount } from 'svelte';
+
+	/** @type {string}*/
 	export let story = '';
+
+	export let indexUrl = '/stories';
+
+	/**
+	 * @param {string} story
+	 */
 	export function selectStory(story) {
 		loadStory(story);
 	}
 
 	onMount(async () => {
-		if (window !== undefined) window['exitStory'] = exitStory;		
+		if (window !== undefined) 
+			// @ts-ignore
+			window.exitStory = exitStory;
 	});
+
+	/**
+	 * @param {string} story
+	 */
 	function loadStory(story) {
 		if (!story) story = 'none';
-		frames[0].location = `/stories/${story}.html`;
+		frames[0].location = `${indexUrl}/${story}.html`;
 	}
 
 	function exitStory() {
-		document.location = '/history'
+		document.location = indexUrl;
 	}
 
 	function storyLoaded() {
@@ -22,6 +36,8 @@
 		}
 	}
 </script>
+
+<iframe title="story" id="story" src={story} on:load={storyLoaded} />
 
 <style>
 	iframe {
@@ -31,5 +47,3 @@
 		border: 0;
 	}
 </style>
-
-<iframe title="story" id="story" src={story} on:load="{storyLoaded}"/>

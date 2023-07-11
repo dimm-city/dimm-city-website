@@ -1,2 +1,7 @@
 import { loadSearchPageFromStrapi } from '$lib/Shared/SvelteStrapi';
-export const load = async (page) => await loadSearchPageFromStrapi(page, 'races');
+/** @returns {Promise<DC.Race[]>} */
+export const load = async function (
+	/** @type {{ params: { pagination: any; sort: any; }; }} */ page
+) {
+	return await loadSearchPageFromStrapi(page, 'dimm-city/races');
+};

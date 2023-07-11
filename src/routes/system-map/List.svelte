@@ -1,9 +1,20 @@
-<script lang="ts">
+<script>
 	import ListItem from './ListItem.svelte';
-	export let data: any[] | null = [];
+	/**
+	 * @type {any[] | null}
+	 */
+	export let data = [];
 	export let baseUrl = '';
 	export let classes = '';
 </script>
+
+<ul class={classes}>
+	{#if data != null}
+		{#each data as item}
+			<ListItem {item} {baseUrl} />
+		{/each}
+	{/if}
+</ul>
 
 <style>
 	ul {
@@ -14,11 +25,3 @@
 		margin-bottom: 0.5rem;
 	}
 </style>
-
-<ul class={classes}>
-	{#if data != null}
-		{#each data as item}
-			<ListItem {item} {baseUrl} />
-		{/each}
-	{/if}
-</ul>

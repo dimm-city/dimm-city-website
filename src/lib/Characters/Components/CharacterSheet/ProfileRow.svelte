@@ -4,7 +4,7 @@
 	import Input from '$lib/Shared/Components/Input.svelte';
 	import Textarea from '$lib/Shared/Components/Textarea.svelte';
 	import { getDistricts } from '$lib/Shared/Stores/getDistricts';
-	import { getSpecialties } from '$lib/Specialties/getSpecialties';
+	import { getSpecialties } from '$lib/Shared/Stores/getSpecialties';
 
 	/**
 	 * @type {DC.Character}

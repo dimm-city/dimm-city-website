@@ -1,8 +1,7 @@
 import { formatDistanceToNow } from "date-fns";
-export function formatDate(input: Date) {
+/**
+ * @param {string | number | Date} input
+ */
+export function formatDate(input) {
     return formatDistanceToNow(new Date(input), { addSuffix: true });
-}
-
-export function formatDreamTime(input: string) {
-    return "who knows?!"
 }

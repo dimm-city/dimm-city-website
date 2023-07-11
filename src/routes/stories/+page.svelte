@@ -5,10 +5,10 @@
 	export let data;
 </script>
 
-<Shell title="History">
+<Shell title="Stories">
 	<SearchPage 
 		initialData={data}
-		endpoint={'/dimm-city/historical-events'}
-		itemResultBaseUrl="/history"
-		searchPlaceholder="Search dimm city history" />
+		endpoint={'/dimm-city/stories'}
+		itemResultBaseUrl="/stories"
+		searchPlaceholder="Search dimm city stories" />
 </Shell>

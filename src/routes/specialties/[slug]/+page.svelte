@@ -1,6 +1,15 @@
 <script>
-	import { page } from '$app/stores';
-	import ViewSpecialty from '$lib/Specialties/ViewSpecialty.svelte';
+	import Article from '$lib/Shared/Components/Article.svelte';
+	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
+	import Shell from '$lib/Shared/Components/Shell.svelte';
+	/**
+	 * @type {DC.Specialty}
+	 */
+	export let data;
 </script>
 
-<ViewSpecialty slug={$page.params.slug} />
+<Shell title={data.attributes.name} titleUrl="/specialties">
+	<ContentPane padding={3}>
+		<Article model={data} imageAug="tl-clip tr-clip-y br-clip bl-clip-y" />
+	</ContentPane>
+</Shell>

@@ -4,7 +4,7 @@
 	import FlexMenu from '$lib/Shared/Components/Menu/FlexMenu.svelte';
 	import { getSpores } from './Queries/getSpores';
 	/**
-	 * @type {import("../Shared/Models/ISummaryItem").ISummaryItem[]}
+	 * @type {DC.Spore[]}
 	 */
 	let spores;
 	getSpores().then((s) => (spores = s));
@@ -28,7 +28,7 @@
 </style>
 
 <Shell title="Spores">
-	<ContentPane>
+	<ContentPane scrollable={true}>
 		<div class="spore-container">
 			<h3 class="">Dimm City Spores</h3>
 			<small>&lt;The Dimm City 1-Page RPG&gt;</small>

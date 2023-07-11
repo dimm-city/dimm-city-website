@@ -16,7 +16,7 @@ query {
 	}
 }`;
 
-export async function getSpores() : Promise<ISummaryItem[]> {
+export async function getSpores() : Promise<DC.Spore[]> {
 	return fetch(config.graphUrl, {
 		method: 'POST',
 		headers: {

@@ -1,5 +1,7 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import { getDistricts } from '$lib/Shared/Stores/getDistricts';
-import { getSpecialties } from '$lib/Specialties/getSpecialties';
+import { getSpecialties } from '$lib/Shared/Stores/getSpecialties';
 
 const _systemMap = {
 	pages: [
@@ -29,12 +31,12 @@ const getSystemMap = async () => {
 		{
 			name: 'Locations',
 			slug: 'locations',
-			children: await getDistricts()
+			children: []// await getDistricts()
 		},
 		{
 			name: 'Specialties',
 			slug: 'specialties',
-			children: await getSpecialties()
+			children: []// await getSpecialties()
 		},
 		{
 			name: 'Journal Entries',
@@ -79,7 +81,7 @@ const getSystemMap = async () => {
 		}
 		// {
 		// 	name: 'Historical Record',
-		// 	slug: 'history',
+		// 	slug: 'stories',
 		// 	children: [
 		// 		{
 		// 			name: 'Welcome to Dimm City',

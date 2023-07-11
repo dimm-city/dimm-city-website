@@ -2,7 +2,6 @@
 	import { config } from '$lib/Shared/config';
 	import { searchText } from '$lib/Shared/Stores/ShellStore';
 	import HexMenu from './Menu/HexMenu.svelte';
-	import MainMenu from './Menu/MainMenu.svelte';
 
 	export let enableSearch = false;
 	export let title = '';
@@ -29,7 +28,13 @@
 					<i class="bi bi-search" />
 				</div>
 			{:else}
-				<h4><a href={titleUrl}>{title}</a></h4>
+				<h4>
+					{#if titleUrl}
+						<a href={titleUrl}>../</a><span>{title}</span>
+					{:else}
+						<span>{title}</span>
+					{/if}
+				</h4>
 			{/if}
 		</div>
 		<div>
@@ -42,17 +47,19 @@
 </div>
 
 <style>
-	:root{
+	:root {
 		--menu-bar-height: 5dvh;
 	}
-	h4 {
+	.search-container h4 {
 		position: absolute;
 		color: var(--light);
 		margin-block: 0px;
 	}
-	h4 a {
+	.search-container h4,
+	.search-container a {
 		text-decoration: none;
 		color: var(--fourth-accent);
+		display: inline;
 	}
 
 	.top-panel {
@@ -120,12 +127,6 @@
 		height: 100%;
 	}
 
-	.top-panel .global-toolbar a {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-
 	.version {
 		color: var(--third-accent);
 		position: absolute;
@@ -137,11 +138,11 @@
 	}
 
 	.search-container {
-			align-items: center;
-		}
+		align-items: center;
+	}
 
 	@media (max-width: 767px) {
-		:root{
+		:root {
 			--menu-bar-height: 7dvh;
 		}
 		.top-panel {
@@ -192,7 +193,6 @@
 			transform: translateX(-0.5rem) translateY(-1.5rem);
 		}
 
-		
 		.version {
 			right: 0.5rem;
 			bottom: 0rem;
