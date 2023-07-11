@@ -177,6 +177,16 @@ input:read-only,
 	font-size: 0.7em;
 }
 
+.aug-button.square {
+	--aug-tl1: 0.5rem;
+	--aug-tr1: 0.5rem;
+	--aug-br1: 0.5rem;
+	--aug-bl1: 0.5rem;
+	aspect-ratio: 1/1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 .text-button{
 	font-family: var(--main-font-family);
 	font-size: 1rem;
@@ -230,6 +240,7 @@ input:read-only,
 }
 @media (max-width: 500px) {
 	.aug-button {
+		/* padding: 0.25rem .5rem; */
 		padding: 0.85rem;
 		width: 100%;
 	}

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Shell from '$lib/Shared/Components/Shell.svelte';
+	import Shell from '$lib/Shared/Shell/Shell.svelte';
 	import { pageImage,pageDescription, pageTitle } from '$lib/Shared/Stores/ShellStore';
 	import { loadCharacter } from '$lib/Characters/Queries/getCharacterBySlug';
 	import { onMount } from 'svelte';

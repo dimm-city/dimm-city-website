@@ -1,7 +1,7 @@
 <script>
 	import ItemView from '$lib/Shared/Components/Views/ItemView.svelte';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
-	import Shell from '$lib/Shared/Components/Shell.svelte';
+	import Shell from '$lib/Shared/Shell/Shell.svelte';
     /**
 	 * @type {DC.Item}
 	 */

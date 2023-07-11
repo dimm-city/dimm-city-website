@@ -3,7 +3,7 @@
 	import { page } from '$app/stores';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
-	import Shell from '$lib/Shared/Components/Shell.svelte';
+	import Shell from '$lib/Shared/Shell/Shell.svelte';
 	import { config } from '$lib/Shared/config';
 	import { jwt, profile } from '$lib/Shared/Stores/UserStore';
 	import { onMount } from 'svelte';

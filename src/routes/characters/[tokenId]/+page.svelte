@@ -1,7 +1,7 @@
 <script>
 	import Sheet from '$lib/Characters/Components/CharacterSheet/Sheet.svelte';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
-	import Shell from '$lib/Shared/Components/Shell.svelte';
+	import Shell from '$lib/Shared/Shell/Shell.svelte';
 	import TwitterButton from '$lib/Shared/Components/TwitterButton.svelte';
 	import { ownsToken } from '$lib/Shared/Stores/UserStore';
 	import { updateEntity } from '$lib/Shared/SvelteStrapi.js';

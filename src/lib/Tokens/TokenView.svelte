@@ -1,13 +1,15 @@
-<script lang="ts">
-	import type { IToken } from '$lib/Characters/Models/Character';
+<script>
 	import Button from '$lib/Shared/Components/Button.svelte';
 	import Image from '$lib/Shared/Components/Image.svelte';
-	import Toolbar from '$lib/Shared/Components/Toolbar.svelte';
+	import Toolbar from '$lib/Shared/Shell/Toolbar.svelte';
 	import { config } from '$lib/Shared/config';
 	import { ownsToken } from '$lib/Shared/Stores/UserStore';
 	import MetadataView from './MetadataView.svelte';
 
-	export let token: any;
+	/**
+	 * @type {{ contract: { slug: any; address: any; }; tokenId: any; name: any; metadata: any;}}
+	 */
+	 export let token;
 	$: owned = ownsToken(token);
 	$: imageUrl =
 		config.apiBaseUrl + `/chain-wallets/thumbnails/${token.contract.slug}/${token.tokenId}.png`;

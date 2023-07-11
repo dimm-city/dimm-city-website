@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ModalShell from '$lib/Shared/Components/ModalShell.svelte';
+	import ModalShell from '$lib/Shared/Shell/ModalShell.svelte';
 	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
 	import markdownit from 'markdown-it';
 

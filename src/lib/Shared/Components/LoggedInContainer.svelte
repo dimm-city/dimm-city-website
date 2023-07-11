@@ -4,7 +4,7 @@
 	import { config } from '$lib/Shared/config';
 	import { connect, loginWithWallet } from '$lib/Shared/Stores/ContractsStore';
 	import Button from './Button.svelte';
-	import { defaultEvmStores, chainId, connected, signerAddress } from 'svelte-ethers-store';
+	import { chainId, connected, signerAddress } from 'svelte-ethers-store';
 	import { onMount } from 'svelte';
 
 	let ethereumEnabled = false;

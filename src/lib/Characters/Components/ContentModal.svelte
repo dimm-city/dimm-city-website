@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ModalShell from '$lib/Shared/Components/ModalShell.svelte';
+	import ModalShell from '$lib/Shared/Shell/ModalShell.svelte';
 	import Textarea from '$lib/Shared/Components/Textarea.svelte';
 	import markdownit from 'markdown-it';
 

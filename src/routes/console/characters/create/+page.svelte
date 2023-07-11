@@ -1,9 +1,9 @@
 <script>
 	import CreateCharacter from '$lib/Characters/CreateCharacter.svelte';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
-	import Shell from '$lib/Shared/Components/Shell.svelte';
+	import Shell from '$lib/Shared/Shell/Shell.svelte';
 	import Notifications from 'svelte-notifications';
-	import  Alert from "$lib/Shared/Components/Alert.svelte";
+	import  Alert from "$lib/Shared/Shell/Alert.svelte";
 </script>
 
 <Notifications item={Alert} zIndex={300}>

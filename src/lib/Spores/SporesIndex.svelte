@@ -1,5 +1,5 @@
 <script>
-	import Shell from '$lib/Shared/Components/Shell.svelte';
+	import Shell from '$lib/Shared/Shell/Shell.svelte';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import FlexMenu from '$lib/Shared/Components/Menu/FlexMenu.svelte';
 	import { getSpores } from './Queries/getSpores';

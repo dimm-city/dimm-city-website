@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { config } from '$lib/Shared/config';
 	import { searchText } from '$lib/Shared/Stores/ShellStore';
-	import HexMenu from './Menu/HexMenu.svelte';
+	import HexMenu from '../Components/Menu/HexMenu.svelte';
 
 	export let enableSearch = false;
 	export let title = '';

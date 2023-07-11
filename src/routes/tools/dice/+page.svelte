@@ -1,5 +1,5 @@
 <script>
-	import Shell from '$lib/Shared/Components/Shell.svelte';
+	import Shell from '$lib/Shared/Shell/Shell.svelte';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import Dice from '$lib/Shared/Components/Dice/Dice.svelte';
 	let diceNotation = '1d20';

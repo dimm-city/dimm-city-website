@@ -1,8 +1,8 @@
 <script>
 	import { loggedIn } from '$lib/Shared/Stores/UserStore';
 
-	import HexMenu from './HexMenu.svelte';
-	import MenuItem from './MenuItem.svelte';
+	import HexMenu from '../Components/Menu/HexMenu.svelte';
+	import MenuItem from '../Components/Menu/MenuItem.svelte';
 </script>
 
 <HexMenu icon="bi bi-menu-button" class="main-menu" title="main menu">
@@ -32,7 +32,7 @@
 		description="Locations identified within Dimm City"
 	/>
 	<MenuItem
-		url="/citizens"
+		url="/characters"
 		icon="bi-people"
 		title="Citizen Files"
 		description="Access the available citizen files"

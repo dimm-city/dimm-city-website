@@ -1,6 +1,5 @@
-<script script lang="ts">
+<script >
 	import List from '$lib/Shared/Components/List.svelte';
-	import type { ISummaryItem } from '$lib/Shared/Models/ISummaryItem';
 	import { getDashboardEntries } from './getDashboardEntries';
 	import { getDistricts } from './getDistricts';
 	import { getSpecialties } from './getSpecialties';
@@ -8,11 +7,26 @@
 	import ListItemLink from '$lib/Shared/Components/ListItemLink.svelte';
 	import Hero from './Hero.svelte';
 	import { onMount } from 'svelte';
-	let newsQuery: any;
-	let latestNews: ISummaryItem[] = [];
-	let districts: ISummaryItem[] = [];
-	let specialties: ISummaryItem[] = [];
-	let citizens: ISummaryItem[] = [];
+	/**
+	 * @type {any}
+	 */
+	let newsQuery;
+	/**
+	 * @type {DC.BaseEntity[]}
+	 */
+	let latestNews = [];
+	/**
+	 * @type {DC.BaseEntity[]}
+	 */
+	let districts= [];
+	/**
+	 * @type {DC.BaseEntity[]}
+	 */
+	let specialties = [];
+	/**
+	 * @type {DC.BaseEntity[]}
+	 */
+	let citizens = [];
 
 	onMount(() => {
 		getDashboardEntries().then(

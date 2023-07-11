@@ -1,7 +1,19 @@
 <script>
+	/**
+	 * @type {string}
+	 */
 	export let url;
+	/**
+	 * @type {string}
+	 */
 	export let text;
 </script>
+
+<a href={url}>
+	<div class="list-item" data-augmented-ui>
+		{text}
+	</div>
+</a>
 
 <style>
 	a {
@@ -43,8 +55,3 @@
 		transition: background 500ms;
 	}
 </style>
-
-<a href={url}>
-<div class="list-item" data-augmented-ui>
- {text}
-</div></a>

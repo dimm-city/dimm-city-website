@@ -5,8 +5,7 @@
 	import DreamMasterPanel from './Components/DreamMasterPanel.svelte';
 	import { getSpore } from '$lib/Spores/Queries/getSpore';
 	import { Spore } from './Spore';
-	import Button from '$lib/Shared/Components/Button.svelte';
-	import { pageTitle } from "$lib/Shared/Stores/ShellStore";
+	import { pageTitle } from '$lib/Shared/Stores/ShellStore';
 	export let slug: string;
 	let spore: Spore = new Spore();
 	if (slug > '') {
@@ -17,19 +16,14 @@
 	}
 </script>
 
-<style>
-	:global(.print-only) {
-		display: none;
-	}
-	.toolbar {
-		display: flex;
-		justify-content: flex-end;
-	}
-</style>
-
 {#if spore}
 	<div class="toolbar">
-		<Button target="_blank" url={'/spores/' + spore.slug + '/print'}>Print</Button>
+		<a
+			href={'/spores/' + spore.slug + '/print'}
+			data-augmented-ui
+			class="aug-button"
+			target="_blank">Print</a
+		>
 	</div>
 
 	<div class="col front">
@@ -57,3 +51,13 @@
 		<DreamMasterPanel {spore} />
 	</div>
 {/if}
+
+<style>
+	:global(.print-only) {
+		display: none;
+	}
+	.toolbar {
+		display: flex;
+		justify-content: flex-end;
+	}
+</style>

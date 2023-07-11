@@ -1,12 +1,12 @@
 <script>
 	import PageBackground from './PageBackground.svelte';
-	import ContentPane from './ContentPane.svelte';
+	import ContentPane from '../Components/ContentPane.svelte';
 	import { Modals, closeModal, closeAllModals } from 'svelte-modals';
 	import { pageImage, pageTitle, pageDescription, pageKeywords } from '$lib/Shared/Stores/ShellStore';
 	import { onMount } from 'svelte';
 	import MenuBar from './MenuBar.svelte';
 	import { config } from '$lib/Shared/config';
-	import MainMenu from './Menu/MainMenu.svelte';
+	import MainMenu from './MainMenu.svelte';
 
 	export let title = '';
 	export let titleUrl = '';

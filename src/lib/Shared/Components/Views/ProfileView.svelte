@@ -1,9 +1,12 @@
-<script lang="ts">
+<script>
 	import { onMount } from 'svelte';
 	import { profile, loadProfile, logout, loadWallets, tokens } from '$lib/Shared/Stores/UserStore';
 	import CharacterMenu from '$lib/Characters/CharacterMenu.svelte';
 	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
 
+	/**
+	 * @type {Promise<any>}
+	 */
 	let walletQuery;
 	onMount(async () => {
 		await loadProfile();

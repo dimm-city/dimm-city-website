@@ -4,7 +4,6 @@
 	import { createEventDispatcher, onMount } from 'svelte';
 	import { getCharactersQuery } from './Queries/getCharacters';
 	import { config } from '$lib/Shared/config';
-	import type { ICharacter } from './Models/Character';
 	import { characters } from './CharacterStore';
 	import { filterAndSort } from '$lib/Shared/Stores/StoreUtils';
 	import { ownsToken } from '$lib/Shared/Stores/UserStore';

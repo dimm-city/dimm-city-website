@@ -2,7 +2,7 @@
 	import { searchText } from '$lib/Shared/Stores/ShellStore';
 	import type { PageData } from './$types';
 	export let data: PageData;
-	import Shell from '$lib/Shared/Components/Shell.svelte';
+	import Shell from '$lib/Shared/Shell/Shell.svelte';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import FlexMenu from '$lib/Shared/Components/Menu/FlexMenu.svelte';
 	import { searchArchive } from '$lib/Archive/getArchiveItems';
