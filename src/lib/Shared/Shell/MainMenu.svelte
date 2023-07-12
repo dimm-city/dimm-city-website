@@ -32,7 +32,7 @@
 		description="Locations identified within Dimm City"
 	/>
 	<MenuItem
-		url="/characters"
+		url="/citizens"
 		icon="bi-people"
 		title="Citizen Files"
 		description="Access the available citizen files"

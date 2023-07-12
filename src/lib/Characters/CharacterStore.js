@@ -1,13 +1,11 @@
 import { writable, derived, get } from 'svelte/store';
 import { getExpiryTime, getLocalValue, setLocalValue } from '$lib/Shared/Stores/StoreUtils';
-import { Character, type ICharacter } from '$lib/Characters/Models/Character';
 import { searchText } from '$lib/Shared/Stores/ShellStore';
 import { getReleaseContract } from '$lib/Shared/Stores/ContractsStore';
-import type { ICharacterRelease } from './Models/ICharacterRelease';
 import { config } from '$lib/Shared/config';
 import { jwt, refreshToken } from '$lib/Shared/Stores/UserStore';
 
-export const characters = writable<ICharacter[]>(getLocalValue('characters') ?? []);
+export const characters = writable(getLocalValue('characters') ?? []);
 characters.subscribe((value) => setLocalValue('characters', value, getExpiryTime()));
 
 export const filteredCharacters = derived(
@@ -73,7 +71,10 @@ export async function updateCharacter(character /** @type {DC.Character} */) {
 // export async function createCitizenFile(character: ICharacter) : Promise<ICharacter> {
 // 	return new Character();
 // }
-export async function createSporo(release: ICharacterRelease): Promise<ICharacter> {
+/**
+ * @param {{ slug: string; }} release
+ */
+export async function createSporo(release) {
 	const contract = await getReleaseContract(release.slug);
 	const cost = await contract.getPackCost();
 	const totalSupply = await contract.totalSupply(); // as BigNumber;
@@ -96,5 +97,5 @@ export async function createSporo(release: ICharacterRelease): Promise<ICharacte
 	const tokenId = 35;
 	console.log('downloading new token');
 
-	return new Character(); //await downloadSporo(tokenId, release);
+	return {}; //await downloadSporo(tokenId, release);
 }

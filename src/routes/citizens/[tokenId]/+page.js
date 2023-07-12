@@ -1,7 +1,15 @@
-import { loadCharacter } from '$lib/Characters/Queries/getCharacterBySlug';
-
-export const load = (async (page) => {
-    const data = await loadCharacter(page.params.tokenId);
-    console.log('character data',data);
-    return data;
-});
+import { loadEntityPageFromStrapi } from '$lib/Shared/SvelteStrapi';
+/**
+ * @returns {Promise<DC.Character>}
+ */
+export const load = async (/** @type {{ params: any; }} */ page) => {
+	const tokenId = page.params.tokenId;
+	let data = await loadEntityPageFromStrapi(page, 'dimm-city/characters', {
+		filters: {
+			tokenId: {
+				$eq: tokenId
+			}
+		}
+	});
+	return data;
+};

@@ -3,7 +3,10 @@ import { get } from 'svelte/store';
 import { jwt } from '$lib/Shared/Stores/UserStore';
 
 
-export async function createCharacter(paymentId: string) : Promise<any> {
+/**
+ * @param {string} paymentId
+ */
+export async function createCharacter(paymentId) {
 	return fetch(`${config.apiBaseUrl}/payments/purchased/${paymentId}`, {
 			method: 'POST',
 			headers: {

@@ -168,30 +168,32 @@
  * @property {{data: Strapi.Media}} attributes.mainImage
  * @property {{data: Strapi.Media}} attributes.mainVideo
  * @property {{data: Array<DC.Race>}} attributes.races
- * @property {{data: ContractData}} attributes.contract
+ * @property {{data: ChainWallets.Contract}} attributes.contract
  */
 
 /**
- * @typedef {Object} ContractData
- * @property {string} name
- * @property {string} slug
- * @property {string} description
- * @property {?Object} metadata
- * @property {?Object} abi
- * @property {number} totalSupply
- * @property {number} maxSupply
- * @property {number} price
- * @property {?string} imageUrl
- * @property {?string} videoUrl
- * @property {?string} thumbnailUrl
- * @property {?string} tags
- * @property {?string} metadataBaseUri
- * @property {string} publishedAt
- * @property {string} address
- * @property {number} lastSynced
- * @property {string} metadataService
- * @property {string} chain
- * @property {?string} contractService
+ * @typedef {Object} ChainWallets.Contract
+ * @property {number} id
+ * @property {Object} attributes
+ * @property {string} attributes.name
+ * @property {string} attributes.slug
+ * @property {string} attributes.description
+ * @property {?Object} attributes.metadata
+ * @property {?Object} attributes.abi
+ * @property {number} attributes.totalSupply
+ * @property {number} attributes.maxSupply
+ * @property {number} attributes.price
+ * @property {?string} attributes.imageUrl
+ * @property {?string} attributes.videoUrl
+ * @property {?string} attributes.thumbnailUrl
+ * @property {?string} attributes.tags
+ * @property {?string} attributes.metadataBaseUri
+ * @property {string} attributes.publishedAt
+ * @property {string} attributes.address
+ * @property {number} attributes.lastSynced
+ * @property {string} attributes.metadataService
+ * @property {string} attributes.chain
+ * @property {?string} attributes.contractService
  */
 
 /**

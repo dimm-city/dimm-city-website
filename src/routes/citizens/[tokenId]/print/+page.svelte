@@ -1,7 +1,8 @@
 <script>
-	import { page } from '$app/stores';
-	import ViewCharacter from '$lib/Characters/ViewCharacter.svelte';	
+	import { page } from '$app/stores';	
 	let tokenId = $page.params.tokenId;
 </script>
 
-<ViewCharacter {tokenId} />
+<main>
+	print me
+</main>

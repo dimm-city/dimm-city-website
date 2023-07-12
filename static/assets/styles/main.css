@@ -15,6 +15,7 @@
 	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F,
 		U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
+
 * {
 	box-sizing: border-box;
 	scrollbar-color: var(--third-accent) var(--secondary-accent);
@@ -39,26 +40,33 @@ html {
 	/* background: url(/assets/bg/bg-04.jpg) center center / cover no-repeat,
 		linear-gradient(to bottom left, #3c1b49, #3d0a33); */
 }
+
 body {
 	min-height: 100vh;
 	min-height: fill-available;
 	min-height: -webkit-fill-available;
 }
-h1,h2,h3,h4{
+
+h1,
+h2,
+h3,
+h4 {
 	font-family: var(--header-font-family);
 	letter-spacing: var(--default-letter-spacing);
 }
 
-h1{
+h1 {
 	font-family: var(--header-font-family);
 	letter-spacing: var(--default-letter-spacing);
 	font-size: clamp(22px, 24px, 26px);
 }
-h2{
+
+h2 {
 	font-family: var(--header-font-family);
 	letter-spacing: var(--default-letter-spacing);
 	font-size: clamp(18px, 20px, 22px);
 }
+
 h3 {
 	font-family: var(--header-font-family);
 	letter-spacing: var(--default-letter-spacing);
@@ -67,12 +75,27 @@ h3 {
 	color: var(--fourth-accent);
 }
 
+button.text-button {
+	padding: 0;
+	border: none;
+	outline: none;
+	font: inherit;
+	color: inherit;
+	background: none;
+}
+
+button.text-button,
 a {
+	cursor: pointer;
+	width: auto;
 	text-decoration: none;
 	color: var(--fourth-accent);
 	opacity: 0.8;
 	transition: all var(--transition-in-time) ease;
 }
+
+button.text-button:hover,
+button.text-button:active,
 a:hover,
 a:active {
 	color: var(--pink);
@@ -81,25 +104,28 @@ a:active {
 	transition: all var(--transition-in-time) ease;*/
 }
 
-li > a {
+li>a {
 	display: block;
 	cursor: pointer;
 
 	color: var(--fourth-accent);
 }
-li > a:hover,
-li > a:focus {
+
+li>a:hover,
+li>a:focus {
 	color: var(--pink);
 }
 
 /* https://css-tricks.com/custom-scrollbars-in-webkit/ */
 *::-webkit-scrollbar {
-	width: 0.1rem; /* width of the entire scrollbar */	
+	width: 0.1rem;
+	/* width of the entire scrollbar */
 
 }
 
 *::-webkit-scrollbar-track {
-	background: transparent; /* var(--third-accent); /* color of the tracking area */
+	background: transparent;
+	/* var(--third-accent); /* color of the tracking area */
 	margin-top: 2vh;
 	margin-bottom: 2vh;
 }
@@ -108,20 +134,24 @@ li > a:focus {
 	/* background-color: var(--fourth-accent); color of the scroll thumb */
 
 	background-color: var(--fourth-accent);
-	border-radius: 100vw; /* roundness of the scroll thumb */
-	border: 1px solid var(--fourth-accent); /* creates padding around scroll thumb */
+	border-radius: 100vw;
+	/* roundness of the scroll thumb */
+	border: 1px solid var(--fourth-accent);
+	/* creates padding around scroll thumb */
 }
 
-li > ul {
+li>ul {
 	list-style-type: none;
 	margin-top: 0.5rem;
 }
+
 ul li {
 	position: relative;
 	list-style-type: none;
 	padding-left: 1rem;
 	margin-bottom: 0.5rem;
 }
+
 ul li:before {
 	content: '>';
 	display: block;
@@ -137,6 +167,7 @@ ul.unstyled-list {
 	list-style: none;
 	padding-left: 0;
 }
+
 ul.unstyled-list li {
 	padding-bottom: 0.5rem;
 }
@@ -144,12 +175,15 @@ ul.unstyled-list li {
 .text-primary {
 	color: var(--primary-accent) !important;
 }
+
 .text-secondary {
 	color: var(--secondary-accent) !important;
 }
+
 .text-highlight {
 	color: var(--third-accent) !important;
 }
+
 .text-warning {
 	color: var(--fourth-accent) !important;
 }
@@ -169,12 +203,15 @@ ul.unstyled-list li {
 .padding-0 {
 	padding: 0 !important;
 }
+
 .padding-1 {
 	padding: 1rem !important;
 }
+
 .padding-2 {
 	padding: 2rem !important;
 }
+
 .padding-3 {
 	padding: 3rem !important;
 }

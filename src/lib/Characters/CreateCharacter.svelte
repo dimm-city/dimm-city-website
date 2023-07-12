@@ -1,13 +1,11 @@
-<script lang="ts">
+<script>
 	import { getNotificationsContext } from 'svelte-notifications';
 	import StepWizard from 'svelte-step-wizard';
 	import Select from 'svelte-select';
 	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
-	import type { ICharacterRelease } from './Models/ICharacterRelease';
-	import { getCharacterReleases } from './Queries/getCharacterReleases';
+	import { getCharacterReleases } from '$lib/Shared/Stores/getCharacterReleases';
 	import { onMount } from 'svelte';
 	import LoggedInContainer from '$lib/Shared/Components/LoggedInContainer.svelte';
-	import type { ICharacter } from './Models/Character';
 	import StripePayment from '$lib/Shared/Components/StripePayment.svelte';
 	import Article from '$lib/Shared/Components/Article.svelte';
 	import { loadWallets, profile } from '$lib/Shared/Stores/UserStore';
@@ -15,27 +13,33 @@
 	import ProfileImage from './Components/ProfileImage.svelte';
 
 	const { addNotification } = getNotificationsContext();
-	let logs = [];
+	let logs = [''];
 	$: filteredLogs = logs.slice(-3);
 
-	let stripe: StripePayment;
+	/**
+	 * @type {StripePayment}
+	 */
+	let stripe;
 	let processing = false;
 	let isSaving = false;
-	let character: ICharacter = {
-		name: 'test',
-		tokenId: 'dcta-23'
+	let character = {
+		name: '',
+		tokenId: ''
 	};
-	let selectedRelease: ICharacterRelease | null = null; //new CharacterRelease();
+	/**
+	 * @type {DC.CharacterRelease}
+	 */
+	let selectedRelease; 
 
 	let currentStep = 3;
 	let metadata = {
-		slug: selectedRelease?.slug,
+		slug: '',
 		user: $profile?.id
 	};
 
 	$: if (selectedRelease) {
 		metadata = {
-			slug: selectedRelease.slug,
+			slug: selectedRelease.attributes.slug,
 			user: $profile?.id
 		};
 	}
@@ -51,11 +55,11 @@
 		else window.location.href = '/console';
 	}
 
-	async function processPayment(nextStep: Function) {
+	async function processPayment(nextStep) {
 		if (selectedRelease) {
 			isSaving = true;
 			metadata = {
-				slug: selectedRelease?.slug,
+				slug: selectedRelease?.attributes.slug,
 				user: $profile?.id
 			};
 
@@ -74,7 +78,12 @@
 			}
 		}
 	}
-	async function onPaymentProcessed(result: any, nextStep: Function, previousStep: Function) {
+	/**
+	 * @param {CustomEvent<any>} result
+	 * @param {() => void} nextStep
+	 * @param {() => void} previousStep
+	 */
+	async function onPaymentProcessed(result, nextStep, previousStep) {
 		addNotification({
 			id: `${new Date().getTime()}-${Math.floor(Math.random() * 9999)}`,
 			position: 'bottom-right',
@@ -125,7 +134,7 @@
 
 		//if (currentStep == 3) nextStep();
 	}
-	async function onPaymentFailed(result: any, previousStep: Function) {
+	async function onPaymentFailed(result, previousStep) {
 		// logs.push('payment failed');
 		// logs.push(result.detail.message);
 		// logs = [...logs];

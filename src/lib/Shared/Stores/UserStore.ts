@@ -47,8 +47,8 @@ export const loggedIn = derived(
 	false
 );
 
-export function ownsToken(token: any): boolean {
-	return true;
+export function ownsToken(token){
+	//return true;
 	const userWallets = get(wallets) ?? [];
 	const id = (token?.id || token?.data?.id || -1).toString();
 	const result =
@@ -73,13 +73,13 @@ export async function loadWallets(force = false) {
 	if (response.ok) {
 		const data = await response.json();
 
-		for (let index = 0; index < data.results?.length; index++) {
-			const wallet = data.results[index];
+		// for (let index = 0; index < data.results?.length; index++) {
+		// 	const wallet = data.results[index];
 
-			for (const token of wallet.tokens.filter((t) => t.contract != null)) {
-				await loadTokenMetadata(token);
-			}
-		}
+		// 	for (const token of wallet.tokens.filter((t) => t.contract != null)) {
+		// 		await loadTokenMetadata(token);
+		// 	}
+		// }
 
 		wallets.set(data.results ?? []);
 		return data.results ?? [];
@@ -88,8 +88,8 @@ export async function loadWallets(force = false) {
 	}
 }
 
-export const tokens = derived<any[], any[]>([wallets], ($wallets) =>
-	$wallets.flatMap((w: any) => w.tokens)
+export const tokens = derived([wallets], ($wallets) =>
+	$wallets.flatMap((w) => w.tokens)
 );
 
 export const logout = () => {
@@ -98,7 +98,7 @@ export const logout = () => {
 
 	setSessionValue('wallets', []);
 };
-async function loadTokenMetadata(token: any) {
+async function loadTokenMetadata(token) {
 	const metaResponse = await fetch(
 		`${config.apiBaseUrl}/chain-wallets/metadata/${token.contract.slug}/${token.tokenId}`
 	);
@@ -107,7 +107,7 @@ async function loadTokenMetadata(token: any) {
 	return token.metadata;
 }
 
-export async function refreshToken(tokenId: any) {
+export async function refreshToken(tokenId) {
 	const token = get(wallets)
 		.flatMap((w) => w.tokens)
 		.find((t) => {

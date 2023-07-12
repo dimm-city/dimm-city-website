@@ -1,40 +1,63 @@
 <script>
 	import { onMount } from 'svelte';
-	import { profile, loadProfile, logout, loadWallets, tokens } from '$lib/Shared/Stores/UserStore';
-	import CharacterMenu from '$lib/Characters/CharacterMenu.svelte';
-	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
+	import { profile, logout } from '$lib/Shared/Stores/UserStore';
+	import { getCharactersByUser } from '$lib/Shared/Stores/getCharacters';
+	import PagedResults from '../PagedResults.svelte';
+	import MenuItem from '../Menu/MenuItem.svelte';
+	import DefaultItemResult from '../DefaultItemResult.svelte';
+	import { config } from '$lib/Shared/config';
+
+	let currentPage = 1;
+	let totalPages = 1;
+	let query = {
+		sort: ['name:asc'],
+		filters: {
+			token: {
+				wallet: {
+					user: {
+						id: $profile.id
+					}
+				}
+			}
+		},
+		populate: '*'
+	};
 
 	/**
-	 * @type {Promise<any>}
+	 * @type {any}
 	 */
-	let walletQuery;
+	let initialData;
 	onMount(async () => {
-		await loadProfile();
-		walletQuery = loadWallets();
+		initialData = await getCharactersByUser($profile.id);
 	});
 </script>
 
 <div class="header">
-	<h1>{$profile?.settings?.displayName ?? $profile?.username}</h1>
+	<h1>{$profile?.settings?.displayName ?? $profile?.user?.username}</h1>
 	<!-- svelte-ignore a11y-missing-attribute -->
-	<a on:click={logout} on:keyup={logout}><small>logout</small></a>
 	<!-- <p>{@html $profile?.settings?.bio ?? ''}</p> -->
 </div>
-<div class="menu">
-	<a href="/console/characters/create"><small>create character</small></a>
-	<a href="/console/archive"><small>manage archives</small></a>
+<div class="profile-menu">
+	<a href="/console/characters/create">create character</a>
+	<!-- <a href="/console/archive"><small>manage archives</small></a> -->
+	<button class="text-button" on:click={logout}>logout</button>
 </div>
 
 <h3>Your Sporos</h3>
-{#await walletQuery}
-	<LoadingIndicator>Locating sporos...</LoadingIndicator>
-{:then data}
-	{#if $tokens?.length > 0}
-		<CharacterMenu ownedCharactersOnly={true} />
-	{:else}
-		<p>No sporos located</p>
-	{/if}
-{/await}
+<PagedResults
+	bind:page={currentPage}
+	bind:totalPages
+	results={initialData?.data}
+	endpoint={`${config.apiBaseUrl}/dimm-city/characters`}
+	{query}>
+	<svelte:fragment slot="result" let:result>
+		<slot name="result" {result}>
+			<MenuItem url={`/characters/${result.attributes.slug}`}>
+				<DefaultItemResult item={result.attributes} icon="bi-shield-lock" />
+			</MenuItem>
+		</slot>
+	</svelte:fragment>
+</PagedResults>
 
 <style>
 	.header {
@@ -49,11 +72,11 @@
 		text-overflow: ellipsis;
 		margin-bottom: 0.25rem;
 	}
-	small {
-		font-size: 0.8rem;
-		cursor: pointer;
+	.profile-menu {
+		display: flex;
+		justify-content: space-between;
+		margin-block: 1rem;
+		border-bottom: 1px solid var(--secondary-accent);
 	}
-	.menu {
-		margin-bottom: 1rem;
-	}
+
 </style>

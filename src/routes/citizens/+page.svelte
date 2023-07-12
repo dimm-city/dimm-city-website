@@ -1,65 +1,28 @@
 <script>
-	export let data;
-	import { config } from '$lib/Shared/config.js';
 	import Shell from '$lib/Shared/Shell/Shell.svelte';
-	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import SearchPage from '$lib/Shared/Components/SearchPage.svelte';
 	import MenuItem from '$lib/Shared/Components/Menu/MenuItem.svelte';
-	import CharacterResult from '$lib/Characters/CharacterResult.svelte';
+	import DefaultItemResult from '$lib/Shared/Components/DefaultItemResult.svelte';
 
-	const endpoint = config.apiBaseUrl + '/characters';
-	/**
-	 * @type {string}
-	 */
-	let searchText;
-
-	$: query = {
-		fields: ['tokenId', 'name', 'vibe', 'hp', 'ap'],
-		populate: {
-			race: {
-				fields: ['name']
-			},
-			specialties: {
-				fields: ['name']
-			}
-		},
-		filters: {
-			$or: [
-				{
-					name: {
-						$containsi: searchText
-					}
-				},
-				{
-					vibe: {
-						$containsi: searchText
-					}
-				}
-			]
-		}
+	export let data;
+	let query = {
+		fields: ['name', 'tokenId', 'slug', 'shortDescription']
 	};
 </script>
 
-<Shell title="Citizen Files" fullscreen={false}>
-	<ContentPane padding={0}>
-		<SearchPage {query} {endpoint} autoLoad={true}>
-			<div class="search-container" slot="search" let:resultsComponent>
-				<div data-augmented-ui class="aug-input">
-					<!-- <i class="bi bi-gear" /> -->
-					<input
-						bind:value={searchText}
-						type="text"
-						placeholder="Search citizen files..."
-						on:keyup={resultsComponent.search}
-					/>
-					<!-- <i class="bi bi-search" /> -->
-				</div>
-			</div>
-			<svelte:fragment slot="result" let:result>
-				<MenuItem url={`/citizens/${result.attributes.tokenId}`}>
-					<CharacterResult item={result.attributes} />
+<Shell title="Citizens">
+	<SearchPage
+		bind:query
+		initialData={data}
+		endpoint={'/dimm-city/characters'}
+		itemResultBaseUrl="/citizens"
+	>
+		<svelte:fragment slot="result" let:result>
+			<slot name="result" {result}>
+				<MenuItem url={`citizens/${result.attributes.tokenId}`}>
+					<DefaultItemResult item={result.attributes} icon="bi-shield-lock" />
 				</MenuItem>
-			</svelte:fragment>
-		</SearchPage>
-	</ContentPane>
+			</slot>
+		</svelte:fragment>
+	</SearchPage>
 </Shell>
