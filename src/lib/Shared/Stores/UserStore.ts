@@ -61,7 +61,7 @@ export function ownsToken(token: any): boolean {
 
 export async function loadWallets(force = false) {
 	if (!force) {
-		const wallets: any[] = getSessionValue('wallets');
+		const wallets = getSessionValue('wallets');
 		if (wallets.length > 0) return wallets;
 	}
 	const token = get(jwt);
