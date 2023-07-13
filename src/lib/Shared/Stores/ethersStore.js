@@ -7,45 +7,49 @@ import { jwt, loadWallets } from './UserStore';
 const windowWithEthereum = window;
 
 /**
- * @type {ethers.providers.Web3Provider}
+ * @type {ethers.BrowserProvider}
  */
 let provider;
 
-/** @type {ethers.providers.JsonRpcSigner} */
+/** @type {ethers.Signer} */
 let signer;
 
-/** @type {import('svelte/store').Writable<ethers.providers.Web3Provider>} */
+/** @type {import('svelte/store').Writable<ethers.BrowserProvider>} */
 const _provider = writable();
 
 /** @type {import('svelte/store').Readable<boolean>} */
 export const connected = derived([_provider], () => provider != null);
-export const signerAddress = derived([_provider], () => provider?.getSigner()?.getAddress());
+export const signerAddress = derived([_provider], async () => {
+	let signer = await provider?.getSigner();
+	return signer.address;
+});
 
 export async function connect() {
 	if (typeof windowWithEthereum.ethereum !== 'undefined') {
-		provider = new ethers.providers.Web3Provider(windowWithEthereum.ethereum);
+		provider = new ethers.BrowserProvider(windowWithEthereum.ethereum);
+
 		_provider.set(provider);
 
 		await windowWithEthereum.ethereum.enable();
 		const accounts = await provider.listAccounts();
 		const address = accounts[0];
-		signer = provider.getSigner(address);
+		signer = await provider.getSigner();
 
 		return address;
 	}
 }
 
 /**
- * @param {string | ethers.utils.Bytes} message
+ * @param {string | Uint8Array} message
  */
 async function signMessage(message) {
 	try {
 		// Get the user's selected Ethereum address
-		const accounts = await provider.listAccounts();
-		const address = accounts[0];
+		//const accounts = await provider.listAccounts();
+		//const address = accounts[0];
 
-		// Create a signer object using the selected address
-		signer = provider.getSigner(address);
+		// // Create a signer object using the selected address
+		// signer = provider.getSigner(address);
 
 		// Sign the message
 		const signature = await signer.signMessage(message);
@@ -96,14 +100,18 @@ export async function loginWithWallet() {
 
 export async function attachWallet() {
 	const signature = await signMessage('Attach this wallet');
-
-	const response = await fetch(`${config.apiBaseUrl}/chain-wallets/wallets/attach/${$chainId}`, {
-		method: 'POST',
-		headers: {
-			Authorization: `Bearer ${get(jwt)}`,
-			sig: signature
+	const network = await provider.getNetwork();
+	const response = await fetch(
+		`${config.apiBaseUrl}/chain-wallets/wallets/attach/${network.chainId}`,
+		{
+			method: 'POST',
+			// @ts-ignore
+			headers: {
+				Authorization: `Bearer ${get(jwt)}`,
+				sig: signature
+			}
 		}
-	});
+	);
 
 	if (response.ok) {
 		console.log('attached wallet');

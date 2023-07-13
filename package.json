@@ -39,7 +39,6 @@
 		"svelte-step-wizard": "^0.0.2",
 		"svelte-stripe": "^0.0.22",
 		"@3d-dice/dice-box-threejs": "^0.0.12",
-		"@google/model-viewer": "^3.1.1",
 		"csv-parse": "^5.4.0",
 		"qs": "^6.11.2",
 		"svelte-adapter-azure-swa": "^0.13.0",
