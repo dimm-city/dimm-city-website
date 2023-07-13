@@ -2,7 +2,7 @@
 	import PhysicalStats from './PhysicalStats.svelte';
 	import Points from './Points.svelte';
 	import { openModal } from 'svelte-modals';
-	import AbilityModal from '../AbilityModal.svelte';
+	import AbilityModal from '../../../Abilities/AbilityModal.svelte';
 	import List from '$lib/Shared/Components/List.svelte';
 	import ProfileImage from '../ProfileImage.svelte';
 

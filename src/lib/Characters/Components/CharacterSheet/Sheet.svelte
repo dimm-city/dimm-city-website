@@ -5,7 +5,7 @@
 	import ProfileRow from './ProfileRow.svelte';
 
 	import { openModal } from 'svelte-modals';
-	import AbilityModal from '../AbilityModal.svelte';
+	import AbilityModal from '../../../Abilities/AbilityModal.svelte';
 	import StoryRow from './StoryRow.svelte';
 
 	/**@type {DC.Character}*/

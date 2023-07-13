@@ -1,5 +1,5 @@
 <script>
-	import FactionView from '$lib/Shared/Components/Views/FactionView.svelte';
+	import FactionView from '$lib/Factions/FactionView.svelte';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import Shell from '$lib/Shared/Shell/Shell.svelte';
 

@@ -1,5 +1,5 @@
 <script>
-	import RaceView from '$lib/Shared/Components/Views/RaceView.svelte';
+	import RaceView from '$lib/Races/RaceView.svelte';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import Shell from '$lib/Shared/Shell/Shell.svelte';
     /**

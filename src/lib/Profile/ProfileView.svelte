@@ -2,9 +2,9 @@
 	import { onMount } from 'svelte';
 	import { profile, logout } from '$lib/Shared/Stores/UserStore';
 	import { getCharactersByUser } from '$lib/Shared/Stores/getCharacters';
-	import PagedResults from '../PagedResults.svelte';
-	import MenuItem from '../Menu/MenuItem.svelte';
-	import DefaultItemResult from '../DefaultItemResult.svelte';
+	import PagedResults from '../Shared/Components/PagedResults.svelte';
+	import MenuItem from '../Shared/Components/Menu/MenuItem.svelte';
+	import DefaultItemResult from '../Shared/Components/DefaultItemResult.svelte';
 	import { config } from '$lib/Shared/config';
 
 	let currentPage = 1;
@@ -52,7 +52,7 @@
 	{query}>
 	<svelte:fragment slot="result" let:result>
 		<slot name="result" {result}>
-			<MenuItem url={`/characters/${result.attributes.slug}`}>
+			<MenuItem url={`/citizens/${result.attributes.tokenId}`}>
 				<DefaultItemResult item={result.attributes} icon="bi-shield-lock" />
 			</MenuItem>
 		</slot>

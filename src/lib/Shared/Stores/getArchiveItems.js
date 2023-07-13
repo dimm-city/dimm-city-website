@@ -15,7 +15,7 @@ export async function searchArchive(searchText = '', itemTypes = ['all']) {
       };
       
        /**
-     * @type {import("../Shared/Models/ISummaryItem").ISummaryItem[]}
+     * @type {DC.BaseEntity[]}
      */
       let results = [];
       let response = await fetch(`${config.apiBaseUrl}/dimm-city/archives/search`, requestOptions);

@@ -1,5 +1,5 @@
 <script>
-	import HistoricalEventView from '$lib/Shared/Components/Views/HistoricalEventView.svelte';
+	import HistoricalEventView from '$lib/HistoricalEvents/HistoricalEventView.svelte';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import Shell from '$lib/Shared/Shell/Shell.svelte';
 

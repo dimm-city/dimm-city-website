@@ -1,6 +1,6 @@
 <script>
 	import Shell from '$lib/Shared/Shell/Shell.svelte';
-	import StoryView from '$lib/Shared/Components/Views/StoryView.svelte';
+	import StoryView from '$lib/Stories/StoryView.svelte';
 	import { page } from '$app/stores';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 
