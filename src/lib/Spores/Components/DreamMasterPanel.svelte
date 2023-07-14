@@ -1,7 +1,9 @@
-<script lang="ts">
-	import type { Spore } from '../Spore';
+<script>
 
-	export let spore: Spore;
+	/**
+	 * @type {DC.Spore}
+	 */
+	 export let spore;
 </script>
 
 <div class="panel inside-right" data-augmented-ui>
@@ -32,7 +34,7 @@
 				like, or make up your own! Decide how and when you want to let the party know about the plot twist.
 			</div>
 			<ol data-update>
-				{#each spore.twists as item}
+				{#each spore.attributes.twists as item}
 					<li>{item}</li>
 				{/each}
 			</ol>

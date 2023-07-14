@@ -1,6 +1,8 @@
-<script lang="ts">
-	import type { Spore } from '../Spore';
-	export let spore: Spore;
+<script>	
+	/**
+	 * @type {DC.Spore}
+	 */
+	 export let spore;
 </script>
 
 <style>
@@ -16,7 +18,7 @@
 		<div class="table" data-update>
 			<h3>A powerful...</h3>
 			<ol>
-				{#each spore.villains as item}
+				{#each spore.attributes.villains as item}
 					<li>{item}</li>
 				{/each}
 			</ol>
@@ -24,7 +26,7 @@
 		<div class="table" data-update>
 			<h3>Has executed their plan to...</h3>
 			<ol>
-				{#each spore.plots as item}
+				{#each spore.attributes.plots as item}
 					<li>{item}</li>
 				{/each}
 			</ol>
@@ -41,7 +43,7 @@
 				together. Here are some ideas to use depending on the scenario selected above:
 			</p>
 			<ul data-update>
-				{#each spore.goals as item}
+				{#each spore.attributes.goals as item}
 					<li>{item}</li>
 				{/each}
 			</ul>

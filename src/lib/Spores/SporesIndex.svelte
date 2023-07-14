@@ -1,14 +1,57 @@
 <script>
 	import Shell from '$lib/Shared/Shell/Shell.svelte';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
-	import FlexMenu from '$lib/Shared/Components/Menu/FlexMenu.svelte';
-	import { getSpores } from './Queries/getSpores';
+	import PagedResults from '$lib/Shared/Components/PagedResults.svelte';
+	import DefaultItemResult from '$lib/Shared/Components/DefaultItemResult.svelte';
+	import MenuItem from '$lib/Shared/Components/Menu/MenuItem.svelte';
 	/**
-	 * @type {DC.Spore[]}
+	 * @type {Strapi.APIResponse<DC.Spore>}
 	 */
-	let spores;
-	getSpores().then((s) => (spores = s));
+	export let data;
 </script>
+
+<Shell title="Spores">
+	<ContentPane scrollable={true} padding={2}>
+		<div class="spore-container">
+			<h3 class="">Dimm City Spores</h3>
+			<small>&lt;The Dimm City 1-Page RPG&gt;</small>
+
+			<div class="fade-in">
+				<p>
+					A Dimm City Spore is a rules light (Lasers & Feelings homebrew) introduction to the Dimm
+					City Campaign Setting/WEB3 Character Evolution for use with the rules heavy Quest RPG
+					System.
+				</p>
+				<p>
+					In a Dimm City Spore, Dreamers (players) take on the role of a sporos hero doing good
+					deeds in a bad place using magic, technology, combat, and their own wits to succeed. Dream
+					Masters (the judge and storyteller) provide environmental descriptions, atmosphere,
+					challenges, and opponents along with the plot to drive the Dream (shared story) forward.
+					The Dream Master is not an enemy of the Dreamers, but a guide into Dimm City and all the
+					action, adventure, and secrets it holds. Dreamers and the DM work together to create a
+					story that is both exciting and unforgettable.
+				</p>
+				<p>
+					To download a copy of a spore, click one of the menu items below. Use the <a href="/"
+						>DCC</a
+					> to learn more about Dimm City and it's citizens.
+				</p>
+
+				<p>
+					We hope you enjoy your journey,
+					<br />-the founders
+				</p>
+			</div>
+			<PagedResults results={data.data} autoLoad={false} page={data.meta.pagination.page}>
+				<svelte:fragment slot="result" let:result>
+					<MenuItem url={`spores/${result.attributes.slug}`}>
+						<DefaultItemResult item={result.attributes} icon="bi-map" />
+					</MenuItem>
+				</svelte:fragment>
+			</PagedResults>
+		</div>
+	</ContentPane>
+</Shell>
 
 <style>
 	.spore-container h3 {
@@ -24,40 +67,4 @@
 		width: 100%;
 		overflow-y: auto;
 	}
-
 </style>
-
-<Shell title="Spores">
-	<ContentPane scrollable={true}>
-		<div class="spore-container">
-			<h3 class="">Dimm City Spores</h3>
-			<small>&lt;The Dimm City 1-Page RPG&gt;</small>
-
-			<div class="fade-in">
-				<p>
-					A Dimm City Spore is a rules light (Lasers & Feelings homebrew) introduction to the Dimm City Campaign
-					Setting/WEB3 Character Evolution for use with the rules heavy Quest RPG System.
-				</p>
-				<p>
-					In a Dimm City Spore, Dreamers (players) take on the role of a sporos hero doing good deeds in a bad place
-					using magic, technology, combat, and their own wits to succeed. Dream Masters (the judge and storyteller)
-					provide environmental descriptions, atmosphere, challenges, and opponents along with the plot to drive the
-					Dream (shared story) forward. The Dream Master is not an enemy of the Dreamers, but a guide into Dimm City and
-					all the action, adventure, and secrets it holds. Dreamers and the DM work together to create a story that is
-					both exciting and unforgettable.
-				</p>
-				<p>
-					To download a copy of a spore, click one of the menu items below. Use the <a href="/">DCC</a> to learn more about
-					Dimm City and it's citizens.
-				</p>
-
-				<p>
-					We hope you enjoy your journey,
-					<br />-the founders
-				</p>
-			</div>
-
-			<FlexMenu data={spores} icon="bi-map" />
-		</div>
-	</ContentPane>
-</Shell>

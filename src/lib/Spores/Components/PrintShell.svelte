@@ -1,6 +1,7 @@
-<script lang="ts">
-	import { pageTitle } from "$lib/Shared/Stores/ShellStore";
+<script>
+	import { pageTitle } from '$lib/Shared/Stores/ShellStore';
 </script>
+
 <svelte:head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width,initial-scale=1" />

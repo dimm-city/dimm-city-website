@@ -66,6 +66,7 @@
 /**
  * @template T
  * @typedef {Object} Strapi.APIResponse<T>
- * @property {Array<T>[]} results - The results of the response
- * @property {Strapi.Pagination} pagination - The pagination info of the response
+ * @property {Array<T>} data - The results of the response
+ * @property {Object} meta - The metadata of the response
+ * @property {Strapi.Pagination} meta.pagination - The pagination info of the response
  */

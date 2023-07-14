@@ -1,5 +1,6 @@
-<script lang="ts">
+<script>
 	import SporesIndex from '$lib/Spores/SporesIndex.svelte';
+	export let data;
 </script>
 
-<SporesIndex />
+<SporesIndex {data} />

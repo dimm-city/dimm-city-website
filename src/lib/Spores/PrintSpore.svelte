@@ -1,22 +1,22 @@
-<script lang="ts">
+<script>
 	import BackCoverPanel from './Components/BackCoverPanel.svelte';
 	import CharacterPanel from './Components/CharacterPanel.svelte';
 	import DicePanel from './Components/DicePanel.svelte';
 	import DreamGuidePanel from './Components/DreamGuidePanel.svelte';
 	import DreamMasterPanel from './Components/DreamMasterPanel.svelte';
 	import FrontCoverPanel from './Components/FrontCoverPanel.svelte';
-	import { getSpore } from '$lib/Spores/Queries/getSpore';
-	import { pageTitle } from "$lib/Shared/Stores/ShellStore";
-	import { Spore } from './Spore';
-	export let slug: string;
-	let spore: Spore = new Spore();
-	if (slug > '') {
-		getSpore(slug).then((s) => {
-			spore = s;
-			$pageTitle = `Print ${spore.name} Spore`;
-		});
+	import { pageTitle } from '$lib/Shared/Stores/ShellStore';
+
+	/**
+	 * @type {DC.Spore}
+	 */
+	export let spore;
+	$: if (spore) {
+		$pageTitle = `Print ${spore.attributes.name} Spore`;
 	}
 </script>
+<div>
+	
 
 <section class="page">
 	<div class="col dream-guide">
@@ -40,3 +40,4 @@
 		<DreamMasterPanel {spore} />
 	</div>
 </section>
+</div>

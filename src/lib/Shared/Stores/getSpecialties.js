@@ -16,6 +16,5 @@ export async function getFeaturedSpecialties(pageSize = 5) {
 
 	query.pagination.pageSize = pageSize;
 	const results = await strapi.search('dimm-city/specialties', query);
-	console.log('featured specialties', results);
 	return results?.data;
 }

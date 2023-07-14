@@ -1,10 +1,9 @@
-<script lang="ts">
+<script>
 	import PrintShell from '$lib/Spores/Components/PrintShell.svelte';
-	import { page } from '$app/stores';
 	import PrintSpore from '$lib/Spores/PrintSpore.svelte';
-	export let slug = $page.params.slug;
+	export let data;
 </script>
 
 <PrintShell>
-		<PrintSpore {slug} />	
+	<PrintSpore spore={data} />
 </PrintShell>

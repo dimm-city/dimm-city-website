@@ -135,7 +135,7 @@
 		max-width: 500px;
 		overflow: hidden;
 	}
-	ul li:before {
+	.results-list > li:before {
 		content: '';
 		display: none;
 	}
