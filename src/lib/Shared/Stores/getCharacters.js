@@ -10,19 +10,15 @@ export async function getCharactersByUser(userId) {
 		sort: ['name:asc'],
 		filters: {
 			token: {
-				wallet:{
-                    user:{
-                        id: userId
-                    }
-                }
+				wallet: {
+					user: {
+						id: userId
+					}
+				}
 			}
 		},
-		populate: '*',
-		fields: ['name', 'slug', 'shortDescription'],
-		// pagination: {
-		// 	pageSize: 20,
-		// 	page: 1
-		// },
+		fields: ['name', 'tokenId'],
+		populate: ['race', 'specialties', 'mainImage'],
 		publicationState: 'live',
 		locale: ['en']
 	});

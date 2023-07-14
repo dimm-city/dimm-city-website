@@ -6,7 +6,6 @@ import { get } from 'svelte/store';
 export async function loadProfile() {
 	const token = get(jwt);
 	const p = get(profile);
-	console.log(p);
 	
 	if (token && p.username == null) {
 		let data = null;
@@ -16,23 +15,26 @@ export async function loadProfile() {
 			}
 		});
 		if (response.ok) {
+			
 			data = await response.json();
+			console.log('settinig profile', data);
 		}
 		if (data) profile.set(data);
 	}
 }
 
-export const jwt = writable<string | null>(getSessionValue('jwt') ?? null);
+export const jwt = writable(getSessionValue('jwt') ?? null);
 jwt.subscribe((value) => {
 	setSessionValue('jwt', value);
 });
 
-export const profile = writable<any>(getSessionValue('profile') ?? null);
+export const profile = writable(getSessionValue('profile') ?? null);
 profile.subscribe((value) => {
 	setSessionValue('profile', value);
 });
 
-export const wallets = writable<any[]>(getSessionValue('wallets') ?? null);
+/** @type {import('svelte/store').Writable<CW.Wallet[]>} */
+export const wallets = writable(getSessionValue('wallets') ?? null);
 wallets.subscribe((value) => {
 	setSessionValue('wallets', value);
 });
@@ -41,16 +43,18 @@ export const loggedIn = derived(
 	[jwt],
 	([$jwt], set) => {
 		const isLoggedIn = typeof $jwt === 'string' && $jwt > '';
-		console.log('updating logged in', $jwt, isLoggedIn);
 		set(isLoggedIn);
 	},
 	false
 );
 
+/**
+ * @param {CW.Token | string} token
+ */
 export function ownsToken(token){
 	//return true;
 	const userWallets = get(wallets) ?? [];
-	const id = (token?.id || token?.data?.id || -1).toString();
+	const id =  (token?.id || token?.data?.id || token || -1).toString();
 	const result =
 		id != '-1' &&
 		Array.isArray(userWallets) &&
@@ -72,15 +76,6 @@ export async function loadWallets(force = false) {
 	});
 	if (response.ok) {
 		const data = await response.json();
-
-		// for (let index = 0; index < data.results?.length; index++) {
-		// 	const wallet = data.results[index];
-
-		// 	for (const token of wallet.tokens.filter((t) => t.contract != null)) {
-		// 		await loadTokenMetadata(token);
-		// 	}
-		// }
-
 		wallets.set(data.results ?? []);
 		return data.results ?? [];
 	} else {
@@ -88,39 +83,9 @@ export async function loadWallets(force = false) {
 	}
 }
 
-export const tokens = derived([wallets], ($wallets) =>
-	$wallets.flatMap((w) => w.tokens)
-);
-
 export const logout = () => {
 	jwt.set(null);
 	profile.set(null);
 
 	setSessionValue('wallets', []);
 };
-async function loadTokenMetadata(token) {
-	const metaResponse = await fetch(
-		`${config.apiBaseUrl}/chain-wallets/metadata/${token.contract.slug}/${token.tokenId}`
-	);
-	if (metaResponse.ok) token.metadata = await metaResponse.json();
-
-	return token.metadata;
-}
-
-export async function refreshToken(tokenId) {
-	const token = get(wallets)
-		.flatMap((w) => w.tokens)
-		.find((t) => {
-			return `${t?.contract?.slug}-${t?.tokenId}` === tokenId;
-		});
-	if (!token) return;
-	token.metadata = await loadTokenMetadata(token);
-	wallets.update((w) => {
-		return [
-			...w.map((w) => {
-				w.tokens = [...w.tokens.filter((t) => t.id !== token.id), token];
-				return w;
-			})
-		];
-	});
-}

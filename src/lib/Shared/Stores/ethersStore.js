@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { ethers } from 'ethers';
 import { derived, get, writable } from 'svelte/store';
 import { config } from '../config';

@@ -3,12 +3,12 @@
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import Shell from '$lib/Shared/Shell/Shell.svelte';
 	import TwitterButton from '$lib/Shared/Components/TwitterButton.svelte';
-	import { ownsToken } from '$lib/Shared/Stores/UserStore';
+	import { ownsToken } from '$lib/Shared/Stores/UserStore.js';
 	import { updateEntity } from '$lib/Shared/SvelteStrapi.js';
 
 	export let data;
 	let originalCharacter = JSON.stringify(data);
-	let isEditable = true; //ownsToken(data.attributes.tokenId);
+	let isEditable = ownsToken(data.attributes.tokenId);
 	let isEditing = false;
 	let isSaving = false;
 

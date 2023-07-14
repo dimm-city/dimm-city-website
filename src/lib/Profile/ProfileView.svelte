@@ -1,6 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
-	import { profile, logout } from '$lib/Shared/Stores/UserStore';
+	import { profile, logout, loadWallets, loadProfile } from '$lib/Shared/Stores/UserStore';
 	import { getCharactersByUser } from '$lib/Shared/Stores/getCharacters';
 	import PagedResults from '../Shared/Components/PagedResults.svelte';
 	import MenuItem from '../Shared/Components/Menu/MenuItem.svelte';
@@ -11,6 +11,9 @@
 	let totalPages = 1;
 	let query = {
 		sort: ['name:asc'],
+		fields: ['name', 'tokenId'],
+		populate: ['race', 'specialty'],
+		publicationState: 'live',
 		filters: {
 			token: {
 				wallet: {
@@ -19,8 +22,7 @@
 					}
 				}
 			}
-		},
-		populate: '*'
+		}
 	};
 
 	/**
@@ -28,6 +30,7 @@
 	 */
 	let initialData;
 	onMount(async () => {
+		loadWallets();
 		initialData = await getCharactersByUser($profile.id);
 	});
 </script>
@@ -49,7 +52,9 @@
 	bind:totalPages
 	results={initialData?.data}
 	endpoint={`${config.apiBaseUrl}/dimm-city/characters`}
-	{query}>
+	{query}
+	autoLoad={false}
+>
 	<svelte:fragment slot="result" let:result>
 		<slot name="result" {result}>
 			<MenuItem url={`/citizens/${result.attributes.tokenId}`}>
@@ -78,5 +83,4 @@
 		margin-block: 1rem;
 		border-bottom: 1px solid var(--secondary-accent);
 	}
-
 </style>
