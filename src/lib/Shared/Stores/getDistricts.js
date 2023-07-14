@@ -14,5 +14,5 @@ export async function getDistricts() {
 	};
 	const results = await strapi.search('dimm-city/locations', query);
 
-	return results.data;
+	return results?.data;
 }

@@ -17,14 +17,16 @@
 		items = [...data?.slice(0, maxItems)];
 	} else if (data?.length > 0) {
 		items = [...data?.slice(0, data?.length)];
+		//console.log('list items', viewAllLink, items);
 	} else {
 		items = [];
 	}
+
 </script>
 
 <div class="list">
 	{#if items && items.length > 0}
-		{#each items as item}
+		{#each items as item (item)}
 			<slot name="item" {item}>
 				<ListItemLink url="" text={item.name} />
 			</slot>

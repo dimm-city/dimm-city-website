@@ -5,7 +5,7 @@ export async function getSpecialties() {
 	const strapi = new Strapi(config.apiBaseUrl);
 	const results = await strapi.search('dimm-city/specialties', config.defaultSummaryQuery);
 
-	return results.data;
+	return results?.data;
 }
 
 export async function getFeaturedSpecialties(pageSize = 5) {
@@ -16,5 +16,6 @@ export async function getFeaturedSpecialties(pageSize = 5) {
 
 	query.pagination.pageSize = pageSize;
 	const results = await strapi.search('dimm-city/specialties', query);
-	return results.data;
+	console.log('featured specialties', results);
+	return results?.data;
 }

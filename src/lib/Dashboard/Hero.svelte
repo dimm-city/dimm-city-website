@@ -8,12 +8,12 @@
 <div class="container">
 	{#if data != null}
 		{#each data as item}
-			<a href="/journal-entries/{item.attributes.slug}" class="small hero-item" data-augmented-ui>
+			<a href="/journal-entries/{item.attributes?.slug}" class="small hero-item" data-augmented-ui>
 				<div class="" style="">
-					<div class="title-container">{item.attributes.name}</div>
+					<div class="title-container">{item.attributes?.name}</div>
 				</div>
 				<div class="description">
-					<small>{item.attributes.shortDescription || ''}</small>
+					<small>{item.attributes?.shortDescription || ''}</small>
 				</div>
 			</a>
 		{/each}

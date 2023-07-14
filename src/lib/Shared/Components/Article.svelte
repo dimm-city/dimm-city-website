@@ -8,7 +8,7 @@
 	export let model;
 	export let imageAug = 'tl-clip tr-clip br-clip bl-clip border';
 	let html = '';
-	$: html = model != null ? marked.parse(model.attributes.description || ' ') : '';
+	$: html = model != null ? marked.parse(model?.attributes?.description || ' ') : '';
 </script>
 
 {#if model != null}
@@ -23,7 +23,7 @@
 			<div class="main-image">
 				<slot name="main-image">
 					<Image
-						imageUrl={model.attributes.mainImage.data?.attributes?.formats?.medium.url}
+						imageUrl={model.attributes.mainImage?.data?.attributes?.formats?.medium?.url}
 						title={model.attributes.name}
 						videoUrl={model.attributes.mainVideo?.data?.attributes?.url}
 						aug={imageAug}

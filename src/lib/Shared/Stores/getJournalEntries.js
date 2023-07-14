@@ -5,7 +5,7 @@ export async function getJournalEntries() {
 	const strapi = new Strapi(config.apiBaseUrl);
 	const results = await strapi.search('dimm-city/journal-entries', config.defaultSummaryQuery);
 
-	return results.data;
+	return results?.data;
 }
 
 export async function getFeaturedJournalEntries(pageSize = 5) {
@@ -21,5 +21,5 @@ export async function getFeaturedJournalEntries(pageSize = 5) {
 
 	query.filters = { tags: { $containsi: ['featured'] } };
 	const results = await strapi.search('dimm-city/journal-entries', query);
-	return results.data;
+	return results?.data;
 }
