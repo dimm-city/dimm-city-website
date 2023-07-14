@@ -35,7 +35,7 @@
 			</div>
 			<ol data-update>
 				{#each spore.attributes.twists as item}
-					<li>{item}</li>
+					<li>{item.value}</li>
 				{/each}
 			</ol>
 		</div>

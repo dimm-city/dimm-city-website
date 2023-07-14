@@ -19,7 +19,7 @@
 			<h3>A powerful...</h3>
 			<ol>
 				{#each spore.attributes.villains as item}
-					<li>{item}</li>
+					<li>{item.value}</li>
 				{/each}
 			</ol>
 		</div>
@@ -27,7 +27,7 @@
 			<h3>Has executed their plan to...</h3>
 			<ol>
 				{#each spore.attributes.plots as item}
-					<li>{item}</li>
+					<li>{item.value}</li>
 				{/each}
 			</ol>
 		</div>
@@ -44,7 +44,7 @@
 			</p>
 			<ul data-update>
 				{#each spore.attributes.goals as item}
-					<li>{item}</li>
+					<li>{item.value}</li>
 				{/each}
 			</ul>
 			<hr />
