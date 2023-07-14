@@ -42,12 +42,24 @@
  */
 
 
+
 /**
  * @typedef {Object} Strapi.Pagination
  * @property {number} page - The current page number
  * @property {number} pageSize - The number of items per page
- * @property {number} pageCount - The total number of pages
- * @property {number} total - The total number of items
+ * @property {?number} pageCount - The total number of pages
+ * @property {?number} total - The total number of items
+ */
+
+/**
+ * @typedef {Object} Strapi.APIRequestParams
+ * @property {Array<string>} sort - Array of strings defining the sorting order
+ * @property {any} filters - Filters to apply
+ * @property {string} populate - Field to populate
+ * @property {Array<string>} fields - Array of strings defining the fields to be fetched
+ * @property {Strapi.Pagination} pagination - Pagination parameters
+ * @property {string} publicationState - Publication state filter
+ * @property {Array<string>} locale - Array of strings defining the locale
  */
 
 

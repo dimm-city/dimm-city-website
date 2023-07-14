@@ -1,41 +1,26 @@
 <script >
 	import List from '$lib/Shared/Components/List.svelte';
-	import { getDashboardEntries } from './getDashboardEntries';
-	import { getDistricts } from './getDistricts';
-	import { getSpecialties } from './getSpecialties';
-	import { getLatestCitizens } from './getNewestCitizens';
 	import ListItemLink from '$lib/Shared/Components/ListItemLink.svelte';
 	import Hero from './Hero.svelte';
-	import { onMount } from 'svelte';
-	/**
-	 * @type {any}
-	 */
-	let newsQuery;
-	/**
-	 * @type {DC.BaseEntity[]}
-	 */
-	let latestNews = [];
-	/**
-	 * @type {DC.BaseEntity[]}
-	 */
-	let districts= [];
-	/**
-	 * @type {DC.BaseEntity[]}
-	 */
-	let specialties = [];
-	/**
-	 * @type {DC.BaseEntity[]}
-	 */
-	let citizens = [];
 
-	onMount(() => {
-		getDashboardEntries().then(
-			(d) => (latestNews = d?.filter((item) => item.tags?.includes("dashboard") || item?.id == 2 || item?.id == 4 || item?.id == 5))
-		);
-		getDistricts().then((d) => (districts = d));
-		getSpecialties().then((d) => (specialties = d));
-		getLatestCitizens().then((d) => (citizens = d));
-	});
+	/**
+	 * @type {DC.BaseEntity[]}
+	 */
+	export let latestNews = [];
+	/**
+	 * @type {DC.BaseEntity[]}
+	 */
+	export let districts= [];
+	/**
+	 * @type {DC.BaseEntity[]}
+	 */
+	export let specialties = [];
+	/**
+	 * @type {DC.BaseEntity[]}
+	 */
+	export let citizens = [];
+
+
 </script>
 
 <div class="container">
@@ -45,7 +30,7 @@
 			<hr />
 		</div>
 		<div class="hero-body">
-			<Hero query={newsQuery} data={latestNews} />
+			<Hero data={latestNews} />
 		</div>
 	</div>
 	<div  class="reference-header">
@@ -57,7 +42,7 @@
 		<hr />
 		<div class="list-container">
 			<List data={citizens} viewAllLink="/citizens">
-				<ListItemLink slot="item" let:item url="/citizens/{item.tokenId}" text={item.name} />
+				<ListItemLink slot="item" let:item url="/citizens/{item.attributes.tokenId}" text={item.attributes.name} />
 			</List>
 		</div>
 	</div>
@@ -66,7 +51,7 @@
 		<hr />
 		<div class="list-container">
 			<List data={specialties} viewAllLink="/specialties">
-				<ListItemLink slot="item" let:item url="/specialties/{item.slug}" text={item.name} />
+				<ListItemLink slot="item" let:item url="/specialties/{item.attributes.slug}" text={item.attributes.name} />
 			</List>
 		</div>
 	</div>
@@ -75,7 +60,7 @@
 		<hr />
 		<div class="list-container">
 			<List data={districts} viewAllLink="/locations">
-				<ListItemLink slot="item" let:item url="/locations/{item.slug}" text={item.name} />
+				<ListItemLink slot="item" let:item url="/locations/{item.attributes.slug}" text={item.attributes.name} />
 			</List>
 		</div>
 	</div>

@@ -4,16 +4,28 @@ import { config as beta } from './Config/config.beta';
 import { config as dev } from './Config/config.dev';
 import { browser } from '$app/environment';
 
-// import { readFileSync } from 'fs';
-// import { fileURLToPath } from 'url';
-// const file = fileURLToPath(new URL('../../../package.json', import.meta.url));
-// const json = readFileSync(file, 'utf8');
-// const pkg = JSON.parse(json);
 
+/** @type {DC.Config} */
 export const config = getCurrentConfig();
 
 function getCurrentConfig() {
-	let output = dev;
+
+	/** @type {DC.Config} */
+	let output = {
+		...dev,
+		version: '0.9.0',
+		defaultSummaryQuery:  {
+		sort: ['name:asc'],
+		populate: 'mainImage',
+		fields: ['name', 'slug', 'shortDescription'],
+		pagination: {
+			pageSize: 20,
+			page: 1
+		},
+		publicationState: 'live',
+		locale: ['en']
+	}
+	};
 
 	if (browser) {
 		console.log('Loading client config');
@@ -32,8 +44,8 @@ function getCurrentConfig() {
 	if (output.googleKey <= '') {
 		output.googleKey = 'testing';
 	}
-	output.version = '0.9.0';
 	// output.stripePublicKey =
 	// 	'pk_test_51MmHcALeft6siyywTseJIs5awwWr469e2D9RQMI5a79oz1NGhg8ijvPNH1NbgMrM2aIn4KadqswLuTF2kc4tZVNp00UQj2pA8Z';
+
 	return output;
 }

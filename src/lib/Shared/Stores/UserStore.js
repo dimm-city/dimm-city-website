@@ -54,6 +54,7 @@ export const loggedIn = derived(
 export function ownsToken(token){
 	//return true;
 	const userWallets = get(wallets) ?? [];
+	console.log('checking ownership of token', token);
 	const id =  (token?.id || token?.data?.id || token || -1).toString();
 	const result =
 		id != '-1' &&

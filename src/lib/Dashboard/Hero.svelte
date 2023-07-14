@@ -1,10 +1,24 @@
-<script lang="ts">
-	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
-	import type { ISummaryItem } from '$lib/Shared/Models/ISummaryItem';
-	export let query: any = null; // new Promise();
-	export let data: ISummaryItem[] = [];
-	// export let icon = 'bi-file-text';
+<script>
+	/**
+	 * @type {DC.BaseEntity[] | null}
+	 */
+	 export let data = [];
 </script>
+
+<div class="container">
+	{#if data != null}
+		{#each data as item}
+			<a href="/journal-entries/{item.attributes.slug}" class="small hero-item" data-augmented-ui>
+				<div class="" style="">
+					<div class="title-container">{item.attributes.name}</div>
+				</div>
+				<div class="description">
+					<small>{item.attributes.shortDescription || ''}</small>
+				</div>
+			</a>
+		{/each}
+	{/if}
+</div>
 
 <style>
 	.container {
@@ -38,7 +52,7 @@
 
 		--aug-inlay: initial;
 		--aug-inlay-bg: #05050552;
-        background: #0505051e;
+		background: #0505051e;
 	}
 	a {
 		color: var(--light);
@@ -48,26 +62,3 @@
 		color: var(--pink);
 	}
 </style>
-
-<div class="container">
-	{#await query}
-		<LoadingIndicator>
-			<div>Loading data...</div>
-		</LoadingIndicator>
-	{:then}
-		{#if data != null}
-			{#each data as item}
-				<a href="/journal-entries/{item.slug}" class="small hero-item" data-augmented-ui>
-					<div class="" style="">
-						<div class="title-container">{item.name}</div>
-					</div>
-					<div class="description">
-						<small>{item.description || ''}</small>
-					</div>
-				</a>
-			{/each}
-		{/if}
-	{:catch e}
-		<div>{e}</div>
-	{/await}
-</div>

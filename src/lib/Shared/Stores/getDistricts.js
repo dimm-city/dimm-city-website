@@ -4,24 +4,15 @@ import { config } from '$lib/Shared/config';
 
 export async function getDistricts() {
 	const strapi = new Strapi(config.apiBaseUrl);
-	const results = await strapi.search('dimm-city/locations', {
-		sort: ['name:asc'],
-		filters: {
-			region: {
-				id: {
-					$null: true
-				}
+	const query = {...config.defaultSummaryQuery};
+	query.filters = {
+		region: {
+			id: {
+				$null: true
 			}
-		},
-		populate: 'mainImage',
-		fields: ['name', 'slug', 'shortDescription'],
-		// pagination: {
-		// 	pageSize: 20,
-		// 	page: 1
-		// },
-		publicationState: 'live',
-		locale: ['en']
-	});
+		}
+	};
+	const results = await strapi.search('dimm-city/locations', query);
 
 	return results.data;
 }

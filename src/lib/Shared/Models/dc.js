@@ -1,5 +1,19 @@
 
 /**
+ * @typedef {Object} DC.Config
+ * @property {string} version - The version of the application
+ * @property {string} env - The environment in which the application is running
+ * @property {string} googleKey - The Google API key for the application
+ * @property {string} baseUrl - The base URL for the application
+ * @property {string} graphUrl - The GraphQL endpoint URL for the application
+ * @property {string} apiBaseUrl - The base API URL for the application
+ * @property {string} stripePublicKey - The public key for Stripe
+ * @property {Strapi.APIRequestParams} defaultSummaryQuery - The default summary query parameters
+ */
+
+
+
+/**
  * @typedef {Object} DC.BaseEntity
  * @property {number} id - Unique ID of the item
  * @property {Object} attributes - Detailed properties of the item
