@@ -32,9 +32,7 @@
 			<li><a href="https://kit.svelte.dev/">SvelteKit</a></li>
 			<li><a href="https://github.com/mattjennings/svelte-modals">svelte-modals</a></li>
 			<li><a href="https://github.com/EvanOxfeld/svelte-step-wizard">svelte-step-wizard</a></li>
-			<li><a href="https://gitlab.com/clb1/svelte-ethers-store">svelte-ethers-store</a></li>
 			<li><a href="https://www.typescriptlang.org/">TypeScript</a></li>
-			<li><a href="https://github.com/web3modal/web3modal">web3modal</a></li>
 			<li><a href="https://eslint.org/">eslint</a></li>
 			<li><a href="https://prettier.io/">prettier</a></li>
 			<li><a href="https://strapi.io/">Strapi</a></li>
