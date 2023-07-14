@@ -24,8 +24,8 @@
 		role="status"
 		aria-live="polite"
         id={id}
-		in:fade
-		out:fade
+		in:fade|global
+		out:fade|global
 		data-augmented-ui="  tl-clip-x tr-clip br-clip bl-clip both"
 	>
 		<div class={getClass('content')}>

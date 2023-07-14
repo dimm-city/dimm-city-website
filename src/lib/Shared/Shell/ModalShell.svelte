@@ -101,7 +101,7 @@
 	}
 </style>
 
-<div role="dialog" class="modal" transition:fly={{ y: -600, delay: 0, duration: 450 }} on:introstart on:outroend>
+<div role="dialog" class="modal" transition:fly|global={{ y: -600, delay: 0, duration: 450 }} on:introstart on:outroend>
 	<div class="contents" class:fullscreen data-augmented-ui="tl-2-clip-xy tr-2-clip-xy br-2-clip-y bl-2-clip-y both">
 		<div class="actions">
 			<slot name="actions" />
