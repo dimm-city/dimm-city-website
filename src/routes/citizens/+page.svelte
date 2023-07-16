@@ -6,7 +6,8 @@
 
 	export let data;
 	let query = {
-		fields: ['name', 'tokenId', 'slug', 'shortDescription']
+		fields: ['name', 'tokenId', 'slug', 'shortDescription'],
+		populate: ['mainImage', 'race', 'specialties']
 	};
 </script>
 

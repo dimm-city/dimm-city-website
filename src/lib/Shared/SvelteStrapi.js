@@ -19,12 +19,7 @@ export async function loadSearchPageFromStrapi(
 		pagination,
 		sort,
 		fields,
-		populate: {
-			mainImage: {
-				fields: ['url', 'formats', 'formats.thumbnail', 'formats.medium', 'formats.large']
-			},
-			
-		}
+		populate: ['mainImage']
 	};
 
 	const strapi = new Strapi(config.apiBaseUrl);

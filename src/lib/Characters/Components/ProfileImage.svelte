@@ -1,11 +1,17 @@
 <script>
 	import Image from '$lib/Shared/Components/Image.svelte';
+	import { config } from '$lib/Shared/config';
 
 	/**
 	 * @type {DC.Character}
 	 */
 	export let character;
-	let imageUrl = character.attributes?.mainImage?.data?.attributes?.formats?.large.url ?? '';
+
+	//trim last slash from config.baseUrl	
+	const baseUrl = config.baseUrl.replace(/\/$/, '');;
+
+	let imageUrl =  baseUrl + character.attributes?.mainImage?.data?.attributes?.formats?.large.url ?? '';
+	
 </script>
 
 <Image

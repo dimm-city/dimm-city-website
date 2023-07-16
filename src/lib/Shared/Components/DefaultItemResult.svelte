@@ -1,10 +1,14 @@
 <script>
+	import { config } from '../config';
+
 	/**
 	 * @type {{ name: any; type: any; shortDescription: any; description: string; mainImage: any }}
 	 */
 	export let item;
 	export let icon = 'bi-box';
 	export let subtitle = '';
+
+	const baseUrl = config.baseUrl.replace(/\/$/, '');
 </script>
 
 <div class="item-result-grid">
@@ -18,7 +22,10 @@
 	<div class="item-result-description">
 		<div class="item-result-image" data-augmented-ui="tl-rect tr-rect br-clip bl-clip both">
 			{#if item.mainImage?.data}
-				<img src={item.mainImage?.data?.attributes?.formats?.thumbnail.url} alt="thumbnail" />
+				<img
+					src={baseUrl + item.mainImage?.data?.attributes?.formats?.thumbnail.url}
+					alt="thumbnail"
+				/>
 			{:else}
 				<i class="bi {icon} text-light" />
 			{/if}
@@ -52,6 +59,7 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		
 		height: 75px;
 		width: 75px;
 		--aug-border: initial;
@@ -66,7 +74,7 @@
 	}
 	.item-result-image i {
 		font-size: 50px;
-		margin:0;
+		margin: 0;
 		padding: 0;
 	}
 	.item-result-description {
