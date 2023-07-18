@@ -1,7 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	import { profile, logout, loadWallets, loadProfile } from '$lib/Shared/Stores/UserStore';
-	import { getCharactersByUser } from '$lib/Shared/Stores/getCharacters';
+	import { getCharactersByIds, getCharactersByUser } from '$lib/Shared/Stores/getCharacters';
 	import PagedResults from '../Shared/Components/PagedResults.svelte';
 	import MenuItem from '../Shared/Components/Menu/MenuItem.svelte';
 	import DefaultItemResult from '../Shared/Components/DefaultItemResult.svelte';
@@ -11,7 +11,7 @@
 	let totalPages = 1;
 	let query = {
 		sort: ['name:asc'],
-		fields: ['name', 'tokenId'],
+		fields: ['name', 'tokenId', 'slug'],
 		populate: ['race', 'specialty'],
 		publicationState: 'live',
 		filters: {
@@ -30,8 +30,11 @@
 	 */
 	let initialData;
 	onMount(async () => {
-		loadWallets();
-		initialData = await getCharactersByUser($profile.id);
+
+		/**@type {CW.Wallet[]}*/
+		const wallets = await loadWallets();
+		const tokenIds = wallets.flatMap(w => w.tokens).map(t => t.id);
+		initialData = await getCharactersByIds(tokenIds);
 	});
 </script>
 

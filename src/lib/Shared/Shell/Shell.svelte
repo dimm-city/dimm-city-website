@@ -52,7 +52,7 @@
 	<slot name="head" />
 </svelte:head>
 <PageBackground />
-<div class="main-container {title.toLowerCase()}" class:fullscreen>
+<div class="main-container {title?.toLowerCase()}" class:fullscreen>
 	<div class="content-panel slide-in-up">
 		<slot><ContentPane>404</ContentPane></slot>
 	</div>
@@ -72,6 +72,7 @@
 
 <slot name="scripts" />
 <Modals>
+	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<div
 		slot="backdrop"
 		class="backdrop fade-in"

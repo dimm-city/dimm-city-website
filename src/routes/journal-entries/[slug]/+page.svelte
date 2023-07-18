@@ -7,7 +7,7 @@
 	export let data;
 </script>
 
-<Shell title={data.attributes?.name}>
+<Shell title={data.attributes?.name ?? 'Unknown Entry'}>
 	<ContentPane padding={2} scrollable={true}>
 		<div class="journal-entry">
 			<Article model={data} />

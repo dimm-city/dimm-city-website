@@ -8,7 +8,7 @@
 	export let character;
 
 	//trim last slash from config.baseUrl	
-	const baseUrl = config.baseUrl.replace(/\/$/, '');;
+	const baseUrl = config.baseUrl.replace(/\/$/, '');
 
 	let imageUrl =  baseUrl + character.attributes?.mainImage?.data?.attributes?.formats?.large.url ?? '';
 	

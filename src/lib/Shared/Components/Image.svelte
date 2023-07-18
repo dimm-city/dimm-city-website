@@ -1,5 +1,6 @@
 <script>
 	import { onMount, afterUpdate } from 'svelte';
+	import { config } from '../config';
 
 	/**
 	 * @type {?string | null}
@@ -33,19 +34,27 @@
 		hasVideo = true;
 		console.log('video loaded');
 	}
-	function onImageLoaded() {
+	function onImageLoaded(e) {
 		hasImage = true;
-		console.log('image loaded');
+		console.log('image loaded', e);
+	}
+	function onImageError(e) {
+		console.log('image error', e);
+		hasImage = false;
 	}
 	function onCanPlay() {
 		console.log('can play');
 	}
+
+	$: if (imageUrl && !imageUrl?.startsWith(config.baseUrl)) {
+		imageUrl = config.baseUrl.replace(/\/$/, '') + imageUrl;
+	}
+
 	$: if (videoUrl > '') {
 		console.log('video changed', videoUrl, video);
 		mediaUrl = videoUrl;
 		hasVideo = mediaUrl != null;
 		if (video != null && video.querySelector('source') != null) {
-			
 			const source = video.querySelector('source');
 			if (source) source.src = mediaUrl;
 
@@ -55,6 +64,7 @@
 		hasVideo = false;
 		mediaUrl = null;
 	}
+
 
 	onMount(async () => {
 		mediaUrl = videoUrl;
@@ -104,14 +114,13 @@
 			environment-image={skyboxUrl}
 			poster={imageUrl}
 		/>
-	{:else if !hasVideo}
+	{:else if !hasVideo && imageUrl}
 		<img
 			bind:this={image}
 			src={imageUrl}
 			class="fade-in"
 			class:hidden={!imageUrl}
 			alt={title}
-			on:load={onImageLoaded}
 		/>
 	{/if}
 </div>

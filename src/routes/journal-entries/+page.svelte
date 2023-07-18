@@ -17,7 +17,7 @@
 			<MenuItem
 				icon="bi-book"
 				url={`/journal-entries/${result.attributes.slug}`}
-				title={result.attributes.title}
+				title={result.attributes.name ?? 'Unknown'}
 				description={result.attributes.shortDescription}
 			/>
 		</svelte:fragment>

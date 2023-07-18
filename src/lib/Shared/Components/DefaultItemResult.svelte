@@ -61,7 +61,7 @@
 		align-items: center;
 		
 		height: 75px;
-		width: 75px;
+		max-width: 75px;
 		--aug-border: initial;
 		--aug-border-all: 1px;
 		--aug-tl: 5px;

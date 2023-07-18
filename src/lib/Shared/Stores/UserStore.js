@@ -59,7 +59,7 @@ export function ownsToken(token){
 	const result =
 		id != '-1' &&
 		Array.isArray(userWallets) &&
-		userWallets?.some((w) => w.tokens?.some((t) => t.id.toString() === id));
+		userWallets?.some((w) => w.tokens?.some((t) => t.id.toString() === id || t.slug === token));
 
 	return result;
 }
@@ -69,8 +69,9 @@ export async function loadWallets(force = false) {
 		const wallets = getSessionValue('wallets');
 		if (wallets.length > 0) return wallets;
 	}
+	console.log('updating wallets from server');
 	const token = get(jwt);
-	const response = await fetch(`${config.apiBaseUrl}/chain-wallets/wallets`, {
+	const response = await fetch(`${config.apiBaseUrl}/chain-wallets/wallets?populate=*`, {
 		headers: {
 			Authorization: `Bearer ${token}`
 		}

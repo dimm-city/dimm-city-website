@@ -9,7 +9,8 @@ export const load = async (/** @type {{ params: any; }} */ page) => {
 			tokenId: {
 				$eq: tokenId
 			}
-		}
+		},
+		populate: "*"
 	});
 	return data;
 };

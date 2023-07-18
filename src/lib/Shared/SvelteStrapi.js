@@ -9,7 +9,8 @@ import { config } from './config';
 export async function loadSearchPageFromStrapi(
 	page,
 	contentType,
-	fields = ['slug', 'name', 'shortDescription', 'type', 'tags']
+	fields = ['slug', 'name', 'shortDescription', 'type', 'tags'],
+	populate = ['mainImage', 'mainVideo', 'mainModel']
 ) {
 	// pull page number, results per page, and sort order from query params
 	const { pagination, sort } = page.params;
@@ -19,7 +20,7 @@ export async function loadSearchPageFromStrapi(
 		pagination,
 		sort,
 		fields,
-		populate: ['mainImage']
+		populate
 	};
 
 	const strapi = new Strapi(config.apiBaseUrl);

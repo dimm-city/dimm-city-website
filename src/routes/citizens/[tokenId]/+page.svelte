@@ -44,7 +44,7 @@
 	// }
 
 	async function saveChanges() {
-		if (ownsToken(data.attributes.token)) {
+		if (ownsToken(data.attributes.tokenId)) {
 			isSaving = true;
 
 			const importData = JSON.parse(JSON.stringify(data.attributes));

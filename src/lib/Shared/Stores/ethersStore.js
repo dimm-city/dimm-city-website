@@ -22,7 +22,7 @@ const _provider = writable();
 export const connected = derived([_provider], () => provider != null);
 export const signerAddress = derived([_provider], async () => {
 	let signer = await provider?.getSigner();
-	return signer.address;
+	return signer?.address;
 });
 
 export async function connect() {
