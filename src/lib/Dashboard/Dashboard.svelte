@@ -19,10 +19,6 @@
 	 * @type {DC.BaseEntity[]}
 	 */
 	export let citizens = [];
-
-$: if(specialties){
-	console.log('s', specialties);
-}
 </script>
 
 <div class="container">
