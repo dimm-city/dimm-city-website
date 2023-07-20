@@ -1,5 +1,7 @@
 name: Deploy to dev
 
+env:
+  BUILD_ENV: beta
 on:
   push:
     branches:

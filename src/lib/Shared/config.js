@@ -35,10 +35,10 @@ function getCurrentConfig() {
 		if (window.location.href.includes(dev.baseUrl)) output = dev;
 	} else if (process) {
 		console.log('Loading server config');
-		if (process.env && process.env.NODE_ENV === 'production') output = prod;
-		if (process.env && process.env.NODE_ENV === 'staging') output = staging;
-		if (process.env && process.env.NODE_ENV === 'beta') output = beta;
-		if (process.env && process.env.NODE_ENV === 'development') output = dev;
+		if (process.env && (process.env.BUILD_ENV || process.env.NODE_ENV === 'production')) output = prod;
+		if (process.env && (process.env.BUILD_ENV || process.env.NODE_ENV === 'staging')) output = staging;
+		if (process.env && (process.env.BUILD_ENV || process.env.NODE_ENV === 'beta')) output = beta;
+		if (process.env && (process.env.BUILD_ENV || process.env.NODE_ENV === 'development')) output = dev;
 	}
 
 	if (output.googleKey <= '') {

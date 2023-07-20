@@ -8,7 +8,7 @@
  * @property {string} graphUrl - The GraphQL endpoint URL for the application
  * @property {string} apiBaseUrl - The base API URL for the application
  * @property {string} stripePublicKey - The public key for Stripe
- * @property {Strapi.APIRequestParams} defaultSummaryQuery - The default summary query parameters
+ * @property {?Strapi.APIRequestParams} defaultSummaryQuery - The default summary query parameters
  */
 
 
