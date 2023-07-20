@@ -29,19 +29,25 @@
 		url="/locations"
 		icon="bi-map"
 		title="Locations"
-		description="Locations identified within Dimm City"
+		description="Locations identified in Dimm City"
 	/>
 	<MenuItem
 		url="/citizens"
-		icon="bi-people"
+		icon="bi-file-person"
 		title="Citizen Files"
-		description="Access the available citizen files"
+		description="Available citizen files"
 	/>
 	<MenuItem
 		url="/specialties"
 		icon="bi-code"
 		title="Specialties"
-		description="Documenting the true skills of the Sporos"
+		description="The true skills of the Sporos"
+	/>
+		<MenuItem
+		url="/races"
+		icon="bi-people"
+		title="Races"
+		description="Types of sentitnet beings"
 	/>
 	<MenuItem
 		url="/items"
@@ -55,7 +61,7 @@
 		url="/about/stats"
 		icon="bi-bar-chart"
 		title="System Stats"
-		description="Console information and diagnostics"
+		description="DCC Statisitics"
 	/>
 	<MenuItem
 		icon="bi bi-diagram-3"

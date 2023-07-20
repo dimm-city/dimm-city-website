@@ -9,7 +9,7 @@
 </script>
 
 <Shell title={data.attributes.name} titleUrl="/specialties">
-	<ContentPane padding={3}>
+	<ContentPane padding={2} scrollable={true}>
 		<Article model={data} imageAug="tl-clip tr-clip-y br-clip bl-clip-y" />
 	</ContentPane>
 </Shell>
