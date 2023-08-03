@@ -13,7 +13,7 @@
 	--secondary-color: #b943f0;
 	--accent-color: #1e7ed8;
 	--accent-color: #00f3ff;
-	--background-color: #12121288;
+	--background-color: #121212;
 	--text-color: #d3d3d3;
 
 	--highlight-color: #f8f400da;
@@ -23,7 +23,6 @@
 
 html {
 	height: 100%;
-	background-image: url('/assets/imgs/the-archive-district.png');
 	background-size: cover;
 	background-repeat: no-repeat;
 }
@@ -33,6 +32,8 @@ body {
 	grid-template-rows: min-content auto min-content;
 	height: 100%;
 	font-family: var(--font-family);
+	background-image: url('/assets/imgs/landing-bg.png');
+	background-position: top;
 	background-color: var(--background-color);
 	color: var(--text-color);
 	line-height: 1.5;
@@ -41,6 +42,7 @@ body {
 /* Header and Navigation */
 header {
 	padding: 0.25rem 0 0 0;
+	background-color: var(--background-color);
 }
 
 nav {
@@ -72,19 +74,19 @@ nav ul li {
 }
 
 /* Main Content */
-.main {
+.centered-container {
 	display: flex;
-	flex-direction: column;
+	justify-content: center;
 	align-items: center;
 	min-height: 80vh;
 	width: 100%;
+
 }
 
 .hero {
 	text-align: center;
-	
-	padding: 3rem;
-	padding-bottom: 1rem;
+
+	padding: 1rem 3rem;
 }
 
 .hero h1 {
@@ -101,14 +103,28 @@ nav ul li {
 }
 
 /* Form elements */
-.form-container {
+.form-container,
+.content-container {
 	width: 90%;
-	height: 100%;
-	overflow: hidden;
-	display: grid;
-	margin: 0 auto;
+	/* min-height: 100%;
+	overflow: hidden; */
+	/* display: flex;
+	flex-direction: column; */
+	margin: 1rem auto;
+	padding: 1rem 3rem;
 	border-radius: 5px;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	--background-color: #121212d8;
+	background-color: var(--background-color);
+}
+
+@media (max-width: 768px) {
+
+	.form-container,
+	.content-container {
+		margin: 1rem auto;
+		padding: 1rem;
+	}
 }
 
 article {

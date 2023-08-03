@@ -6,7 +6,7 @@
 </script>
 <LandingShell>
     
-<article>
+<article class="content-container">
 	<h1>Dimm City RPG</h1>
 
 	<p>
