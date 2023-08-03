@@ -49,6 +49,7 @@
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-TJ2LB9K4M4"></script>
 	<!-- <link rel="stylesheet" type="text/css" href="https://unpkg.com/augmented-ui@2/augmented-ui.min.css"> -->
 
+	<link rel="stylesheet" type="text/css" href="/assets/styles/main.css" />
 	<slot name="head" />
 </svelte:head>
 <PageBackground />

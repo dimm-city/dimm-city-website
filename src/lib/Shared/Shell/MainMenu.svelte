@@ -10,6 +10,9 @@
 		<a href="/" data-augmented-ui="all-hex border" title="home">
 			<i class="bi bi-globe2 fade-in" />
 		</a>
+		<a href="/dashboard" data-augmented-ui="all-hex border" title="dashboard">
+			<i class="bi bi-window-dock fade-in" />
+		</a>
 		<a href="/console" data-augmented-ui="all-hex border" title="op console">
 			{#if $loggedIn}
 				<i class="bi bi-person-check-fill fade-in" />
