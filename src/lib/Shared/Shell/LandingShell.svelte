@@ -3,6 +3,7 @@
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import Dashboard from '$lib/Dashboard/Dashboard.svelte';
 	import { config } from '$lib/Shared/config';
+	import { loggedIn } from '../Stores/UserStore';
 </script>
 
 <svelte:head>
@@ -13,7 +14,9 @@
 	<nav>
 		<a href="/">Dimm City RPG</a>
 		<ul>
+			{#if $loggedIn}
 			<li><a href="/console">Console</a></li>
+			{/if}
 			<li><a href="/about">About</a></li>
 			<!-- <li><a href="/console">Contact</a></li> -->
 		</ul>

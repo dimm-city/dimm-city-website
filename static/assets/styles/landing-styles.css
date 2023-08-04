@@ -60,6 +60,7 @@ nav a {
 	color: var(--text-color);
 	text-decoration: none;
 	text-wrap: balance;
+	padding-block: .5rem;
 }
 
 nav ul {
@@ -97,9 +98,8 @@ nav ul li {
 	letter-spacing: 0.2rem;
 }
 
-.hero h1,
-.hero p {
-	text-shadow: 0 0 3px var(--accent-color), 0 1px 3px var(--accent-color)
+.hero h1{
+	text-shadow: 0 0 1px var(--accent-color), 0 1px 1px var(--accent-color)
 }
 
 /* Form elements */
@@ -136,7 +136,7 @@ article {
 
 
 p {
-	margin-bottom: .5rem;
+	margin-block: .5rem;
 }
 
 ul,
@@ -184,7 +184,11 @@ a {
 	color: var(--accent-color);
 }
 
+a.button,
 button {
+	display: inline-block;
+	text-align: center;
+	text-decoration: none;
 	width: 100%;
 	font-family: var(--font-family);
 	background-color: var(--primary-color);
@@ -199,6 +203,8 @@ button {
 	font-weight: 300;
 }
 
+a.button:hover,
+a.button:focus-visible,
 button:hover,
 button:focus-visible {
 	border: none;

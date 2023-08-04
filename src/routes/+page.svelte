@@ -1,9 +1,8 @@
 <script>
-	import Shell from '$lib/Shared/Shell/Shell.svelte';
-	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
-	import Dashboard from '$lib/Dashboard/Dashboard.svelte';
 	import { config } from '$lib/Shared/config';
 	import LandingShell from '$lib/Shared/Shell/LandingShell.svelte';
+	import LoggedInContainer from '$lib/Shared/Components/LoggedInContainer.svelte';
+	import { profile } from '$lib/Shared/Stores/UserStore';
 </script>
 
 <svelte:head>
@@ -18,15 +17,60 @@
 					<p>something wicked this way comes...</p>
 				</section>
 			</div>
+			<hr />
+			<LoggedInContainer>
+				<div slot="public" class="fade-in">
+					<h4>Hello dreamer, have you come looking for the secrets of Dimm City?</h4>
 
-			<form>
+					<p>
+						Please register to become a citizen of Dimm City to stay informed on the latest
+						happenings.
+					</p>
+
+					<p>
+						There are several options available to register your account. Simply choose one from the
+						list below, and being your journey into the city of dreams... and nightmares.
+					</p>
+
+					<div class="register-links">
+						<a class="button" href={config.apiBaseUrl + '/connect/google'}
+							><i class="bi bi-google" />Register with Google</a
+						>
+						<a class="button" href={config.apiBaseUrl + '/connect/reddit'}
+							><i class="bi bi-reddit" />Register with Reddit</a
+						>
+					</div>
+				</div>
+				<div class="logged-in">
+					<h2>Welcome back {$profile?.settings?.displayName ?? $profile?.username}!</h2>
+					<h4>Thank you for registering to be a citizen of Dimm City.</h4>
+					<section>
+						<p>
+							Please check back often to get the latest news from Dimm City. Don't forget to join
+							our
+							<a href="https://www.reddit.com/r/DimmCityRPG/" target="_blank"
+								>Dimm City RPG subreddit</a
+							>
+							and check the status of our current <a href="/" target="_blank">kickstarter</a>.
+						</p>
+						<p>
+							We are hard at work extracting information from the ruins of the DC Archives. We hope
+							to publish the Op Manual soon. In the meantime, please feel free to browse the <a
+								href="/console">DC Console</a
+							>
+							to learn more about the city and it's citizens.
+						</p>
+					</section>
+				</div>
+			</LoggedInContainer>
+			<!--<form>
 				<label for="name">Name</label>
 				<input type="text" id="name" placeholder="Your name" />
 
 				<label for="email">Email</label>
 				<input type="email" id="email" placeholder="Your email" />
 
-				<!-- <label for="select">Select an option</label>
+				 <label for="select">Select an option</label>
 		<select id="select">
 			<option value="option1">Option 1</option>
 			<option value="option2">Option 2</option>
@@ -35,9 +79,9 @@
 		
 		<label for="message">Message</label>
 		<textarea id="message" rows="4" placeholder="Your message"></textarea>
-		 -->
+		
 				<button type="submit">Stay Informed</button>
-			</form>
+			</form> -->
 		</section>
 	</div>
 </LandingShell>
@@ -46,5 +90,17 @@
 	.welcome-container {
 		display: flex;
 		flex-direction: column;
+	}
+	hr {
+		margin-bottom: 2rem;
+	}
+	.logged-in h2 {
+		color: var(--highlight-color);
+	}
+	.logged-in section{
+		padding-block: 1rem;
+	}
+	.register-links {
+		padding-block: 1rem;
 	}
 </style>

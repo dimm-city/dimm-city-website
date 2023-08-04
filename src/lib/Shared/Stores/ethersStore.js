@@ -4,8 +4,10 @@ import { derived, get, writable } from 'svelte/store';
 import { config } from '../config';
 import { jwt, loadWallets } from './UserStore';
 
-/** @type {Window & { ethereum?: any }} */
-const windowWithEthereum = window;
+/** @returns {Window & { ethereum?: any }} */
+function getWindow() {
+	return window ?? { ethereum: null };
+}
 
 /**
  * @type {ethers.BrowserProvider}
@@ -26,12 +28,12 @@ export const signerAddress = derived([_provider], async () => {
 });
 
 export async function connect() {
-	if (typeof windowWithEthereum.ethereum !== 'undefined') {
-		provider = new ethers.BrowserProvider(windowWithEthereum.ethereum);
+	if (typeof getWindow().ethereum !== 'undefined') {
+		provider = new ethers.BrowserProvider(getWindow().ethereum);
 
 		_provider.set(provider);
 
-		await windowWithEthereum.ethereum.enable();
+		await getWindow().ethereum.enable();
 		const accounts = await provider.listAccounts();
 		const address = accounts[0];
 		signer = await provider.getSigner();
