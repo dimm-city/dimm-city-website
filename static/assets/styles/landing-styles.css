@@ -32,7 +32,6 @@ body {
 	grid-template-rows: min-content auto min-content;
 	height: 100%;
 	font-family: var(--font-family);
-	background-image: url('/assets/imgs/landing-bg.png');
 	background-position: top;
 	background-color: var(--background-color);
 	color: var(--text-color);
@@ -41,7 +40,7 @@ body {
 
 /* Header and Navigation */
 header {
-	padding: 0.25rem 0 0 0;
+	padding: 0;
 	background-color: var(--background-color);
 }
 
@@ -57,10 +56,10 @@ nav {
 }
 
 nav a {
-	color: var(--text-color);
+	color: var(--highlight-color);
 	text-decoration: none;
 	text-wrap: balance;
-	padding-block: .5rem;
+	padding-block: 0.5rem;
 }
 
 nav ul {
@@ -74,6 +73,99 @@ nav ul li {
 	margin-left: 20px;
 }
 
+/* Hide the checkbox */
+#nav-toggle {
+	display: none;
+}
+
+.nav-items-header,
+.nav-separator {
+	display: none;
+}
+
+/* Show the toggle button on small screens */
+@media screen and (max-width: 768px) {
+	/* Style the toggle button */
+	.nav-toggle-label {
+		display: inline-block;
+		cursor: pointer;
+		width: 2rem;
+		margin-bottom: 0;
+	}
+
+	.nav-toggle-label span {
+		display: block;
+		height: 3px;
+		background: var(--text-color);
+		margin-bottom: 5px;
+		width: 100%;
+		position: relative;
+		transition: all 0.3s ease-in-out;
+	}
+	.nav-toggle-label span:last-of-type {
+		margin-bottom: 0;
+	}
+	.nav-items-container {
+		position: absolute;
+		visibility: collapse;
+		width: 0;
+		height: 0;
+		transition: width 200ms ease-in;
+	}
+
+	.nav-items-header,
+	.nav-separator {
+		display: flex;
+		justify-content: space-between;
+	}
+	
+	.nav-close-label {
+		color: var(--highlight-color);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding-inline: 0.5rem;
+		padding-block: 0.5rem;
+	}
+	#nav-toggle:checked ~.nav-toggle-container {
+		visibility: collapse;
+		width: 0;
+		transition: all 200ms ease-in;
+	}
+	/* Show menu items when checkbox is checked */
+	#nav-toggle:checked~.nav-items-container {
+		display: block;
+		visibility: visible;
+		z-index: 100;
+		right: 0;
+		top: 0;
+		height: 100dvh;
+		width: 50dvw;
+		background-color: var(--background-color);
+		opacity: 0.9;
+	}
+
+	#nav-toggle:checked ~ ul {
+		display: block;
+	}
+
+
+
+	/* Make the menu vertical */
+	nav ul {
+		flex-direction: column;
+	}
+
+	nav ul li {
+		padding-inline: 0.2rem;
+		padding-block: 1rem;
+	}
+	/* Show the menu items when checkbox is checked */
+	#nav-toggle:checked ~ ul {
+		display: flex;
+	}
+}
+
 /* Main Content */
 .centered-container {
 	display: flex;
@@ -81,7 +173,6 @@ nav ul li {
 	align-items: center;
 	min-height: 80vh;
 	width: 100%;
-
 }
 
 .hero {
@@ -91,15 +182,18 @@ nav ul li {
 }
 
 .hero h1 {
-	font-size: 2rem;
+	font-size: clamp(3vw, 1.5rem, 50vw);
 	font-family: var(--header-font-family);
 	color: var(--highlight-color);
-	text-wrap: balance;
+	white-space: nowrap;
 	letter-spacing: 0.2rem;
 }
 
-.hero h1{
-	text-shadow: 0 0 1px var(--accent-color), 0 1px 1px var(--accent-color)
+.hero p{
+	text-wrap: balance;
+}
+.hero h1 {
+	text-shadow: 0 0 1px var(--accent-color), 0 1px 1px var(--accent-color);
 }
 
 /* Form elements */
@@ -119,7 +213,10 @@ nav ul li {
 }
 
 @media (max-width: 768px) {
-
+	.hero h1{
+		white-space: initial;
+		text-wrap: balance;
+	}
 	.form-container,
 	.content-container {
 		margin: 1rem auto;
@@ -133,10 +230,8 @@ article {
 	margin-top: 2rem;
 }
 
-
-
 p {
-	margin-block: .5rem;
+	margin-block: 0.5rem;
 }
 
 ul,

@@ -14,7 +14,7 @@
 			<div class="welcome-container">
 				<section class="hero">
 					<h1>Dimm City RPG</h1>
-					<p>something wicked this way comes...</p>
+					<p>hacking the ethereal realm</p>
 				</section>
 			</div>
 			<hr />
@@ -23,13 +23,13 @@
 					<h4>Hello dreamer, have you come looking for the secrets of Dimm City?</h4>
 
 					<p>
-						Please register to become a citizen of Dimm City to stay informed on the latest
-						happenings.
+						Please register to become a Dimm City operator and stay informed on the latest news from
+						the streets.
 					</p>
 
 					<p>
 						There are several options available to register your account. Simply choose one from the
-						list below, and being your journey into the city of dreams... and nightmares.
+						list below, and being your journey into the city...
 					</p>
 
 					<div class="register-links">
@@ -97,7 +97,7 @@
 	.logged-in h2 {
 		color: var(--highlight-color);
 	}
-	.logged-in section{
+	.logged-in section {
 		padding-block: 1rem;
 	}
 	.register-links {

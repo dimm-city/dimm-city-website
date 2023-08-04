@@ -4,7 +4,7 @@
 	/** @type {import('./$types').PageData} */
 	export let data;
 </script>
-<LandingShell>
+<LandingShell videoUrl="https://files.dimm.city/assets/locations/the-dark-drab-edition.mp4">
     
 <article class="content-container">
 	<h1>Dimm City RPG</h1>
