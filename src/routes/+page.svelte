@@ -20,13 +20,19 @@
 			<hr />
 			<LoggedInContainer>
 				<div slot="public" class="fade-in">
-					<h4>Hello dreamer, have you come looking for the secrets of Dimm City?</h4>
+					<h2>Hello dreamer, have you come looking for the secrets of Dimm City?</h2>
 
 					<p>
-						Please register to become a Dimm City operator and stay informed on the latest news from
-						the streets.
+						Dreamer, the time is nigh! We're on the brink of launching our Kickstarter campaign for
+						the 'Dreamer's Guide to Dimm City'. This isn't just a guide, it's your ticket to the
+						ethereal realms of Dimm City, where dreams meld into reality. Be part of our journey.
+						Sign up now to stay updated on our progress, and be the first to step into the
+						dreamscape when it unfolds.
 					</p>
-
+					<p>
+						Remember, Dreamer, the future of Dimm City rests in your hands – or rather, in your
+						dreams. Wake up to the dream!
+					</p>
 					<p>
 						There are several options available to register your account. Simply choose one from the
 						list below, and being your journey into the city...

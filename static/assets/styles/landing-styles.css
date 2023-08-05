@@ -14,6 +14,7 @@
 	--accent-color: #1e7ed8;
 	--accent-color: #00f3ff;
 	--background-color: #121212;
+	--background-color-opaque: #121212fa;
 	--text-color: #d3d3d3;
 
 	--highlight-color: #f8f400da;
@@ -48,7 +49,7 @@ nav {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	width: 90%;
+	padding-inline: 1rem;
 	margin-block: 0;
 	margin-inline: auto;
 	font-family: var(--header-font-family);
@@ -74,7 +75,7 @@ nav ul li {
 }
 
 /* Hide the checkbox */
-#nav-toggle {
+#nav-toggle, .nav-toggle-label {
 	display: none;
 }
 
@@ -85,12 +86,19 @@ nav ul li {
 
 /* Show the toggle button on small screens */
 @media screen and (max-width: 768px) {
+	nav{
+		padding-right: 0;
+		padding-left: 1rem;
+	}
 	/* Style the toggle button */
 	.nav-toggle-label {
-		display: inline-block;
 		cursor: pointer;
-		width: 2rem;
-		margin-bottom: 0;
+		color: var(--highlight-color);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding-inline: 0.5rem;
+		padding-block: 0.5rem;
 	}
 
 	.nav-toggle-label span {
@@ -106,11 +114,14 @@ nav ul li {
 		margin-bottom: 0;
 	}
 	.nav-items-container {
+		display: block;
 		position: absolute;
-		visibility: collapse;
+		height: 100dvh;
+		background-color: var(--background-color-opaque);
 		width: 0;
-		height: 0;
-		transition: width 200ms ease-in;
+		right: 0;
+		top: 0;
+		transition: width 300ms ease-in-out;
 	}
 
 	.nav-items-header,
@@ -120,6 +131,7 @@ nav ul li {
 	}
 
 	.nav-close-label {
+		cursor: pointer;
 		color: var(--highlight-color);
 		display: flex;
 		align-items: center;
@@ -130,19 +142,12 @@ nav ul li {
 	#nav-toggle:checked ~ .nav-toggle-container {
 		visibility: collapse;
 		width: 0;
-		transition: all 200ms ease-in;
 	}
 	/* Show menu items when checkbox is checked */
-	#nav-toggle:checked ~ .nav-items-container {
-		display: block;
-		visibility: visible;
+	#nav-toggle:checked ~ .nav-items-container {		
 		z-index: 100;
-		right: 0;
-		top: 0;
-		height: 100dvh;
 		width: 50dvw;
-		background-color: var(--background-color);
-		opacity: 0.9;
+		transition: all 300ms ease-in-out;
 	}
 
 	#nav-toggle:checked ~ ul {
@@ -194,7 +199,7 @@ nav ul li {
 }
 
 /* Form elements */
-.warning{
+.warning {
 	color: var(--secondary-color);
 }
 .form-container,
@@ -345,6 +350,10 @@ footer {
 	margin: 0 auto;
 	padding: 20px 0;
 	color: var(--text-color);
+}
+
+footer a {
+	color: var(--highlight-color);
 }
 
 footer div {
