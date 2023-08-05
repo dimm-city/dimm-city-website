@@ -118,7 +118,7 @@ nav ul li {
 		display: flex;
 		justify-content: space-between;
 	}
-	
+
 	.nav-close-label {
 		color: var(--highlight-color);
 		display: flex;
@@ -127,13 +127,13 @@ nav ul li {
 		padding-inline: 0.5rem;
 		padding-block: 0.5rem;
 	}
-	#nav-toggle:checked ~.nav-toggle-container {
+	#nav-toggle:checked ~ .nav-toggle-container {
 		visibility: collapse;
 		width: 0;
 		transition: all 200ms ease-in;
 	}
 	/* Show menu items when checkbox is checked */
-	#nav-toggle:checked~.nav-items-container {
+	#nav-toggle:checked ~ .nav-items-container {
 		display: block;
 		visibility: visible;
 		z-index: 100;
@@ -148,8 +148,6 @@ nav ul li {
 	#nav-toggle:checked ~ ul {
 		display: block;
 	}
-
-
 
 	/* Make the menu vertical */
 	nav ul {
@@ -177,7 +175,6 @@ nav ul li {
 
 .hero {
 	text-align: center;
-
 	padding: 1rem 3rem;
 }
 
@@ -189,7 +186,7 @@ nav ul li {
 	letter-spacing: 0.2rem;
 }
 
-.hero p{
+.hero p {
 	text-wrap: balance;
 }
 .hero h1 {
@@ -197,6 +194,9 @@ nav ul li {
 }
 
 /* Form elements */
+.warning{
+	color: var(--secondary-color);
+}
 .form-container,
 .content-container {
 	width: 90%;
@@ -213,7 +213,7 @@ nav ul li {
 }
 
 @media (max-width: 768px) {
-	.hero h1{
+	.hero h1 {
 		white-space: initial;
 		text-wrap: balance;
 	}
@@ -307,6 +307,32 @@ button:focus-visible {
 	background-color: var(--secondary-color);
 	/* text-shadow: 0 0 1px var(--accent-color), 0 0 1px var(--accent-color), 0 0 5px var(--accent-color),
 		0 0 2px var(--accent-color), 0 0 2px var(--accent-color); */
+}
+
+.text-button {
+	display: inline-block;
+	text-align: center;
+	align-self: center;
+	text-decoration: none;
+	width: 100%;
+	font-family: var(--font-family);
+	font-size: 1rem;
+	border: 0;
+	border-radius: 0;
+	padding: 0;
+	margin: 0;
+	background: transparent;
+	white-space: nowrap;
+	display: inline-block;
+	cursor: pointer;
+	color: var(--highlight-color);
+	white-space: nowrap;
+}
+
+.text-button:hover,
+.text-button:focus-visible {
+	color: var(--secondary-color);
+	background: transparent;
 }
 
 /* Footer */
