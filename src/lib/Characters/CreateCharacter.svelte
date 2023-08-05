@@ -8,7 +8,7 @@
 	import LoggedInContainer from '$lib/Shared/Components/LoggedInContainer.svelte';
 	import StripePayment from '$lib/Shared/Components/StripePayment.svelte';
 	import Article from '$lib/Shared/Components/Article.svelte';
-	import { loadWallets, profile } from '$lib/Shared/Stores/UserStore';
+	import { loadWallets, user } from '$lib/Shared/Stores/UserStore';
 	import { createCharacter } from './Queries/createCharacter';
 	import ProfileImage from './Components/ProfileImage.svelte';
 
@@ -34,13 +34,13 @@
 	let currentStep = 3;
 	let metadata = {
 		slug: '',
-		user: $profile?.id
+		user: $user?.id
 	};
 
 	$: if (selectedRelease) {
 		metadata = {
 			slug: selectedRelease.attributes.slug,
-			user: $profile?.id
+			user: $user?.id
 		};
 	}
 	onMount(async () => {
@@ -60,7 +60,7 @@
 			isSaving = true;
 			metadata = {
 				slug: selectedRelease?.attributes.slug,
-				user: $profile?.id
+				user: $user?.id
 			};
 
 			try {

@@ -2,7 +2,7 @@
 	import { getSessionValue } from '$lib/Shared/Stores/StoreUtils';
 	import { page } from '$app/stores';
 	import { config } from '$lib/Shared/config';
-	import { jwt, loadProfile, loadWallets, profile } from '$lib/Shared/Stores/UserStore';
+	import { jwt, loadProfile, loadWallets, user } from '$lib/Shared/Stores/UserStore';
 	import { onMount } from 'svelte';
 	const token = $page.url.searchParams.get('access_token');
 	const provider = $page.params.provider;
@@ -16,7 +16,7 @@
 
 		const cbData = await callback.json();
 		$jwt = cbData.jwt;
-		$profile = { ...cbData };
+		$user = { ...cbData };
 		if (document) {
 			await loadProfile();
 			await loadWallets(true);

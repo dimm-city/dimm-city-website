@@ -5,7 +5,7 @@ import { get } from 'svelte/store';
 
 export async function loadProfile() {
 	const token = get(jwt);
-	const p = get(profile);
+	const p = get(user);
 	
 	if (token && p.username == null) {
 		let data = null;
@@ -17,9 +17,9 @@ export async function loadProfile() {
 		if (response.ok) {
 			
 			data = await response.json();
-			console.log('settinig profile', data);
+			console.log('profile', data);
 		}
-		if (data) profile.set(data);
+		if (data) user.set(data);
 	}
 }
 
@@ -28,8 +28,8 @@ jwt.subscribe((value) => {
 	setSessionValue('jwt', value);
 });
 
-export const profile = writable(getSessionValue('profile') ?? null);
-profile.subscribe((value) => {
+export const user = writable(getSessionValue('profile') ?? null);
+user.subscribe((value) => {
 	setSessionValue('profile', value);
 });
 
@@ -87,7 +87,7 @@ export async function loadWallets(force = false) {
 
 export const logout = () => {
 	jwt.set(null);
-	profile.set(null);
+	user.set(null);
 
 	setSessionValue('wallets', []);
 };

@@ -2,7 +2,7 @@
 	import { config } from '$lib/Shared/config';
 	import LandingShell from '$lib/Shared/Shell/LandingShell.svelte';
 	import LoggedInContainer from '$lib/Shared/Components/LoggedInContainer.svelte';
-	import { profile } from '$lib/Shared/Stores/UserStore';
+	import { user } from '$lib/Shared/Stores/UserStore';
 </script>
 
 <svelte:head>
@@ -48,7 +48,7 @@
 					</div>
 				</div>
 				<div class="logged-in">
-					<h2>Welcome back {$profile?.settings?.displayName ?? $profile?.username}!</h2>
+					<h2>Welcome back {$user?.profile?.displayName ?? $user?.username}!</h2>
 					<h4>Thank you for registering to be a citizen of Dimm City.</h4>
 					<section>
 						<p>

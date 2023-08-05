@@ -1,13 +1,13 @@
 <script>
 	import LoggedInContainer from '$lib/Shared/Components/LoggedInContainer.svelte';
 	import LandingShell from '$lib/Shared/Shell/LandingShell.svelte';
-	import { logout, profile } from '$lib/Shared/Stores/UserStore';
+	import { logout, user } from '$lib/Shared/Stores/UserStore';
 	import { config } from '$lib/Shared/config';
 
 	/** @type {import('./$types').PageData} */
 	export let data;
 
-	$: data = JSON.parse(JSON.stringify($profile));
+	$: data = JSON.parse(JSON.stringify($user));
 	let editing = false;
     /**
 	 * @type {any}
@@ -16,7 +16,7 @@
 	function updateProfile() {
 		//Send to API
 
-		$profile = JSON.parse(JSON.stringify(data));
+		$user = JSON.parse(JSON.stringify(data));
 		editing = false;
 	}
 	function startEditing() {

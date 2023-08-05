@@ -1,6 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
-	import { profile, logout, loadWallets, loadProfile } from '$lib/Shared/Stores/UserStore';
+	import { user, logout, loadWallets, loadProfile } from '$lib/Shared/Stores/UserStore';
 	import { getCharactersByIds, getCharactersByUser } from '$lib/Shared/Stores/getCharacters';
 	import PagedResults from '../Shared/Components/PagedResults.svelte';
 	import MenuItem from '../Shared/Components/Menu/MenuItem.svelte';
@@ -18,7 +18,7 @@
 			token: {
 				wallet: {
 					user: {
-						id: $profile.id
+						id: $user.id
 					}
 				}
 			}
@@ -39,7 +39,7 @@
 </script>
 
 <div class="header">
-	<h1>{$profile?.settings?.displayName ?? $profile?.username}</h1>
+	<h1>{$user?.profile?.displayName ?? $user?.username}</h1>
 	<!-- svelte-ignore a11y-missing-attribute -->
 	<!-- <p>{@html $profile?.settings?.bio ?? ''}</p> -->
 </div>
