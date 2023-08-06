@@ -75,7 +75,8 @@ nav ul li {
 }
 
 /* Hide the checkbox */
-#nav-toggle, .nav-toggle-label {
+#nav-toggle,
+.nav-toggle-label {
 	display: none;
 }
 
@@ -86,7 +87,7 @@ nav ul li {
 
 /* Show the toggle button on small screens */
 @media screen and (max-width: 768px) {
-	nav{
+	nav {
 		padding-right: 0;
 		padding-left: 1rem;
 	}
@@ -144,7 +145,7 @@ nav ul li {
 		width: 0;
 	}
 	/* Show menu items when checkbox is checked */
-	#nav-toggle:checked ~ .nav-items-container {		
+	#nav-toggle:checked ~ .nav-items-container {
 		z-index: 100;
 		width: 50dvw;
 		transition: all 300ms ease-in-out;
@@ -169,6 +170,16 @@ nav ul li {
 	}
 }
 
+h1 {
+	margin-bottom: 1rem;
+	color: var(--accent-color);
+	text-wrap: balance;
+}
+h2 {
+	margin-top: 1.25rem;
+	color: var(--secondary-color);
+	text-wrap: balance;
+}
 /* Main Content */
 .centered-container {
 	display: flex;
@@ -281,7 +292,7 @@ label {
 }
 
 a {
-	color: var(--accent-color);
+	color: var(--secondary-color);
 }
 
 a.button,

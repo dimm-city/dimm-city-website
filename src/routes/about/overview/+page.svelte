@@ -1,12 +1,10 @@
 <script>
-	import LandingShell from '$lib/Shared/Shell/LandingShell.svelte';
-
-	export let data;
+	import LandingShell from '$lib/Shared/Shell/LandingShell.svelte';	
 </script>
 
 <LandingShell>
     <article class="content-container">
-        <h1>System Overview</h1>
+    <h1>System Overview</h1>
 	<p>
 		Welcome, Dreamers, to the overview of Dimm City RPG, where the essence of tabletop gaming melds
 		with the vibrancy of cyberpunk, the intrigue of sci-fi, and the magic of fantasy.

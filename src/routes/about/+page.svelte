@@ -39,14 +39,4 @@
 			is not the sky, but your ability to dream.
 		</p>
 	</article>
-	<style>
-		h1 {
-			margin-bottom: 1rem;
-			color: var(--accent-color);
-		}
-		h2 {
-			margin-top: 1.25rem;
-			color: var(--secondary-color);
-		}
-	</style>
 </LandingShell>

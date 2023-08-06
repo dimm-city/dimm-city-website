@@ -12,7 +12,7 @@
 	let _temp;
 	async function saveChanges() {
 		//Send to API
-		const result = await updateProfile($user.profile);
+		await updateProfile($user.profile);
 		editing = false;
 	}
 	function startEditing() {
@@ -24,6 +24,7 @@
 		$user = JSON.parse(_temp);
 		editing = false;
 	}
+	if ($user.profile == null) $user.profile = {};
 </script>
 
 <LandingShell>
@@ -43,7 +44,7 @@
 						<!-- svelte-ignore a11y-missing-content -->
 						<h1 contenteditable="true" bind:innerText={$user.profile.displayName} />
 					{:else}
-						<h1>{$user.profile.displayName}</h1>
+						<h1>{$user.profile?.displayName}</h1>
 					{/if}
 					<div class="profile-menu">
 						{#if editing}
@@ -73,18 +74,20 @@
 					<span>email:</span>
 					{#if editing}
 						<span contenteditable="true" bind:innerText={$user.profile.email} />
-						
 					{:else}
 						<span>{$user?.profile?.email ?? 'Missing email address'}</span>
-						
 					{/if}
-					
 				</h4>
 				{#if $user?.profile?.email?.endsWith('strapi.io')}
 					<small class="warning">Please update your email address</small>
 				{/if}
 				<h4>
-				<Toggle bind:checked={$user.profile.notifications} label="Receive Dimm City News" enabled={editing}/></h4>
+					<Toggle
+						bind:checked={$user.profile.notifications}
+						label="Receive Dimm City News"
+						enabled={editing}
+					/>
+				</h4>
 			</div>
 			<div>
 				<h4><span>bio:</span></h4>
@@ -108,11 +111,14 @@
 	hr {
 		margin-block: 0.25rem;
 	}
-	
-	h1, h4, h4 > span, p{
+
+	h1,
+	h4,
+	h4 > span,
+	p {
 		padding-block: 0.2rem;
 	}
-	h1{
+	h1 {
 		margin-bottom: 0.5rem;
 	}
 	h4 > span:first-of-type {
