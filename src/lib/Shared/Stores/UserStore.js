@@ -3,35 +3,67 @@ import { getSessionValue, setSessionValue } from '$lib/Shared/Stores/StoreUtils'
 import { config } from '$lib/Shared/config';
 import { get } from 'svelte/store';
 
+export const jwt = writable(getSessionValue('jwt') ?? null);
+jwt.subscribe((value) => {
+	setSessionValue('jwt', value);
+});
+
+export const user = writable(getSessionValue('user') ?? null);
+user.subscribe((value) => {
+	setSessionValue('user', value);
+});
+
 export async function loadProfile() {
 	const token = get(jwt);
 	const p = get(user);
-	
+
 	if (token && p.username == null) {
-		let data = null;
+		let result = null;
 		const response = await fetch(`${config.apiBaseUrl}/users/me?fields=*&populate=*`, {
 			headers: {
 				Authorization: `Bearer ${token}`
 			}
 		});
 		if (response.ok) {
-			
-			data = await response.json();
-			console.log('profile', data);
+			result = await response.json();
+			console.log('profile loaded', result);
 		}
-		if (data) user.set(data);
+		if (result) user.set(result);
 	}
 }
 
-export const jwt = writable(getSessionValue('jwt') ?? null);
-jwt.subscribe((value) => {
-	setSessionValue('jwt', value);
-});
+/**
+ * @param {{ email: null; id: any; }} profile
+ */
+export async function updateProfile(profile) {
+	const token = get(jwt);
+	const userValue = get(user);
 
-export const user = writable(getSessionValue('profile') ?? null);
-user.subscribe((value) => {
-	setSessionValue('profile', value);
-});
+	if (token && profile?.email != null) {
+		let result = null;
+		const response = await fetch(`${config.apiBaseUrl}/dimm-city/profiles/${profile.id}`, {
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`
+			},
+			body: JSON.stringify({ data: profile })
+		});
+		if (response.ok) {
+			result = await response.json();
+			console.log('profile updated', result);
+		}
+		if (result) {
+			user.set({
+				...userValue,
+				profile: {
+					id: result.data.id,
+					...result.data.attributes
+				}
+			});
+		}
+	}
+}
 
 /** @type {import('svelte/store').Writable<CW.Wallet[]>} */
 export const wallets = writable(getSessionValue('wallets') ?? null);
@@ -49,17 +81,19 @@ export const loggedIn = derived(
 );
 
 /**
- * @param {CW.Token | string} token
+ * @param {CW.Token } token
  */
-export function ownsToken(token){
+export function ownsToken(token) {
 	//return true;
 	const userWallets = get(wallets) ?? [];
 	console.log('checking ownership of token', token);
-	const id =  (token?.id || token?.data?.id || token || -1).toString();
+	const id = (token?.id || token?.data?.id || token || -1).toString();
 	const result =
 		id != '-1' &&
 		Array.isArray(userWallets) &&
-		userWallets?.some((w) => w.tokens?.some((t) => t.id.toString() === id || t.slug === token));
+		userWallets?.some((w) =>
+			w.tokens?.some((t) => t.id.toString() === id || t.tokenId === token?.toString())
+		);
 
 	return result;
 }
