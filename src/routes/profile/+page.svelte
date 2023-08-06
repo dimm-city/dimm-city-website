@@ -24,7 +24,10 @@
 		$user = JSON.parse(_temp);
 		editing = false;
 	}
-	if ($user.profile == null) $user.profile = {};
+	$: if ($user && $user.profile == null)
+		$user.profile = {
+			email: $user.email
+		};
 </script>
 
 <LandingShell>

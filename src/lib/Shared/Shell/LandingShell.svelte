@@ -22,21 +22,17 @@
 		<a href="/">Dimm City RPG</a>
 		<div class="nav-toggle-container">
 			<label for="nav-toggle" class="nav-toggle-label">
-				<!-- <span />
-				<span />
-				<span /> -->
 				&lt;&lt;
 			</label>
 		</div>
 		<div class="nav-items-container">
-			
 			<ul>
 				<li><a href="/about/overview">Overview</a></li>
 				<li><a href="/about/faq">FAQ</a></li>
-				<li><a href="/about/glossary">Glossary</a></li>				
+				<li><a href="/about/glossary">Glossary</a></li>
 				<li><a href="/about">About</a></li>
+				<li><a href="/profile">Profile</a></li>
 				{#if $loggedIn}
-					<li><a href="/profile">Profile</a></li>
 					<li><a href="/console">Console</a></li>
 				{/if}
 			</ul>
@@ -89,8 +85,8 @@
 	.video-container {
 		position: fixed;
 		z-index: -1;
-		width: 100%; /* or any specific size */
-		height: 100%; /* or any specific size */
+		width: 100%;
+		height: 100%;
 		overflow: hidden;
 		opacity: 0.3;
 	}
