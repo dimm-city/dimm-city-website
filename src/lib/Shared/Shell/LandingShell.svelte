@@ -29,11 +29,7 @@
 			</label>
 		</div>
 		<div class="nav-items-container">
-			<div class="nav-items-header">
-				<span>&nbsp;</span>
-				<label for="nav-toggle" class="nav-close-label"> &gt;&gt; </label>
-			</div>
-			<hr class="nav-separator" />
+			
 			<ul>
 				<li><a href="/about/overview">Overview</a></li>
 				<li><a href="/about/faq">FAQ</a></li>
@@ -91,7 +87,7 @@
 
 <style>
 	.video-container {
-		position: absolute;
+		position: fixed;
 		z-index: -1;
 		width: 100%; /* or any specific size */
 		height: 100%; /* or any specific size */
