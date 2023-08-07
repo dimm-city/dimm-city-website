@@ -12,10 +12,10 @@ const markdownDir = path.join(process.cwd(), 'src/pages');
 // }
 
 /**
- * @param {string} filePath
+ * @param {string} slug
  */
-export async function getFile(filePath) {
-	//const filePath = path.join(markdownDir, `${slug}.md`);
+export async function getFile(slug) {
+	const filePath = path.join(markdownDir, `${slug}.md`);
 
 	if (!fs.existsSync(filePath)) {
 		return null;
