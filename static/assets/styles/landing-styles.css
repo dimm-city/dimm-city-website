@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css?family=Tomorrow:400,700&display=swap');
-@import url('animations.css');
 /* Reset some default browser styles */
 * {
 	margin: 0;
@@ -126,6 +125,8 @@ article {
 	width: min(80%, 80ch);
 	margin: auto;
 	margin-top: 2rem;
+	opacity: 0;
+	animation: fadeIn var(--transition-in-time) ease-in var(--transition-in-delay) 1 both;
 }
 
 p {
@@ -262,4 +263,23 @@ footer p,
 footer small {
 	white-space: nowrap;
 	text-overflow: ellipsis;
+}
+
+
+@-webkit-keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
 }

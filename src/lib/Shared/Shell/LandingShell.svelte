@@ -61,6 +61,9 @@
 </footer>
 
 <style>
+	:global(article){
+		opacity: 0;
+	}
 	.video-container {
 		position: fixed;
 		z-index: -1;
@@ -77,14 +80,5 @@
 		width: 100%;
 		height: 100%;
 		object-fit: cover; /* this will help the video to cover the entire container */
-	}
-	@media (max-width: 750px) {
-		/* video {
-			display: none;
-		}
-		.video-container {
-			background: url('fallback.jpg') no-repeat;
-			background-size: cover;
-		} */
 	}
 </style>

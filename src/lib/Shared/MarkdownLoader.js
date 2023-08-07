@@ -2,8 +2,9 @@
 import fs from 'fs';
 import { marked } from "marked";
 import matter from 'gray-matter';
+import path from 'path';
 
-//const markdownDir = path.join(process.cwd(), 'src/routes/markdown');
+const markdownDir = path.join(process.cwd(), 'src/pages');
 
 // export async function getFiles() {
 // 	const filenames = fs.readdirSync(markdownDir);

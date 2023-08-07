@@ -7,6 +7,7 @@
 	animation: fadeIn var(--transition-in-time) ease-in var(--transition-in-delay) 1 both;
 }
 
+
 @-webkit-keyframes fadeInUp {
 	0% {
 		opacity: 0;

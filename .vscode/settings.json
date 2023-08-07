@@ -15,4 +15,8 @@
         "**/node_modules": true
    
     },
+    "cSpell.words": [
+        "dreamverse",
+        "Kickstarter"
+    ],
 }
