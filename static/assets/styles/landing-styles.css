@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Tomorrow:400,700&display=swap');
-
+@import url('animations.css');
 /* Reset some default browser styles */
 * {
 	margin: 0;
@@ -20,6 +20,10 @@
 	--highlight-color: #f8f400da;
 	--header-font-family: 'Orbitron', sans-serif;
 	--font-family: 'Tomorrow', 'Droid Sans Mono', 'Comfortaa', 'Orbitron', sans-serif;
+
+
+	--transition-in-time: 300ms;
+	--transition-in-delay: 10ms;
 }
 
 html {

@@ -1,6 +1,4 @@
 <script>
-	import { config } from '$lib/Shared/config';
-	import { loggedIn } from '../Stores/UserStore';
 	import LandingMenu from './LandingMenu.svelte';
 	export let imageUrl = '/assets/imgs/landing-bg.png';
 	export let videoUrl = 'https://files.dimm.city/assets/locations/burning-drab-square.mp4';

@@ -1,13 +1,9 @@
 <script>
 	import { config } from '$lib/Shared/config';
 	import LandingShell from '$lib/Shared/Shell/LandingShell.svelte';
-	import LoggedInContainer from '$lib/Shared/Components/LoggedInContainer.svelte';
-	import { user } from '$lib/Shared/Stores/UserStore';
+	import { loggedIn, user } from '$lib/Shared/Stores/UserStore';
 </script>
 
-<svelte:head>
-	<link rel="stylesheet" href="/assets/styles/landing-styles.css" />
-</svelte:head>
 <LandingShell>
 	<div class="centered-container">
 		<section class="form-container">
@@ -18,46 +14,47 @@
 				</section>
 			</div>
 			<hr />
-			<LoggedInContainer>
-				<div slot="public" class="fade-in">
-					<h2>Hello dreamer, have you come looking for the secrets of Dimm City?</h2>
-
-					<p>
-						Dreamer, the time is nigh! We're on the brink of launching our Kickstarter campaign for
-						the 'Dreamer's Guide to Dimm City'. This isn't just a guide, it's your ticket to the
-						ethereal realms of Dimm City, where dreams meld into reality. Be part of our journey.
-						Sign up now to stay updated on our progress, and be the first to step into the
-						dreamscape when it unfolds.
-					</p>
-					<p>
-						Remember, Dreamer, the future of Dimm City rests in your hands – or rather, in your
-						dreams. Wake up to the dream!
-					</p>
-					<p>
-						There are several options available to register your account. Simply choose one from the
-						list below, and being your journey into the city...
-					</p>
-
-					<div class="register-links">
-						<a class="button" href={config.apiBaseUrl + '/connect/google'}
-							><i class="bi bi-google" />Register with Google</a
-						>
-						<a class="button" href={config.apiBaseUrl + '/connect/reddit'}
-							><i class="bi bi-reddit" />Register with Reddit</a
-						>
-					</div>
-				</div>
-				<div class="logged-in">
-					<h2>Welcome back {$user?.profile?.displayName ?? $user?.username}!</h2>
-					<h4>Thank you for registering to be a citizen of Dimm City.</h4>
+			{#if $loggedIn}
+				<div class="logged-in fade-in">
+					<h2>Welcome {$user?.profile?.displayName ?? $user?.username}, fellow Dreamer</h2>
 					<section>
 						<p>
-							Please check back often to get the latest news from Dimm City. Don't forget to join
-							our
+							You have entered the enigmatic maze of reality and illusion that is Dimm City. Our
+							lead artist, Scott Georges, has painted the backdrop of our dreamworld with hues of
+							sci-fi and cyberpunk, a world where your imagination holds the reins.
+						</p>
+
+						<p>
+							Dimm City, the crux of our tale, teeters between the tangible and the ethereal. It is
+							a metropolis sculpted from your deepest dreams and darkest nightmares, where the
+							glimmering skyscrapers meet the nebulous clouds of the dreamverse.
+						</p>
+
+						<p>
+							In this game, you're not just a bystander, but a luminary of lucid dreaming. As you
+							weave through the labyrinth of Dimm City, you become a puppeteer of your own fate,
+							crafting scenes that ripple through the dream fabric of this world.
+						</p>
+
+						<p>
+							You'll roll the dice, of course, but they're not the masters of your destiny. You are.
+							Your choices, your actions, and your dreams shape the course of your journey. You'll
+							engage with dream economies, manipulate distances, and navigate deadly scenes, all in
+							a day's work.
+						</p>
+
+						<p>
+							Dimm City isn't just a game. It's a dreamscape that breathes and pulsates with your
+							imagination. Are you ready to wake up in this dream, Dreamer? Because in Dimm City,
+							the limit is not the sky, but your ability to dream.
+						</p>
+
+						<p>
+							Come around often to stay clued up to the latest news from Dimm City. Don't forget to
+							join the
 							<a href="https://www.reddit.com/r/DimmCityRPG/" target="_blank"
 								>Dimm City RPG subreddit</a
-							>
-							and check the status of our current <a href="/" target="_blank">kickstarter</a>.
+							>.
 						</p>
 						<p>
 							We are hard at work extracting information from the ruins of the DC Archives. We hope
@@ -66,28 +63,37 @@
 							>
 							to learn more about the city and it's citizens.
 						</p>
+						<p>Check the status of our current <a href="/" target="_blank">kickstarter</a></p>
 					</section>
 				</div>
-			</LoggedInContainer>
-			<!--<form>
-				<label for="name">Name</label>
-				<input type="text" id="name" placeholder="Your name" />
+			{:else}
+				<div class="fade-in">
+					<h2>Hello dreamer, have you come looking for the secrets of Dimm City?</h2>
+					<section>
+						<p>
+							Dreamer, the time is nigh! We're on the brink of launching our Kickstarter campaign
+							for the 'Dreamer's Guide to Dimm City'. This isn't just a guide, it's your ticket to
+							the ethereal realms of Dimm City, where dreams meld into reality. Be part of our
+							journey. Sign up now to stay updated on our progress, and be the first to step into
+							the dreamscape when it unfolds.
+						</p>
+						<p>
+							Remember, Dreamer, the future of Dimm City rests in your hands – or rather, in your
+							dreams. Wake up to the dream!
+						</p>
+						<p>Simply sign in, and being your journey into the city...</p>
 
-				<label for="email">Email</label>
-				<input type="email" id="email" placeholder="Your email" />
-
-				 <label for="select">Select an option</label>
-		<select id="select">
-			<option value="option1">Option 1</option>
-			<option value="option2">Option 2</option>
-			<option value="option3">Option 3</option>
-		</select>
-		
-		<label for="message">Message</label>
-		<textarea id="message" rows="4" placeholder="Your message"></textarea>
-		
-				<button type="submit">Stay Informed</button>
-			</form> -->
+						<div class="register-links">
+							<a class="button" href={config.apiBaseUrl + '/connect/google'}
+								><i class="bi bi-google" />Sign in with Google</a
+							>
+							<a class="button" href={config.apiBaseUrl + '/connect/reddit'}
+								><i class="bi bi-reddit" />Sign with Reddit</a
+							>
+						</div>
+					</section>
+				</div>
+			{/if}
 		</section>
 	</div>
 </LandingShell>
@@ -99,9 +105,6 @@
 	}
 	hr {
 		margin-bottom: 2rem;
-	}
-	.logged-in h2 {
-		color: var(--highlight-color);
 	}
 	.logged-in section {
 		padding-block: 1rem;
