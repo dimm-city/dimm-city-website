@@ -1,6 +1,7 @@
 <script>
 	import { config } from '$lib/Shared/config';
 	import { loggedIn } from '../Stores/UserStore';
+	import LandingMenu from './LandingMenu.svelte';
 	export let imageUrl = '/assets/imgs/landing-bg.png';
 	export let videoUrl = 'https://files.dimm.city/assets/locations/burning-drab-square.mp4';
 </script>
@@ -17,27 +18,7 @@
 </div>
 
 <header>
-	<nav>
-		<input type="checkbox" id="nav-toggle" />
-		<a href="/">Dimm City RPG</a>
-		<div class="nav-toggle-container">
-			<label for="nav-toggle" class="nav-toggle-label">
-				&lt;&lt;
-			</label>
-		</div>
-		<div class="nav-items-container">
-			<ul>
-				<li><a href="/about/overview">Overview</a></li>
-				<li><a href="/about/faq">FAQ</a></li>
-				<li><a href="/about/glossary">Glossary</a></li>
-				<li><a href="/about">About</a></li>
-				<li><a href="/profile">Profile</a></li>
-				{#if $loggedIn}
-					<li><a href="/console">Console</a></li>
-				{/if}
-			</ul>
-		</div>
-	</nav>
+<LandingMenu />
 </header>
 <main>
 	<slot />
