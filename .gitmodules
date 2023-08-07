@@ -1,0 +1,3 @@
+[submodule "op-manual"]
+	path = op-manual
+	url = https://github.com/dimm-city/dc-op-manual.git
