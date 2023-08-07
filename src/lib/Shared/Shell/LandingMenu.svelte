@@ -1,5 +1,4 @@
 <script>
-	import { onMount, onDestroy } from 'svelte';
 	import { loggedIn } from '../Stores/UserStore';
 
 	let checked = false;
@@ -10,30 +9,27 @@
 
 	function toggleMenu() {}
 
-	onMount(() => {
-		document.body.addEventListener('click', onBodyClick);
-	});
-
-	onDestroy(() => {
-		document.body.removeEventListener('click', onBodyClick);
-	});
+	const bodyHandler = () => {
+		if (checked) document.body.addEventListener('click', onBodyClick);
+		else document.body.removeEventListener('click', onBodyClick);
+	};
 </script>
 
 <nav>
-	<input bind:checked type="checkbox" id="nav-toggle" />
+	<input bind:checked type="checkbox" id="nav-toggle" on:change={bodyHandler} />
 	<a class="site-title" href="/">Dimm City RPG</a>
 	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 	<!-- svelte-ignore a11y-interactive-supports-focus -->
 	<div
 		class="nav-toggle-container"
-		on:click|stopPropagation={toggleMenu}
-		on:keyup|stopPropagation={toggleMenu}
 		role="button"
 		tabindex="0"
+        on:click|stopPropagation={toggleMenu}
+        on:keyup|stopPropagation={toggleMenu}
 	>
 		<label for="nav-toggle" class="nav-toggle-label"> &lt;&lt; </label>
 	</div>
-	<div class="nav-items-container">
+	<div class="nav-items-container" on:visibilitychange={bodyHandler}>
 		<ul>
 			<li><a href="/about/overview">Overview</a></li>
 			<li><a href="/about/faq">FAQ</a></li>
@@ -100,7 +96,7 @@
 	.site-title {
 		display: block;
 		width: auto;
-        white-space: nowrap;
+		white-space: nowrap;
 	}
 	/* Show the toggle button on small screens */
 	@media screen and (max-width: 768px) {
