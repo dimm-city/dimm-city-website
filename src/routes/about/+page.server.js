@@ -7,3 +7,6 @@ export const load = async ({ params }) => {
 		data: file?.data || null
 	};
 };
+
+export const prerender = true;
+export const csr = false;

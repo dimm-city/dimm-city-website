@@ -21,7 +21,7 @@
 				>
 			</li>
 			<li>
-				<a rel="noreferrer" target="_blank" href="svelte-step-wizard - npm">svelte-step-wizard</a>
+				<a rel="noreferrer" target="_blank" href="https://npmjs.org/svelte-step-wizard">svelte-step-wizard</a>
 			</li>
 			<li><a rel="noreferrer" target="_blank" href="https://www.typescriptlang.org">TypeScript</a></li>
 			<li><a rel="noreferrer" target="_blank" href="https://eslint.org">eslint</a></li>

@@ -5,10 +5,11 @@
 	import TwitterButton from '$lib/Shared/Components/TwitterButton.svelte';
 	import { ownsToken } from '$lib/Shared/Stores/UserStore.js';
 	import { updateEntity } from '$lib/Shared/SvelteStrapi.js';
+	import { browser } from '$app/environment';
 
 	export let data;
 	let originalCharacter = JSON.stringify(data);
-	let isEditable = ownsToken(data.attributes.tokenId);
+	let isEditable = browser && ownsToken(data.attributes.tokenId);
 	let isEditing = false;
 	let isSaving = false;
 

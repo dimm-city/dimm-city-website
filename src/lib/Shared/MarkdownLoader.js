@@ -1,15 +1,9 @@
-// src/lib/markdownLoader.js
 import fs from 'fs';
 import { marked } from "marked";
 import matter from 'gray-matter';
 import path from 'path';
 
 const markdownDir = path.join(process.cwd(), 'src/pages');
-
-// export async function getFiles() {
-// 	const filenames = fs.readdirSync(markdownDir);
-// 	return filenames.map((filename) => filename.replace('.md', ''));
-// }
 
 /**
  * @param {string} slug
