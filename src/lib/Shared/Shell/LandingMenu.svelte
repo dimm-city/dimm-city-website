@@ -35,6 +35,7 @@
 			<li><a href="/about/faq">FAQ</a></li>
 			<li><a href="/about/glossary">Glossary</a></li>
 			<li><a href="/about">About</a></li>
+			<li><a href="/gallery">Gallery</a></li>
 			<li><a href="/profile">Profile</a></li>
 			{#if $loggedIn}
 				<li><a href="/console">Console</a></li>

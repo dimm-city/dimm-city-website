@@ -27,15 +27,16 @@
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
 		"@typescript-eslint/parser": "^5.45.0",
 		"augmented-ui": "^2.0.0",
+		"bigger-picture": "^1.1.11",
 		"csv-parse": "^5.4.0",
 		"date-fns": "^2.29.3",
 		"eslint": "^8.28.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-svelte": "^2.32.2",
 		"ethers": "^6.6.3",
+		"gray-matter": "^4.0.3",
 		"markdown-it": "^13.0.1",
 		"marked": "^7.0.0",
-		"gray-matter": "^4.0.3",
 		"prettier": "^2.8.0",
 		"prettier-plugin-svelte": "^2.10.1",
 		"qs": "^6.11.2",
@@ -52,7 +53,5 @@
 		"typescript": "^5.0.0",
 		"vite": "^4.0.0"
 	},
-	"type": "module",
-	"dependencies": {
-	}
+	"type": "module"
 }
