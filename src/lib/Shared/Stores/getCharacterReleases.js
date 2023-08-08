@@ -1,8 +1,8 @@
-import { Strapi } from '$lib/Shared/StrapiClient';
+import { StrapiClient } from '$lib/Shared/StrapiClient';
 import { config } from '$lib/Shared/config';
 
 export async function getCharacterReleases() {
-	const strapi = new Strapi(config.apiBaseUrl);
+	const strapi = new StrapiClient(config.apiBaseUrl);
 	const results = await strapi.search('dimm-city/characters', {
 		sort: ['name:asc'],
 		populate: ['mainImage', 'mainVideo'],

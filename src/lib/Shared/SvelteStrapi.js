@@ -1,6 +1,6 @@
 import qs from 'qs';
 import { getSessionValue } from './Stores/StoreUtils';
-import { Strapi } from './StrapiClient';
+import { StrapiClient } from './StrapiClient';
 import { config } from './config';
 
 /**
@@ -54,7 +54,7 @@ export async function loadSearchPageFromStrapi(
 		populate
 	};
 
-	const strapi = new Strapi(config.apiBaseUrl);
+	const strapi = new StrapiClient(config.apiBaseUrl);
 	const results = await strapi.search(contentType, query);
 
 	return results;
@@ -67,7 +67,7 @@ export async function loadSearchPageFromStrapi(
  */
 export async function loadEntityPageFromStrapi(page, contentType, query) {
 	const slug = page.params.slug;
-	const strapi = new Strapi(config.apiBaseUrl);
+	const strapi = new StrapiClient(config.apiBaseUrl);
 	const item = await strapi.loadBySlug(contentType, slug, query);
 	return item ?? { attributes: {} };
 }
@@ -79,6 +79,6 @@ export async function loadEntityPageFromStrapi(page, contentType, query) {
 export async function updateEntity(contentType, entity) {
 	let data = JSON.parse(JSON.stringify(entity));
 
-	const strapi = new Strapi(config.apiBaseUrl, getSessionValue('jwt'));
+	const strapi = new StrapiClient(config.apiBaseUrl, getSessionValue('jwt'));
 	strapi.updateEntity(contentType, data);
 }

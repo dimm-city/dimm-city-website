@@ -48,7 +48,7 @@ function getCurrentConfig() {
 	}
 	// output.stripePublicKey =
 	// 	'pk_test_51MmHcALeft6siyywTseJIs5awwWr469e2D9RQMI5a79oz1NGhg8ijvPNH1NbgMrM2aIn4KadqswLuTF2kc4tZVNp00UQj2pA8Z';
-
+	output.storageBaseUrl = "http://localhost:1337"
 	output.version = '0.9.0';
 	return output;
 }

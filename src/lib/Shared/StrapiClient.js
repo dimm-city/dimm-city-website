@@ -1,13 +1,15 @@
 import qs from 'qs';
 
-export class Strapi {
+export class StrapiClient {
 	/**
 	 * @param {string} baseURL
 	 * @param {string|null} jwt
+	 * @param {any} _fetch
 	 */
-	constructor(baseURL, jwt = null) {
+	constructor(baseURL, jwt = null, _fetch = null) {
 		this.baseURL = baseURL;
 		this.jwt = jwt;
+		this.fetch = _fetch || fetch;
 	}
 
 	/**
@@ -22,6 +24,8 @@ export class Strapi {
 	/**
 	 * @param {string} contentType
 	 * @param {any} query
+	 * @template T
+	 * @returns {(Promise<Strapi.APIResponse<T | null>>)}
 	 */
 	async search(contentType, query) {
 		const url = this._getUrlWithQuery(contentType, query);
@@ -37,6 +41,17 @@ export class Strapi {
 			return data;
 		} catch (error) {
 			console.error('Error in search:', error);
+			return {
+				data: [],
+				meta: {
+				 pagination: {
+					 page: 0,
+					 pageSize: 0,
+					 total: 0,
+					 pageCount: 0				 
+				 }
+				}
+			};
 		}
 	}
 

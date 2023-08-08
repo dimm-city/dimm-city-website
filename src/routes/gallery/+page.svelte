@@ -3,7 +3,9 @@
 	import 'bigger-picture/css';
 	import BiggerPicture from 'bigger-picture/svelte';
 	import { onMount } from 'svelte';
-	export let data;
+	
+    /** @type {{items: BiggerPicture.Item[]}}*/
+    export let data;
 
 	onMount(() => {
 		let bp = BiggerPicture({
@@ -15,6 +17,7 @@
 		for (let link of imageLinks) {
 			link.addEventListener('click', openGallery);
 		}
+
 		function openGallery(e) {
 			e.preventDefault();
 			bp.open({
@@ -33,21 +36,24 @@
 
 <LandingShell>
 	<article class="content-container">
+
 		<div id="gallery-wrapper" />
+		<h1>Dimm City Gallery</h1>
 		<div class="thumbnail-wrapper">
 			{#each data.items as item}
+             
 				<div
 					class="thumbnail"
-                    data-title={item.name}
+                    data-title={item.title}
 					data-width={item.width}
 					data-height={item.height}
-					data-img={item.sources ? '' : item.src}
-					data-thumb={item.thumbnail}
-					data-alt={item.caption}
+					data-img={item.img}
+					data-thumb={item.thumb}
+					data-alt={item.title}
 					data-caption={item.caption}
 					data-sources={JSON.stringify(item.sources)}
 				>
-					<img src={item.thumbnail} alt={item.caption} />
+					<img src={item.thumb} alt={item.caption} />
 				</div>
 			{/each}
 		</div>

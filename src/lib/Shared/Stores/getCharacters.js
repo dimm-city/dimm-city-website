@@ -1,4 +1,4 @@
-import { Strapi } from '$lib/Shared/StrapiClient';
+import { StrapiClient } from '$lib/Shared/StrapiClient';
 import { config } from '$lib/Shared/config';
 
 const summaryRelationships = ['race', 'specialties', 'mainImage'];
@@ -8,7 +8,7 @@ const summaryFields = ['name', 'tokenId'];
  * @param {Number[]} ids
  */
 export async function getCharactersByIds(ids = []) {
-	const strapi = new Strapi(config.apiBaseUrl);
+	const strapi = new StrapiClient(config.apiBaseUrl);
 	const results = await strapi.search('dimm-city/characters', {
 		sort: ['name:asc'],
 		filters: {
@@ -31,7 +31,7 @@ export async function getCharactersByIds(ids = []) {
  * @param {Number} userId
  */
 export async function getCharactersByUser(userId) {
-	const strapi = new Strapi(config.apiBaseUrl);
+	const strapi = new StrapiClient(config.apiBaseUrl);
 	const results = await strapi.search('dimm-city/characters', {
 		sort: ['name:asc'],
 		filters: {
@@ -56,7 +56,7 @@ export async function getCharactersByUser(userId) {
  * @param {string} tokenId
  */
 export async function getCharacterByTokenId(tokenId) {
-	const strapi = new Strapi(config.apiBaseUrl);
+	const strapi = new StrapiClient(config.apiBaseUrl);
 	const results = await strapi.search('dimm-city/characters', {
 		sort: ['name:asc'],
 		filters: {
@@ -78,7 +78,7 @@ export async function getCharacterByTokenId(tokenId) {
 }
 
 export async function getLatestCharacters(pageSize = 5) {
-	const strapi = new Strapi(config.apiBaseUrl);
+	const strapi = new StrapiClient(config.apiBaseUrl);
 	const results = await strapi.search('dimm-city/characters', {
 		sort: ['name:asc'],
 		populate: summaryRelationships,

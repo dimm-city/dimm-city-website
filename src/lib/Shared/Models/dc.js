@@ -5,6 +5,7 @@
  * @property {string} env - The environment in which the application is running
  * @property {string} googleKey - The Google API key for the application
  * @property {string} baseUrl - The base URL for the application
+ * @property {string} storageBaseUrl - The base URL for the CDN/uploads/assets location
  * @property {string} graphUrl - The GraphQL endpoint URL for the application
  * @property {string} apiBaseUrl - The base API URL for the application
  * @property {string} stripePublicKey - The public key for Stripe
@@ -192,6 +193,25 @@
  * @property {DC.Location} attributes.location.data - Location of the faction
  */
 
+/**
+ * @typedef {Object} DC.GalleryItemAttributes
+ * @property {string} name - The name of the gallery item.
+ * @property {?string} caption - The caption of the gallery item, can be in rich text format and has a maximum length of 500 characters.
+ * @property {?string} height - The height description of the gallery item.
+ * @property {?string} width - The width description of the gallery item.
+ * @property {?{data: Strapi.Media}} mainVideo - The main video media associated with the gallery item. Only allows video types.
+ * @property {?{data: Strapi.Media}} mainImage - The main image media associated with the gallery item. Only allows image types.
+ * @property {string} slug - Unique identifier generated from the 'name' of the gallery item.
+ */
+
+/**
+ * @typedef {Object} DC.GalleryItem
+ * @property {number} id - The unique ID of the gallery item.
+ * @property {DC.GalleryItemAttributes} attributes - Detailed properties of the gallery item.
+ * @property {string} createdAt - The timestamp of the gallery item creation.
+ * @property {string} updatedAt - The timestamp of the last gallery item update.
+ * @property {?boolean} published_at - The timestamp when the gallery item was published. Only present if 'draftAndPublish' is enabled.
+ */
 
 /**
  * @typedef DC.HistoricalEvent

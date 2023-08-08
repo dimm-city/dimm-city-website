@@ -47,8 +47,8 @@
  * @typedef {Object} Strapi.Pagination
  * @property {number} page - The current page number
  * @property {number} pageSize - The number of items per page
- * @optional {?number} pageCount - The total number of pages
- * @optional {?number} total - The total number of items
+ * @property {?number} pageCount - The total number of pages
+ * @property {?number} total - The total number of items
  */
 
 /**
@@ -59,7 +59,7 @@
  * @property {Strapi.Pagination} pagination - Pagination parameters
  * @property {string} publicationState - Publication state filter
  * @property {Array<string>} locale - Array of strings defining the locale
- * @optional {any} filters - Filters to apply
+ * @property {?any} filters - Filters to apply
  */
 
 

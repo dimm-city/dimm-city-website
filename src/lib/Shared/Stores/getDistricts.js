@@ -1,9 +1,9 @@
-import { Strapi } from '$lib/Shared/StrapiClient';
+import { StrapiClient } from '$lib/Shared/StrapiClient';
 import { config } from '$lib/Shared/config';
 
 
 export async function getDistricts() {
-	const strapi = new Strapi(config.apiBaseUrl);
+	const strapi = new StrapiClient(config.apiBaseUrl);
 	const query = {...config.defaultSummaryQuery};
 	query.filters = {
 		region: {
