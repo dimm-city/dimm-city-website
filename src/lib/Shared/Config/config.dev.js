@@ -4,7 +4,7 @@ export const config = {
 	env: 'dev',
 	googleKey: '',
 	baseUrl: 'http://localhost:1337/',
-	storageBaseUrl: 'http://localhost:1337/',
+	storageBaseUrl: "http://localhost:1337",
 	graphUrl: 'http://localhost:1337/graphql',
 	apiBaseUrl: 'http://localhost:1337/api',
 	stripePublicKey:
