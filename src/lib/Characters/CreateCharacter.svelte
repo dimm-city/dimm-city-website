@@ -9,7 +9,7 @@
 	import StripePayment from '$lib/Shared/Components/StripePayment.svelte';
 	import Article from '$lib/Shared/Components/Article.svelte';
 	import { loadWallets, user } from '$lib/Shared/Stores/UserStore';
-	import { createCharacter } from './Queries/createCharacter';
+	import { createCharacter } from './Queries/CharacterStore';
 	import ProfileImage from './Components/ProfileImage.svelte';
 
 	const { addNotification } = getNotificationsContext();
