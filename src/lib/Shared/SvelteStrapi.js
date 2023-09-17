@@ -40,7 +40,7 @@ export async function search(_fetch, contentType, query) {
 export async function loadSearchPageFromStrapi(
 	page,
 	contentType,
-	fields = ['slug', 'name', 'shortDescription', 'type', 'tags'],
+	fields = ['slug', 'name', 'shortDescription', 'tags'],
 	populate = ['mainImage', 'mainVideo', 'mainModel']
 ) {
 	// pull page number, results per page, and sort order from query params

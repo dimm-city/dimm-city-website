@@ -3,7 +3,6 @@ export const load = async (/** @type {{ params: { pagination: any; sort: any; };
 	return await loadSearchPageFromStrapi(page, 'dimm-city/characters', [
 		'name',
 		'tokenId',
-		'slug',
-		'shortDescription'
+		'vibe'
 	]);
 };

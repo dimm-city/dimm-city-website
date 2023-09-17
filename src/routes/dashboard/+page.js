@@ -61,6 +61,6 @@ export const load = async (params) => {
 	console.log(data);
 	return data;
 };
-export const prerender = 'auto';
+export const prerender = false;
 export const ssr = true;
 export const csr = true;

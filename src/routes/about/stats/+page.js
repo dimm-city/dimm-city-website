@@ -1,6 +1,7 @@
 import { config } from '$lib/Shared/config';
 
 export const load = async () => {
+	console.log(config.apiBaseUrl);
 	const response = await fetch(`${config.apiBaseUrl}/dimm-city/stats`);
 	if (response.ok) {
 		const json = await response.json();
@@ -12,3 +13,7 @@ export const load = async () => {
 		return {};
 	}
 };
+
+export const csr = true;
+export const ssr = false;
+export const prerender = false;
