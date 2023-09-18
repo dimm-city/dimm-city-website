@@ -14,7 +14,9 @@
 
 	let originLocation;
 
-	$: character.attributes.originLocation.set = [character.attributes.originLocation.data];
+	$: if (!character.attributes.originLocation) character.attributes.originLocation = {};
+
+	$: character.attributes.originLocation.set = [character.attributes.originLocation?.data];
 </script>
 
 <div class="profile-row">
@@ -46,7 +48,7 @@
 				<span
 					>{character.attributes.specialties?.data?.length > 0
 						? character.attributes.specialties?.data?.map((s) => s.attributes?.name).join(', ')
-						: 'Unknown'}</span
+						: ''}</span
 				>
 			{/if}
 		</div>
@@ -63,15 +65,15 @@
 						bind:value={character.attributes.originLocation.data}
 					>
 						<div slot="selection" let:selection>
-							<span>{selection.name ?? selection.attributes?.name ?? 'Unknown'}</span>
+							<span>{selection.name ?? selection.attributes?.name ?? ''}</span>
 						</div>
 						<div slot="item" let:item let:index>
-							<span>{item.name ?? item.attributes?.name ?? 'Unknown'}</span>
+							<span>{item.name ?? item.attributes?.name ?? ''}</span>
 						</div>
 					</Select>
 				</div>
 			{:else}
-				<span>{character.attributes.originLocation?.data?.attributes?.name ?? 'Unknown'}</span>
+				<span>{character.attributes.originLocation?.data?.attributes?.name ?? ''}</span>
 			{/if}
 		</div>
 
@@ -88,15 +90,15 @@
 						bind:value={character.attributes.currentLocation.data}
 					>
 						<div slot="selection" let:selection>
-							<span>{selection.name ?? selection.attributes?.name ?? 'Unknown'}</span>
+							<span>{selection.name ?? selection.attributes?.name ?? ''}</span>
 						</div>
 						<div slot="item" let:item let:index>
-							<span>{item.name ?? item.attributes?.name ?? 'Unknown'}</span>
+							<span>{item.name ?? item.attributes?.name ?? ''}</span>
 						</div>
 					</Select>
 				</div>
 			{:else}
-				<span>{character.attributes.currentLocation?.data?.attributes?.name ?? 'Unknown'}</span>
+				<span>{character.attributes.currentLocation?.data?.attributes?.name ?? ''}</span>
 			{/if}
 		</div>
 
@@ -105,7 +107,7 @@
 			{#if isEditing}
 				<Input bind:value={character.attributes.vibe} maxlength="50" class="inline" />
 			{:else}
-				<span>{character.attributes.vibe}</span>
+				<span>{character.attributes.vibe ?? ''}</span>
 			{/if}
 		</div>
 
@@ -114,7 +116,7 @@
 			{#if isEditing}
 				<Textarea maxlength="150" bind:value={character.attributes.beliefs} />
 			{:else}
-				<span>{character.attributes.beliefs ?? 'Unknown'}</span>
+				<span>{character.attributes.beliefs ?? ''}</span>
 			{/if}
 		</div>
 
@@ -123,7 +125,7 @@
 			{#if isEditing}
 				<Textarea maxlength="150" bind:value={character.attributes.flaws} />
 			{:else}
-				<span>{character.attributes.flaws ?? 'Unknown'}</span>
+				<span>{character.attributes.flaws ?? ''}</span>
 			{/if}
 		</div>
 	</section>

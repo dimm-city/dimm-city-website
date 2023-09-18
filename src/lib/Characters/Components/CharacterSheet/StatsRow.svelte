@@ -30,7 +30,7 @@
 	</div>
 	<div class="cybernetics-container">
 		<h3>Cybernetics</h3>
-		<List data={character.attributes.cybernetics.data} maxItems={5} noItemsText="no cybernetics registered">
+		<List data={character.attributes?.cybernetics?.data} maxItems={5} noItemsText="no cybernetics registered">
 			<div let:item slot="item">
 				<button data-augmented-ui class="aug-button" on:click={() => viewAbility(item)}
 					>{item.attributes.name}</button

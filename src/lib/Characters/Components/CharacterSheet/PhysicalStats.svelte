@@ -23,7 +23,7 @@
 		<div class="label">Race:</div>
 		<div class="value">
 			{#if character.attributes.race}
-				{character.attributes.race.data?.attributes?.name}
+				<span>{character.attributes.race.data?.attributes?.name}</span>
 			{/if}
 		</div>
 		<div class="label">Pronouns:</div>
@@ -35,7 +35,7 @@
 			{/if}
 		</div>
 		<div class="label">Age:</div>
-		<div class="value aug-select">
+		<div class="value" class:aug-select={isEditing}>
 			{#if isEditing}
 				<Select
 					value={character.attributes.age}
@@ -43,7 +43,7 @@
 					items={ageOptions}
 				/>
 			{:else}
-				{character.attributes.age || 'Unknown'}
+				<span>{character.attributes.age || ''}</span>
 			{/if}
 		</div>
 		<div class="label">Height:</div>
@@ -59,11 +59,11 @@
 			{#if isEditing}
 				<Input bind:value={character.attributes.weight} class="inline" />
 			{:else}
-				{character.attributes.weight || 0}
+				<span></span>{character.attributes.weight || 0}
 			{/if}kg
 		</div>
 		<div class="label">Eyes:</div>
-		<div class="value">{character.attributes.eyes || ''}</div>
+		<div class="value"><span>{character.attributes.eyes || ''}</span></div>
 		<div class="label">Skin:</div>
 		<div class="value">{character.attributes.skin || ''}</div>
 	</div>
@@ -103,7 +103,6 @@
 		display: flex;
 		align-items: center;
 		gap: 0.25rem;
-		width: 100%;
 	}
 
 	:global(input.inline) {

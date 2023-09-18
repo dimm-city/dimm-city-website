@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css?family=Tomorrow:400,700&display=swap');
+@import url('/static/assets/styles/variables.css');
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html,
+body {
+	min-height: 100%;
+	overflow: hidden;
+	overflow-y: auto;
+	font-family: var(--main-font-family);
+}
+
+html {
+	background: none;
+}
+
+@media print {
+	.hide-print {
+		display: none;
+	}
+	.scroll-wrapper {
+		overflow: hidden;
+	}
+	.container {
+		padding-inline: 0.1in;
+		display: grid;
+		grid-auto-flow: row;
+		grid-template-columns: 1fr;
+		grid-template-rows: min-content min-content min-content auto;
+		gap: 0.5rem;
+	}
+
+.lists-row {
+	page-break-before: always;
+	min-height: 3in;
+}
+}
+/* .sheet {
+	--aug-border-all: 0px !important;
+	--aug-inlay-all: 0px !important;
+	--aug-inlay-opacity: 0;
+	background-color: transparent !important;
+} */
+.value {
+	height: 100%;
+	border-bottom: var(--third-accent) thin solid;
+	width: 90%;
+	margin: auto;
+}

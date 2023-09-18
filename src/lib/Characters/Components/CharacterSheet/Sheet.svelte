@@ -11,22 +11,29 @@
 	/**@type {DC.Character}*/
 	export let character;
 	export let isEditing = false;
+	export let isPrinting = false;
 
-	const viewAbility = (/** @type {DC.Ability} */ ability) => openModal(AbilityModal, { data: ability });
+	const viewAbility = (/** @type {DC.Ability} */ ability) =>
+		openModal(AbilityModal, { data: ability });
 
 	const skills = [];
 
+	let sheetAug = 'bl-2-clip-y br-2-clip-y tl-clip tr-clip t-clip both';
+
+	$: if (isPrinting) sheetAug = '';
 	let originalData = '';
 	$: if (character) {
 		originalData = JSON.stringify(character);
+	} else {
+		character = {
+			id: '',
+			attributes: {}
+		};
 	}
 </script>
 
 <div class="scroll-wrapper">
-	<div
-		class="sheet"
-		data-augmented-ui="bl-2-clip-y br-2-clip-y tl-clip tr-clip t-clip both"
-	>
+	<div class="sheet" data-augmented-ui={sheetAug}>
 		<div class="heading">
 			<div>
 				{#if isEditing}
@@ -174,12 +181,12 @@
 		}
 
 		:global(.image > div) {
-		--aug-b: 0px;
-		--aug-l: 0px;
-		--aug-t: 0px;
-		--aug-tr: 7px;
-		--aug-border-all: 2px;
-		--aug-border-bg: var(--fourth-accent);
-	}
+			--aug-b: 0px;
+			--aug-l: 0px;
+			--aug-t: 0px;
+			--aug-tr: 7px;
+			--aug-border-all: 2px;
+			--aug-border-bg: var(--fourth-accent);
+		}
 	}
 </style>
