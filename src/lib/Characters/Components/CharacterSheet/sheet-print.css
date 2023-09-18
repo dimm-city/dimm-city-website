@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Tomorrow:400,700&display=swap');
-@import url('/static/assets/styles/variables.css');
+@import url('/static/assets/styles/controls.css');
 * {
 	margin: 0;
 	padding: 0;
@@ -9,18 +9,36 @@
 html,
 body {
 	min-height: 100%;
-	overflow: hidden;
-	overflow-y: auto;
 	font-family: var(--main-font-family);
-}
-
-html {
 	background: none;
 }
+body {
+	/* margin: 0.9in; */
+	overflow-y: auto !important;
+}
 
+.sheet.print {
+	--default-letter-spacing: 1.5px;
+	--bs-body-font-family: var(--main-font-family);
+
+	--light: #000;
+	--dark: rgb(0, 0, 0);
+	--blue-accent: #000;
+	--primary-accent: #000;
+	--secondary-accent: #000;
+	--secondary-accent-muted: #000;
+
+	--third-accent: #000;
+	--fourth-accent: #000;
+}
 @media print {
+	body {
+		/* margin: 0.9in; */
+		overflow-y: hidden !important;
+	}
+
 	.hide-print {
-		display: none;
+		display: none !important;
 	}
 	.scroll-wrapper {
 		overflow: hidden;
@@ -34,17 +52,49 @@ html {
 		gap: 0.5rem;
 	}
 
-.lists-row {
-	page-break-before: always;
-	min-height: 3in;
+	.lists-row {
+		page-break-before: always;
+	}
 }
+.sheet.print {
+	--content-container-background: transparent;
 }
-/* .sheet {
-	--aug-border-all: 0px !important;
+.image-wrapper.missing {
+	background-image: none !important;
+	background-color: transparent;
+	background-repeat: no-repeat;
+}
+.sheet.print div.heading {
+	filter: none;
+}
+.sheet.print h3.section-title {
+	margin-bottom: 10px;
+}
+
+.story-row .text-section div.text-container {
+	width: 100%;
+	height: 15rem;
+	max-height: 15rem;
+}
+
+.sheet.print .lists-row {
+	min-height: 9in;
+	width: 100%;
+	margin: auto;
+	overflow: hidden;
+	margin-block: 0.25in;
+}
+
+.sheet.print .lists-row .skills-container {
+	margin-bottom: 0;
+}
+.list > [slot='item'] button {
+	height: 36px;
+	--aug-border-bg: var(--third-accent);
 	--aug-inlay-all: 0px !important;
 	--aug-inlay-opacity: 0;
-	background-color: transparent !important;
-} */
+}
+
 .value {
 	height: 100%;
 	border-bottom: var(--third-accent) thin solid;

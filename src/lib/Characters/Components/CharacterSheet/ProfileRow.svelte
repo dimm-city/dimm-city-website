@@ -208,7 +208,7 @@
 		font-family: var(--main-font-family);
 	}
 
-	@media (max-width: 767px) {
+	@media screen and (max-width: 767px) {
 		.section-container.profile {
 			grid-template-columns: min-content 1fr;
 			grid-template-rows: repeat(8, min-content);

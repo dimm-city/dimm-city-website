@@ -31,7 +31,7 @@
 			{#if isEditing}
 				<Input bind:value={character.attributes.pronouns} class="inline" maxlength="50" />
 			{:else}
-				{character.attributes.pronouns || 'they/them'}
+				{character.attributes.pronouns || ''}
 			{/if}
 		</div>
 		<div class="label">Age:</div>
@@ -51,21 +51,23 @@
 			{#if isEditing}
 				<Input bind:value={character.attributes.height} class="inline" />
 			{:else}
-				{character.attributes.height || 0}
-			{/if} cm
+			<span>{character.attributes.height || ''}</span>
+			{/if} 
+			<!-- <span>cm</span> -->
 		</div>
 		<div class="label">Weight:</div>
 		<div class="value suffix">
 			{#if isEditing}
 				<Input bind:value={character.attributes.weight} class="inline" />
 			{:else}
-				<span></span>{character.attributes.weight || 0}
-			{/if}kg
+				<span>{character.attributes.weight || ''}</span>
+			{/if}
+			<!-- <span>kg</span> -->
 		</div>
 		<div class="label">Eyes:</div>
 		<div class="value"><span>{character.attributes.eyes || ''}</span></div>
 		<div class="label">Skin:</div>
-		<div class="value">{character.attributes.skin || ''}</div>
+		<div class="value"><span>{character.attributes.skin || ''}</span></div>
 	</div>
 </div>
 

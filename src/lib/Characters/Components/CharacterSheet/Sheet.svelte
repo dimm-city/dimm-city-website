@@ -5,7 +5,7 @@
 	import ProfileRow from './ProfileRow.svelte';
 
 	import { openModal } from 'svelte-modals';
-	import AbilityModal from '../../../Abilities/AbilityModal.svelte';
+	import AbilityModal from '$lib/Abilities/AbilityModal.svelte';
 	import StoryRow from './StoryRow.svelte';
 
 	/**@type {DC.Character}*/
@@ -16,11 +16,8 @@
 	const viewAbility = (/** @type {DC.Ability} */ ability) =>
 		openModal(AbilityModal, { data: ability });
 
-	const skills = [];
-
 	let sheetAug = 'bl-2-clip-y br-2-clip-y tl-clip tr-clip t-clip both';
 
-	$: if (isPrinting) sheetAug = '';
 	let originalData = '';
 	$: if (character) {
 		originalData = JSON.stringify(character);
@@ -30,21 +27,35 @@
 			attributes: {}
 		};
 	}
+	const emptyItems = createEmptyList();
+	$: if (isPrinting) {
+		sheetAug = '';
+		character.attributes.cybernetics = createEmptyList(5);
+		character.attributes.selectedAbilities = emptyItems;
+		character.attributes.items = emptyItems;
+		character.attributes.scripts = emptyItems;
+	}
+
+	function createEmptyList(length = 22) {
+		return {
+			data: Array.from({ length }, (_, index) => ({ attributes: { id: index + 1, name: '' } }))
+		};
+	}
 </script>
 
 <div class="scroll-wrapper">
-	<div class="sheet" data-augmented-ui={sheetAug}>
+	<div class="sheet" data-augmented-ui={sheetAug} class:print={isPrinting}>
 		<div class="heading">
 			<div>
 				{#if isEditing}
 					<h1 contenteditable="true" bind:textContent={character.attributes.name} />
 				{:else}
 					<h1>
-						{character.attributes.name}
+						{character.attributes.name ?? ''}
 					</h1>
 				{/if}
 			</div>
-			<div class="specialties-heading">
+			<div class="specialties-heading hide-print">
 				<h2>
 					<!-- ts-ignore-->
 					{character.attributes.specialties?.data?.length > 0
@@ -54,7 +65,7 @@
 			</div>
 		</div>
 		<div class="container" data-augmented-ui-reset>
-			<StatsRow {character} {isEditing} />
+			<StatsRow {character} {isEditing} {isPrinting} />
 			<ProfileRow {character} {isEditing} />
 			<StoryRow {character} {isEditing} />
 			<ListsRow {character} {isEditing} {viewAbility} />
@@ -103,15 +114,23 @@
 		color: var(--fourth-accent);
 		white-space: nowrap;
 		text-overflow: ellipsis;
+		min-height: 75px;
 	}
 	div.heading > div {
 		width: 100%;
 		overflow: hidden;
 	}
+	
 	div.heading > div:first-of-type {
 		text-align: left;
 		align-items: end;
 		padding: 0;
+	}
+	div.heading > div:first-of-type::after{
+		content: 'name:';
+		width: 100%;
+		display: block;
+		border-top: thin var(--fourth-accent) solid;
 	}
 
 	div.heading > div:last-of-type {
@@ -141,7 +160,7 @@
 		grid-auto-flow: row;
 		grid-template-columns: 1fr;
 		grid-template-rows: min-content min-content min-content auto;
-		gap: 0.5rem;
+		gap: 1.5rem;
 	}
 
 	:global(.image > div) {
