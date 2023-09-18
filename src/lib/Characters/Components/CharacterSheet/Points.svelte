@@ -8,14 +8,14 @@
 	<div class="hp">
 		<h4>HP</h4>
 		<div data-augmented-ui="all-hex border">
-			<span contenteditable="{isEditing}">{character?.hp ?? (isPrinting ? ' ' : '10')}</span>
+			<span contenteditable="{isEditing}">{character?.attributes.hp ?? (isPrinting ? ' ' : '10')}</span>
 			<hr />
-			<small>{isPrinting ? ' ' : '10'}</small>
+			<small>{ character?.attributes?.race?.data?.attributes?.hp ?? character?.attributes.hp ?? (isPrinting ? ' ' : '10')}</small>
 		</div>
 	</div>
 	<div class="ap">
 		<h4>AP</h4>
-		<div data-augmented-ui="all-hex border">{character?.ap ?? ''}</div>
+		<div data-augmented-ui="all-hex border">{character?.attributes.ap ?? ''}</div>
 	</div>
 </div>
 

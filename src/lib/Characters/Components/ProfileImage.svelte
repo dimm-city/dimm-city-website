@@ -7,17 +7,17 @@
 	 */
 	export let character;
 
-	//trim last slash from config.baseUrl	
+	//trim last slash from config.baseUrl
 	const baseUrl = config.baseUrl.replace(/\/$/, '');
-
-	let imageUrl =  baseUrl + character.attributes?.mainImage?.data?.attributes?.formats?.large.url ?? '';
-	
+	const { mainImage, mainModel, mainVideo, name } = character.attributes;
+	const relativeUrl = mainImage?.data?.attributes?.formats?.large.url;
+	const imageUrl = relativeUrl ? `${baseUrl}${relativeUrl}` : null;
 </script>
 
 <Image
 	{imageUrl}
-	modelUrl={character.attributes.mainModel?.data?.attributes.url}
-	videoUrl={character.attributes.mainVideo?.data?.attributes.url}
-	title={character.attributes.name}
+	modelUrl={mainModel?.data?.attributes.url}
+	videoUrl={mainVideo?.data?.attributes.url}
+	title={name}
 	on:click
 />

@@ -16,7 +16,7 @@
 	const viewAbility = (/** @type {DC.Ability} */ ability) =>
 		openModal(AbilityModal, { data: ability });
 
-	let sheetAug = 'bl-2-clip-y br-2-clip-y tl-clip tr-clip t-clip both';
+	let sheetAug = 'bl-2-clip-y br-2-clip-y tl-clip tr-clip t-clip none';
 
 	let originalData = '';
 	$: if (character) {
@@ -27,19 +27,22 @@
 			attributes: {}
 		};
 	}
-	const emptyItems = createEmptyList();
 	$: if (isPrinting) {
 		sheetAug = '';
-		character.attributes.cybernetics = createEmptyList(5);
-		character.attributes.selectedAbilities = emptyItems;
-		character.attributes.items = emptyItems;
-		character.attributes.scripts = emptyItems;
+		character.attributes.cybernetics = createEmptyList(5, character.attributes.cybernetics?.data);
+		character.attributes.selectedAbilities = createEmptyList(
+			22,
+			character.attributes.selectedAbilities?.data
+		);
+		character.attributes.items = createEmptyList(22, character.attributes.items?.data);
+		character.attributes.scripts = createEmptyList(22, character.attributes.scripts?.data);
 	}
 
-	function createEmptyList(length = 22) {
-		return {
-			data: Array.from({ length }, (_, index) => ({ attributes: { id: index + 1, name: '' } }))
-		};
+	function createEmptyList(length = 22, existingItems = []) {
+		const emptyItems = Array.from({ length }, (_, index) => ({
+			attributes: { id: index + 1, name: '' }
+		}));
+		return { data: [...existingItems, ...emptyItems.slice(existingItems.length)] };
 	}
 </script>
 
@@ -55,12 +58,16 @@
 					</h1>
 				{/if}
 			</div>
-			<div class="specialties-heading hide-print">
+			<div class="specialties-heading">
 				<h2>
-					<!-- ts-ignore-->
-					{character.attributes.specialties?.data?.length > 0
-						? character.attributes.specialties?.data?.map((s) => s?.attributes?.name).join(', ')
-						: 'Unknown'}
+					{#if isPrinting}
+						Dimm City RPG
+					{:else}
+						<!-- ts-ignore-->
+						{character.attributes.specialties?.data?.length > 0
+							? character.attributes.specialties?.data?.map((s) => s?.attributes?.name).join(', ')
+							: 'Unknown'}
+					{/if}
 				</h2>
 			</div>
 		</div>
@@ -120,13 +127,13 @@
 		width: 100%;
 		overflow: hidden;
 	}
-	
+
 	div.heading > div:first-of-type {
 		text-align: left;
 		align-items: end;
 		padding: 0;
 	}
-	div.heading > div:first-of-type::after{
+	div.heading > div:first-of-type::after {
 		content: 'name:';
 		width: 100%;
 		display: block;

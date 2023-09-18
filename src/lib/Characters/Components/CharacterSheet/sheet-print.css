@@ -10,6 +10,7 @@ html,
 body {
 	min-height: 100%;
 	font-family: var(--main-font-family);
+	color: var(--primary-color);
 	background: none;
 }
 body {
@@ -20,16 +21,18 @@ body {
 .sheet.print {
 	--default-letter-spacing: 1.5px;
 	--bs-body-font-family: var(--main-font-family);
+	--primary-color: black;
 
-	--light: #000;
-	--dark: rgb(0, 0, 0);
-	--blue-accent: #000;
-	--primary-accent: #000;
-	--secondary-accent: #000;
-	--secondary-accent-muted: #000;
+	--light: var(--primary-color);
 
-	--third-accent: #000;
-	--fourth-accent: #000;
+	/* --dark: rgb(0, 0, 0);
+	--blue-accent: #000; */
+	
+	--primary-accent: var(--primary-color);
+	--secondary-accent: var(--primary-color);
+	--secondary-accent-muted: var(--primary-color);
+	--third-accent: var(--primary-color);
+	--fourth-accent: var(--primary-color);
 }
 @media print {
 	body {
@@ -100,4 +103,23 @@ body {
 	border-bottom: var(--third-accent) thin solid;
 	width: 90%;
 	margin: auto;
+	text-transform: capitalize;
+}
+
+.aug-button {
+	font-size: 1rem !important;
+	padding: 0.75rem;
+	white-space: nowrap;
+	display: inline-block;
+	cursor: pointer;
+	color: var(--primary-accent);
+	overflow: hidden;
+	text-overflow: ellipsis;
+	text-transform: capitalize;
+	background-color: transparent;
+	text-shadow: none;
+	text-align: justify;
+}
+.image > .image-wrapper img{
+	opacity: 1;
 }

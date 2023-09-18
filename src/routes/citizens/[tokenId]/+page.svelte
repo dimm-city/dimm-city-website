@@ -131,12 +131,13 @@
 				>
 			{/if}
 			<TwitterButton title="share character" />
-			<!-- <a
+			<a
 				title="print character"
-				href="/citizens/{character?.tokenId}/print"
+				target="_blank"
+				href="/citizens/{data.attributes.tokenId}/print"
 				class="aug-button animate__fadeInDownBig"
 				data-augmented-ui=""><i class="bi bi-printer" /></a
-			> -->
+			>
 		{/if}
 	</svelte:fragment>
 </Shell>
