@@ -9,6 +9,7 @@
 </script>
 
 <div class="story-row">
+	<div class="row-frame" data-augmented-ui="tl-clip-x tr-clip-x br-clip bl-clip border" />
 	<div class="backstory">
 		<TextSection header="Backstory" {isEditing} bind:data={character.attributes.backstory} />
 	</div>
@@ -19,10 +20,26 @@
 
 <style>
 	.story-row {
-		padding: 1rem;
+		position: relative;		
+		padding-block: 2rem;
+		padding-inline: 1rem;
 		display: flex;
 		width: 100%;
 		column-gap: 3rem;
+	}
+	.story-row .row-frame {
+		position: absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+		--aug-border-all: 1px;
+		--aug-border-bg: var(--secondary-accent-muted);
+		--aug-tl: 13px;
+		--aug-tr: 13px;
+		--aug-bl: 13px;
+		--aug-br: 13px;
+		--aug-inlay: 0;
 	}
 	.dreams {
 		width: 100%;
@@ -31,10 +48,10 @@
 		width: 100%;
 	}
 
-	@media (max-width: 1024px) {
+	@media screen and (max-width: 1024px) {
 		.story-row {
 			flex-wrap: wrap;
-            row-gap: 2rem;
+			row-gap: 2rem;
 		}
 	}
 </style>

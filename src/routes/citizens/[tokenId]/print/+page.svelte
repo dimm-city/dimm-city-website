@@ -1,8 +1,10 @@
 <script>
-	import { page } from '$app/stores';	
-	let tokenId = $page.params.tokenId;
+	import PrintShell from '$lib/Shared/Shell/PrintShell.svelte';
+	import Sheet from '$lib/Characters/Components/CharacterSheet/Sheet.svelte';
+	import '$lib/Characters/Components/CharacterSheet/sheet-print.css';
+	export let data;
 </script>
 
-<main>
-	print me
-</main>
+<PrintShell title={data?.attributes?.name ?? 'Citizen File'}>
+	<Sheet character={data} isPrinting={true} />
+</PrintShell>

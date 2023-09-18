@@ -49,5 +49,6 @@
 		display: flex;
 		flex-direction: column;
 		gap: var(--list-gap) 1rem;
+		margin-block: var(--list-gap) 1rem;
 	}
 </style>

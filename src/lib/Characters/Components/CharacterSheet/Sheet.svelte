@@ -5,49 +5,74 @@
 	import ProfileRow from './ProfileRow.svelte';
 
 	import { openModal } from 'svelte-modals';
-	import AbilityModal from '../../../Abilities/AbilityModal.svelte';
+	import AbilityModal from '$lib/Abilities/AbilityModal.svelte';
 	import StoryRow from './StoryRow.svelte';
 
 	/**@type {DC.Character}*/
 	export let character;
 	export let isEditing = false;
+	export let isPrinting = false;
 
-	const viewAbility = (/** @type {DC.Ability} */ ability) => openModal(AbilityModal, { data: ability });
+	const viewAbility = (/** @type {DC.Ability} */ ability) =>
+		openModal(AbilityModal, { data: ability });
 
-	const skills = [];
+	let sheetAug = 'bl-2-clip-y br-2-clip-y tl-clip tr-clip t-clip none';
 
 	let originalData = '';
 	$: if (character) {
 		originalData = JSON.stringify(character);
+	} else {
+		character = {
+			id: '',
+			attributes: {}
+		};
+	}
+	$: if (isPrinting) {
+		sheetAug = '';
+		character.attributes.cybernetics = createEmptyList(5, character.attributes.cybernetics?.data);
+		character.attributes.selectedAbilities = createEmptyList(
+			22,
+			character.attributes.selectedAbilities?.data
+		);
+		character.attributes.items = createEmptyList(22, character.attributes.items?.data);
+		character.attributes.scripts = createEmptyList(22, character.attributes.scripts?.data);
+	}
+
+	function createEmptyList(length = 22, existingItems = []) {
+		const emptyItems = Array.from({ length }, (_, index) => ({
+			attributes: { id: index + 1, name: '' }
+		}));
+		return { data: [...existingItems, ...emptyItems.slice(existingItems.length)] };
 	}
 </script>
 
 <div class="scroll-wrapper">
-	<div
-		class="sheet"
-		data-augmented-ui="bl-2-clip-y br-2-clip-y tl-clip tr-clip t-clip both"
-	>
+	<div class="sheet" data-augmented-ui={sheetAug} class:print={isPrinting}>
 		<div class="heading">
 			<div>
 				{#if isEditing}
 					<h1 contenteditable="true" bind:textContent={character.attributes.name} />
 				{:else}
 					<h1>
-						{character.attributes.name}
+						{character.attributes.name ?? ''}
 					</h1>
 				{/if}
 			</div>
 			<div class="specialties-heading">
 				<h2>
-					<!-- ts-ignore-->
-					{character.attributes.specialties?.data?.length > 0
-						? character.attributes.specialties?.data?.map((s) => s?.attributes?.name).join(', ')
-						: 'Unknown'}
+					{#if isPrinting}
+						Dimm City RPG
+					{:else}
+						<!-- ts-ignore-->
+						{character.attributes.specialties?.data?.length > 0
+							? character.attributes.specialties?.data?.map((s) => s?.attributes?.name).join(', ')
+							: 'Unknown'}
+					{/if}
 				</h2>
 			</div>
 		</div>
 		<div class="container" data-augmented-ui-reset>
-			<StatsRow {character} {isEditing} />
+			<StatsRow {character} {isEditing} {isPrinting} />
 			<ProfileRow {character} {isEditing} />
 			<StoryRow {character} {isEditing} />
 			<ListsRow {character} {isEditing} {viewAbility} />
@@ -96,15 +121,23 @@
 		color: var(--fourth-accent);
 		white-space: nowrap;
 		text-overflow: ellipsis;
+		min-height: 75px;
 	}
 	div.heading > div {
 		width: 100%;
 		overflow: hidden;
 	}
+
 	div.heading > div:first-of-type {
 		text-align: left;
 		align-items: end;
 		padding: 0;
+	}
+	div.heading > div:first-of-type::after {
+		content: 'name:';
+		width: 100%;
+		display: block;
+		border-top: thin var(--fourth-accent) solid;
 	}
 
 	div.heading > div:last-of-type {
@@ -134,7 +167,7 @@
 		grid-auto-flow: row;
 		grid-template-columns: 1fr;
 		grid-template-rows: min-content min-content min-content auto;
-		gap: 0.5rem;
+		gap: 1.5rem;
 	}
 
 	:global(.image > div) {
@@ -174,12 +207,12 @@
 		}
 
 		:global(.image > div) {
-		--aug-b: 0px;
-		--aug-l: 0px;
-		--aug-t: 0px;
-		--aug-tr: 7px;
-		--aug-border-all: 2px;
-		--aug-border-bg: var(--fourth-accent);
-	}
+			--aug-b: 0px;
+			--aug-l: 0px;
+			--aug-t: 0px;
+			--aug-tr: 7px;
+			--aug-border-all: 2px;
+			--aug-border-bg: var(--fourth-accent);
+		}
 	}
 </style>

@@ -13,7 +13,8 @@
 </script>
 
 <div class="lists-row" data-augmented-ui-reset>
-	<div class="skills-container" data-augmented-ui="tl-clip tr-clip br-clip bl-clip none">
+	<div class="row-frame" data-augmented-ui="tl-clip-x tr-clip-x br-clip bl-clip none" />
+	<div class="skills-container" data-augmented-ui="tl-clip tr-clip br-clip bl-clip border">
 		<ItemsList
 			header="Skills"
 			noItemsText="no skills registered"
@@ -21,7 +22,7 @@
 			viewItem={viewAbility}
 		/>
 	</div>
-	<div class="items-container" data-augmented-ui="tl-clip tr-clip br-clip bl-clip none">
+	<div class="items-container" data-augmented-ui="tl-clip tr-clip br-clip bl-clip border">
 		<ItemsList
 			header="Items"
 			noItemsText="no inventory recorded"
@@ -29,7 +30,7 @@
 			viewItem={viewAbility}
 		/>
 	</div>
-	<div class="scripts-container" data-augmented-ui="tl-clip tr-clip br-clip bl-clip none">
+	<div class="scripts-container" data-augmented-ui="tl-clip tr-clip br-clip bl-clip border">
 		<ItemsList
 			header="Scripts"
 			noItemsText="no scripts detected"
@@ -45,16 +46,29 @@
 		display: grid;
 		grid-template-rows: min-content;
 		grid-template-columns: 1fr 1fr 1fr;
-		gap: 0.33rem;
+		gap: 0.75rem;
 		row-gap: 0;
 		margin-inline: 0.5rem;
+	}
+	.lists-row .row-frame {
+		position: absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+		--aug-border-all: 1px;
+		--aug-border-bg: var(--secondary-accent-muted);
+		--aug-tl: 13px;
+		--aug-tr: 13px;
+		--aug-bl: 13px;
+		--aug-br: 13px;
+		--aug-inlay: 0;
 	}
 	.lists-row > div {
 		position: relative;
 		text-align: center;
 		padding-inline: 0.75rem;
-		margin-bottom: 2.5rem;
-		--aug-border-all: 2px;
+		--aug-border-all: 1px;
 		--aug-border-bg: var(--fourth-accent);
 	}
 

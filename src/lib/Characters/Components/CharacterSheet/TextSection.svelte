@@ -33,7 +33,7 @@
 		<div class="text-section-header">
 			<span>{header}:</span>
 			<i
-				class="btn inline bi"
+				class="btn inline bi hide-print"
 				class:bi-fullscreen={toggleFullscreen}
 				class:bi-fullscreen-exit={toggleFullscreen}
 				on:keypress={toggleFullscreen}
@@ -96,4 +96,5 @@
 		--aug-border-all: 1px;
 		--aug-border-bg: var(--fourth-accent);
 	}
+	
 </style>
