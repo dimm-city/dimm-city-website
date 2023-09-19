@@ -34,8 +34,12 @@ body {
 	--third-accent: var(--primary-color);
 	--fourth-accent: var(--primary-color);
 }
-/* @media print {
-
+ @media print {
+	.hide-print {
+		display: none !important;
+	}
+}
+	/*
 	.container {
 		padding-inline: 0.1in;
 		display: grid;
@@ -53,9 +57,7 @@ body {
 		overflow-y: hidden !important;
 	}
 
-	.hide-print {
-		display: none !important;
-	}
+
 	.scroll-wrapper {
 		overflow: hidden;
 	} */
