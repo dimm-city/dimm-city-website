@@ -31,14 +31,7 @@
 		color: var(--fourth-accent);
 	}
 
-	.section-title {
-		color: var(--fourth-accent);
-		display: flex;
-		justify-content: center;
-		width: 100%;
-		position: relative;
-		font-size: 1rem;
-	}
+
 
 	button {
 		--aug-border-bg: var(--menu-item-aug-border-bg);

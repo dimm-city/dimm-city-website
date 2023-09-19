@@ -11,24 +11,19 @@
 	 */
 	export let character;
 	export let isEditing = false;
-	export let isPrinting = false;
 
 	const viewAbility = (/** @type {DC.Ability} */ ability) =>
 		openModal(AbilityModal, { data: ability });
 </script>
 
-<div class="stats-row" data-augmented-ui="tl-clip tr-clip br-clip-x bl-clip-x both">
+<div class="stats-row row-frame" data-augmented-ui="tl-clip tr-clip br-clip-x bl-clip-x both">
 	<div class="image-cell">
 		<div class="image">
 			<ProfileImage {character} />
 		</div>
 	</div>
 	<div class="stats-container">
-		<!-- <h3>Physical Stats</h3> -->
 		<PhysicalStats {character} {isEditing} />
-	</div>
-	<div class="scores-container">
-		<Points {character} {isEditing} {isPrinting} />
 	</div>
 	<div class="cybernetics-container">
 		<ItemsList
@@ -36,15 +31,7 @@
 			noItemsText="no scripts detected"
 			data={character.attributes.cybernetics?.data}
 			viewItem={viewAbility}
-		/>
-		<!-- <h3>Cybernetics</h3>
-		<List data={character.attributes?.cybernetics?.data} maxItems={5} noItemsText="no cybernetics registered">
-			<div let:item slot="item">
-				<button data-augmented-ui class="aug-button" on:click={() => viewAbility(item)}
-					>{item.attributes.name}</button
-				>
-			</div>
-		</List> -->
+		/>		
 	</div>
 </div>
 
@@ -52,11 +39,10 @@
 	.stats-row {
 		display: grid;
 		grid-template-columns: min-content 1fr 1fr;
-		grid-template-rows: min-content auto;
-		grid-template-areas:
-			'image-cell stats-cell cyber-cell'
-			'scores-cell scores-cell scores-cell';
-		padding: 1rem;
+		grid-template-rows: min-content;
+		grid-template-areas: 'image-cell stats-cell cyber-cell';
+		padding-block: 1em;
+		padding-inline: 1rem;
 		column-gap: 2rem;
 		row-gap: 1rem;
 		--aug-border-all: 1px;
@@ -65,14 +51,13 @@
 		--aug-tr: 13px;
 		--aug-bl: 13px;
 		--aug-br: 13px;
-		--aug-inlay: 0;
 	}
 
 	.stats-container {
 		grid-area: stats-cell;
 	}
 	.image-cell {
-		grid-area: 'image-cell';
+		grid-area: image-cell;
 	}
 	.image {
 		--dc-image-aspect-ratio: 3/4;
@@ -88,14 +73,6 @@
 		--aug-border-all: 2px;
 		--aug-border-bg: var(--fourth-accent);
 		margin: auto;
-	}
-
-	.scores-container {
-		display: flex;
-		flex-direction: row;
-		justify-content: space-evenly;
-		align-items: start;
-		grid-area: scores-cell;
 	}
 
 	.cybernetics-container {

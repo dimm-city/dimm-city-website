@@ -9,7 +9,7 @@
 	export let isEditing = false;
 
 	const md = new markdownit();
-	let aug = 'tr-clip bl-clip border';
+	export let aug = 'tl-clip tr-clip br-clip bl-clip border';
 
 	/**
 	 * @type {import("svelte-modals/store").SvelteModalComponent<any, any, any> | import("svelte-modals/store").LazySvelteModalComponent<any, any, any> | ContentModal}
@@ -30,8 +30,8 @@
 
 <section class="section-container">
 	<div class="text-section">
-		<div class="text-section-header">
-			<span>{header}:</span>
+		<div class="text-section-header">			
+			<span>{header}</span>			
 			<i
 				class="btn inline bi hide-print"
 				class:bi-fullscreen={toggleFullscreen}
@@ -78,6 +78,8 @@
 	.text-section-content {
 		display: flex;
 		height: 100%;
+		justify-content: start;
+		align-content: start;
 	}
 
 	.text-section span {
@@ -86,7 +88,7 @@
 		margin-left: 0;
 	}
 	.text-container {
-		display: grid;
+		display: flex;
 		width: 100%;
 		min-height: 7rem;
 		max-height: 12rem;

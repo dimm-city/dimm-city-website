@@ -3,6 +3,7 @@
 	import StatsRow from './StatsRow.svelte';
 	import ListsRow from './ListsRow.svelte';
 	import ProfileRow from './ProfileRow.svelte';
+	import Points from './Points.svelte';
 
 	import { openModal } from 'svelte-modals';
 	import AbilityModal from '$lib/Abilities/AbilityModal.svelte';
@@ -31,23 +32,32 @@
 		sheetAug = '';
 		character.attributes.cybernetics = createEmptyList(5, character.attributes.cybernetics?.data);
 		character.attributes.selectedAbilities = createEmptyList(
-			22,
+			24,
 			character.attributes.selectedAbilities?.data
 		);
-		character.attributes.items = createEmptyList(22, character.attributes.items?.data);
-		character.attributes.scripts = createEmptyList(22, character.attributes.scripts?.data);
+		character.attributes.items = createEmptyList(12, character.attributes.items?.data);
+		character.attributes.scripts = createEmptyList(8, character.attributes.scripts?.data);
 	}
 
 	function createEmptyList(length = 22, existingItems = []) {
 		const emptyItems = Array.from({ length }, (_, index) => ({
-			attributes: { id: index + 1, name: '' }
+			id: index + 1,
+			attributes: { name: index + 1 + ': ' }
 		}));
-		return { data: [...existingItems, ...emptyItems.slice(existingItems.length)] };
+		return {
+			data: [
+				...existingItems.map((i, index) => {
+					i.attributes.name = index + 1 + ': ' + i.attributes.name;
+					return i;
+				}),
+				...emptyItems.slice(existingItems.length)
+			]
+		};
 	}
 </script>
 
 <div class="scroll-wrapper">
-	<div class="sheet" data-augmented-ui={sheetAug} class:print={isPrinting}>
+	<div class="sheet" data-augmented-ui="none" class:print={isPrinting}>
 		<div class="heading">
 			<div>
 				{#if isEditing}
@@ -73,6 +83,11 @@
 		</div>
 		<div class="container" data-augmented-ui-reset>
 			<StatsRow {character} {isEditing} {isPrinting} />
+			<div class="points-row ">
+				<div class="scores-container row-frame" data-augmented-ui="tl-clip-x tr-clip-x br-clip-x bl-clip-x both">
+					<Points {character} {isEditing} {isPrinting} />
+				</div>
+			</div>
 			<ProfileRow {character} {isEditing} />
 			<StoryRow {character} {isEditing} />
 			<ListsRow {character} {isEditing} {viewAbility} />
@@ -107,7 +122,8 @@
 		width: 100%;
 		height: 100%;
 		color: var(--light);
-		background-color: var(--content-container-background);
+		/* border-radius: 0.5em;
+		background-color: var(--content-container-background); */
 	}
 	div.heading {
 		filter: var(--content-container-filter);
@@ -164,10 +180,29 @@
 		height: max-content;
 		width: 100%;
 		display: grid;
-		grid-auto-flow: row;
+		grid-auto-flow: column;
 		grid-template-columns: 1fr;
-		grid-template-rows: min-content min-content min-content auto;
+		grid-template-rows: repeat(4, min-content) auto;
 		gap: 1.5rem;
+	}
+	.points-row {
+		display: flex;
+		justify-content: center;
+	}
+	.scores-container {
+		--aug-border-all: 1px;
+		--aug-border-bg: var(--secondary-accent-muted);
+		--aug-tl: 7px;
+		--aug-tr: 7px;
+		--aug-bl: 7px;
+		--aug-br: 7px;
+		padding-block: 0.5em;
+		padding-inline: 3em;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-evenly;
+		align-items: start;
+		grid-area: scores-cell;
 	}
 
 	:global(.image > div) {
@@ -178,7 +213,10 @@
 		--aug-border-all: 2px;
 		--aug-border-bg: var(--fourth-accent);
 	}
-
+	:global(.row-frame) {
+		--aug-inlay: initial;
+		--aug-inlay-bg: var(--content-container-background);
+	}
 	@media (max-width: 767px) {
 		.scroll-wrapper {
 			overflow-y: auto;

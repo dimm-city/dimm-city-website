@@ -2,6 +2,7 @@
 	//import type { ICharacter } from '$lib/Characters/Models/Character';
 
 	import ItemsList from './ItemsList.svelte';
+	import TextSection from './TextSection.svelte';
 
 	/**
 	 * @type {DC.Character}}
@@ -13,8 +14,8 @@
 </script>
 
 <div class="lists-row" data-augmented-ui-reset>
-	<div class="row-frame" data-augmented-ui="tl-clip-x tr-clip-x br-clip bl-clip none" />
-	<div class="skills-container" data-augmented-ui="tl-clip tr-clip br-clip bl-clip border">
+	<div class="row-frame" data-augmented-ui="tl-rect tr-rect br-clip-inset bl-clip-inset both" />
+	<div class="skills-container" data-augmented-ui="tl-clip tr-clip br-2-clip-xy bl-clip border">
 		<ItemsList
 			header="Skills"
 			noItemsText="no skills registered"
@@ -22,7 +23,7 @@
 			viewItem={viewAbility}
 		/>
 	</div>
-	<div class="items-container" data-augmented-ui="tl-clip tr-clip br-clip bl-clip border">
+	<div class="items-container" data-augmented-ui="tl-clip tr-clip br-clip bl-2-clip-xy border">
 		<ItemsList
 			header="Items"
 			noItemsText="no inventory recorded"
@@ -30,7 +31,7 @@
 			viewItem={viewAbility}
 		/>
 	</div>
-	<div class="scripts-container" data-augmented-ui="tl-clip tr-clip br-clip bl-clip border">
+	<div class="scripts-container" data-augmented-ui="tl-2-clip-xy tr-clip br-clip bl-clip border">
 		<ItemsList
 			header="Scripts"
 			noItemsText="no scripts detected"
@@ -38,17 +39,29 @@
 			viewItem={viewAbility}
 		/>
 	</div>
+	<div class="notes-container" data-augmented-ui="tl-clip tr-2-clip-xy br-clip bl-clip border">
+		<h3 class="section-title">Notes</h3>
+			<TextSection data={character.attributes.playerNotes} aug="none" />
+		
+	</div>
 </div>
 
 <style>
 	.lists-row {
+		--default-aug: 7px;
 		position: relative;
 		display: grid;
-		grid-template-rows: min-content;
-		grid-template-columns: 1fr 1fr 1fr;
 		gap: 0.75rem;
-		row-gap: 0;
 		margin-inline: 0.5rem;
+		width: 100%;
+		margin: auto;
+		overflow: hidden;
+		grid-template-rows: 3fr 1fr;
+		grid-template-columns: repeat(3, 1fr);
+		grid-template-areas:
+			'skills skills items'
+			'notes notes scripts';
+		padding: 1em;
 	}
 	.lists-row .row-frame {
 		position: absolute;
@@ -62,7 +75,6 @@
 		--aug-tr: 13px;
 		--aug-bl: 13px;
 		--aug-br: 13px;
-		--aug-inlay: 0;
 	}
 	.lists-row > div {
 		position: relative;
@@ -72,6 +84,26 @@
 		--aug-border-bg: var(--fourth-accent);
 	}
 
+	.skills-container {
+		--aug-br: var(--default-aug);
+		grid-area: skills;
+	}
+	.scripts-container {
+		--aug-tl: var(--default-aug);
+		grid-area: scripts;
+	}
+	.items-container {
+		--aug-bl: var(--default-aug);
+		grid-area: items;
+	}
+	.notes-container {
+		--aug-tr: var(--default-aug);
+		grid-area: notes;
+	}
+	.notes-container .text-content {
+		display: flex;
+		justify-content: start;
+	}
 	@media (max-width: 767px) {
 		.lists-row {
 			padding-top: 2rem;

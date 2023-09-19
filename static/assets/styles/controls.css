@@ -25,6 +25,14 @@ i.btn.inline {
 	color: var(--third-accent);
 	fill: var(--third-accent);
 }
+.section-title {
+	color: var(--fourth-accent);
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	position: relative;
+	font-size: 1rem;
+}
 
 hr {
 	border-color: var(--third-accent);
@@ -43,15 +51,17 @@ button {
 
 	border: 1px var(--third-accent) solid;
 }
-button:hover, button:focus-visible{
+button:hover,
+button:focus-visible {
 	outline: none;
 }
 
-input, select {
+input,
+select {
 	width: 100%;
 	padding: 0.5rem 1rem;
 	background-color: rgba(17, 17, 17, 0.75);
-	
+
 	border-width: 1px;
 	border-color: var(--third-accent);
 	color: var(--third-accent);
@@ -60,7 +70,7 @@ input, select {
 }
 
 input:focus-visible,
-select:focus-visible{
+select:focus-visible {
 	outline-width: 0;
 	border-color: var(--fourth-accent);
 }
@@ -173,7 +183,7 @@ input:read-only,
 	cursor: not-allowed;
 }
 
-.aug-button small{
+.aug-button small {
 	font-size: 0.7em;
 }
 
@@ -187,7 +197,7 @@ input:read-only,
 	justify-content: center;
 	align-items: center;
 }
-.text-button{
+.text-button {
 	font-family: var(--main-font-family);
 	font-size: 1rem;
 	border: 0;
@@ -198,11 +208,11 @@ input:read-only,
 	color: var(--secondary-accent);
 }
 .text-button:hover,
-.text-button:focus-visible{
+.text-button:focus-visible {
 	color: var(--fourth-accent);
 }
 
-.toolbar select{
+.toolbar select {
 	padding: 0.5rem;
 }
 .search-container {

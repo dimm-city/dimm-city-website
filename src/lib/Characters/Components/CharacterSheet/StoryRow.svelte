@@ -9,7 +9,7 @@
 </script>
 
 <div class="story-row">
-	<div class="row-frame" data-augmented-ui="tl-clip-x tr-clip-x br-clip bl-clip border" />
+	<div class="row-frame" data-augmented-ui="tl-clip-x tr-clip-x br-clip-inset bl-clip-inset both" />
 	<div class="backstory">
 		<TextSection header="Backstory" {isEditing} bind:data={character.attributes.backstory} />
 	</div>
@@ -39,7 +39,6 @@
 		--aug-tr: 13px;
 		--aug-bl: 13px;
 		--aug-br: 13px;
-		--aug-inlay: 0;
 	}
 	.dreams {
 		width: 100%;

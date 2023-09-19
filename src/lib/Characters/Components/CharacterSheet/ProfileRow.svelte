@@ -20,7 +20,7 @@
 </script>
 
 <div class="profile-row">
-	<div class="row-frame" data-augmented-ui="tl-clip-x tr-clip-x br-clip bl-clip border" />
+	<div class="row-frame" data-augmented-ui="tl-clip-x tr-clip-x br-clip-x bl-clip-x both" />
 	<div class="profile-heading"><h3>Profile</h3></div>
 	<section class="section-container profile">
 		<div class="label">Specialties:</div>
@@ -52,28 +52,13 @@
 				>
 			{/if}
 		</div>
-		<div class="label">Origin:</div>
+
+		<div class="label">Beliefs:</div>
 		<div class="value">
 			{#if isEditing}
-				<div class="current-location aug-select">
-					<Select
-						loadOptions={getDistricts}
-						placeholder="Select a district"
-						label="name"
-						itemId="id"
-						bind:justValue={originLocation}
-						bind:value={character.attributes.originLocation.data}
-					>
-						<div slot="selection" let:selection>
-							<span>{selection.name ?? selection.attributes?.name ?? ''}</span>
-						</div>
-						<div slot="item" let:item let:index>
-							<span>{item.name ?? item.attributes?.name ?? ''}</span>
-						</div>
-					</Select>
-				</div>
+				<Textarea maxlength="150" bind:value={character.attributes.beliefs} />
 			{:else}
-				<span>{character.attributes.originLocation?.data?.attributes?.name ?? ''}</span>
+				<span>{character.attributes.beliefs ?? ''}</span>
 			{/if}
 		</div>
 
@@ -101,7 +86,6 @@
 				<span>{character.attributes.currentLocation?.data?.attributes?.name ?? ''}</span>
 			{/if}
 		</div>
-
 		<div class="label">Vibe:</div>
 		<div class="value">
 			{#if isEditing}
@@ -110,13 +94,28 @@
 				<span>{character.attributes.vibe ?? ''}</span>
 			{/if}
 		</div>
-
-		<div class="label">Beliefs:</div>
+		<div class="label">Origin:</div>
 		<div class="value">
 			{#if isEditing}
-				<Textarea maxlength="150" bind:value={character.attributes.beliefs} />
+				<div class="current-location aug-select">
+					<Select
+						loadOptions={getDistricts}
+						placeholder="Select a district"
+						label="name"
+						itemId="id"
+						bind:justValue={originLocation}
+						bind:value={character.attributes.originLocation.data}
+					>
+						<div slot="selection" let:selection>
+							<span>{selection.name ?? selection.attributes?.name ?? ''}</span>
+						</div>
+						<div slot="item" let:item let:index>
+							<span>{item.name ?? item.attributes?.name ?? ''}</span>
+						</div>
+					</Select>
+				</div>
 			{:else}
-				<span>{character.attributes.beliefs ?? ''}</span>
+				<span>{character.attributes.originLocation?.data?.attributes?.name ?? ''}</span>
 			{/if}
 		</div>
 
@@ -159,6 +158,7 @@
 		grid-template-columns: min-content 1fr min-content 1fr;
 		grid-template-rows: repeat(4, min-content);
 		grid-column-gap: 0.5rem;
+		grid-auto-flow: row;
 	}
 	.label {
 		text-align: left;
@@ -195,7 +195,6 @@
 		--aug-tr: 13px;
 		--aug-bl: 13px;
 		--aug-br: 13px;
-		--aug-inlay: 0;
 	}
 	.profile-heading {
 		grid-area: heading;
