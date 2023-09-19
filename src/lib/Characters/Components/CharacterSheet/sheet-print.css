@@ -14,7 +14,6 @@ body {
 	background: none;
 }
 body {
-	/* margin: 0.9in; */
 	overflow-y: auto !important;
 }
 
@@ -24,46 +23,21 @@ body {
 	--primary-color: black;
 
 	--light: var(--primary-color);
-
-	/* --dark: rgb(0, 0, 0);
-	--blue-accent: #000; */
-
 	--primary-accent: var(--primary-color);
 	--secondary-accent: var(--primary-color);
 	--secondary-accent-muted: var(--primary-color);
 	--third-accent: var(--primary-color);
 	--fourth-accent: var(--primary-color);
 }
- @media print {
+@media print {
 	.hide-print {
 		display: none !important;
 	}
 }
-	/*
-	.container {
-		padding-inline: 0.1in;
-		display: grid;
-		grid-auto-flow: row;
-		grid-template-columns: 1fr;
-		grid-template-rows: min-content min-content min-content auto;
-		gap: 0.5rem;
-	}
 
-	
-} */
-
-	/* body {
-		
-		overflow-y: hidden !important;
-	}
-
-
-	.scroll-wrapper {
-		overflow: hidden;
-	} */
 .lists-row {
-		page-break-before: always;
-	}
+	page-break-before: always;
+}
 .sheet.print {
 	--content-container-background: transparent;
 }
@@ -94,20 +68,16 @@ body {
 }
 .sheet.print .lists-row {
 	grid-template-rows: 6in 4in;
-	margin-block: .25in;
+	margin-block: 0.25in;
 	page-break-inside: avoid;
 }
-/* 
-.skills-container { grid-area: 1 / 1 / 2 / 3; } */
+
 .skills-container .list {
 	display: flex;
 	flex-wrap: wrap;
 	height: 100%;
 	padding-bottom: 0.2in;
 }
-/* .scripts-container { grid-area: 1 / 3 / 2 / 4; }
-.items-container { grid-area: 2 / 3 / 3 / 4; }
-.notes-container { grid-area: 2 / 1 / 3 / 3; } */
 
 .sheet.print .lists-row .skills-container {
 	margin-bottom: 0;
