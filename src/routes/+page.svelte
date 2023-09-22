@@ -2,6 +2,11 @@
 	import { config } from '$lib/Shared/config';
 	import LandingShell from '$lib/Shared/Shell/LandingShell.svelte';
 	import { loggedIn, user } from '$lib/Shared/Stores/UserStore';
+	import { setSessionValue } from '$lib/Shared/Stores/StoreUtils';
+	import { onMount } from 'svelte';
+	onMount(() => {
+		setSessionValue('redirect', document?.location);
+	});
 </script>
 
 <LandingShell>
@@ -27,8 +32,8 @@
 							to learn more about the city and it's citizens.
 						</p>
 						<p>
-							You can also download a single shot <a href="/spores">Spore</a> and start
-							exploring some of the districts of Dimm City.
+							You can also download a single shot <a href="/spores">Spore</a> and start exploring some
+							of the districts of Dimm City.
 						</p>
 						<!-- <p>Check the status of our current <a href="/" target="_blank">kickstarter</a></p> -->
 						<p>
@@ -71,7 +76,7 @@
 						<p>Sign in to being your journey into the city...</p>
 
 						<div class="register-links">
-							<a class="button" href={config.apiBaseUrl + '/connect/google?redirect=/'}
+							<a class="button" href={config.apiBaseUrl + '/connect/google'}
 								><i class="bi bi-google" />Sign in with Google</a
 							>
 							<a class="button" href={config.apiBaseUrl + '/connect/reddit'}

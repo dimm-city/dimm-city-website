@@ -4,7 +4,11 @@
 	import LandingShell from '$lib/Shared/Shell/LandingShell.svelte';
 	import { logout, user, updateProfile } from '$lib/Shared/Stores/UserStore';
 	import { config } from '$lib/Shared/config';
-
+	import { setSessionValue } from '$lib/Shared/Stores/StoreUtils';
+	import { onMount } from 'svelte';
+	onMount(() => {
+		setSessionValue('redirect', document?.location);
+	});
 	let editing = false;
 	/**
 	 * @type {any}

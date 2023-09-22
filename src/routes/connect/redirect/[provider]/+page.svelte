@@ -21,7 +21,7 @@
 			await loadProfile();
 			await loadWallets(true);
 			redirect = getSessionValue('redirect');
-			document.location = redirect?.href ?? '/console';
+			document.location = redirect?.href ?? '/';
 		}
 	});
 </script>
