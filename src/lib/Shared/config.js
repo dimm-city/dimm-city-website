@@ -29,11 +29,11 @@ function getCurrentConfig() {
 	};
 
 	if (browser) {
-		console.log('Loading client config');
+		console.log('Loading client config:', window.location.href);
 		if (window.location.href.includes(prod.baseUrl)) output = prod;
-		if (window.location.href.includes(staging.baseUrl)) output = staging;
-		if (window.location.href.includes(beta.baseUrl)) output = beta;
-		if (window.location.href.includes(dev.baseUrl)) output = dev;
+		else if (window.location.href.includes(staging.baseUrl)) output = staging;
+		else if (window.location.href.includes(beta.baseUrl)) output = beta;
+		else if (window.location.href.includes(dev.baseUrl)) output = dev;
 	} else if (process) {
 		console.log('Loading server config', process.env.BUILD_ENV, process.env.NODE_ENV);
 		if(process.env){
