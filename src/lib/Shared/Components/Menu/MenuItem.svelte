@@ -1,25 +1,12 @@
-<script lang="ts">
+<script>
 	export let icon = 'bi bi-missing';
-	export let title = 'Title';
+	export let title = '';
 	export let url = '#';
 	export let description = '';
 	export let disabled = false;
 	export let classes = '';
 	export let target = '_self';
 </script>
-
-<style>
-	.menu-item {
-		background-color: rgba(33, 0, 43, 0.55);
-	}
-	.menu-item i {
-		margin-right: 0.5rem;
-	}
-
-	/* .menu-item-container {
-		min-width: 50ch;
-	} */
-</style>
 
 <div on:mouseenter on:mouseleave class="menu-item-container">
 	{#if disabled}

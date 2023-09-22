@@ -1,11 +1,22 @@
-<script lang="ts">
-	import Shell from '$lib/Shared/Components/Shell.svelte';
-	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
-	import LocationsMenu from '$lib/Locations/LocationsMenu.svelte';
+<script>
+	import Shell from '$lib/Shared/Shell/Shell.svelte';
+	import SearchPage from '$lib/Shared/Components/SearchPage.svelte';
+	import MenuItem from '$lib/Shared/Components/Menu/MenuItem.svelte';
+
+	export let data;
+	const endpoint = '/dimm-city/locations';
+
 </script>
 
 <Shell title="Locations">
-	<ContentPane padding={0}>
-		<LocationsMenu />
-	</ContentPane>
+	<SearchPage {endpoint} initialData={data}>		
+		<svelte:fragment slot="result" let:result>
+			<MenuItem
+				icon="bi-map"
+				url={`/locations/${result.attributes.slug}`}
+				title={result.attributes.name}
+				description={result.attributes.shortDescription ?? ''}
+			/>
+		</svelte:fragment>
+	</SearchPage>
 </Shell>

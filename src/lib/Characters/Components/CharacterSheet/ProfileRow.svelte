@@ -3,18 +3,24 @@
 	import Select from 'svelte-select';
 	import Input from '$lib/Shared/Components/Input.svelte';
 	import Textarea from '$lib/Shared/Components/Textarea.svelte';
-	import { getDistricts } from '$lib/Locations/getDistricts';
-	import { getSpecialties } from '$lib/Specialties/getSpecialties';
+	import { getDistricts } from '$lib/Shared/Stores/getDistricts';
+	import { getSpecialties } from '$lib/Shared/Stores/getSpecialties';
 
 	/**
-	 * @type {import('$lib/Characters/Models/Character').ICharacter}}
+	 * @type {DC.Character}
 	 */
 	export let character;
 	export let isEditing = false;
+
+	let originLocation;
+
+	$: if (!character.attributes.originLocation) character.attributes.originLocation = {};
+
+	$: character.attributes.originLocation.set = [character.attributes.originLocation?.data];
 </script>
 
 <div class="profile-row">
-	<div class="row-frame" data-augmented-ui="tl-clip-x tr-clip-x br-clip bl-clip border" />
+	<div class="row-frame" data-augmented-ui="tl-clip-x tr-clip-x br-clip-x bl-clip-x both" />
 	<div class="profile-heading"><h3>Profile</h3></div>
 	<section class="section-container profile">
 		<div class="label">Specialties:</div>
@@ -28,7 +34,7 @@
 						itemId="id"
 						multiple={true}
 						hideEmptyState={true}
-						bind:value={character.specialties.data}
+						bind:value={character.attributes.specialties.data}
 					>
 						<div slot="selection" let:selection>
 							<span>{selection.name ?? selection.attributes?.name ?? 'Unknown'}</span>
@@ -40,33 +46,19 @@
 				</div>
 			{:else}
 				<span
-					>{character.specialties?.data?.length > 0
-						? character.specialties?.data?.map((s) => s.attributes?.name).join(', ')
-						: 'Unknown'}</span
+					>{character.attributes.specialties?.data?.length > 0
+						? character.attributes.specialties?.data?.map((s) => s.attributes?.name).join(', ')
+						: ''}</span
 				>
 			{/if}
 		</div>
-		<div class="label">Origin:</div>
+
+		<div class="label">Beliefs:</div>
 		<div class="value">
 			{#if isEditing}
-				<div class="current-location aug-select">
-					<Select
-						loadOptions={getDistricts}
-						placeholder="Select a district"
-						label="name"
-						itemId="id"
-						bind:value={character.originLocation.data}
-					>
-						<div slot="selection" let:selection>
-							<span>{selection.name ?? selection.attributes?.name ?? 'Unknown'}</span>
-						</div>
-						<div slot="item" let:item let:index>
-							<span>{item.name ?? item.attributes?.name ?? 'Unknown'}</span>
-						</div>
-					</Select>
-				</div>
+				<Textarea maxlength="150" bind:value={character.attributes.beliefs} />
 			{:else}
-				<span>{character.originLocation?.data?.attributes?.name ?? 'Unknown'}</span>
+				<span>{character.attributes.beliefs ?? ''}</span>
 			{/if}
 		</div>
 
@@ -80,45 +72,59 @@
 						label="name"
 						itemId="id"
 						--list-z-index="8888888"
-						bind:value={character.currentLocation.data}
+						bind:value={character.attributes.currentLocation.data}
 					>
 						<div slot="selection" let:selection>
-							<span>{selection.name ?? selection.attributes?.name ?? 'Unknown'}</span>
+							<span>{selection.name ?? selection.attributes?.name ?? ''}</span>
 						</div>
 						<div slot="item" let:item let:index>
-							<span>{item.name ?? item.attributes?.name ?? 'Unknown'}</span>
+							<span>{item.name ?? item.attributes?.name ?? ''}</span>
 						</div>
 					</Select>
 				</div>
 			{:else}
-				<span>{character.currentLocation?.data?.attributes?.name ?? 'Unknown'}</span>
+				<span>{character.attributes.currentLocation?.data?.attributes?.name ?? ''}</span>
 			{/if}
 		</div>
-
 		<div class="label">Vibe:</div>
 		<div class="value">
 			{#if isEditing}
-				<Input bind:value={character.vibe} maxlength="50" class="inline" />
+				<Input bind:value={character.attributes.vibe} maxlength="50" class="inline" />
 			{:else}
-				<span>{character.vibe}</span>
+				<span>{character.attributes.vibe ?? ''}</span>
 			{/if}
 		</div>
-
-		<div class="label">Beliefs:</div>
+		<div class="label">Origin:</div>
 		<div class="value">
 			{#if isEditing}
-				<Textarea maxlength="150" bind:value={character.beliefs} />
+				<div class="current-location aug-select">
+					<Select
+						loadOptions={getDistricts}
+						placeholder="Select a district"
+						label="name"
+						itemId="id"
+						bind:justValue={originLocation}
+						bind:value={character.attributes.originLocation.data}
+					>
+						<div slot="selection" let:selection>
+							<span>{selection.name ?? selection.attributes?.name ?? ''}</span>
+						</div>
+						<div slot="item" let:item let:index>
+							<span>{item.name ?? item.attributes?.name ?? ''}</span>
+						</div>
+					</Select>
+				</div>
 			{:else}
-				<span>{character.beliefs ?? 'Unknown'}</span>
+				<span>{character.attributes.originLocation?.data?.attributes?.name ?? ''}</span>
 			{/if}
 		</div>
 
 		<div class="label">Flaws:</div>
 		<div class="value">
 			{#if isEditing}
-				<Textarea maxlength="150" bind:value={character.flaws} />
+				<Textarea maxlength="150" bind:value={character.attributes.flaws} />
 			{:else}
-				<span>{character.flaws ?? 'Unknown'}</span>
+				<span>{character.attributes.flaws ?? ''}</span>
 			{/if}
 		</div>
 	</section>
@@ -152,6 +158,7 @@
 		grid-template-columns: min-content 1fr min-content 1fr;
 		grid-template-rows: repeat(4, min-content);
 		grid-column-gap: 0.5rem;
+		grid-auto-flow: row;
 	}
 	.label {
 		text-align: left;
@@ -188,7 +195,6 @@
 		--aug-tr: 13px;
 		--aug-bl: 13px;
 		--aug-br: 13px;
-		--aug-inlay: 0;
 	}
 	.profile-heading {
 		grid-area: heading;
@@ -201,7 +207,7 @@
 		font-family: var(--main-font-family);
 	}
 
-	@media (max-width: 767px) {
+	@media screen and (max-width: 767px) {
 		.section-container.profile {
 			grid-template-columns: min-content 1fr;
 			grid-template-rows: repeat(8, min-content);

@@ -15,4 +15,13 @@
         "**/node_modules": true
    
     },
+    "cSpell.words": [
+        "containsi",
+        "cyberwar",
+        "dimm",
+        "dreamverse",
+        "Kickstarter",
+        "Strapi",
+        "threejs"
+    ],
 }

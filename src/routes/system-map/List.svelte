@@ -1,19 +1,12 @@
-<script lang="ts">
+<script>
 	import ListItem from './ListItem.svelte';
-	export let data: any[] | null = [];
+	/**
+	 * @type {any[] | null}
+	 */
+	export let data = [];
 	export let baseUrl = '';
 	export let classes = '';
 </script>
-
-<style>
-	ul {
-		list-style-type: none;
-		position: relative;
-		list-style-type: none;
-		padding-left: 1rem;
-		margin-bottom: 0.5rem;
-	}
-</style>
 
 <ul class={classes}>
 	{#if data != null}
@@ -22,3 +15,13 @@
 		{/each}
 	{/if}
 </ul>
+
+<style>
+	ul {
+		list-style-type: none;
+		position: relative;
+		list-style-type: none;
+		padding-left: 0;
+		margin-bottom: 0.5rem;
+	}
+</style>

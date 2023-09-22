@@ -1,11 +1,15 @@
-<script lang="ts">
-	import Shell from '$lib/Shared/Components/Shell.svelte';
-	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
-	import SpecialtyMenu from '$lib/Specialties/SpecialtyMenu.svelte';
+<script>
+	import Shell from '$lib/Shared/Shell/Shell.svelte';
+	import SearchPage from '$lib/Shared/Components/SearchPage.svelte';
+
+	export let data;
 </script>
 
-<Shell title="Specialties" enableSearch={true}>
-	<ContentPane padding={0}>
-		<SpecialtyMenu />
-	</ContentPane>
+<Shell title="Specialties">
+	<SearchPage
+		initialData={data}
+		endpoint={'/dimm-city/specialty'}
+		itemResultBaseUrl="/specialties"
+		searchPlaceholder="Search dimm city specialties"
+	/>
 </Shell>

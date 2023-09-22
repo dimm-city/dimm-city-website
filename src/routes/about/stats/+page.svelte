@@ -1,28 +1,28 @@
-<script lang="ts">
-	import Shell from '$lib/Shared/Components/Shell.svelte';
+<script>
+	import Shell from '$lib/Shared/Shell/Shell.svelte';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
-	import { districts } from '$lib/Locations/LocationStore';
-	import { config } from '$lib/Shared/config';
-	import { characters } from '$lib/Characters/CharacterStore';
-	import { specialties } from '$lib/Specialties/SpecialtyStore';
+	import { config } from '$lib/Shared/config.js';
+	export let data = {};
 </script>
 
 <Shell title="Console Stats">
-	<ContentPane>
+	<ContentPane padding={1} scrollable={true}>
 		<h4 class="">Console Stats:</h4>
 		<ul class="unstyled-list">
-			<li>Current Version: {config.version}</li>
+			<li>Console Environment: {config.env}</li>
+			<li>Console Version: {config.version}</li>
+			<li>Data Connection Version: {data.version}</li>
 			<li>Connection Status: Weak</li>
-			<li>Citizen Profiles recorded: {$characters.length}</li>
-			<li>Citizen Specialities recorded: {$specialties.length}</li>
-			<li>Districts recorded: {$districts.length}</li>
-			<!-- <li>License: <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+			<li>Citizen Profiles recorded: {data.character}</li>
+			<li>Citizen Specialties recorded: {data.specialty}</li>
+			<li>Districts recorded: {data.location}</li>
+			<li>Journal entries recorded: {data["journal-entry"]}</li>		
+		</ul>
+	<!-- <li>License: <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
                 CC-BY
               </a>
-			</li> -->
-			dependencies 
-		</ul>
-
+			</li> 
+			dependencies -->
 		<h4>technologies, projects, and contributions</h4>
 		<p>A true thank you to all of the people that poured hours of passion into these projects!</p>
 		<ul class="unstyled-list">
@@ -32,9 +32,7 @@
 			<li><a href="https://kit.svelte.dev/">SvelteKit</a></li>
 			<li><a href="https://github.com/mattjennings/svelte-modals">svelte-modals</a></li>
 			<li><a href="https://github.com/EvanOxfeld/svelte-step-wizard">svelte-step-wizard</a></li>
-			<li><a href="https://gitlab.com/clb1/svelte-ethers-store">svelte-ethers-store</a></li>
 			<li><a href="https://www.typescriptlang.org/">TypeScript</a></li>
-			<li><a href="https://github.com/web3modal/web3modal">web3modal</a></li>
 			<li><a href="https://eslint.org/">eslint</a></li>
 			<li><a href="https://prettier.io/">prettier</a></li>
 			<li><a href="https://strapi.io/">Strapi</a></li>

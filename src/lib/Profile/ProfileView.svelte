@@ -1,37 +1,71 @@
-<script lang="ts">
+<script>
 	import { onMount } from 'svelte';
-	import { profile, loadProfile, logout, loadWallets, tokens } from '$lib/Shared/Stores/UserStore';
-	import CharacterMenu from '$lib/Characters/CharacterMenu.svelte';
-	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
+	import { user, logout, loadWallets, loadProfile } from '$lib/Shared/Stores/UserStore';
+	import { getCharactersByIds, getCharactersByUser } from '$lib/Shared/Stores/getCharacters';
+	import PagedResults from '../Shared/Components/PagedResults.svelte';
+	import MenuItem from '../Shared/Components/Menu/MenuItem.svelte';
+	import DefaultItemResult from '../Shared/Components/DefaultItemResult.svelte';
+	import { config } from '$lib/Shared/config';
 
-	let walletQuery;
+	let currentPage = 1;
+	let totalPages = 1;
+	let query = {
+		sort: ['name:asc'],
+		fields: ['name', 'tokenId', 'slug'],
+		populate: ['race', 'specialty'],
+		publicationState: 'live',
+		filters: {
+			token: {
+				wallet: {
+					user: {
+						id: $user.id
+					}
+				}
+			}
+		}
+	};
+
+	/**
+	 * @type {any}
+	 */
+	let initialData;
 	onMount(async () => {
-		await loadProfile();
-		walletQuery = loadWallets();
+
+		/**@type {CW.Wallet[]}*/
+		const wallets = await loadWallets();
+		const tokenIds = wallets.flatMap(w => w.tokens).map(t => t.id);
+		initialData = await getCharactersByIds(tokenIds);
 	});
 </script>
 
 <div class="header">
-	<h1>{$profile?.settings?.displayName ?? $profile?.username}</h1>
+	<h1>{$user?.profile?.displayName ?? $user?.username}</h1>
 	<!-- svelte-ignore a11y-missing-attribute -->
-	<a on:click={logout} on:keyup={logout}><small>logout</small></a>
 	<!-- <p>{@html $profile?.settings?.bio ?? ''}</p> -->
 </div>
-<div class="menu">
-	<!-- <a href="/console/characters/create"><small>create character</small></a> -->
-	<a href="/console/archive"><small>manage archives</small></a>
+<div class="profile-menu">
+	<a href="/console/characters/create">create character</a>
+	<!-- <a href="/console/archive"><small>manage archives</small></a> -->
+	<button class="text-button" on:click={logout}>logout</button>
 </div>
 
 <h3>Your Sporos</h3>
-{#await walletQuery}
-	<LoadingIndicator>Locating sporos...</LoadingIndicator>
-{:then data}
-	{#if $tokens?.length > 0}
-		<CharacterMenu ownedCharactersOnly={true} />
-	{:else}
-		<p>No sporos located</p>
-	{/if}
-{/await}
+<PagedResults
+	bind:page={currentPage}
+	bind:totalPages
+	results={initialData?.data}
+	endpoint={`${config.apiBaseUrl}/dimm-city/characters`}
+	{query}
+	autoLoad={false}
+>
+	<svelte:fragment slot="result" let:result>
+		<slot name="result" {result}>
+			<MenuItem url={`/citizens/${result.attributes.tokenId}`}>
+				<DefaultItemResult item={result.attributes} icon="bi-shield-lock" />
+			</MenuItem>
+		</slot>
+	</svelte:fragment>
+</PagedResults>
 
 <style>
 	.header {
@@ -46,11 +80,10 @@
 		text-overflow: ellipsis;
 		margin-bottom: 0.25rem;
 	}
-	small {
-		font-size: 0.8rem;
-		cursor: pointer;
-	}
-	.menu {
-		margin-bottom: 1rem;
+	.profile-menu {
+		display: flex;
+		justify-content: space-between;
+		margin-block: 1rem;
+		border-bottom: 1px solid var(--secondary-accent);
 	}
 </style>

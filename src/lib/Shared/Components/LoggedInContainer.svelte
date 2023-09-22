@@ -1,54 +1,35 @@
-<script lang="ts">
+<script>
+	import { setSessionValue } from '$lib/Shared/Stores/StoreUtils';
 	import { loggedIn } from '$lib/Shared/Stores/UserStore';
 	import { config } from '$lib/Shared/config';
-	import { connect, loginWithWallet } from '$lib/Shared/Stores/ContractsStore';
 	import Button from './Button.svelte';
-	import { defaultEvmStores, chainId, connected, signerAddress } from 'svelte-ethers-store';
 	import { onMount } from 'svelte';
+	import WalletLoginButton from './WalletLoginButton.svelte';
+	onMount(async () => {
+		console.log('login container mounted', $loggedIn);
 
-	let ethereumEnabled =  false; 
-	onMount(async ()=>{
-		ethereumEnabled = window && window?.ethereum;
-		// if(!$connected && ethereumEnabled){
-		// 	connect();
-		// }
+		if (!$loggedIn) {
+			console.log('setting redirect', document.location);
 
+			setSessionValue('redirect', document.location);
+		}
+	
 	});
 </script>
 
 {#if $loggedIn}
 	<slot />
 {:else}
+	<slot name="public-header"></slot>
 	<slot name="public">
 		<div class="content-container fade-in">
+			<Button height="5rem" url={config.apiBaseUrl + '/connect/google'}
+				><i class="bi bi-google" />Login with Google</Button
+			>
 			<Button height="5rem" url={config.apiBaseUrl + '/connect/reddit'}
 				><i class="bi bi-reddit" />Login with Reddit</Button
 			>
-			{#if ethereumEnabled}
-				{#if $connected && $signerAddress}
-					<Button height="5rem" on:click={loginWithWallet}
-						><i class="bi bi-safe" />
-						Login with Metamask
-						<small class="connection-details">(chain: {$chainId} | address: {$signerAddress})</small
-						>
-						<small>
-							you will be prompted to sign a message to login with your connected wallet
-						</small>
-					</Button>
-				{:else}<Button height="5rem" on:click={connect}
-						><i class="bi bi-safe" />
-						Connect Metamask
-						<p>
-							<small>to login with metamask you will first be asked to connect to the site</small>
-						</p>
-					</Button>
-				{/if}
-			{:else}
-				<Button height="5rem" url="https://metamask.io" target="_blank"
-					><i class="bi bi-safe" /> Metamask not installed
-					<p><small>please install metamask to enable this option</small></p>
-				</Button>
-			{/if}
+			<WalletLoginButton />	
 		</div>
 	</slot>
 {/if}
@@ -57,16 +38,18 @@
 	.content-container {
 		display: flex;
 		flex-direction: column;
-		gap: 0.5rem;
+		gap: 1.5rem;
 		padding-inline: 1rem;
-		align-items: stretch;
+		align-items: center;
 		justify-content: center;
 		height: 100%;
+		max-width: 65ch;
+		margin: auto;
 	}
-	.connection-details {
-		display: block;
-		padding: 0.25rem;
+	:global(.content-container > a) {
+		width: 100%;
 	}
+
 
 	.bi {
 		margin: 0.5rem;

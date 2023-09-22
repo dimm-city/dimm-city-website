@@ -1,0 +1,204 @@
+<script lang="ts">
+	import { config } from '$lib/Shared/config';
+	import { searchText } from '$lib/Shared/Stores/ShellStore';
+	import HexMenu from '../Components/Menu/HexMenu.svelte';
+
+	export let enableSearch = false;
+	export let title = '';
+	export let titleUrl = '';
+</script>
+
+<div class="top-panel fade-in animate__animated animate__fadeInDown">
+	<div
+		class="top-panel-decoration"
+		data-augmented-ui="tl-clip l-clip t-clip-x b-clip-x tr-clip r-clip bl-clip br-clip border"
+	>
+		&nbsp;
+	</div>
+
+	<div class="global-toolbar">
+		<div>
+			<slot name="left-button" />
+		</div>
+		<div class="search-container">
+			{#if enableSearch}
+				<div data-augmented-ui class="aug-input">
+					<!-- <i class="bi bi-gear" /> -->
+					<input bind:value={$searchText} type="text" placeholder="Search {title}..." />
+					<i class="bi bi-search" />
+				</div>
+			{:else}
+				<h4>
+					{#if titleUrl}
+						<a href={titleUrl}>../</a><span>{title}</span>
+					{:else}
+						<span>{title}</span>
+					{/if}
+				</h4>
+			{/if}
+		</div>
+		<div>
+			<HexMenu title="action menu">
+				<slot name="action-menu" />
+			</HexMenu>
+		</div>
+	</div>
+	<div class="version"><small><span>DCC</span> <span>v{config.version}</span></small></div>
+</div>
+
+<style>
+	:root {
+		--menu-bar-height: 5dvh;
+	}
+	.search-container h4 {
+		position: absolute;
+		color: var(--light);
+		margin-block: 0px;
+	}
+	.search-container h4,
+	.search-container a {
+		text-decoration: none;
+		color: var(--fourth-accent);
+		display: inline;
+	}
+
+	.top-panel {
+		--ds: drop-shadow(0 0 0.2vh var(--secondary-accent));
+		filter: var(--ds);
+		animation-duration: 150ms;
+		animation-delay: 50ms;
+		--animate-delay: 50ms;
+	}
+
+	.top-panel-decoration,
+	.top-panel-decoration::before,
+	.top-panel-decoration::after,
+	.top-panel {
+		height: var(--menu-bar-height);
+		width: 100vw;
+		transition: all var(--easing);
+	}
+
+	.top-panel-decoration {
+		position: fixed;
+		background: rgba(0, 0, 0, 0.9);
+		--aug-tl1: 0px;
+		--aug-tr1: 0px;
+		--aug-t1: 0px;
+		--aug-t2: 0px;
+		--aug-t-extend1: 80%;
+		--aug-b1: 0.5rem;
+		--aug-b2: 0.5rem;
+		--aug-b-extend1: 60%;
+		--aug-l1: 1vh;
+		--aug-l2: 1vh;
+		--aug-r1: 1vh;
+		--aug-r2: 1vh;
+		--aug-border: initial;
+		--aug-border-bg: var(--secondary-accent-muted);
+		--aug-border-all: 0.25vh;
+		--aug-border-top: 0px;
+		--aug-border-bottom: 1px;
+		--aug-bl1: 1rem;
+		--aug-br1: 1rem;
+	}
+
+	.top-panel .global-toolbar {
+		position: absolute;
+		width: 100dvw;
+		height: 100%;
+		display: flex;
+		display: grid;
+		grid-template-columns: 1fr 7fr 1fr;
+		align-items: center;
+		justify-items: center;
+		transition: all var(--easing);
+	}
+
+	.global-toolbar > div:first-of-type {
+		display: flex;
+		justify-content: start;
+		width: 100%;
+	}
+	.global-toolbar > div:last-of-type {
+		display: flex;
+		justify-content: end;
+		width: 100%;
+		height: 100%;
+	}
+
+	.version {
+		color: var(--third-accent);
+		position: absolute;
+		bottom: 0.255rem;
+		right: 3.25rem;
+		transition: all var(--transition-in-time);
+		font-size: 0.75rem;
+		white-space: nowrap;
+	}
+
+	.search-container {
+		align-items: center;
+	}
+
+	@media (max-width: 767px) {
+		:root {
+			--menu-bar-height: 7dvh;
+		}
+		.top-panel {
+			margin-bottom: 0;
+			bottom: 0;
+		}
+		.top-panel-decoration {
+			--aug-tl1: 1vh;
+			--aug-tr1: 1vh;
+			--aug-t1: 1vh;
+			--aug-t2: 1vh;
+			--aug-t-extend1: (80% - 1vh);
+			--aug-b1: 0vh;
+			--aug-b2: 0vh;
+			--aug-b-extend1: (80% - 1vh);
+			--aug-l1: 0px;
+			--aug-l2: 0px;
+			--aug-r1: 0px;
+			--aug-r2: 0px;
+			--aug-border: initial;
+			--aug-border-bg: var(--secondary-accent-muted);
+			--aug-border-all: 0.5vh;
+			--aug-border-top: 1px;
+			--aug-border-bottom: 0px;
+			--aug-bl1: 0rem;
+			--aug-br1: 0rem;
+		}
+		.top-panel-decoration,
+		.top-panel-decoration::before,
+		.top-panel-decoration::after,
+		.top-panel {
+			height: var(--menu-bar-height);
+		}
+		.top-panel .global-toolbar {
+			width: 100vw;
+		}
+		.global-toolbar > div:first-of-type {
+			display: flex;
+			justify-content: start;
+			width: 100%;
+			transform: translateX(0.5rem) translateY(-1.5rem);
+		}
+		.global-toolbar > div:last-of-type {
+			display: flex;
+			justify-content: end;
+			width: 100%;
+			height: 100%;
+			transform: translateX(-0.5rem) translateY(-1.5rem);
+		}
+
+		.version {
+			right: 0.5rem;
+			bottom: 0rem;
+		}
+		.version span:first-of-type {
+			display: none;
+		}
+	}
+</style>

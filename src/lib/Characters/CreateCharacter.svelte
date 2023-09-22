@@ -1,106 +1,202 @@
-<script lang="ts">
+<script>
+	import { getNotificationsContext } from 'svelte-notifications';
 	import StepWizard from 'svelte-step-wizard';
-	import Button from '$lib/Shared/Components/Button.svelte';
+	import Select from 'svelte-select';
 	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
-	import { CharacterRelease, type ICharacterRelease } from './Models/ICharacterRelease';
-	import { getCharacterReleases } from './Queries/getCharacterReleases';
+	import { getCharacterReleases } from '$lib/Shared/Stores/getCharacterReleases';
 	import { onMount } from 'svelte';
 	import LoggedInContainer from '$lib/Shared/Components/LoggedInContainer.svelte';
-	import type { ICharacter, IToken } from './Models/Character';
 	import StripePayment from '$lib/Shared/Components/StripePayment.svelte';
 	import Article from '$lib/Shared/Components/Article.svelte';
-	import Toolbar from '$lib/Shared/Components/Toolbar.svelte';
-	import { loadWallets, profile } from '$lib/Shared/Stores/UserStore';
-	import { loadCharacter } from './Queries/getCharacterBySlug';
-	import { createCharacter } from './Queries/createCharacter';
-	import Image from '$lib/Shared/Components/Image.svelte';
+	import { loadWallets, user } from '$lib/Shared/Stores/UserStore';
+	import { createCharacter } from './Queries/CharacterStore';
 	import ProfileImage from './Components/ProfileImage.svelte';
 
-	let stripe: StripePayment;
+	const { addNotification } = getNotificationsContext();
+	let logs = [''];
+	$: filteredLogs = logs.slice(-3);
+
+	/**
+	 * @type {StripePayment}
+	 */
+	let stripe;
 	let processing = false;
 	let isSaving = false;
-	let character: ICharacter;
-	let releases: ICharacterRelease[] = [];
-	let selectedRelease: ICharacterRelease = new CharacterRelease();
-
-	let metadata = {
-		slug: selectedRelease.slug,
-		user: $profile?.id
+	let character = {
+		name: '',
+		tokenId: ''
 	};
-	$: {
+	/**
+	 * @type {DC.CharacterRelease}
+	 */
+	let selectedRelease; 
+
+	let currentStep = 3;
+	let metadata = {
+		slug: '',
+		user: $user?.id
+	};
+
+	$: if (selectedRelease) {
 		metadata = {
-			slug: selectedRelease.slug,
-			user: $profile?.id
+			slug: selectedRelease.attributes.slug,
+			user: $user?.id
 		};
 	}
 	onMount(async () => {
 		const data = await getCharacterReleases();
-		releases = data;
-		selectedRelease = releases?.at(0) ?? new CharacterRelease();
 	});
 
+	function itemSelected(params) {
+		//logs = [...logs, `${params.detail.name} was selected`];
+	}
 	function cancel() {
 		if (window.history.length > 0) window.history.back();
 		else window.location.href = '/console';
 	}
 
-	async function processPayment(nextStep: Function) {
-		metadata = {
-			slug: selectedRelease.slug,
-			user: $profile?.id
-		};
+	async function processPayment(nextStep) {
+		if (selectedRelease) {
+			isSaving = true;
+			metadata = {
+				slug: selectedRelease?.attributes.slug,
+				user: $user?.id
+			};
 
-		await stripe.process();
-		nextStep();
+			try {
+				await stripe.process();
+				//nextStep();
+			} catch (error) {
+				console.error('Failed to process payment:', error);
+				addNotification({
+					id: `${new Date().getTime()}-${Math.floor(Math.random() * 9999)}`,
+					position: 'bottom-right',
+					heading: 'issue with payment',
+					type: 'error',
+					description: 'failed to process payment'
+				});
+			}
+		}
 	}
-	async function onPaymentProcessed(result: any, nextStep: Function, previousStep: Function) {
-		console.log('onPP', result);
+	/**
+	 * @param {CustomEvent<any>} result
+	 * @param {() => void} nextStep
+	 * @param {() => void} previousStep
+	 */
+	async function onPaymentProcessed(result, nextStep, previousStep) {
+		addNotification({
+			id: `${new Date().getTime()}-${Math.floor(Math.random() * 9999)}`,
+			position: 'bottom-right',
+			heading: 'establishing connection',
+			type: 'success',
+			removeAfter: 3000,
+			text: 'connecting your sporo to you op console...'
+		});
 
-		if (result.paymentIntent.status != 'succeeded') previousStep();
+		if (currentStep == 3) nextStep();
 
-		const response = await createCharacter(result.paymentIntent.id);
+		const waitingTimer = setInterval(() => {
+			addNotification({
+				id: `${new Date().getTime()}-${Math.floor(Math.random() * 9999)}`,
+				position: 'bottom-right',
+				heading: 'still working',
+				type: 'warning',
+				removeAfter: 3000,
+				text: 'it is taking some time the founders are hard at work connecting to your sporo'
+			});
+		}, 10000);
 
-		loadWallets(true);
+		try {
+			const response = await createCharacter(result.detail.paymentIntent.id);
 
-		character = {
-			tokenId: response.token.slug,
-			name: response.token.metadata.name,
-			imageUrl: response.token.metadata.image
-		};
+			loadWallets(true);
 
-		nextStep();
+			character = {
+				tokenId: response.token.slug,
+				name: response.token.metadata.name,
+				imageUrl: response.token.metadata.image
+			};
+			clearInterval(waitingTimer);
+			nextStep();
+		} catch (error) {
+			addNotification({
+				id: `${new Date().getTime()}-${Math.floor(Math.random() * 9999)}`,
+				position: 'bottom-right',
+				heading: 'connection error',
+				type: 'error',
+				removeAfter: 3000,
+				text: error
+			});
+			if (currentStep == 3) previousStep();
+		}
+
+		isSaving = false;
+
+		//if (currentStep == 3) nextStep();
+	}
+	async function onPaymentFailed(result, previousStep) {
+		// logs.push('payment failed');
+		// logs.push(result.detail.message);
+		// logs = [...logs];
+
+		addNotification({
+			position: 'bottom-right',
+			removeAfter: 3000,
+			allowRemove: true,
+			id: `${new Date().getTime()}-${Math.floor(Math.random() * 9999)}`,
+			heading: 'payment failed',
+			type: 'error',
+			text: result.detail.message
+		});
+		isSaving = false;
+
+		// if (currentStep == 3) previousStep();
 	}
 </script>
 
 <LoggedInContainer>
-	<StepWizard initialStep={1}>
+	<div class="status text-warning" data-augmented-ui="border">
+		{#each filteredLogs as log}
+			<div class="fade-in">{log}</div>
+		{/each}
+	</div>
+	<StepWizard initialStep={1} step={currentStep}>
 		<StepWizard.Step num={1} let:previousStep let:nextStep>
-			<div class="step-container release-step  fade-in">
+			<div class="step-container release-step fade-in">
 				<div class="step-container-header">
-					<h4>Select which collection you would like to create a character from</h4>
-					<div class="toolbar">
-						{#each releases as release}
-							<button
-								class="aug-button hex"
-								class:selected={selectedRelease == release}
-								data-augmented-ui
-								on:click={() => (selectedRelease = release)}
-								><i class={release.icon} /><span>{release.name}</span></button
-							>
-						{/each}
+					<!-- <h4>Select which collection you would like to create a character from</h4> -->
+					<div class="toolbar aug-select">
+						<Select
+							loadOptions={getCharacterReleases}
+							placeholder="Select a character collection"
+							label="name"
+							itemId="id"
+							on:change={itemSelected}
+							bind:value={selectedRelease}
+						>
+							<div slot="selection" let:selection>
+								<i class={selection.icon} /><span>{selection.name ?? 'Unknown'}</span><span
+									class="release-token-summary"
+									>&nbsp; ({selection.contract?.totalSupply}/{selection.contract?.maxSupply ??
+										'Unknown'} sporos)</span
+								>
+							</div>
+							<div slot="item" let:item let:index>
+								<i class={item.icon} /><span>{item.name ?? 'Unknown'}</span><span
+									class="release-token-summary"
+									>&nbsp; ({item.contract?.totalSupply}/{item.contract?.maxSupply ?? 'Unknown'} sporos)</span
+								>
+							</div>
+						</Select>
 					</div>
-					<small>
-						{#if selectedRelease?.id > 0}
-							<span
-								>{selectedRelease.contract?.totalSupply}/{selectedRelease.contract?.maxSupply ?? 'Unknown'} sporos created
-								in this release</span
-							>
-						{/if}
-					</small>
 				</div>
 				<div class="step-container-content">
 					<div class="release-container">
-						<Article model={selectedRelease}  />
+						<Article model={selectedRelease}>
+							<svelte:fragment slot="header">
+								<span />
+							</svelte:fragment>
+						</Article>
 					</div>
 				</div>
 				<div class="button-row">
@@ -123,8 +219,8 @@
 						<small>
 							{#if selectedRelease?.id > 0}
 								<span
-									>{selectedRelease.contract?.totalSupply}/{selectedRelease.contract?.maxSupply} sporos
-									created in this release</span
+									>{selectedRelease.contract?.totalSupply}/{selectedRelease.contract?.maxSupply ??
+										'unknown'} connection established</span
 								>
 							{/if}
 						</small>
@@ -135,14 +231,20 @@
 					<h4>Enter Payment Details</h4>
 					<StripePayment
 						bind:this={stripe}
-						callback={(data) => onPaymentProcessed(data, nextStep, previousStep)}
+						on:stripe.onPaymentIntentCreated={(data) => console.log('intent created', data)}
+						on:stripe.onPaymentConfirmed={(data) =>
+							onPaymentProcessed(data, nextStep, previousStep)}
+						on:stripe.onPaymentFailed={(data) => onPaymentFailed(data, previousStep)}
 						{metadata}
 						bind:processing
 					/>
-					<blockquote class="text-warning">
+					<div class="text-warning">
 						<h4>You will be charged for your character when you press continue.</h4>
-						<p>Once your payment has been processed, character creation will begin...</p>
-					</blockquote>
+						<p>
+							Once your payment has been processed, a connection will be established to your
+							sporo...
+						</p>
+					</div>
 					{#if processing}
 						<div class="padding-1">
 							<LoadingIndicator>processing...</LoadingIndicator>
@@ -167,39 +269,48 @@
 			</div>
 		</StepWizard.Step>
 		<StepWizard.Step num={3} let:previousStep let:nextStep>
-			<h2>Generating sporo...</h2>
-			<Image videoUrl="https://files.dimm.city/assets/connecting.mp4" title="Generating character"/>
+			<div class="video-container">
+				<!-- svelte-ignore a11y-media-has-caption -->
+				<video class="video" autoplay loop>
+					<!-- <source src="small.mp4" type="video/mp4" media="(max-width: 480px)"> -->
+					<source src="https://files.dimm.city/stories/prologue-1/scene-4.mp4" type="video/mp4" />
+				</video>
+			</div>
 		</StepWizard.Step>
 		<StepWizard.Step num={4} let:previousStep let:nextStep>
-			<div class="step-container fade-in">
-				<div class="centered-container h-100">
+			<div class="character-created step-container fade-in">
+				<div class="step-container-header">
+					<h2>Connection established!</h2>
+				</div>
+				<div class="step-container-content centered-container h-100">
 					<div class="character-created-container">
-						<h2>Sporo Generated</h2>
-						<h3>{character.name}</h3>
-						<Image imageUrl={character.imageUrl} title="character image" />
-						<p>
-							Click the <strong>complete</strong> button to complete their citizen file in your Dimm
-							City Archive.
-						</p>
+						{#if character?.name > ''}
+							<h3>{character.name}</h3>
+							<ProfileImage {character} />
+							<!-- <p>
+								Click the <strong>view citizen file</strong> button to edit their citizen file
+							</p> -->
 
-						<p>
-							Please note that submitting this information to the Dimm City Archive will make it
-							freely available to the public. All information submitted to the archive will be
-							considered to be available on the CC-BY license unless otherwise stated. Contact the
-							founders if you would like more information.
-						</p>
+							<small>
+								You may now edit your sporo's citizen file and begin providing their backstory,
+								specialties, and more! You the 'edit citizen file' button below to get started.
+							</small>
+						{/if}
 						{#if isSaving}
-							<LoadingIndicator><div class="centered-container">compiling...</div></LoadingIndicator
+							<LoadingIndicator
+								><div class="centered-container">connecting...</div></LoadingIndicator
 							>
 						{/if}
 					</div>
 				</div>
-				<div class="button-row">
+				<div class="character-created button-row">
 					<!-- <Button on:click={previousStep}>Back</Button> -->
 					<!-- <Button on:click={cancel}>skip</Button> -->
 					<!-- <Button on:click={() => }>Complete</Button> -->
-					<Button url="/console">Return to Op Console</Button>
-					<Button url={'/citizens/' + character.tokenId}>View Citizen File</Button>
+					<a class="aug-button" data-augmented-ui href="/console">Return to Op Console</a>
+					<a class="aug-button" data-augmented-ui href={'/citizens/' + character.tokenId}
+						>Edit Citizen File</a
+					>
 					<!-- <Button url={'/console/characters/import/' + token.tokenId}>Create Citizen File</Button> -->
 				</div>
 			</div>
@@ -208,8 +319,38 @@
 </LoggedInContainer>
 
 <style>
-	:root{
+	:root {
 		--focusBoxShadow: 0;
+	}
+	h2 {
+		font-size: max(1rem, min(1.5vw, 2.5rem));
+	}
+	p {
+		font-size: max(0.8rem, min(1.5vw, 1.25rem));
+	}
+	:global(.aug-select) {
+		--multi-item-clear-icon-color: var(--pink);
+		--multi-item-outline: 1px solid var(--pink);
+		--clear-select-color: var(--pink);
+		--list-z-index: 999;
+	}
+	.status {
+		position: fixed;
+		display: grid;
+		width: 100%;
+		padding-inline: 20%;
+		left: 0;
+		/* top: 50%;  */
+		/* left: 50%; */
+		/* margin: auto;*/
+		justify-content: center;
+		pointer-events: none;
+		bottom: 0.17rem;
+		--aug-border-all: 1px;
+		--aug-border-bg: var(--dark);
+		--aug-all-width: max(5vh, 2vw);
+		--aug-inlay-bg: var(--pink);
+		transition: all 300ms ease-in-out;
 	}
 	.step-container {
 		height: 100%;
@@ -217,13 +358,20 @@
 		display: grid;
 		grid-template-columns: 1fr;
 		/* grid-template-rows: auto 0.1fr; */
-		grid-template-rows: min-content auto min-content;
-		padding: 1rem 0;
+		grid-template-rows: min-content min(90%, auto) min-content;
+		padding: 2rem 0.5rem;
+	}
+
+	.step-container {
+		margin: auto;
 	}
 	/* .step-container.release-step {
 		grid-template-rows: min-content auto min-content;
 	} */
 
+	.release-token-summary {
+		font-size: 0.75rem;
+	}
 	.character-details-container span:nth-child(odd) {
 		padding-right: 1rem;
 	}
@@ -242,11 +390,13 @@
 		min-height: max-content;
 		height: 100%;
 		width: 100%;
+		overflow: hidden;
 		/* justify-content: space-between; */
 		/* overflow-y: auto; */
 	}
 	.step-container-content {
 		width: 100%;
+		overflow: hidden;
 	}
 	.toolbar {
 		display: flex;
@@ -258,23 +408,80 @@
 		margin-right: 0.5rem;
 	}
 	.button-row {
+		height: min-content;
 		display: flex;
 		justify-content: space-between;
+		align-self: flex-end;
 	}
-	.release-container{
+	.release-container {
 		--dc-image-aspect-ratio: 3/4;
+	}
+	.video-container {
+		--dc-image-aspect-ratio: 16/9;
+		--dc-image-height: auto;
+		--dc-image-width: 100%;
+	}
+	.video {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		min-height: 100%;
+		min-width: 100%;
+		width: auto;
+		height: auto;
+		object-fit: cover;
 	}
 	.character-created-container {
 		--dc-image-height: 400px;
 		--dc-image-width: auto;
 		--dc-image-aspect-ratio: 3/4;
+
+		text-align: center;
+		display: grid;
+		row-gap: 0.5rem;
+		align-content: space-around;
+	}
+	.character-created .step-container-header {
+		text-align: center;
+	}
+	.character-created small {
+		max-width: 60ch;
+		margin-block: 1rem;
 	}
 	/* .step-container div:nth-child(1) .centered-container {
 		height: fit-content;
 	} */
 
-	:global(.Input, .Input--invalid, .p-Input-input.Input.p-CardNumberInput-input){
+	:global(.Input, .Input--invalid, .p-Input-input.Input.p-CardNumberInput-input) {
 		padding: 0;
 		box-shadow: 0;
+	}
+
+	@media (max-width: 500px) {
+		.step-container {
+			padding: 0.5rem;
+			justify-content: center;
+		}
+
+		.release-step {
+			padding-top: 1.25rem;
+		}
+		/* .release-container {
+			--dc-image-width: 80svw;
+			--dc-image-aspect-ratio: 9/16;
+		} */
+
+		.button-row {
+			display: flex;
+			gap: 1rem;
+			justify-content: flex-start;
+			align-items: start;
+		}
+
+		.character-created.button-row {
+			margin-top: 1.5rem;
+			flex-direction: column;
+		}
 	}
 </style>

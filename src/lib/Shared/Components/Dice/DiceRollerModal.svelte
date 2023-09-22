@@ -1,11 +1,19 @@
 <ModalShell {fullscreen}>
-	<D20 {color}/>
+	<Dice {dice}/>
 </ModalShell>
 
 <script>
-	import ModalShell from '$lib/Shared/Components/ModalShell.svelte';
-	import D20 from './d20.svelte';
+	import ModalShell from '$lib/Shared/Shell/ModalShell.svelte';
+	import Dice from './Dice.svelte';
 
 	export let color = 'white';
     export let fullscreen = false;
+
+	const dice = {
+		name: 'pink',
+		foreground: 'white',
+		background: '#ef1ebf',
+		texture: 'glass',
+		description: 'Default pink dice'
+	};
 </script>

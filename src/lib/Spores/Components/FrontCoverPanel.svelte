@@ -1,9 +1,14 @@
-<script lang="ts">
-	import type { Spore } from '../Spore';
-	export let spore: Spore;
-	let panel: HTMLElement;	
+<script>
+	/**
+	 * @type {DC.Spore}
+	 */
+	 export let spore;
+	/**
+	 * @type {HTMLDivElement}
+	 */
+	let panel;	
 	$: if (spore && panel) {
-		panel.style.setProperty('--cover-image', `url('${spore.imageUrl ?? '/assets/imgs/the-archive-district.png'}')`);
+		panel.style.setProperty('--cover-image', `url('${spore.attributes.imageUrl ?? '/assets/imgs/the-archive-district.png'}')`);
 	}
 </script>
 
@@ -30,8 +35,8 @@
 <div class="panel front-cover" data-augmented-ui bind:this={panel}>
 	<div class="image" />
 	<div class="container" data-update>
-		<h1>{spore.name}</h1>
-		<h3>{spore.subtitle}</h3>
-		{@html spore.introduction}
+		<h1>{spore.attributes.name}</h1>
+		<h3>{spore.attributes.subtitle}</h3>
+		{@html spore.attributes.introduction}
 	</div>
 </div>

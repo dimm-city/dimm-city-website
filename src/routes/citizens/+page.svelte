@@ -1,12 +1,29 @@
-<script lang="ts">
-	import Shell from '$lib/Shared/Components/Shell.svelte';
-	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
-	import CharacterMenu from '$lib/Characters/CharacterMenu.svelte';
+<script>
+	import Shell from '$lib/Shared/Shell/Shell.svelte';
+	import SearchPage from '$lib/Shared/Components/SearchPage.svelte';
+	import MenuItem from '$lib/Shared/Components/Menu/MenuItem.svelte';
+	import DefaultItemResult from '$lib/Shared/Components/DefaultItemResult.svelte';
+
+	export let data;
+	let query = {
+		fields: ['name', 'tokenId', 'slug', 'shortDescription'],
+		populate: ['mainImage', 'race', 'specialties']
+	};
 </script>
 
-<Shell title="Citizen Files" enableSearch="{true}" fullscreen={false}>
-	
-	<ContentPane padding={1}>
-		<CharacterMenu />
-	</ContentPane>
+<Shell title="Citizens">
+	<SearchPage
+		bind:query
+		initialData={data}
+		endpoint={'/dimm-city/characters'}
+		itemResultBaseUrl="/citizens"
+	>
+		<svelte:fragment slot="result" let:result>
+			<slot name="result" {result}>
+				<MenuItem url={`citizens/${result.attributes.tokenId}`}>
+					<DefaultItemResult item={result.attributes} icon="bi-shield-lock" />
+				</MenuItem>
+			</slot>
+		</svelte:fragment>
+	</SearchPage>
 </Shell>

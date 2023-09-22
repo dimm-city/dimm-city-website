@@ -1,13 +1,12 @@
-<script lang="ts">
-	import { page } from '$app/stores';
-	import Shell from '$lib/Shared/Components/Shell.svelte';
+<script>
+	import Shell from '$lib/Shared/Shell/LandingShell.svelte';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import ViewSpore from '$lib/Spores/ViewSpore.svelte';
-	export let slug = $page.params.slug;
+	export let data;
 </script>
 
 <Shell title="Spores" titleUrl="/spores">
 	<ContentPane padding={2} scrollable={true}>
-		<ViewSpore {slug} />
+		<ViewSpore spore={data} />
 	</ContentPane>
 </Shell>

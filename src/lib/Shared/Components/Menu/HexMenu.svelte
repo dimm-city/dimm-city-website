@@ -30,7 +30,7 @@
 	<button
 		bind:this={button}
 		class="dropdown-button aug-button"
-		data-augmented-ui="all-hex"
+		data-augmented-ui="all-hex both"
 		{title}
 		on:click={toggleDropdown}
 	>
@@ -60,17 +60,18 @@
 		color: white;
 		/* opacity: 0.75; */
 
-		--aug-border-bg: var(--yellow);
+		--aug-border-bg: var(--pink);
 	}
 	.dropdown-button {
 		cursor: pointer;
+		aspect-ratio: 1/1;
 		/* background: var(--pink); */
 		--aug-border-all: 1px;
-		--aug-border-bg: var(--pink);
-		--aug-all-width: max(5vh, 2vw);
+		--aug-border-bg: var(--yellow);
+		--aug-all-width: max(45px, 2vw);
 		--aug-inlay-bg: var(--pink);
 		transition: transform var(--easing);
-		background-color: #363636b0;
+		
 		opacity: 1;
 	}
 
@@ -124,6 +125,9 @@
 		}
 		.dropdown-content.hidden {
 			transform: translateY(100rem) translateX(0);
+		}
+		.dropdown-button{
+			--aug-all-width: max(6vh, 5vw);
 		}
 	}
 

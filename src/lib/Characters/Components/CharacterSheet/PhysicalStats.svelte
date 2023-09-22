@@ -1,8 +1,11 @@
-<script lang="ts">
-	import type { ICharacter } from '$lib/Characters/Models/Character';
+<script>
 	import Input from '$lib/Shared/Components/Input.svelte';
 	import Select from 'svelte-select/Select.svelte';
-	export let character: ICharacter;
+
+	/**
+	 * @type {DC.Character}
+	 */
+	export let character;
 	export let isEditing = false;
 	const ageOptions = [
 		'Childhood',
@@ -19,47 +22,52 @@
 	<div class="grid-container">
 		<div class="label">Race:</div>
 		<div class="value">
-			{#if character.race}
-				{character.race.data?.attributes?.name}
+			{#if character.attributes.race}
+				<span>{character.attributes.race.data?.attributes?.name}</span>
 			{/if}
 		</div>
 		<div class="label">Pronouns:</div>
 		<div class="value">
 			{#if isEditing}
-				<Input bind:value={character.pronouns} class="inline" maxlength="50" />
+				<Input bind:value={character.attributes.pronouns} class="inline" maxlength="50" />
 			{:else}
-				{character.pronouns || 'they/them'}
+				{character.attributes.pronouns || ''}
 			{/if}
 		</div>
 		<div class="label">Age:</div>
-		<div class="value aug-select">
+		<div class="value" class:aug-select={isEditing}>
 			{#if isEditing}
-				<Select value={character.age} bind:justValue={character.age} items={ageOptions} />
+				<Select
+					value={character.attributes.age}
+					bind:justValue={character.attributes.age}
+					items={ageOptions}
+				/>
 			{:else}
-				{character.age || 'Unknown'}
+				<span>{character.attributes.age || ''}</span>
 			{/if}
 		</div>
 		<div class="label">Height:</div>
 		<div class="value suffix">
-				{#if isEditing}
-					<Input bind:value={character.height} class="inline" />
-				{:else}
-					{character.height || 0}
-				{/if} cm
+			{#if isEditing}
+				<Input bind:value={character.attributes.height} class="inline" />
+			{:else}
+			<span>{character.attributes.height || ''}</span>
+			{/if} 
+			<!-- <span>cm</span> -->
 		</div>
 		<div class="label">Weight:</div>
 		<div class="value suffix">
-
 			{#if isEditing}
-				<Input bind:value={character.weight} class="inline" />
+				<Input bind:value={character.attributes.weight} class="inline" />
 			{:else}
-				{character.weight || 0}
-			{/if}kg
+				<span>{character.attributes.weight || ''}</span>
+			{/if}
+			<!-- <span>kg</span> -->
 		</div>
 		<div class="label">Eyes:</div>
-		<div class="value">{character.eyes || ''}</div>
+		<div class="value"><span>{character.attributes.eyes || ''}</span></div>
 		<div class="label">Skin:</div>
-		<div class="value">{character.skin || ''}</div>
+		<div class="value"><span>{character.attributes.skin || ''}</span></div>
 	</div>
 </div>
 
@@ -97,7 +105,6 @@
 		display: flex;
 		align-items: center;
 		gap: 0.25rem;
-		width: 100%;
 	}
 
 	:global(input.inline) {

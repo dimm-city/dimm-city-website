@@ -1,27 +1,24 @@
-<script script lang="ts">
+<script >
 	import List from '$lib/Shared/Components/List.svelte';
-	import type { ISummaryItem } from '$lib/Shared/Models/ISummaryItem';
-	import { getDashboardEntries } from './getDashboardEntries';
-	import { getDistricts } from './getDistricts';
-	import { getSpecialties } from './getSpecialties';
-	import { getLatestCitizens } from './getNewestCitizens';
 	import ListItemLink from '$lib/Shared/Components/ListItemLink.svelte';
 	import Hero from './Hero.svelte';
-	import { onMount } from 'svelte';
-	let newsQuery: any;
-	let latestNews: ISummaryItem[] = [];
-	let districts: ISummaryItem[] = [];
-	let specialties: ISummaryItem[] = [];
-	let citizens: ISummaryItem[] = [];
 
-	onMount(() => {
-		getDashboardEntries().then(
-			(d) => (latestNews = d?.filter((item) => item.tags?.includes("dashboard") || item?.id == 2 || item?.id == 4 || item?.id == 5))
-		);
-		getDistricts().then((d) => (districts = d));
-		getSpecialties().then((d) => (specialties = d));
-		getLatestCitizens().then((d) => (citizens = d));
-	});
+	/**
+	 * @type {DC.BaseEntity[]}
+	 */
+	export let latestNews = [];
+	/**
+	 * @type {DC.BaseEntity[]}
+	 */
+	export let districts= [];
+	/**
+	 * @type {DC.BaseEntity[]}
+	 */
+	export let specialties = [];
+	/**
+	 * @type {DC.BaseEntity[]}
+	 */
+	export let citizens = [];
 </script>
 
 <div class="container">
@@ -31,10 +28,10 @@
 			<hr />
 		</div>
 		<div class="hero-body">
-			<Hero query={newsQuery} data={latestNews} />
+			<Hero data={latestNews} />
 		</div>
 	</div>
-	<div style="grid-area: ref;">
+	<div  class="reference-header">
 		<h4>Dimm City Reference</h4>
 		<hr />
 	</div>
@@ -43,7 +40,7 @@
 		<hr />
 		<div class="list-container">
 			<List data={citizens} viewAllLink="/citizens">
-				<ListItemLink slot="item" let:item url="/citizens/{item.tokenId}" text={item.name} />
+				<ListItemLink slot="item" let:item url="/citizens/{item.attributes.tokenId}" text={item.attributes.name} />
 			</List>
 		</div>
 	</div>
@@ -52,7 +49,7 @@
 		<hr />
 		<div class="list-container">
 			<List data={specialties} viewAllLink="/specialties">
-				<ListItemLink slot="item" let:item url="/specialties/{item.slug}" text={item.name} />
+				<ListItemLink slot="item" let:item url="/specialties/{item.attributes.slug}" text={item.attributes.name} />
 			</List>
 		</div>
 	</div>
@@ -61,17 +58,18 @@
 		<hr />
 		<div class="list-container">
 			<List data={districts} viewAllLink="/locations">
-				<ListItemLink slot="item" let:item url="/locations/{item.slug}" text={item.name} />
+				<ListItemLink slot="item" let:item url="/locations/{item.attributes.slug}" text={item.attributes.name} />
 			</List>
 		</div>
 	</div>
-	<div class="footer">
-		<!-- <a href="/system-map" class="small-menu-item" data-augmented-ui>&lt;system map&gt;</a> -->
-	</div>
+	<!-- <div class="footer">
+		<a href="/system-map" class="small-menu-item" data-augmented-ui>&lt;system map&gt;</a> 
+	</div>-->
 </div>
 
 <style>
 	.container {
+		overflow-y: auto;
 		margin-top: 1.5rem;
 		display: grid;
 		padding-inline: 1.5rem;
@@ -90,6 +88,7 @@
 	@media (min-width: 821px) {
 		.container {
 			grid-template-columns: 1fr 1fr 1fr;
+			grid-template-rows: min-content min-content auto min-content;
 			grid-template-areas:
 				'hero hero hero'
 				'ref ref ref'
@@ -99,6 +98,12 @@
 	}
 	.hero {
 		grid-area: hero;
+	}
+
+	.reference-header{
+		grid-area: ref;
+		height: min-content;
+		margin-block-end: 0;
 	}
 
 	.col1 {
@@ -113,15 +118,16 @@
 		grid-area: col3;
 	}
 
-	.footer {
+	/* .footer {
 		grid-area: footer;
 	}
 	.footer .small-menu-item {
 		text-align: center;
-	}
+	} */
 
 	.col {
 		padding-inline: 1rem;
+		padding-bottom: 1.5rem;
 		--aug-clip-tl1: initial;
 		--aug-clip-tr1: initial;
 		--aug-clip-bl1: initial;
@@ -138,8 +144,6 @@
 			radial-gradient(circle at bottom left, var(--blue) 20px, transparent 30px);
 
 		--aug-inlay: initial;
-		/* --aug-inlay-bg: transparent;
-		background: #ffffff00; */
 		--aug-inlay-bg: #05050552;
 		background: #0505051e;
 	}
@@ -148,11 +152,10 @@
 		color: var(--light);
 	}
 
-	.hero-body,
-	.footer {
+	.hero-body {
 		margin-top: 1.25rem;
 	}
-	.footer a {
+	/* .footer a {
 		height: min-content;
 	}
 	.footer a:hover,
@@ -161,7 +164,7 @@
 		--aug-inlay-bg: transparent;
 		background: #050505b4;
 		transition: background 500ms;
-	}
+	} */
 	h4 {
 		margin-bottom: 0.25rem;
 	}

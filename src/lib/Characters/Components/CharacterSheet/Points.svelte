@@ -1,23 +1,30 @@
-<script lang="ts">
-	
-	import type { ICharacter } from '$lib/Characters/Models/Character';
-	
-	export let character: ICharacter;
+<script>
+	export let character;
 	export let isEditing = false;
+	export let isPrinting = false;
 </script>
 
-<div class="hp">
-	<h4>HP</h4>
-	<div data-augmented-ui="all-hex border">
-		<span>10</span><small>10</small>
+<div class="points-container">
+	<div class="hp">
+		<h4>HP</h4>
+		<div data-augmented-ui="all-hex border">
+			<span contenteditable="{isEditing}">{character?.attributes.hp ?? (isPrinting ? ' ' : '10')}</span>
+			<hr />
+			<small>{ character?.attributes?.race?.data?.attributes?.hp ?? character?.attributes.hp ?? (isPrinting ? ' ' : '10')}</small>
+		</div>
 	</div>
-</div>
-<div class="ap">
-	<h4>AP</h4>
-	<div data-augmented-ui="all-hex border">10</div>
+	<div class="ap">
+		<h4>AP</h4>
+		<div data-augmented-ui="all-hex border">{character?.attributes.ap ?? ''}</div>
+	</div>
 </div>
 
 <style>
+	.points-container {
+		display: flex;
+		flex-direction: row;
+		gap: 2rem;
+	}
 	span {
 		margin-left: 0.5rem;
 	}
@@ -41,10 +48,16 @@
 	}
 	.hp span {
 		margin: 0;
+		height: 19px;
+	}
+	.hp hr {
+		border: none;		
+		border-top: 1px solid var(--fourth-accent);
+		width: 20px;
 	}
 	.hp small {
 		display: block;
-		border-top: 1px solid var(--fourth-accent);
 		font-size: 0.7rem;
+		height: 10px;
 	}
 </style>

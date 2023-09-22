@@ -1,14 +1,12 @@
-<script lang="ts">
+<script>
 	import List from './List.svelte';
+
+	/**
+	 * @type {{ slug: any; name: any; children: any; } | null}
+	 */
 	export let item;
 	export let baseUrl = '';
 </script>
-
-<style>
-	a {
-color: var(--fourth-accent);
-	}
-</style>
 
 {#if item != null}
 	<li>
@@ -16,3 +14,9 @@ color: var(--fourth-accent);
 		<List data={item.children} baseUrl={item.slug} classes="inner-list" />
 	</li>
 {/if}
+
+<style>
+	a {
+		color: var(--fourth-accent);
+	}
+</style>

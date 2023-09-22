@@ -1,53 +1,93 @@
 <!-- CharacterSheet.svelte -->
-<script lang="ts">
+<script>
 	import StatsRow from './StatsRow.svelte';
 	import ListsRow from './ListsRow.svelte';
 	import ProfileRow from './ProfileRow.svelte';
+	import Points from './Points.svelte';
 
 	import { openModal } from 'svelte-modals';
-	import AbilityModal from '../AbilityModal.svelte';
-	import type { ICharacter } from '$lib/Characters/Models/Character';
+	import AbilityModal from '$lib/Abilities/AbilityModal.svelte';
 	import StoryRow from './StoryRow.svelte';
 
-	export let character: ICharacter;
+	/**@type {DC.Character}*/
+	export let character;
 	export let isEditing = false;
+	export let isPrinting = false;
 
-	const viewAbility = (ability: any) => openModal(AbilityModal, { data: ability });
+	const viewAbility = (/** @type {DC.Ability} */ ability) =>
+		openModal(AbilityModal, { data: ability });
 
-	const skills: object[] = [];
+	let sheetAug = 'bl-2-clip-y br-2-clip-y tl-clip tr-clip t-clip none';
 
 	let originalData = '';
 	$: if (character) {
 		originalData = JSON.stringify(character);
+	} else {
+		character = {
+			id: '',
+			attributes: {}
+		};
+	}
+	$: if (isPrinting) {
+		sheetAug = '';
+		character.attributes.cybernetics = createEmptyList(5, character.attributes.cybernetics?.data);
+		character.attributes.selectedAbilities = createEmptyList(
+			24,
+			character.attributes.selectedAbilities?.data
+		);
+		character.attributes.items = createEmptyList(12, character.attributes.items?.data);
+		character.attributes.scripts = createEmptyList(8, character.attributes.scripts?.data);
+	}
+
+	function createEmptyList(length = 22, existingItems = []) {
+		const emptyItems = Array.from({ length }, (_, index) => ({
+			id: index + 1,
+			attributes: { name: index + 1 + ': ' }
+		}));
+		return {
+			data: [
+				...existingItems.map((i, index) => {
+					i.attributes.name = index + 1 + ': ' + i.attributes.name;
+					return i;
+				}),
+				...emptyItems.slice(existingItems.length)
+			]
+		};
 	}
 </script>
 
 <div class="scroll-wrapper">
-	<div
-		class="sheet"
-		data-augmented-ui="bl-2-clip-y br-2-clip-y tl-clip tr-clip t-clip both"
-	>
+	<div class="sheet" data-augmented-ui="none" class:print={isPrinting}>
 		<div class="heading">
 			<div>
 				{#if isEditing}
-					<h1 contenteditable="true" bind:textContent={character.name} />
+					<h1 contenteditable="true" bind:textContent={character.attributes.name} />
 				{:else}
 					<h1>
-						{character.name}
+						{character.attributes.name ?? ''}
 					</h1>
 				{/if}
 			</div>
 			<div class="specialties-heading">
 				<h2>
-					<!-- ts-ignore-->
-					{character.specialties?.data?.length > 0
-						? character.specialties?.data?.map((s) => s?.attributes?.name).join(', ')
-						: 'Unknown'}
+					{#if isPrinting}
+						Dimm City RPG
+					{:else}
+						<!-- ts-ignore-->
+						{character.attributes.specialties?.data?.length > 0
+							? character.attributes.specialties?.data?.map((s) => s?.attributes?.name).join(', ')
+							: 'Unknown'}
+					{/if}
 				</h2>
 			</div>
 		</div>
 		<div class="container" data-augmented-ui-reset>
-			<StatsRow {character} {isEditing} />
+			<StatsRow {character} {isEditing} {isPrinting} />
+			<div class="points-row ">
+				<div class="scores-container row-frame" data-augmented-ui="tl-clip-x tr-clip-x br-clip-x bl-clip-x both">
+					<Points {character} {isEditing} {isPrinting} />
+				</div>
+			</div>
 			<ProfileRow {character} {isEditing} />
 			<StoryRow {character} {isEditing} />
 			<ListsRow {character} {isEditing} {viewAbility} />
@@ -82,7 +122,8 @@
 		width: 100%;
 		height: 100%;
 		color: var(--light);
-		background-color: var(--content-container-background);
+		/* border-radius: 0.5em;
+		background-color: var(--content-container-background); */
 	}
 	div.heading {
 		filter: var(--content-container-filter);
@@ -96,15 +137,23 @@
 		color: var(--fourth-accent);
 		white-space: nowrap;
 		text-overflow: ellipsis;
+		min-height: 75px;
 	}
 	div.heading > div {
 		width: 100%;
 		overflow: hidden;
 	}
+
 	div.heading > div:first-of-type {
 		text-align: left;
 		align-items: end;
 		padding: 0;
+	}
+	div.heading > div:first-of-type::after {
+		content: 'name:';
+		width: 100%;
+		display: block;
+		border-top: thin var(--fourth-accent) solid;
 	}
 
 	div.heading > div:last-of-type {
@@ -131,10 +180,29 @@
 		height: max-content;
 		width: 100%;
 		display: grid;
-		grid-auto-flow: row;
+		grid-auto-flow: column;
 		grid-template-columns: 1fr;
-		grid-template-rows: min-content min-content min-content auto;
-		gap: 0.5rem;
+		grid-template-rows: repeat(4, min-content) auto;
+		gap: 1.5rem;
+	}
+	.points-row {
+		display: flex;
+		justify-content: center;
+	}
+	.scores-container {
+		--aug-border-all: 1px;
+		--aug-border-bg: var(--secondary-accent-muted);
+		--aug-tl: 7px;
+		--aug-tr: 7px;
+		--aug-bl: 7px;
+		--aug-br: 7px;
+		padding-block: 0.5em;
+		padding-inline: 3em;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-evenly;
+		align-items: start;
+		grid-area: scores-cell;
 	}
 
 	:global(.image > div) {
@@ -145,7 +213,10 @@
 		--aug-border-all: 2px;
 		--aug-border-bg: var(--fourth-accent);
 	}
-
+	:global(.row-frame) {
+		--aug-inlay: initial;
+		--aug-inlay-bg: var(--content-container-background);
+	}
 	@media (max-width: 767px) {
 		.scroll-wrapper {
 			overflow-y: auto;
@@ -174,12 +245,12 @@
 		}
 
 		:global(.image > div) {
-		--aug-b: 0px;
-		--aug-l: 0px;
-		--aug-t: 0px;
-		--aug-tr: 7px;
-		--aug-border-all: 2px;
-		--aug-border-bg: var(--fourth-accent);
-	}
+			--aug-b: 0px;
+			--aug-l: 0px;
+			--aug-t: 0px;
+			--aug-tr: 7px;
+			--aug-border-all: 2px;
+			--aug-border-bg: var(--fourth-accent);
+		}
 	}
 </style>

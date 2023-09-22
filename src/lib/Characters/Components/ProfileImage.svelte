@@ -1,19 +1,23 @@
-<script lang="ts">
-	import type { ICharacter } from '$lib/Characters/Models/Character';
+<script>
 	import Image from '$lib/Shared/Components/Image.svelte';
 	import { config } from '$lib/Shared/config';
 
-	export let character: ICharacter;
-	let imageUrl = '';
-	$: if (character.token?.data) {
-		// //HACK: this should not be done by splitting strings!!
-		let imagePath = `${character.tokenId.split('-').at(0)}/${character.tokenId
-			.split('-')
-			.at(1)}.png`;
-		imageUrl = `${config.apiBaseUrl}/chain-wallets/images/${imagePath}`;
-	} else {
-		imageUrl = character.imageUrl;
-	}
+	/**
+	 * @type {DC.Character}
+	 */
+	export let character;
+
+	//trim last slash from config.baseUrl
+	const baseUrl = config.baseUrl.replace(/\/$/, '');
+	const { mainImage, mainModel, mainVideo, name } = character.attributes;
+	const relativeUrl = mainImage?.data?.attributes?.formats?.large.url;
+	const imageUrl = relativeUrl ? `${baseUrl}${relativeUrl}` : null;
 </script>
 
-<Image {imageUrl} title={character.name} on:click />
+<Image
+	{imageUrl}
+	modelUrl={mainModel?.data?.attributes.url}
+	videoUrl={mainVideo?.data?.attributes.url}
+	title={name}
+	on:click
+/>

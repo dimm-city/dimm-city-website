@@ -1,24 +1,32 @@
-<script lang="ts">
+<script>
 	import ListItemLink from './ListItemLink.svelte';
 
-	export let data: Array<any> = [];
+	/**
+	 * @type {any[]}
+	 */
+	export let data = [];
 	export let maxItems = 5;
-	export let viewAllLink: String = "";
-	export let noItemsText = "No items found";
+	export let viewAllLink = '';
+	export let noItemsText = 'No items found';
 
-	let items: any[] = [];
+	/**
+	 * @type {ArrayLike<any>}
+	 */
+	let items = [];
 	$: if (data && maxItems > 0 && data?.length > maxItems) {
 		items = [...data?.slice(0, maxItems)];
 	} else if (data?.length > 0) {
 		items = [...data?.slice(0, data?.length)];
+		//console.log('list items', viewAllLink, items);
 	} else {
 		items = [];
 	}
+
 </script>
 
 <div class="list">
 	{#if items && items.length > 0}
-		{#each items as item}
+		{#each items as item (item)}
 			<slot name="item" {item}>
 				<ListItemLink url="" text={item.name} />
 			</slot>
@@ -34,13 +42,13 @@
 </div>
 
 <style>
-	:root{	
+	:root {
 		--list-gap: 1rem;
-	}	
-	.list {		
+	}
+	.list {
 		display: flex;
 		flex-direction: column;
 		gap: var(--list-gap) 1rem;
+		margin-block: var(--list-gap) 1rem;
 	}
-
 </style>

@@ -1,15 +1,14 @@
-<script lang="ts">
-	import Shell from '$lib/Shared/Components/Shell.svelte';
-	import StoryViewer from '$lib/Stories/StoryViewer.svelte';
-	import { page } from '$app/stores';
+<script>
+	import HistoricalEventView from '$lib/HistoricalEvents/HistoricalEventView.svelte';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
+	import Shell from '$lib/Shared/Shell/Shell.svelte';
 
-	const defaultStory = `/stories/${$page.params.slug || 'none'}.html`;
-	let viewer;
+	/** @type {DC.HistoricalEvent}*/
+	export let data;
 </script>
 
-<Shell title="History">
-	<ContentPane padding={0} scrollable={false}>
-		<StoryViewer story={defaultStory} bind:this={viewer} />
+<Shell title={data.attributes?.name} fullscreen={false}>
+	<ContentPane padding={3}>
+		<HistoricalEventView item={data} />
 	</ContentPane>
 </Shell>

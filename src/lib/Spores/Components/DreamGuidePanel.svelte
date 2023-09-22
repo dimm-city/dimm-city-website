@@ -1,6 +1,8 @@
-<script lang="ts">
-	import type { Spore } from '../Spore';
-	export let spore: Spore;
+<script>	
+	/**
+	 * @type {DC.Spore}
+	 */
+	 export let spore;
 </script>
 
 <style>
@@ -16,16 +18,16 @@
 		<div class="table" data-update>
 			<h3>A powerful...</h3>
 			<ol>
-				{#each spore.villains as item}
-					<li>{item}</li>
+				{#each spore.attributes.villains as item}
+					<li>{item.value}</li>
 				{/each}
 			</ol>
 		</div>
 		<div class="table" data-update>
 			<h3>Has executed their plan to...</h3>
 			<ol>
-				{#each spore.plots as item}
-					<li>{item}</li>
+				{#each spore.attributes.plots as item}
+					<li>{item.value}</li>
 				{/each}
 			</ol>
 		</div>
@@ -41,11 +43,11 @@
 				together. Here are some ideas to use depending on the scenario selected above:
 			</p>
 			<ul data-update>
-				{#each spore.goals as item}
-					<li>{item}</li>
+				{#each spore.attributes.goals as item}
+					<li>{item.value}</li>
 				{/each}
 			</ul>
-			<hr />
+			<hr class="print-only"/>
 			<h1 class="print-only">
 				<small>for more rules, lore, and misc. debris<br /></small>
 				goto: dimm.city/spores

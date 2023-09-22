@@ -1,73 +1,31 @@
-<script lang="ts">
+<script>
 	import Image from '$lib/Shared/Components/Image.svelte';
-	import type { IArticle } from '$lib/Shared/Models/IArticle';
 	import { marked } from 'marked';
-	export let model: IArticle;
+
+	/**
+	 * @type {DC.BaseEntity | null}
+	 */
+	export let model;
 	export let imageAug = 'tl-clip tr-clip br-clip bl-clip border';
-	export let imageHeight = '';
 	let html = '';
-	$: html = model != null ? marked.parse(model.description || ' ') : '';
+	$: html = model != null ? marked.parse(model?.attributes?.description || ' ') : '';
 </script>
-
-<style>
-	.article-grid {
-		display: grid;
-		/* padding: 3rem;
-		min-height: 100%; */
-		grid-template-rows: min-content max-content;
-	}
-
-	.main-image {
-		/* min-height: 300px; */
-		width: 3rem;
-		aspect-ratio: 4/3;
-		width: min-content;
-		float: left;
-		margin-inline-end: 0.75rem;
-		margin-block-end: 0.2rem;
-	}
-
-	.text-area {
-		margin-top: 1rem;
-		height: min-content;
-	}
-	:global(.text-area p) {
-		margin-block-start: 0;
-	}
-
-	@media (max-width: 745px) {
-		/* .main-image {
-			max-width: 80vw;
-			min-height: min-content;
-			height: auto;
-			margin-bottom: 1rem;
-			float: unset;
-		} */
-		/* :global(.main-image .image-wrapper) {
-			width: 100%;
-		}
-		:global(.main-image img, .main-image video) {
-			width: 100%;
-			height: auto;
-		} */
-	}
-</style>
 
 {#if model != null}
 	<div class="article-grid">
 		<div class="title-area">
 			<slot name="header">
-				<h1>{model.name}</h1>
+				<h1>{model.attributes.name}</h1>
+				<hr />
 			</slot>
-			<hr />
 		</div>
 		<article class="text-area">
 			<div class="main-image">
 				<slot name="main-image">
 					<Image
-						imageUrl={model.imageUrl}
-						title={model.name}
-						videoUrl={model.videoUrl}
+						imageUrl={model.attributes.mainImage?.data?.attributes?.formats?.medium?.url}
+						title={model.attributes.name}
+						videoUrl={model.attributes.mainVideo?.data?.attributes?.url}
 						aug={imageAug}
 					/>
 				</slot>
@@ -80,3 +38,47 @@
 		</article>
 	</div>
 {/if}
+
+<style>
+	.article-grid {
+		display: grid;
+		/* padding: 3rem;
+		min-height: 100%; */
+		grid-template-rows: min-content max-content;
+	}
+
+	.main-image {
+		width: min-content;
+		float: left;
+		margin-inline-end: 0.75rem;
+		margin-block-end: 0.2rem;
+	}
+
+	.text-area {
+		margin-top: 1rem;
+		height: min-content;
+	}
+
+	:global(.text-area p) {
+		margin-block-start: 0;
+	}
+
+	@media (max-width: 745px) {
+		:root {
+			--dc-image-width: 400px;
+			--dc-image-aspect-ratio: 4/3;
+		}
+		.article-grid {
+			justify-content: center;
+		}
+
+		.main-image {
+			float: none;
+			margin-inline: auto;
+			margin-block-end: 1rem;
+		}
+		:global(.main-image .image-wrapper) {
+			margin: auto;
+		}
+	}
+</style>
