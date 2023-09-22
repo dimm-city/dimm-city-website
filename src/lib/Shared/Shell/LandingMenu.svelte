@@ -1,5 +1,5 @@
 <script>
-	import { loggedIn } from '../Stores/UserStore';
+	import { loggedIn, user } from '../Stores/UserStore';
 
 	let checked = false;
 
@@ -24,21 +24,24 @@
 		class="nav-toggle-container"
 		role="button"
 		tabindex="0"
-        on:click|stopPropagation={toggleMenu}
-        on:keyup|stopPropagation={toggleMenu}
+		on:click|stopPropagation={toggleMenu}
+		on:keyup|stopPropagation={toggleMenu}
 	>
 		<label for="nav-toggle" class="nav-toggle-label"> &lt;&lt; </label>
 	</div>
 	<div class="nav-items-container" on:visibilitychange={bodyHandler}>
 		<ul>
-			<li><a href="/about/overview">Overview</a></li>
-			<li><a href="/about/faq">FAQ</a></li>
-			<li><a href="/about/glossary">Glossary</a></li>
+			<!--<li><a href="/about/overview">Overview</a></li>
+			 <li><a href="/about/faq">FAQ</a></li>
+			<li><a href="/about/glossary">Glossary</a></li> -->
 			<li><a href="/about">About</a></li>
-			<li><a href="/gallery">Gallery</a></li>
-			<li><a href="/profile">Profile</a></li>
+			<!-- <li><a href="/gallery">Gallery</a></li> -->
+
 			{#if $loggedIn}
-				<li><a href="/console">Console</a></li>
+				<li><a href="/dashboard">Console</a></li>
+				<li><a href="/profile">{$user?.profile?.displayName ?? $user?.username}</a></li>
+			{:else}
+				<li><a href="/profile">Profile</a></li>
 			{/if}
 		</ul>
 	</div>

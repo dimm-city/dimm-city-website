@@ -81,4 +81,9 @@
 		height: 100%;
 		object-fit: cover; /* this will help the video to cover the entire container */
 	}
+	main {
+		width: 100%;
+		max-width: 100ch;
+		margin: auto;
+	}
 </style>

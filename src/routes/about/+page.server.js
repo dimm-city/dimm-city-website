@@ -9,4 +9,5 @@ export const load = async ({ params }) => {
 };
 
 export const prerender = true;
-export const csr = false;
+export const csr = true;
+export const ssr = true;

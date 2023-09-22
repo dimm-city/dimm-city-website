@@ -16,75 +16,58 @@
 			<hr />
 			{#if $loggedIn}
 				<div class="logged-in fade-in">
-					<h2>Welcome {$user?.profile?.displayName ?? $user?.username}, fellow Dreamer</h2>
 					<section>
-						<p>
-							You have entered the enigmatic maze of reality and illusion that is Dimm City. Our
-							lead artist, Scott Georges, has painted the backdrop of our dreamworld with hues of
-							sci-fi and cyberpunk, a world where your imagination holds the reins.
-						</p>
+						<h2>Welcome {$user?.profile?.displayName ?? $user?.username}, fellow Dreamer</h2>
 
-						<p>
-							Dimm City, the crux of our tale, teeters between the tangible and the ethereal. It is
-							a metropolis sculpted from your deepest dreams and darkest nightmares, where the
-							glimmering skyscrapers meet the nebulous clouds of the dreamverse.
-						</p>
-
-						<p>
-							In this game, you're not just a bystander, but a luminary of lucid dreaming. As you
-							weave through the labyrinth of Dimm City, you become a puppeteer of your own fate,
-							crafting scenes that ripple through the dream fabric of this world.
-						</p>
-
-						<p>
-							You'll roll the dice, of course, but they're not the masters of your destiny. You are.
-							Your choices, your actions, and your dreams shape the course of your journey. You'll
-							engage with dream economies, manipulate distances, and navigate deadly scenes, all in
-							a day's work.
-						</p>
-
-						<p>
-							Dimm City isn't just a game. It's a dreamscape that breathes and pulsates with your
-							imagination. Are you ready to wake up in this dream, Dreamer? Because in Dimm City,
-							the limit is not the sky, but your ability to dream.
-						</p>
-
-						<p>
-							Come around often to stay clued up to the latest news from Dimm City. Don't forget to
-							join the
-							<a href="https://www.reddit.com/r/DimmCityRPG/" target="_blank"
-								>Dimm City RPG subreddit</a
-							>.
-						</p>
 						<p>
 							We are hard at work extracting information from the ruins of the DC Archives. We hope
 							to publish the Op Manual soon. In the meantime, please feel free to browse the <a
-								href="/console">DC Console</a
+								href="/dashboard">DC Console</a
 							>
 							to learn more about the city and it's citizens.
 						</p>
-						<p>Check the status of our current <a href="/" target="_blank">kickstarter</a></p>
+						<!-- <p>Check the status of our current <a href="/" target="_blank">kickstarter</a></p> -->
+						<p>
+							Join the
+							<a href="https://www.reddit.com/r/DimmCityRPG/" target="_blank"
+								>Dimm City RPG subreddit</a
+							> to stay updated on the last news from the city. We will be announce release dates, community
+							events, and more!
+						</p>
 					</section>
 				</div>
 			{:else}
 				<div class="fade-in">
-					<h2>Hello dreamer, have you come looking for the secrets of Dimm City?</h2>
 					<section>
 						<p>
-							Dreamer, the time is nigh! We're on the brink of launching our Kickstarter campaign
-							for the 'Dreamer's Guide to Dimm City'. This isn't just a guide, it's your ticket to
-							the ethereal realms of Dimm City, where dreams meld into reality. Be part of our
-							journey. Sign up now to stay updated on our progress, and be the first to step into
-							the dreamscape when it unfolds.
+							What makes a dream a dream and a nightmare a nightmare? Dreams are mostly pleasant,
+							but always slinking along the edges is the threat of shadows ready to flood in. This
+							is a good analogy for the five districts of Dimm City. Here there are bright parts of
+							the metropolis like the breadbasket of The Market District, but also the pit of horror
+							known to all here as The Dark.
 						</p>
 						<p>
-							Remember, Dreamer, the future of Dimm City rests in your hands – or rather, in your
-							dreams. Wake up to the dream!
+							The conflict between the collective freedom of the populace and the capitalistic
+							mega-corporations' attempts at enslavement is palpable. Aliens, angels, AI, outsider
+							horrors, and the native anthropomorphic sporos each have their own alliances and
+							factions, with some individuals navigating both sides of the divide to their own
+							benefit. It is within this tumult that agents are needed to move the needle one way or
+							the other.
 						</p>
-						<p>Simply sign in, and being your journey into the city...</p>
+						<p>
+							Who wins this struggle is up to you! Will you dream yourself a canine sporos rabble
+							rousing for the people or enter into a nightmare as an android suppressing the
+							rebellion? When you prowl the five districts of DimmC, just stepping into the shadows
+							is enough to pull you into a death-defying adventure.
+						</p>
+						<p>
+							Dimm City isn't just a game, it's a dreamscape that your imagination breathes life
+							into. Countless sagas await your character and choices. Are you ready to wake up?
+						</p>
+						<p>Sign in to being your journey into the city...</p>
 
 						<div class="register-links">
-							<a class="button" href={config.apiBaseUrl + '/connect/google'}
+							<a class="button" href={config.apiBaseUrl + '/connect/google?redirect=/'}
 								><i class="bi bi-google" />Sign in with Google</a
 							>
 							<a class="button" href={config.apiBaseUrl + '/connect/reddit'}

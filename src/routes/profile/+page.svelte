@@ -61,7 +61,7 @@
 							<!-- svelte-ignore a11y-missing-attribute -->
 							<!-- svelte-ignore a11y-click-events-have-key-events -->
 							<!-- svelte-ignore a11y-no-static-element-interactions -->
-							<a class="text-button" on:click={startEditing}>update profile</a>
+							<a class="text-button" on:click={startEditing}>edit</a>
 							<!-- <a href="/console/archive"><small>manage archives</small></a> -->
 							<!-- svelte-ignore a11y-invalid-attribute -->
 							<a href="#" class="text-button" on:click={logout}>logout</a>
