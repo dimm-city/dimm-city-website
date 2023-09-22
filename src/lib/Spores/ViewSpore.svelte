@@ -33,18 +33,15 @@
 		</div>
 	</div>
 	<div class="col dream-guide">
-		<hr />
 		<DreamGuidePanel {spore} />
 	</div>
 	<div class="col character">
 		<CharacterPanel />
 	</div>
 	<div class="col dice">
-		<hr />
 		<DicePanel />
 	</div>
 	<div class="col dream-master">
-		<hr />
 		<DreamMasterPanel {spore} />
 	</div>
 {/if}

@@ -16,6 +16,14 @@ Fantasy fans, fear not, for Dimm City is infused with an air of mystique and mag
 
 In essence, Dimm City RPG is a playground for your imagination, a place where different genres and themes converge to create something unique. It's not just a game—it's an experience. Your dream awaits.
 
+Dimm City welcomes anyone who wants to dream with us to pick up a super simple [SPORE (one-page RPG)](/spores) to try out an easy game or purchase the Dreamer's Guide to Dimm City and go a little deeper into the setting.
+
+There is canon content and we also invite you, the Dreamer, to create in the world as well through journaling on dimm.city and shaping the world through a submission process to add your player-created content to the canon.
+
+In a game where genres converge and choices define your journey, Dimm City RPG invites you to dream, create, and embark on an unforgettable adventure. Join us in shaping this unique dreamscape, where every choice matters and where your imagination knows no bounds. 
+
+Dimm City awaits! 
+
 ## The Founders
 
 Our team has created a cyberpunk/solarpunk game that is rules-light enough to allow beginners to play, yet has enough optional rules to make it appealing to gamers who like a little more crunch.
@@ -24,13 +32,7 @@ Dimm City is the product of our lead artist Scott Georges' art and ideas from th
 
 We are working toward creating a simple game made simpler by integrating online support and resources that will assist in playing, planning, and running the game.
 
-Dimm City welcomes anyone who wants to dream with us to pick up a super simple SPORE (one-page RPG) off our site to try out an easy game or purchase the Dreamer's Guide to Dimm City and go a little deeper into the setting.
 
-There is canon content and we also invite you, the Dreamer, to create in the world as well through journaling on dimm.city and shaping the world through a submission process to add your player-created content to the canon.
-
-In a game where genres converge and choices define your journey, Dimm City RPG invites you to dream, create, and embark on an unforgettable adventure. Join us in shaping this unique dreamscape, where every choice matters and where your imagination knows no bounds. 
-
-Dimm City awaits! 
 
 ## Our Channels
 

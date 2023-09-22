@@ -26,6 +26,10 @@
 							>
 							to learn more about the city and it's citizens.
 						</p>
+						<p>
+							You can also download a single shot <a href="/spores">Spore</a> and start
+							exploring some of the districts of Dimm City.
+						</p>
 						<!-- <p>Check the status of our current <a href="/" target="_blank">kickstarter</a></p> -->
 						<p>
 							Join the

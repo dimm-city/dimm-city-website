@@ -47,7 +47,7 @@
 					<li>{item.value}</li>
 				{/each}
 			</ul>
-			<hr />
+			<hr class="print-only"/>
 			<h1 class="print-only">
 				<small>for more rules, lore, and misc. debris<br /></small>
 				goto: dimm.city/spores

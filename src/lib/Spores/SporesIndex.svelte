@@ -1,5 +1,5 @@
 <script>
-	import Shell from '$lib/Shared/Shell/Shell.svelte';
+	import LandingShell from '$lib/Shared/Shell/LandingShell.svelte';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import PagedResults from '$lib/Shared/Components/PagedResults.svelte';
 	import DefaultItemResult from '$lib/Shared/Components/DefaultItemResult.svelte';
@@ -10,17 +10,16 @@
 	export let data;
 </script>
 
-<Shell title="Spores">
-	<ContentPane scrollable={true} padding={2}>
-		<div class="spore-container">
-			<h3 class="">Dimm City Spores</h3>
-			<small>&lt;The Dimm City 1-Page RPG&gt;</small>
+<LandingShell title="Spores">
+	<article class="centered-container">
+		<div class="spore-container form-container">
+			<h1 class="">Dimm City Spores</h1>
+			<h3>&lt;Dimm City 1-Page RPG&gt;</h3>
 
 			<div class="fade-in">
 				<p>
 					A Dimm City Spore is a rules light (Lasers & Feelings homebrew) introduction to the Dimm
-					City Campaign Setting/WEB3 Character Evolution for use with the rules heavy Quest RPG
-					System.
+					City Campaign Setting for use with the Dimm City RPG.
 				</p>
 				<p>
 					In a Dimm City Spore, Dreamers (players) take on the role of a sporos hero doing good
@@ -32,8 +31,8 @@
 					story that is both exciting and unforgettable.
 				</p>
 				<p>
-					To download a copy of a spore, click one of the menu items below. Use the <a href="/"
-						>DCC</a
+					To download a copy of a spore, click one of the menu items below. Use the <a
+						href="/dashboard">console</a
 					> to learn more about Dimm City and it's citizens.
 				</p>
 
@@ -44,20 +43,26 @@
 			</div>
 			<PagedResults results={data.data} autoLoad={false} page={data.meta.pagination.page}>
 				<svelte:fragment slot="result" let:result>
-					<MenuItem url={`spores/${result.attributes.slug}`}>
-						<DefaultItemResult item={result.attributes} icon="bi-map" />
-					</MenuItem>
+					<a
+						class="spore-item"
+						href={`spores/${result.attributes.slug}`}
+						target="_blank"
+						data-augmented-ui="border"
+					>
+						<h4>{result.attributes.name}</h4>
+						{result.attributes.shortDescription ?? ''}
+					</a>
 				</svelte:fragment>
 			</PagedResults>
 		</div>
-	</ContentPane>
-</Shell>
+	</article>
+</LandingShell>
 
 <style>
-	.spore-container h3 {
+	.spore-container h1 {
 		margin-bottom: 0rem;
 	}
-	.spore-container small {
+	.spore-container h3 {
 		font-size: 0.75rem;
 		display: block;
 		margin-bottom: 1rem;
@@ -66,5 +71,40 @@
 		height: min-content;
 		width: 100%;
 		overflow-y: auto;
+	}
+
+	.spore-item {
+		text-decoration: none;
+		display: block;
+		padding: 0.5em;
+		color: var(--primary-color) white;
+		transition: all 300ms ease-in-out;
+		height: 7em;
+		width: 100%;
+		text-overflow: ellipsis;
+		overflow: hidden;
+
+		--aug-clip-tl1: initial;
+		--aug-clip-tr1: initial;
+		--aug-clip-bl1: initial;
+		--aug-clip-br1: initial;
+		--aug-border: initial;
+		--aug-border-all: 1px;
+		--aug-tl1: 1vh;
+		--aug-tr1: 2vh;
+		--aug-br1: 1vh;
+		--aug-bl1: 1vh;
+		--aug-border-bg: var(--primary-color);
+		--aug-inlay: initial;
+		--aug-inlay-bg: var(--menu-inlay-bg-color);
+	}
+
+	.spore-item:hover,
+	.spore-item:active {
+		border-color: var(--highlight-color);
+	}
+	.spore-item:hover h4,
+	.spore-item:active h4 {
+		color: var(--highlight-color);
 	}
 </style>

@@ -35,6 +35,7 @@
 			 <li><a href="/about/faq">FAQ</a></li>
 			<li><a href="/about/glossary">Glossary</a></li> -->
 			<li><a href="/about">About</a></li>
+			<li><a href="/spores">Spores</a></li>
 			<!-- <li><a href="/gallery">Gallery</a></li> -->
 
 			{#if $loggedIn}

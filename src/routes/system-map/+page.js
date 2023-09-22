@@ -15,7 +15,7 @@ const getSystemMap = async () => {
 	_systemMap.pages = [
 		{
 			name: 'Dashboard',
-			slug: '',
+			slug: '/dashboard',
 			children: []
 		},
 		{
@@ -43,10 +43,10 @@ const getSystemMap = async () => {
 			slug: 'journal-entries',
 			children: [] //await getJournalEntries()
 		},
-		{
-			name: 'Spores',
-			slug: 'spores'
-		},
+		// {
+		// 	name: 'Spores',
+		// 	slug: 'spores'
+		// },
 		{
 			name: 'Tools',
 			slug: 'tools',
