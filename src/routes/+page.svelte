@@ -73,7 +73,7 @@
 							Dimm City isn't just a game, it's a dreamscape that your imagination breathes life
 							into. Countless sagas await your character and choices. Are you ready to wake up?
 						</p>
-						<p>Sign in to being your journey into the city...</p>
+						<p>Sign in to begin your journey into the city...</p>
 
 						<div class="register-links">
 							<a class="button" href={config.apiBaseUrl + '/connect/google'}
