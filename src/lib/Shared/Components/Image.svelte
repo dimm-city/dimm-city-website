@@ -46,9 +46,9 @@
 		console.log('can play');
 	}
 
-	$: if (imageUrl && !imageUrl?.startsWith(config.baseUrl)) {
-		imageUrl = config.baseUrl.replace(/\/$/, '') + imageUrl;
-	}
+	// $: if (imageUrl && !imageUrl?.startsWith(config.baseUrl)) {
+	// 	imageUrl = config.baseUrl.replace(/\/$/, '') + imageUrl;
+	// }
 
 	$: if (videoUrl > '') {
 		console.log('video changed', videoUrl, video);
