@@ -23,7 +23,7 @@
 		<div class="item-result-image" data-augmented-ui="tl-rect tr-rect br-clip bl-clip both">
 			{#if item.mainImage?.data}
 				<img
-					src={baseUrl + item.mainImage?.data?.attributes?.formats?.thumbnail.url}
+					src={item.mainImage?.data?.attributes?.formats?.thumbnail.url}
 					alt="thumbnail"
 				/>
 			{:else}
