@@ -11,7 +11,7 @@
 	const baseUrl = config.baseUrl.replace(/\/$/, '');
 	const { mainImage, mainModel, mainVideo, name } = character.attributes;
 	const relativeUrl = mainImage?.data?.attributes?.formats?.large.url;
-	const imageUrl = relativeUrl ? `${baseUrl}${relativeUrl}` : null;
+	const imageUrl = relativeUrl  ? `${relativeUrl}` : `${baseUrl}/assets/missing-image.png`;
 </script>
 
 <Image
