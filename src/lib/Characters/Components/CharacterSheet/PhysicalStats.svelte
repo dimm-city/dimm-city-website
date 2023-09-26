@@ -118,7 +118,7 @@
 			grid-template-columns: min-content auto;
 		}
 		.label {
-			align-items: top;
+			align-items: start;
 			justify-content: start;
 			display: flex;
 		}
