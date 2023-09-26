@@ -233,7 +233,7 @@
 			--aug-r: 0px;
 		} */
 		.container {
-			grid-template-rows: auto;
+			grid-template-rows: repeat(4, min-content) auto;
 		}
 	}
 	@media (max-width: 500px) {

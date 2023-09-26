@@ -109,6 +109,13 @@
 			padding-top: 2rem;
 			grid-template-columns: 1fr;
 			grid-template-rows: repeat(3, max-content);
+			grid-template-areas:
+			'skills'
+			'items'
+			'scripts';
+		}
+		.notes-container{
+			display: none;
 		}
 		.lists-row > div {
 			position: relative;
