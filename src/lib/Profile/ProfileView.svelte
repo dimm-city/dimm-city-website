@@ -44,7 +44,7 @@
 	<!-- <p>{@html $profile?.settings?.bio ?? ''}</p> -->
 </div>
 <div class="profile-menu">
-	<a href="/console/characters/create">create character</a>
+	<!-- <a href="/console/characters/create">create character</a> -->
 	<!-- <a href="/console/archive"><small>manage archives</small></a> -->
 	<button class="text-button" on:click={logout}>logout</button>
 </div>

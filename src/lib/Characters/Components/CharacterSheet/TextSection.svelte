@@ -61,7 +61,7 @@
 		align-items: stretch;
 		justify-content: stretch;
 		gap: 0.5rem;
-		transition: all 200ms;
+		transition: opacity 200ms;
 	}
 
 	.text-section {

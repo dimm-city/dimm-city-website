@@ -18,11 +18,11 @@ const getSystemMap = async () => {
 			slug: '/dashboard',
 			children: []
 		},
-		{
-			name: 'Op Console',
-			slug: 'console',
-			children: []
-		},
+		// {
+		// 	name: 'Op Console',
+		// 	slug: 'console',
+		// 	children: []
+		// },
 		{
 			name: 'Citizen Files',
 			slug: 'citizens',
@@ -31,12 +31,17 @@ const getSystemMap = async () => {
 		{
 			name: 'Locations',
 			slug: 'locations',
-			children: []// await getDistricts()
+			children: [] // await getDistricts()
 		},
 		{
 			name: 'Specialties',
 			slug: 'specialties',
-			children: []// await getSpecialties()
+			children: [] // await getSpecialties()
+		},
+		{
+			name: 'Races',
+			slug: 'races',
+			children: []
 		},
 		{
 			name: 'Journal Entries',
@@ -47,31 +52,27 @@ const getSystemMap = async () => {
 		// 	name: 'Spores',
 		// 	slug: 'spores'
 		// },
-		{
-			name: 'Tools',
-			slug: 'tools',
-			children: [
-				{
-					name: 'Cyberwar',
-					slug: 'cyberwar'
-				},
-				{
-					name: 'Dice',
-					slug: 'dice'
-				}
-			]
-		},
+		// {
+		// 	name: 'Tools',
+		// 	slug: 'tools',
+		// 	children: [
+		// 		{
+		// 			name: 'Cyberwar',
+		// 			slug: 'cyberwar'
+		// 		},
+		// 		{
+		// 			name: 'Dice',
+		// 			slug: 'dice'
+		// 		}
+		// 	]
+		// },
 		{
 			name: 'About',
-			slug: 'about',
+			slug: 'console/about',
 			children: [
 				{
 					name: 'Change Log',
 					slug: 'change-log'
-				},
-				{
-					name: 'System Stats',
-					slug: 'stats'
 				},
 				{
 					name: 'Dependencies and Integrations',

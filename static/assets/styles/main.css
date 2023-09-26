@@ -91,7 +91,7 @@ a {
 	text-decoration: none;
 	color: var(--fourth-accent);
 	opacity: 0.8;
-	transition: all var(--transition-in-time) ease;
+	transition: opacity var(--transition-in-time) ease;
 }
 
 button.text-button:hover,

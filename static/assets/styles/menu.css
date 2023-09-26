@@ -6,7 +6,7 @@
 	overflow: hidden;
 	opacity: 0.75;
 	text-shadow: 0 0 0.25vh black, 0 0 0.25vh black;
-	transition: all var(--quick-in);
+	transition: opacity var(--quick-in);
 	--aug-clip-tl1: initial;
 	--aug-clip-tr1: initial;
 	--aug-clip-bl1: initial;
@@ -71,7 +71,7 @@
 	overflow: hidden;
 	opacity: 0.75;
 	text-shadow: 0 0 0.25vh black, 0 0 0.25vh black;
-	transition: all var(--quick-in);
+	transition: opacity var(--quick-in);
 
 	--aug-clip-tl1: initial;
 	--aug-clip-tr1: initial;

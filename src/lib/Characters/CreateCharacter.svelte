@@ -350,7 +350,7 @@
 		--aug-border-bg: var(--dark);
 		--aug-all-width: max(5vh, 2vw);
 		--aug-inlay-bg: var(--pink);
-		transition: all 300ms ease-in-out;
+		transition: opacity 300ms ease-in-out;
 	}
 	.step-container {
 		height: 100%;

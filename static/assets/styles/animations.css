@@ -27,15 +27,21 @@
 		-webkit-transform: translate3d(0, 120vh, -500px);
 		transform: translate3d(0, 120vh, -500px);
 	}
+	2%{
+		visibility: visible;
+	}
 	100% {
+		visibility: visible;
 		opacity: 1;
 		-webkit-transform: translateZ(0);
 		transform: translateZ(0);
 	}
 }
-
 .slide-in-up {
-	animation: fadeInUp 400ms ease-in-out 50ms 1 both;
+	visibility: hidden;
+	opacity: 0;
+	display: none;
+	animation: fadeInUp 100ms ease-in-out 10ms 1 both;
 }
 
 .slide-in-down {

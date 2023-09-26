@@ -1,5 +1,5 @@
 <script>
-	import Shell from '$lib/Shared/Shell/Shell.svelte';
+	import Shell from '$lib/Shared/Shell/LandingShell.svelte';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import LoggedInContainer from '$lib/Shared/Components/LoggedInContainer.svelte';
 	import AttachUserWallet from '$lib/Profile/AttachUserWallet.svelte';

@@ -54,7 +54,7 @@
 </svelte:head>
 <PageBackground />
 <div class="main-container {title?.toLowerCase()}" class:fullscreen>
-	<div class="content-panel slide-in-up">
+	<div class="content-panel">
 		<slot><ContentPane>404</ContentPane></slot>
 	</div>
 	<div class="menu-container">

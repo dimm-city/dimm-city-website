@@ -13,7 +13,7 @@
 		<a href="/dashboard" data-augmented-ui="all-hex border" title="dashboard">
 			<i class="bi bi-window-dock fade-in" />
 		</a>
-		<a href="/console" data-augmented-ui="all-hex border" title="op console">
+		<a href="/profile" data-augmented-ui="all-hex border" title="profile">
 			{#if $loggedIn}
 				<i class="bi bi-person-check-fill fade-in" />
 			{:else}
@@ -46,25 +46,25 @@
 		title="Specialties"
 		description="The true skills of the Sporos"
 	/>
-		<MenuItem
-		url="/races"
-		icon="bi-people"
-		title="Races"
-		description="Types of sentitnet beings"
-	/>
+	<MenuItem url="/races" icon="bi-people" title="Races" description="Types of sentient beings" />
 	<MenuItem
 		url="/items"
 		icon="bi-tools"
 		title="Items"
 		description="Search the items of Dimm City"
 	/>
-<MenuItem url="/console/dreams" icon="bi-controller" title="Dream Console" description="Dimm City solo campaigns" />
-	<MenuItem url="/spores" icon="bi-hypnotize" title="Spores" description="Dreams of Dimm City" />
 	<MenuItem
-		url="/about/stats"
+		url="/dreams"
+		icon="bi-controller"
+		title="Dream Console"
+		description="Dimm City solo campaigns"
+	/>
+	<!-- <MenuItem url="/spores" icon="bi-hypnotize" title="Spores" description="Dreams of Dimm City" /> -->
+	<MenuItem
+		url="/console/about"
 		icon="bi-bar-chart"
 		title="System Stats"
-		description="DCC Statisitics"
+		description="DCC Statistics"
 	/>
 	<MenuItem
 		icon="bi bi-diagram-3"
@@ -112,7 +112,7 @@
 		color: var(--yellow);
 	}
 
-    :global(.main-menu .dropdown-content.visible) {
+	:global(.main-menu .dropdown-content.visible) {
 		z-index: 1;
 		opacity: 1;
 		transform: translateY(0) translateX(23rem) !important;
@@ -120,14 +120,14 @@
 	}
 	@media (max-width: 767px) {
 		:global(.main-menu .dropdown-content.visible) {
-			transform: translateY(0) translateX(0) !important; 
-            bottom: 3rem !important;
-            left: 1rem !important;
+			transform: translateY(0) translateX(0) !important;
+			bottom: 3rem !important;
+			left: 1rem !important;
 		}
-        :global(.main-menu .dropdown-content.hidden) {
+		:global(.main-menu .dropdown-content.hidden) {
 			transform: translateY(-80dvh) translateX(0rem) !important;
-            bottom: -100vh !important;
-            left: 1rem !important;
+			bottom: -100vh !important;
+			left: 1rem !important;
 		}
 	}
 </style>
