@@ -11,9 +11,6 @@
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
 		"format": "prettier --plugin-search-dir . --write ."
 	},
-	"peerDependencies": {
-		"svelte": "^4.0.5"
-	},
 	"devDependencies": {
 		"@3d-dice/dice-box-threejs": "^0.0.12",
 		"@dimm-city/dc-cyberwar": "*",

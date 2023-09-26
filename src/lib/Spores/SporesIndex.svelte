@@ -54,7 +54,7 @@
 						<a
 							class="spore-item"
 							href={`spores/${result.attributes.slug}`}
-							target="_blank"
+							
 							data-augmented-ui="border"
 						>
 							<h4>{result.attributes.name}</h4>
