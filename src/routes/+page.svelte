@@ -15,7 +15,7 @@
 			<div class="welcome-container">
 				<section class="hero">
 					<h1>Dimm City RPG</h1>
-					<p>hacking the ethereal realm</p>
+					<p>hack the ethereal realm</p>
 				</section>
 			</div>
 			<hr />
@@ -24,6 +24,27 @@
 					<section>
 						<h2>Welcome {$user?.profile?.displayName ?? $user?.username}, fellow Dreamer</h2>
 
+						<p>
+							What makes a dream a dream and a nightmare a nightmare? Dreams are mostly pleasant,
+							but always slinking along the edges is the threat of shadows ready to flood in. This
+							is a good analogy for the five districts of Dimm City. Here there are bright parts of
+							the metropolis like the breadbasket of The Market District, but also the pit of horror
+							known to all here as The Dark.
+						</p>
+						<p>
+							The conflict between the collective freedom of the populace and the capitalistic
+							mega-corporations' attempts at enslavement is palpable. Aliens, angels, AI, outsider
+							horrors, and the native anthropomorphic sporos each have their own alliances and
+							factions, with some individuals navigating both sides of the divide to their own
+							benefit. It is within this tumult that agents are needed to move the needle one way or
+							the other.
+						</p>
+						<p>
+							Who wins this struggle is up to you! Will you dream yourself a canine sporos rabble
+							rousing for the people or enter into a nightmare as an android suppressing the
+							rebellion? When you prowl the five districts of DimmC, just stepping into the shadows
+							is enough to pull you into a death-defying adventure.
+						</p>
 						<p>
 							We are hard at work extracting information from the ruins of the DC Archives. We hope
 							to publish the Op Manual soon. In the meantime, please feel free to browse the <a
@@ -48,27 +69,7 @@
 			{:else}
 				<div class="fade-in">
 					<section>
-						<p>
-							What makes a dream a dream and a nightmare a nightmare? Dreams are mostly pleasant,
-							but always slinking along the edges is the threat of shadows ready to flood in. This
-							is a good analogy for the five districts of Dimm City. Here there are bright parts of
-							the metropolis like the breadbasket of The Market District, but also the pit of horror
-							known to all here as The Dark.
-						</p>
-						<p>
-							The conflict between the collective freedom of the populace and the capitalistic
-							mega-corporations' attempts at enslavement is palpable. Aliens, angels, AI, outsider
-							horrors, and the native anthropomorphic sporos each have their own alliances and
-							factions, with some individuals navigating both sides of the divide to their own
-							benefit. It is within this tumult that agents are needed to move the needle one way or
-							the other.
-						</p>
-						<p>
-							Who wins this struggle is up to you! Will you dream yourself a canine sporos rabble
-							rousing for the people or enter into a nightmare as an android suppressing the
-							rebellion? When you prowl the five districts of DimmC, just stepping into the shadows
-							is enough to pull you into a death-defying adventure.
-						</p>
+						
 						<p>
 							Dimm City isn't just a game, it's a dreamscape that your imagination breathes life
 							into. Countless sagas await your character and choices. Are you ready to wake up?
