@@ -114,13 +114,6 @@
 			--aug-tr: 7px;
 			--aug-border-all: 2px;
 			--aug-border-bg: var(--fourth-accent);
-		}
-		.scores-container {
-			display: flex;
-			flex-direction: row;
-			justify-content: space-evenly;
-			align-items: center;
-			margin-bottom: 1rem;
-		}
+		}		
 	}
 </style>

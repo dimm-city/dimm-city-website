@@ -118,9 +118,12 @@
 			grid-template-columns: min-content auto;
 		}
 		.label {
-			align-items: center;
+			align-items: top;
 			justify-content: start;
 			display: flex;
+		}
+		.value {
+			white-space:inherit;
 		}
 	}
 </style>

@@ -212,5 +212,8 @@
 			grid-template-columns: min-content 1fr;
 			grid-template-rows: repeat(8, min-content);
 		}
+		.label{
+			align-items: start;
+		}
 	}
 </style>
