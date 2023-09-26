@@ -29,6 +29,7 @@
 	h3 {
 		margin: 0;
 		color: var(--fourth-accent);
+		margin-top: 0.25rem;
 	}
 
 

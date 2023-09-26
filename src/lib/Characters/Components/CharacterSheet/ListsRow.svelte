@@ -100,13 +100,13 @@
 		--aug-tr: var(--default-aug);
 		grid-area: notes;
 	}
-	.notes-container .text-content {
+	/* .notes-container .text-content {
 		display: flex;
 		justify-content: start;
-	}
+	} */
 	@media (max-width: 767px) {
 		.lists-row {
-			padding-top: 2rem;
+			padding-top: 1rem;
 			grid-template-columns: 1fr;
 			grid-template-rows: repeat(3, max-content);
 			grid-template-areas:

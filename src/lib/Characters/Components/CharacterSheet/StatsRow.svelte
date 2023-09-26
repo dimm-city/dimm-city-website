@@ -76,8 +76,12 @@
 	}
 
 	.cybernetics-container {
-		grid-area: 'cyber-cell';
+		grid-area: cyber-cell;
 		padding-bottom: 1rem;
+		border-left: 1px solid var(--fourth-accent);
+	}
+	:global(.cybernetics-container .list .list-item){
+		text-align: center;
 	}
 	@media screen and (max-width: 900px) {
 		.stats-row {
@@ -85,14 +89,18 @@
 			grid-template-rows: min-content auto;
 			grid-template-areas:
 				'image-cell stats-cell'
-				'scores-cell cyber-cell';
+				'cyber-cell cyber-cell';
+		}
+		.cybernetics-container {
+			border-left: none;
+			border-top: 1px solid var(--fourth-accent);
 		}
 	}
 	@media screen and (max-width: 767px) {
 		.stats-row {
 			display: grid;
 			grid-template-columns: 1fr;
-			grid-template-rows: repeat(7, min-content);
+			grid-template-rows: auto;
 			row-gap: 0.5rem;
 			grid-template-areas:
 				'image-cell'
