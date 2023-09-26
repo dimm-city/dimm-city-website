@@ -8,7 +8,7 @@
 	export let target = '_self';
 </script>
 
-<div on:mouseenter on:mouseleave class="menu-item-container">
+<div on:mouseenter on:mouseleave class="menu-item-container" aria-role="button">
 	{#if disabled}
 		<div class="fade-zoom-in" {disabled}>
 			<div class="menu-item" data-augmented-ui class:disabled>

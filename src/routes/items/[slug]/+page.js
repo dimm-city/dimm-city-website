@@ -7,3 +7,5 @@ export const load = async function (page) {
     return await loadEntityPageFromStrapi(page, 'dimm-city/items');
 };
 
+
+export const prerender = 'auto';

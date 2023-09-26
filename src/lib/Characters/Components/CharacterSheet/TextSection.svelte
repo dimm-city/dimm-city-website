@@ -32,6 +32,7 @@
 	<div class="text-section">
 		<div class="text-section-header">			
 			<span>{header}</span>			
+			<!-- svelte-ignore a11y-interactive-supports-focus -->
 			<i
 				class="btn inline bi hide-print"
 				class:bi-fullscreen={toggleFullscreen}

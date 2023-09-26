@@ -14,3 +14,5 @@ export const load = async (/** @type {{ params: any; }} */ page) => {
 	});
 	return data;
 };
+
+export const prerender = 'auto';
