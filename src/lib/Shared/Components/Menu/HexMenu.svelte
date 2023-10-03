@@ -38,6 +38,8 @@
 	>
 	<div
 		class="dropdown-content"
+		role="button"
+		tabindex="0"
 		data-augmented-ui="tl-clip-x tr-clip-x br-clip-x bl-clip-x both"
 		class:visible
 		class:hidden={!visible} on:click={toggleDropdown} on:keyup={toggleDropdown}

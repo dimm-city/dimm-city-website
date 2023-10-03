@@ -45,8 +45,11 @@
 				method: 'GET'
 			}
 		);
+
 		const data = await response.json();
-		totalPages = data.meta.pagination.pageCount;
+		if(data.error)
+			console.log('Error fetching data', data.error);
+		totalPages = data.meta?.pagination?.pageCount ?? 1;
 		return data;
 	}
 

@@ -37,12 +37,7 @@
 			$or: [
 				{
 					name: {
-						$containsi: searchText
-					}
-				},
-				{
-					description: {
-						$containsi: searchText
+						$containsi: searchText ?? ""
 					}
 				}
 			]
