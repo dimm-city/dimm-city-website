@@ -13,7 +13,7 @@
 	 * @type {any[]}
 	 */
 	export let results = [];
-	let resultsPerPage = 10;
+	let resultsPerPage = 25;
 	$: if (resultsPerPage) page = 1;
 
 	let loading = false;
