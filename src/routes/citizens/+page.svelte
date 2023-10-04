@@ -29,13 +29,19 @@
 					>
 						<dl>
 							<dt>Specialty</dt>
-							<dd>{result.attributes.specialty?.attributes.name ?? 'Unknown'}</dd>
+							{#if result.attributes.specialties?.data?.length > 0}
+								<dd>
+									{result.attributes.specialties?.data?.map((i) => i.attributes.name)?.join(',')}
+								</dd>
+							{:else}
+								<dd>Unknown</dd>
+							{/if}
 							<dt>Race</dt>
-							<dd>{result.attributes.race?.attributes.name ?? 'Unknown'}</dd>
+							<dd>{result.attributes.race?.attributes?.name ?? 'Unknown'}</dd>
 							<dt>Location</dt>
 							<dd>{result.attributes.currentLocation?.attributes.name ?? 'Unknown'}</dd>
-							<dt>Vibe</dt>
-							<dd>{result.attributes.vibe ?? 'Unknown'}</dd>
+							<!-- <dt>Vibe</dt>
+							<dd>{result.attributes.vibe ?? 'Unknown'}</dd> -->
 						</dl>
 					</DefaultItemResult>
 				</MenuItem>
@@ -54,10 +60,10 @@
 		display: inline;
 		color: var(--secondary-accent);
 	}
-	dt::after{
+	dt::after {
 		content: ': ';
 	}
-	
+
 	dd {
 		display: inline;
 		margin: 0;
