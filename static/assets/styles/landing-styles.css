@@ -22,7 +22,6 @@
 	--header-font-family: 'Orbitron', sans-serif;
 	--font-family: 'Tomorrow', 'Droid Sans Mono', 'Comfortaa', 'Orbitron', sans-serif;
 
-
 	--transition-in-time: 300ms;
 	--transition-in-delay: 10ms;
 }
@@ -49,7 +48,6 @@ header {
 	padding: 0;
 	background-color: var(--background-color);
 }
-
 
 h1 {
 	margin-bottom: 1rem;
@@ -110,8 +108,11 @@ h2 {
 	--background-color: #121212d8;
 	background-color: var(--background-color);
 }
+.register-links .bi {
+	margin-right: 0.25em;
+}
 @media screen and (max-width: 768px) {
-	body{
+	body {
 		overflow-x: hidden;
 	}
 	.hero h1 {
@@ -181,7 +182,9 @@ label {
 a {
 	color: var(--secondary-color);
 }
-a:hover, a:focus-visible, a:active{
+a:hover,
+a:focus-visible,
+a:active {
 	color: var(--highlight-color);
 }
 
@@ -268,7 +271,6 @@ footer small {
 	white-space: nowrap;
 	text-overflow: ellipsis;
 }
-
 
 @-webkit-keyframes fadeIn {
 	0% {

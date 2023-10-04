@@ -6,7 +6,10 @@
 	overflow: hidden;
 	opacity: 0.75;
 	text-shadow: 0 0 0.25vh black, 0 0 0.25vh black;
-	transition: opacity var(--quick-in);
+	transition: 
+		color var(--easing),
+		background-color var(--quick-in),
+		opacity var(--quick-in);
 	--aug-clip-tl1: initial;
 	--aug-clip-tr1: initial;
 	--aug-clip-bl1: initial;
@@ -40,7 +43,10 @@
 }
 
 .menu-item.disabled {
-	transition: all var(--transition-in-time);
+	transition: 
+		color var(--easing)
+		background-color 1s
+		opacity 1s;
 	opacity: 0.5;
 	color: var(--disabled-color);
 	--aug-inlay-bg: #d3d3d311;
@@ -71,7 +77,10 @@
 	overflow: hidden;
 	opacity: 0.75;
 	text-shadow: 0 0 0.25vh black, 0 0 0.25vh black;
-	transition: opacity var(--quick-in);
+	transition: 
+		color var(--easing)
+		background-color 1s
+		opacity var(--quick-in);
 
 	--aug-clip-tl1: initial;
 	--aug-clip-tr1: initial;

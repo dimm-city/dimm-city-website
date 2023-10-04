@@ -42,8 +42,8 @@
 	--dc-image-width: 300px;
 	--dc-image-aspect-ratio: 3/4; 
 
-	--easing: 0.75s ease-in-out;
-	--quick-in: 0.5s ease-in;
+	--easing: 0.5s ease-in-out;
+	--quick-in: 0.25s ease-in;
 
 	--transition-in-time: 300ms;
 	--transition-in-delay: 10ms;

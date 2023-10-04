@@ -141,7 +141,10 @@ input:read-only,
 	text-overflow: ellipsis;
 	opacity: 0.75;
 	text-shadow: 0 0 0.25vh black, 0 0 0.25vh black;
-	transition: all var(--quick-in);
+	transition: 
+		color var(--easing)
+		background-color 1s
+		opacity var(--quick-in);
 	text-transform: uppercase;
 
 	border: none;
