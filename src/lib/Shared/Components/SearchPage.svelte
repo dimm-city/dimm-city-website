@@ -19,7 +19,7 @@
 	export let autoLoad = false;
 	export let searchPlaceholder = 'Search entries';
 
-	let searchText = "";
+	let searchText = '';
 	let currentPage = initialData?.meta?.pagination?.page ?? 1;
 	let totalPages = initialData?.meta?.pagination?.pageCount ?? 1;
 	let resultsComponent;
@@ -30,14 +30,13 @@
 	export const nextPage = resultsComponent?.nextPage;
 	//search-results-wrapper on:scroll={resultsComponent.handleScroll}
 
-
 	$: query = {
 		...query,
 		filters: {
 			$or: [
 				{
 					name: {
-						$containsi: searchText ?? ""
+						$containsi: searchText ?? ''
 					}
 				}
 			]
@@ -45,50 +44,50 @@
 	};
 </script>
 
-	<ContentPane padding={0}>
-		<div class="search-grid">
-			<div class="search-results-wrapper">
-				<PagedResults
-					bind:this={resultsComponent}
-					bind:page={currentPage}
-					bind:totalPages
-					endpoint={`${config.apiBaseUrl}${endpoint}`}
-					{query}
-					results={initialData?.data}
-					{autoLoad}
-				>
-					<svelte:fragment slot="result" let:result>
-						<slot name="result" {result}>
-							<MenuItem url={`${itemResultBaseUrl}/${result.attributes.slug}`}>
-								<DefaultItemResult item={result.attributes} icon="bi-shield-lock" />
-							</MenuItem>
-						</slot>
-					</svelte:fragment>
-				</PagedResults>
-			</div>
-			<div class="search-form-wrapper">
-				<button class="text-button" on:click={resultsComponent.previousPage}>&lt;</button>
-				<slot name="search" {resultsComponent}>
-					<div class="search-container">
-						<div data-augmented-ui class="aug-input">
-							<i class="bi bi-gear" />
-							<input
-								bind:value={searchText}
-								type="text"
-								placeholder="{searchPlaceholder}"
-								on:keyup={resultsComponent.search}
-							/>
-							<i class="bi bi-search" />
-						</div>
-					</div>
-				</slot>
-				<button class="text-button" on:click={resultsComponent.nextPage}>&gt;</button>
-			</div>
-			<div class="search-status-wrapper">
-				<small>Page {currentPage} of {totalPages}</small>
-			</div>
+<ContentPane padding={0}>
+	<div class="search-grid">
+		<div class="search-results-wrapper">
+			<PagedResults
+				bind:this={resultsComponent}
+				bind:page={currentPage}
+				bind:totalPages
+				endpoint={`${config.apiBaseUrl}${endpoint}`}
+				{query}
+				results={initialData?.data}
+				{autoLoad}
+			>
+				<svelte:fragment slot="result" let:result>
+					<slot name="result" {result}>
+						<MenuItem url={`${itemResultBaseUrl}/${result.attributes.slug}`}>
+							<DefaultItemResult item={result.attributes} icon="bi-shield-lock" />
+						</MenuItem>
+					</slot>
+				</svelte:fragment>
+			</PagedResults>
 		</div>
-	</ContentPane>
+		<div class="search-form-wrapper">
+			<button class="text-button" on:click={resultsComponent.previousPage}>&lt;</button>
+			<slot name="search" {resultsComponent}>
+				<div class="search-container">
+					<div data-augmented-ui class="aug-input">
+						<!-- <i class="bi bi-gear" /> -->
+						<input
+							bind:value={searchText}
+							type="text"
+							placeholder={searchPlaceholder}
+							on:keyup={resultsComponent.search}
+						/>
+						<!-- <i class="bi bi-search" /> -->
+					</div>
+				</div>
+			</slot>
+			<button class="text-button" on:click={resultsComponent.nextPage}>&gt;</button>
+		</div>
+		<div class="search-status-wrapper">
+			<small>Page {currentPage} of {totalPages}</small>
+		</div>
+	</div>
+</ContentPane>
 
 <style>
 	.search-grid {
@@ -142,11 +141,23 @@
 		}
 		.search-results-wrapper {
 			overflow: overlay;
+			flex-direction: column-reverse;
+			display: flex;
 		}
 
 		.search-form-wrapper {
 			border-top: 1px solid var(--secondary-accent);
 			padding-block: 0.5rem;
+		}
+		.search-form-wrapper .search-container {
+			padding: 0.5rem;
+		}
+		.search-container input {
+			font-size: 1.25rem;
+		}
+		.search-form-wrapper button {
+			font-size: 2rem;
+			padding: 0.5rem;
 		}
 	}
 </style>

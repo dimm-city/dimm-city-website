@@ -76,7 +76,7 @@
 	.top-panel {
 		height: var(--menu-bar-height);
 		width: 100vw;
-		transition: all var(--easing);
+		/* transition: all var(--easing); */
 	}
 
 	.top-panel-decoration {
@@ -112,7 +112,7 @@
 		grid-template-columns: 1fr 7fr 1fr;
 		align-items: center;
 		justify-items: center;
-		transition: all var(--easing);
+		/* transition: all var(--easing); */
 	}
 
 	.global-toolbar > div:first-of-type {
@@ -132,7 +132,7 @@
 		position: absolute;
 		bottom: 0.255rem;
 		right: 3.25rem;
-		transition: all var(--transition-in-time);
+		/* transition: all var(--transition-in-time); */
 		font-size: 0.75rem;
 		white-space: nowrap;
 	}
