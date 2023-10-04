@@ -7,7 +7,10 @@
 	export let item;
 	export let icon = 'bi-box';
 	export let subtitle = '';
-
+	/**
+	 * @type {string|null}
+	 */
+	 export let description = null;
 	const baseUrl = config.baseUrl.replace(/\/$/, '');
 </script>
 
@@ -22,23 +25,30 @@
 	<div class="item-result-description">
 		<div class="item-result-image" data-augmented-ui="tl-rect tr-rect br-clip bl-clip both">
 			{#if item.mainImage?.data}
-				<img
-					src={item.mainImage?.data?.attributes?.formats?.thumbnail.url}
-					alt="thumbnail"
-				/>
+				<img src={item.mainImage?.data?.attributes?.formats?.thumbnail.url} alt="thumbnail" />
 			{:else}
 				<i class="bi {icon} text-light" />
 			{/if}
 		</div>
-		<div>{item.shortDescription ?? item.description ?? ''}</div>
+		<div class="item-result-text">
+			<slot>
+				{description ?? item.shortDescription ?? item.description ?? ''}
+			</slot>
+		</div>
 	</div>
 </div>
 
 <style>
+	:root {
+		--thumb-width: 60px;
+		--thumb-height: 120px;
+		--thumb-aspect-ratio: 3/4;
+		--menu-item-height: fit-content;
+	}
 	.item-result-grid {
 		display: grid;
 		row-gap: 0.5rem;
-		height: 110px;
+		height: var(--menu-item-height);
 		grid-template-areas:
 			'title subtitle'
 			'description description';
@@ -59,9 +69,9 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		
-		height: 75px;
-		max-width: 75px;
+
+		height: var(--thumb-height);
+
 		--aug-border: initial;
 		--aug-border-all: 1px;
 		--aug-tl: 5px;
@@ -70,12 +80,18 @@
 		--aug-br: 7px;
 	}
 	.item-result-image img {
-		height: 75px;
+		height: var(--thumb-height);
+		aspect-ratio: var(--thumb-aspect-ratio);
 	}
 	.item-result-image i {
 		font-size: 50px;
-		margin: 0;
+		margin: auto;
 		padding: 0;
+		height: var(--thumb-height);
+		aspect-ratio: var(--thumb-aspect-ratio);
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
 	.item-result-description {
 		grid-area: description;
@@ -84,5 +100,8 @@
 		align-items: start;
 		gap: 0.5rem;
 		font-size: small;
+	}
+	.item-result-text {
+		padding-left: 0.25rem;
 	}
 </style>
