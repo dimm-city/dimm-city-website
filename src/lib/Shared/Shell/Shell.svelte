@@ -2,7 +2,12 @@
 	import PageBackground from './PageBackground.svelte';
 	import ContentPane from '../Components/ContentPane.svelte';
 	import { Modals, closeModal, closeAllModals } from 'svelte-modals';
-	import { pageImage, pageTitle, pageDescription, pageKeywords } from '$lib/Shared/Stores/ShellStore';
+	import {
+		pageImage,
+		pageTitle,
+		pageDescription,
+		pageKeywords
+	} from '$lib/Shared/Stores/ShellStore';
 	import { onMount } from 'svelte';
 	import MenuBar from './MenuBar.svelte';
 	import { config } from '$lib/Shared/config';
@@ -41,9 +46,10 @@
 	<link rel="stylesheet" type="text/css" href="/assets/styles/main.css"> -->
 	<title>{$pageTitle ?? title} - Dimm City</title>
 
-	<meta name="description" content="{$pageDescription}" />
+	<meta name="description" content={$pageDescription} />
 	<meta name="keywords" content={$pageKeywords} />
 	<meta name="twitter:image" content={$pageImage} />
+	<!-- <link rel="icon" type="image/x-icon" href="/assets/icons/shroom256.png" /> -->
 	<!-- <link rel="icon" type="image/x-icon" href="/assets/icons/shroom256.png" /> -->
 	<!-- <link rel="icon" type="image/x-icon" href="/assets/icons/shroom256.png" /> -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-TJ2LB9K4M4"></script>
@@ -113,12 +119,11 @@
 
 	.content-panel {
 		grid-area: content;
-		display: flex;		
+		display: flex;
 		margin: auto;
 		width: 100%;
 		height: calc(100dvh - var(--menu-bar-height));
 		padding: 0.5rem;
-		padding-bottom: 2rem;
 		flex-direction: column;
 		overflow: hidden;
 		transition: all var(--easing);
@@ -142,6 +147,8 @@
 			grid-template-rows: auto min-content;
 		}
 
-		
+		.content-panel {
+			padding-bottom: 2rem;
+		}
 	}
 </style>
