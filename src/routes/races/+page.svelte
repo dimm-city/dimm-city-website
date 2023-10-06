@@ -9,6 +9,5 @@
 	<SearchPage 
 		initialData={data}
 		endpoint={'/dimm-city/races'}
-		itemResultBaseUrl="/races"
-		searchPlaceholder="Search dimm city races" />
+		itemResultBaseUrl="/races" />
 </Shell>

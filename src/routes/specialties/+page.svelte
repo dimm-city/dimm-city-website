@@ -10,6 +10,5 @@
 		initialData={data}
 		endpoint={'/dimm-city/specialty'}
 		itemResultBaseUrl="/specialties"
-		searchPlaceholder="Search dimm city specialties"
 	/>
 </Shell>

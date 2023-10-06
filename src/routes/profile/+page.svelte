@@ -38,6 +38,7 @@
 	<article class="fade-in content-container">
 		<LoggedInContainer>
 			<div class="register-links" slot="public">
+				<h3>Sign in to manage your profile</h3>
 				<a class="button" href={config.apiBaseUrl + '/connect/google'}
 					><i class="bi bi-google" />Sign in with Google</a
 				>

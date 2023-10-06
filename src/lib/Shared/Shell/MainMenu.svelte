@@ -3,6 +3,8 @@
 
 	import HexMenu from '../Components/Menu/HexMenu.svelte';
 	import MenuItem from '../Components/Menu/MenuItem.svelte';
+	let checked = false;
+
 </script>
 
 <HexMenu icon="bi bi-menu-button" class="main-menu" title="main menu">

@@ -108,7 +108,7 @@
 <ul class="results-list" on:scroll={handleScroll}>
 	{#if loading}
 		<span>...</span>
-	{:else if Array.isArray(results)}
+	{:else if Array.isArray(results) && results.length > 0}
 		{#each results as result (result.id)}
 			<li class="fade-in">
 				<slot name="result" {result}>
@@ -116,6 +116,8 @@
 				</slot>
 			</li>
 		{/each}
+	{:else}
+	<span>No results found</span>
 	{/if}
 </ul>
 

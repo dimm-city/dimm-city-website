@@ -2,7 +2,7 @@
 	export let visible = false;
 	export let icon = 'bi bi-lightning-charge';
 	export let position = 'bottom';
-	export let title = "";
+	export let title = '';
 	/**
 	 * @type {HTMLDivElement}
 	 */
@@ -17,6 +17,10 @@
 	 */
 	function toggleDropdown(event) {
 		visible = !visible;
+		console.log('menu toggle');
+		event.stopPropagation();
+		if (visible) document.body.addEventListener('click', onBodyClick);
+		else document.body.removeEventListener('click', onBodyClick);
 	}
 
 	$: if (position.includes('top') && dropdownContent && button) {
@@ -24,6 +28,9 @@
 		dropdownContent.style.bottom = `${buttonRect.height}px`;
 	}
 
+	function onBodyClick() {
+		if (visible) visible = false;
+	}
 </script>
 
 <div class="dropdown {$$props.class ?? ''}">
@@ -42,7 +49,9 @@
 		tabindex="0"
 		data-augmented-ui="tl-clip-x tr-clip-x br-clip-x bl-clip-x both"
 		class:visible
-		class:hidden={!visible} on:click={toggleDropdown} on:keyup={toggleDropdown}
+		class:hidden={!visible}
+		on:click={toggleDropdown}
+		on:keyup={toggleDropdown}
 		bind:this={dropdownContent}
 	>
 		<div class="dropdown-content-grid">
@@ -73,7 +82,7 @@
 		--aug-all-width: max(45px, 2vw);
 		--aug-inlay-bg: var(--pink);
 		transition: transform var(--easing);
-		
+
 		opacity: 1;
 	}
 
@@ -86,7 +95,7 @@
 		max-width: 90dvw;
 		max-height: 80dvh;
 		overflow-y: hidden;
-		--aug-inlay-bg: #141414ad;  
+		--aug-inlay-bg: #141414ad;
 		/* var(--dark); */
 		--aug-border-all: 1px;
 		--aug-border-bg: var(--blue);
@@ -128,7 +137,7 @@
 		.dropdown-content.hidden {
 			transform: translateY(100rem) translateX(0);
 		}
-		.dropdown-button{
+		.dropdown-button {
 			--aug-all-width: max(6vh, 5vw);
 		}
 	}

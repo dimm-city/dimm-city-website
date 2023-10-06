@@ -11,7 +11,6 @@
 	<SearchPage
 		initialData={data}
 		endpoint="/dimm-city/journal-entries"
-		searchPlaceholder="Search the founder journals..."
 	>
 		<svelte:fragment slot="result" let:result>
 			<MenuItem
