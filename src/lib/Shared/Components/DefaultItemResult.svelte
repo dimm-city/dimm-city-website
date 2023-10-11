@@ -14,7 +14,7 @@
 	const baseUrl = config.baseUrl.replace(/\/$/, '');
 </script>
 
-<div class="item-result-grid" {...$$props}>
+<div class="item-result-grid {$$props.class}">
 	<div class="item-result-title">
 		{item.name}
 	</div>
@@ -48,7 +48,6 @@
 	.item-result-grid {
 		display: grid;
 		row-gap: 0.5rem;
-		height: var(--menu-item-height);
 		grid-template-areas:
 			'title subtitle'
 			'description description';
@@ -63,6 +62,8 @@
 		text-align: right;
 		font-size: smaller;
 		color: var(--secondary-accent);
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 	.item-result-image {
 		grid-area: image;

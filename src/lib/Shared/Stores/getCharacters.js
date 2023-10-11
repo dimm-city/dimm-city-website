@@ -7,7 +7,11 @@ const summaryFields = ['name', 'tokenId'];
 /**
  * @param {Number[]} ids
  */
-export async function getCharactersByIds(ids = []) {
+export async function getCharactersByIds(
+	ids = [],
+	fields = summaryFields,
+	populate = summaryRelationships
+) {
 	const strapi = new StrapiClient(config.apiBaseUrl);
 	const results = await strapi.search('dimm-city/characters', {
 		sort: ['name:asc'],
@@ -18,8 +22,8 @@ export async function getCharactersByIds(ids = []) {
 				}
 			}
 		},
-		populate: summaryRelationships,
-		fields: summaryFields,
+		populate: populate,
+		fields: fields,
 		publicationState: 'live',
 		locale: ['en']
 	});

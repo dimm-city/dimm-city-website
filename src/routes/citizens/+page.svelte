@@ -3,12 +3,13 @@
 	import SearchPage from '$lib/Shared/Components/SearchPage.svelte';
 	import MenuItem from '$lib/Shared/Components/Menu/MenuItem.svelte';
 	import DefaultItemResult from '$lib/Shared/Components/DefaultItemResult.svelte';
+	import CharacterMenuItem from '$lib/Characters/CharacterMenuItem.svelte';
 
 	/** @type {DC.Character}*/
 	export let data;
 	let query = {
 		fields: ['name', 'tokenId', 'age'],
-		populate: ['mainImage', 'race', 'specialties']
+		populate: ['mainImage', 'race', 'specialties', 'currentLocation']
 	};
 </script>
 
@@ -22,29 +23,7 @@
 		<svelte:fragment slot="result" let:result>
 			<slot name="result" {result}>
 				<MenuItem url={`citizens/${result.attributes.tokenId}`}>
-					<DefaultItemResult
-						item={result.attributes}
-						description={result.attributes.age}
-						icon="bi-shield-lock"
-						class="citizen-menu-item"
-					>
-						<dl>
-							<dt>Specialty</dt>
-							{#if result.attributes.specialties?.data?.length > 0}
-								<dd>
-									{result.attributes.specialties?.data?.map((i) => i.attributes.name)?.join(',')}
-								</dd>
-							{:else}
-								<dd>Unknown</dd>
-							{/if}
-							<dt>Race</dt>
-							<dd>{result.attributes.race?.attributes?.name ?? 'Unknown'}</dd>
-							<dt>Location</dt>
-							<dd>{result.attributes.currentLocation?.attributes.name ?? 'Unknown'}</dd>
-							<!-- <dt>Vibe</dt>
-							<dd>{result.attributes.vibe ?? 'Unknown'}</dd> -->
-						</dl>
-					</DefaultItemResult>
+					<CharacterMenuItem {result} />
 				</MenuItem>
 			</slot>
 		</svelte:fragment>
@@ -70,6 +49,8 @@
 	dd {
 		display: inline;
 		margin: 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 
 	:global(.menu-item){
@@ -77,9 +58,6 @@
 		--thumb-aspect-ratio: 1;
 		--thumb-height: 100px;
 		height: var(--menu-item-height);
-	}
-	:global(.item-result-title){
-		margin-bottom: 0.5rem;		
 	}
 
 	

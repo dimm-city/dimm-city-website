@@ -6,23 +6,17 @@
 	import MenuItem from '../Shared/Components/Menu/MenuItem.svelte';
 	import DefaultItemResult from '../Shared/Components/DefaultItemResult.svelte';
 	import { config } from '$lib/Shared/config';
+	import { userOwnsTokenFilter } from '$lib/Shared/StrapiFilters';
+	import CharacterMenuItem from '$lib/Characters/CharacterMenuItem.svelte';
 
 	let currentPage = 1;
 	let totalPages = 1;
 	let query = {
 		sort: ['name:asc'],
-		fields: ['name', 'tokenId', 'slug'],
-		populate: ['race', 'specialty'],
+		fields: ['name', 'tokenId'],
+		populate: ['race', 'specialty', 'currentLocation'],
 		publicationState: 'live',
-		filters: {
-			token: {
-				wallet: {
-					user: {
-						id: $user.id
-					}
-				}
-			}
-		}
+		filters: userOwnsTokenFilter($user.id)
 	};
 
 	/**
@@ -34,7 +28,7 @@
 		/**@type {CW.Wallet[]}*/
 		const wallets = await loadWallets();
 		const tokenIds = wallets.flatMap(w => w.tokens).map(t => t.id);
-		initialData = await getCharactersByIds(tokenIds);
+		initialData = await getCharactersByIds(tokenIds, ['name', 'tokenId'], ['race', 'specialties', 'currentLocation', 'mainImage']);
 	});
 </script>
 
@@ -61,7 +55,7 @@
 	<svelte:fragment slot="result" let:result>
 		<slot name="result" {result}>
 			<MenuItem url={`/citizens/${result.attributes.tokenId}`}>
-				<DefaultItemResult item={result.attributes} icon="bi-shield-lock" />
+				<CharacterMenuItem {result} />
 			</MenuItem>
 		</slot>
 	</svelte:fragment>
