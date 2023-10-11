@@ -26,6 +26,7 @@
 						item={result.attributes}
 						description={result.attributes.age}
 						icon="bi-shield-lock"
+						class="citizen-menu-item"
 					>
 						<dl>
 							<dt>Specialty</dt>
@@ -54,7 +55,8 @@
 	dl {
 		display: grid;
 		grid-template-columns: 1fr 2fr;
-		gap: 0.5rem;
+		row-gap: 0.5rem;
+		margin-block: 0;
 	}
 	dt {
 		display: inline;
@@ -62,10 +64,23 @@
 	}
 	dt::after {
 		content: ': ';
+		padding-right: .25rem;
 	}
 
 	dd {
 		display: inline;
 		margin: 0;
 	}
+
+	:global(.menu-item){
+		--menu-item-height: 175px;
+		--thumb-aspect-ratio: 1;
+		--thumb-height: 100px;
+		height: var(--menu-item-height);
+	}
+	:global(.item-result-title){
+		margin-bottom: 0.5rem;		
+	}
+
+	
 </style>

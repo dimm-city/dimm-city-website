@@ -1,7 +1,7 @@
 .menu-item {
+	aspect-ratio: 2/1;
 	cursor: pointer;
-	padding: 1rem;
-	font-size: 1rem;
+	padding: 1.25rem;
 	color: white;
 	overflow: hidden;
 	opacity: 0.75;
@@ -28,9 +28,13 @@
 	--aug-inlay: initial;
 	--aug-inlay-bg: var(--menu-inlay-bg-color);
 	background-color: transparent;
+	
 }
-.menu-item {
-	background-color: rgba(33, 0, 43, 0.55);
+
+@media (width < 800px) {
+	.menu-item{
+		width: 100%;
+	}
 }
 
 .menu-item:hover,
@@ -60,6 +64,11 @@
 		radial-gradient(circle at bottom left, var(--disabled-color-dark) 20px, transparent 30px);
 }
 
+.menu-item > h6 {
+	margin-top: 0;
+	margin-bottom: 1em;
+	font-size: 1em;
+}
 .menu-item small {
 	font-size: 0.7em;
 }

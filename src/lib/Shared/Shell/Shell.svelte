@@ -126,7 +126,7 @@
 		padding: 0.5rem;
 		flex-direction: column;
 		overflow: hidden;
-		transition: all var(--easing);
+		transition: opacity var(--easing);
 		animation-duration: 400ms;
 		animation-delay: 200ms;
 		--animate-delay: 200ms;

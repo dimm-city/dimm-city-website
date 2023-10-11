@@ -14,7 +14,7 @@
 	const baseUrl = config.baseUrl.replace(/\/$/, '');
 </script>
 
-<div class="item-result-grid">
+<div class="item-result-grid" {...$$props}>
 	<div class="item-result-title">
 		{item.name}
 	</div>
@@ -71,6 +71,7 @@
 		align-items: center;
 
 		height: var(--thumb-height);
+		aspect-ratio: var(--thumb-aspect-ratio);
 
 		--aug-border: initial;
 		--aug-border-all: 1px;

@@ -1,10 +1,7 @@
 <script>
 	import { loggedIn } from '$lib/Shared/Stores/UserStore';
-
 	import HexMenu from '../Components/Menu/HexMenu.svelte';
 	import MenuItem from '../Components/Menu/MenuItem.svelte';
-	let checked = false;
-
 </script>
 
 <HexMenu icon="bi bi-menu-button" class="main-menu" title="main menu">
@@ -94,6 +91,9 @@
 		margin-inline: 0.25rem;
 	}
 
+	:global(.main-menu .menu-item){
+		aspect-ratio: 3/1;
+	}
 	.menu-toolbar a {
 		cursor: pointer;
 		display: flex;
@@ -118,7 +118,7 @@
 		z-index: 1;
 		opacity: 1;
 		transform: translateY(0) translateX(23rem) !important;
-		transition: all 0.2s ease-in-out;
+		transition: transform 0.1s ease-in-out;
 	}
 	@media (max-width: 767px) {
 		:global(.main-menu .dropdown-content.visible) {

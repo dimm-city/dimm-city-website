@@ -131,7 +131,7 @@
 		justify-content: center;
 		align-items: flex-start;
 		padding: 0;
-		margin-top: 0.25rem;
+		gap: 1em;
 	}
 	.results-list > li {
 		padding-left: 0;
