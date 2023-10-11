@@ -11,7 +11,7 @@
 	 * @type {string|null}
 	 */
 	 export let description = null;
-	const baseUrl = config.baseUrl.replace(/\/$/, '');
+	const baseUrl = (config.storageBaseUrl ?? config.baseUrl).replace(/\/$/, '');
 </script>
 
 <div class="item-result-grid {$$props.class}">
@@ -25,7 +25,7 @@
 	<div class="item-result-description">
 		<div class="item-result-image" data-augmented-ui="tl-rect tr-rect br-clip bl-clip both">
 			{#if item.mainImage?.data}
-				<img src={item.mainImage?.data?.attributes?.formats?.thumbnail.url} alt="thumbnail" />
+				<img src={baseUrl + item.mainImage?.data?.attributes?.formats?.thumbnail.url} alt="thumbnail" />
 			{:else}
 				<i class="bi {icon} text-light" />
 			{/if}
@@ -44,6 +44,7 @@
 		--thumb-height: 120px;
 		--thumb-aspect-ratio: 3/4;
 		--menu-item-height: fit-content;
+		--thumb-fit: cover;
 	}
 	.item-result-grid {
 		display: grid;
@@ -84,6 +85,7 @@
 	.item-result-image img {
 		height: var(--thumb-height);
 		aspect-ratio: var(--thumb-aspect-ratio);
+		object-fit: var(--thumb-fit);
 	}
 	.item-result-image i {
 		font-size: 50px;

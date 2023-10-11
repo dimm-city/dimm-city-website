@@ -123,7 +123,7 @@
 		margin: auto;
 		width: 100%;
 		height: calc(100dvh - var(--menu-bar-height));
-		padding: 0.5rem;
+		padding: 0.75rem;
 		flex-direction: column;
 		overflow: hidden;
 		transition: opacity var(--easing);

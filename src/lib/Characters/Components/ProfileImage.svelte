@@ -8,10 +8,14 @@
 	export let character;
 
 	//trim last slash from config.baseUrl
-	const baseUrl = config.baseUrl.replace(/\/$/, '');
+	const baseUrl = (config.storageBaseUrl ?? config.baseUrl).replace(/\/$/, '');
 	const { mainImage, mainModel, mainVideo, name } = character.attributes;
-	const relativeUrl = mainImage?.data?.attributes?.formats?.large.url;
-	const imageUrl = relativeUrl  ? `${relativeUrl}` : `${baseUrl}/assets/missing-image.png`;
+	let relativeUrl =
+		mainImage?.data?.attributes?.url ?? mainImage?.data?.attributes?.formats?.large?.url;
+
+	if (relativeUrl == '') relativeUrl = `${baseUrl}/assets/missing-image.png`;
+	if (!relativeUrl.startsWith('http')) relativeUrl = baseUrl + relativeUrl;
+	const imageUrl = relativeUrl;
 </script>
 
 <Image
