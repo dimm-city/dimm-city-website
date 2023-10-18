@@ -9,6 +9,9 @@
 
 	export let page = 1;
 	export let totalPages = 1;
+
+	export let jwt = '';
+
 	/**
 	 * @type {any[]}
 	 */
@@ -39,16 +42,21 @@
 	 * @param {number} limit
 	 */
 	async function fetchData(page, limit) {
+		const options = {
+			method: 'GET'
+		};
+		if (jwt) {
+			// @ts-ignore
+			options.headers = {Authorization : `Bearer ${jwt}` };
+		}
+
 		const response = await fetch(
 			endpoint + '?' + qs.stringify({ ...query, pagination: { page, pageSize: limit } }),
-			{
-				method: 'GET'
-			}
+			options
 		);
 
 		const data = await response.json();
-		if(data.error)
-			console.log('Error fetching data', data.error);
+		if (data.error) console.log('Error fetching data', data.error);
 		totalPages = data.meta?.pagination?.pageCount ?? 1;
 		return data;
 	}
@@ -65,7 +73,7 @@
 		if (page > 1) {
 			page--;
 			const result = await fetchData(page, resultsPerPage);
-			results = [ ...(result.data ?? [])];
+			results = [...(result.data ?? [])];
 		}
 	}
 	export async function nextPage() {
@@ -75,7 +83,6 @@
 			results = [...(result.data ?? [])];
 		}
 	}
-
 
 	/**
 	 * @param {{ target: { scrollTop: any; clientHeight: any; scrollHeight: any; }; }} event
@@ -117,12 +124,11 @@
 			</li>
 		{/each}
 	{:else}
-	<span>No results found</span>
+		<span>No results found</span>
 	{/if}
 </ul>
 
 <style>
-
 	.results-list {
 		display: flex;
 		flex-wrap: wrap;
@@ -144,5 +150,4 @@
 		content: '';
 		display: none;
 	}
-
 </style>

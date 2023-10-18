@@ -1,34 +1,23 @@
 <script>
 	import { onMount } from 'svelte';
-	import { user, logout, loadWallets, loadProfile } from '$lib/Shared/Stores/UserStore';
-	import { getCharactersByIds, getCharactersByUser } from '$lib/Shared/Stores/getCharacters';
+	import { user, jwt, logout, loadWallets } from '$lib/Shared/Stores/UserStore';
+	import { getCharactersByUser } from '$lib/Shared/Stores/getCharacters';
 	import PagedResults from '../Shared/Components/PagedResults.svelte';
 	import MenuItem from '../Shared/Components/Menu/MenuItem.svelte';
-	import DefaultItemResult from '../Shared/Components/DefaultItemResult.svelte';
-	import { config } from '$lib/Shared/config';
-	import { userOwnsTokenFilter } from '$lib/Shared/StrapiFilters';
 	import CharacterMenuItem from '$lib/Characters/CharacterMenuItem.svelte';
+	import { config } from '$lib/Shared/config';
 
 	let currentPage = 1;
 	let totalPages = 1;
-	let query = {
-		sort: ['name:asc'],
-		fields: ['name', 'tokenId'],
-		populate: ['race', 'specialty', 'currentLocation'],
-		publicationState: 'live',
-		filters: userOwnsTokenFilter($user.id)
-	};
 
+	
 	/**
-	 * @type {any}
+	 * @type {Strapi.APIResponse<DC.Character[]>}
 	 */
-	let initialData;
 	onMount(async () => {
 
 		/**@type {CW.Wallet[]}*/
-		const wallets = await loadWallets();
-		const tokenIds = wallets.flatMap(w => w.tokens).map(t => t.id);
-		initialData = await getCharactersByIds(tokenIds, ['name', 'tokenId'], ['race', 'specialties', 'currentLocation', 'mainImage']);
+		const wallets = await loadWallets();		
 	});
 </script>
 
@@ -47,14 +36,13 @@
 <PagedResults
 	bind:page={currentPage}
 	bind:totalPages
-	results={initialData?.data}
-	endpoint={`${config.apiBaseUrl}/dimm-city/characters`}
-	{query}
-	autoLoad={false}
+	autoLoad={true}	
+	endpoint={`${config.apiBaseUrl}/dimm-city/profiles/tokens`}	
+	jwt={$jwt}
 >
 	<svelte:fragment slot="result" let:result>
 		<slot name="result" {result}>
-			<MenuItem url={`/citizens/${result.attributes.tokenId}`}>
+			<MenuItem url={`/citizens/${result.tokenId}`}>
 				<CharacterMenuItem {result} />
 			</MenuItem>
 		</slot>

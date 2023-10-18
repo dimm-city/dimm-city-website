@@ -29,9 +29,19 @@ export class StrapiClient {
 	 */
 	async search(contentType, query) {
 		const url = this._getUrlWithQuery(contentType, query);
+		let options = {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		};
+		if (this.jwt) {			
+			// @ts-ignore
+			options.headers.Authorization = `Bearer ${this.jwt}`;
+		}
 
 		try {
-			const response = await fetch(url);
+			const response = await fetch(url,options);
 
 			if (!response.ok) {
 				throw new Error('Network response was not ok' + url);
@@ -44,12 +54,12 @@ export class StrapiClient {
 			return {
 				data: [],
 				meta: {
-				 pagination: {
-					 page: 0,
-					 pageSize: 0,
-					 total: 0,
-					 pageCount: 0				 
-				 }
+					pagination: {
+						page: 0,
+						pageSize: 0,
+						total: 0,
+						pageCount: 0
+					}
 				}
 			};
 		}

@@ -1,8 +1,8 @@
 import { StrapiClient } from '$lib/Shared/StrapiClient';
 import { config } from '$lib/Shared/config';
 
-const summaryRelationships = ['race', 'specialties', 'mainImage'];
-const summaryFields = ['name', 'tokenId'];
+export const summaryRelationships = ['race', 'specialties', 'mainImage'];
+export const summaryFields = ['name', 'tokenId'];
 
 /**
  * @param {Number[]} ids
@@ -32,21 +32,12 @@ export async function getCharactersByIds(
 }
 
 /**
- * @param {Number} userId
+ * @param {string} jwt
  */
-export async function getCharactersByUser(userId) {
-	const strapi = new StrapiClient(config.apiBaseUrl);
-	const results = await strapi.search('dimm-city/characters', {
-		sort: ['name:asc'],
-		filters: {
-			token: {
-				wallet: {
-					user: {
-						id: { $eq: userId }
-					}
-				}
-			}
-		},
+export async function getCharactersByUser(jwt) {
+	const strapi = new StrapiClient(config.apiBaseUrl, jwt);
+	const results = await strapi.search('dimm-city/profiles/tokens', {
+		sort: ['name:asc'],		
 		fields: summaryFields,
 		populate: summaryRelationships,
 		publicationState: 'live',
