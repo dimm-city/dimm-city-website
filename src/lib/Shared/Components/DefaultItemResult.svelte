@@ -48,7 +48,9 @@
 	}
 	.item-result-grid {
 		display: grid;
+		height: 100%;
 		row-gap: 0.5rem;
+		grid-template-rows: min-content 1fr;
 		grid-template-areas:
 			'title subtitle'
 			'description description';
@@ -101,11 +103,13 @@
 		grid-area: description;
 		display: flex;
 		flex-direction: row;
-		align-items: start;
+		align-items: center;
 		gap: 0.5rem;
 		font-size: small;
 	}
 	.item-result-text {
 		padding-left: 0.25rem;
+		width: 100%;
+		height: 100%;
 	}
 </style>

@@ -6,7 +6,7 @@
      * @type DC.Character | { attributes: any}
      */
     export let result = { attributes: {}};
-    let specialties;
+    let specialties = "Unknown";
     $: if(result.attributes.specialties?.data.length > 0){
         specialties = result.attributes.specialties?.data.length > 1 ? 'Multiple' : result.attributes.specialties?.data[0].attributes.name;
     } else {
@@ -16,54 +16,29 @@
 </script>
 <DefaultItemResult
 	item={result.attributes}
-	subtitle={specialties}
+	subtitle={result.attributes.tokenId ?? 'Unknown'}
 	description={result.attributes.age}
 	icon="bi-shield-lock"
 	class="citizen-menu-item"
 >
-	<dl>
-		<dt>ID</dt>
-		<dd>{result.attributes.tokenId ?? 'Unknown'}</dd>
-		<!-- <dt>Specialty</dt>
-							{#if result.attributes.specialties?.data?.length > 0}
-								<dd>
-									{result.attributes.specialties?.data?.map((i) => i.attributes.name)?.join(',')}
-								</dd>
-							{:else}
-								<dd>Unknown</dd>
-							{/if} -->
-		<dt>Race</dt>
-		<dd>{result.attributes.race?.data?.attributes?.name ?? 'Unknown'}</dd>
-		<dt>Location</dt>
-		<dd>{result.attributes.currentLocation?.data?.attributes.name ?? 'Unknown'}</dd>
-		<!-- <dt>Vibe</dt>
-							<dd>{result.attributes.vibe ?? 'Unknown'}</dd> -->
-	</dl>
+	<div class="citizen-menu-item-content">
+		<div>{specialties}</div>
+		<div>{result.attributes.race?.data?.attributes?.name ?? 'Unknown'}</div>
+		<div>{result.attributes.currentLocation?.data?.attributes.name ?? 'Unknown'}</div>
+	</div>
 </DefaultItemResult>
 
 <style>
-	dl {
+	.citizen-menu-item-content {
 		display: grid;
-		grid-template-columns: 1fr 2fr;
+		grid-template-columns: 1fr;
 		row-gap: 0.5rem;
 		margin-block: 0;
 	}
-	dt {
-		display: inline;
-		color: var(--secondary-accent);
+	
+	.citizen-menu-item-content div{
+		text-align: end;
 	}
-	dt::after {
-		content: ': ';
-		padding-right: 0.25rem;
-	}
-
-	dd {
-		display: inline;
-		margin: 0;
-		overflow: hidden;
-		text-overflow: ellipsis;
-	}
-
 	:global(.menu-item) {
 		--menu-item-height: 175px;
 		--thumb-aspect-ratio: 1;
