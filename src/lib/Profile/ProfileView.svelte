@@ -1,7 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
 	import { user, jwt, logout, loadWallets } from '$lib/Shared/Stores/UserStore';
-	import { getCharactersByUser } from '$lib/Shared/Stores/getCharacters';
 	import PagedResults from '../Shared/Components/PagedResults.svelte';
 	import MenuItem from '../Shared/Components/Menu/MenuItem.svelte';
 	import CharacterMenuItem from '$lib/Characters/CharacterMenuItem.svelte';
@@ -37,12 +36,12 @@
 	bind:page={currentPage}
 	bind:totalPages
 	autoLoad={true}	
-	endpoint={`${config.apiBaseUrl}/dimm-city/profiles/tokens`}	
+	endpoint={`${config.apiBaseUrl}/dimm-city/my/characters`}	
 	jwt={$jwt}
 >
 	<svelte:fragment slot="result" let:result>
 		<slot name="result" {result}>
-			<MenuItem url={`/citizens/${result.tokenId}`}>
+			<MenuItem url={`/citizens/${result.attributes.tokenId}`}>
 				<CharacterMenuItem {result} />
 			</MenuItem>
 		</slot>
