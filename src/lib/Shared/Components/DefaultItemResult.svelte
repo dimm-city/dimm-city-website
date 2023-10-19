@@ -12,6 +12,11 @@
 	 */
 	 export let description = null;
 	const baseUrl = (config.storageBaseUrl ?? config.baseUrl).replace(/\/$/, '');
+	const onImageError = (e) => {
+		console.error(e);
+		e.preventDefault();
+		e.target.src = '/assets/missing-image.png';
+	};
 </script>
 
 <div class="item-result-grid {$$props.class}">
@@ -25,7 +30,7 @@
 	<div class="item-result-description">
 		<div class="item-result-image" data-augmented-ui="tl-rect tr-rect br-clip bl-clip both">
 			{#if item.mainImage?.data}
-				<img src={baseUrl + item.mainImage?.data?.attributes?.formats?.thumbnail.url} alt="thumbnail" />
+				<img src={baseUrl + item.mainImage?.data?.attributes?.formats?.thumbnail.url} alt="thumbnail" on:error={onImageError} />
 			{:else}
 				<i class="bi {icon} text-light" />
 			{/if}

@@ -16,6 +16,13 @@
 	export let aug = 'tl-clip t-clip-x tr-clip-y br-clip b-rect bl-clip l-scoop border';
 	export let classes = '';
 
+	let loaded = false;
+	let failed = false;
+	let loading = false;
+
+	let imageLoaded = false;
+	let imageFailed = false;
+
 	/**
 	 * @type {HTMLImageElement}
 	 */
@@ -65,9 +72,26 @@
 		mediaUrl = null;
 	}
 
-
 	onMount(async () => {
 		mediaUrl = videoUrl;
+
+		const img = new Image();
+		img.src = imageUrl;
+
+		img.onload = () => {
+			console.log('image loaded');
+			imageLoaded = true;
+		};
+		img.onerror = () => {
+			// loading = false;
+			// failed = true;
+			imageLoaded = false;
+			imageFailed = true;
+			console.log('error loading image');
+			img.src = '/assets/missing-image.png';
+			imageUrl = '/assets/missing-image.png';
+		};
+
 		if (image?.complete) {
 			hasImage = true;
 		}
@@ -86,6 +110,14 @@
 	data-augmented-ui={aug}
 	style="position: relative;"
 >
+	{#if imageFailed}
+		<img
+			bind:this={image}
+			class="fade-in"
+			src="/assets/missing-image.png"
+			alt={title}
+		/>
+	{/if}
 	<!-- svelte-ignore a11y-media-has-caption -->
 	<video
 		bind:this={video}
@@ -114,14 +146,10 @@
 			environment-image={skyboxUrl}
 			poster={imageUrl}
 		/>
-	{:else if !hasVideo && imageUrl}
-		<img
-			bind:this={image}
-			src={imageUrl}
-			class="fade-in"
-			class:hidden={!imageUrl}
-			alt={title}
-		/>
+	{:else if !hasVideo && imageLoaded}
+		<img bind:this={image} src={imageUrl} class="fade-in" class:hidden={!imageUrl} alt={title} />
+	{:else}
+		<img src="/assets/missing-image.png" alt={title} />
 	{/if}
 </div>
 
