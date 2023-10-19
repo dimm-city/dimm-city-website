@@ -10,6 +10,6 @@
 
 <Shell title={data?.attributes?.name} titleUrl="/items">
 	<ContentPane padding={2} scrollable={true}>
-		<ItemView item={data} />
+		<ItemView item={data} />		
 	</ContentPane>
 </Shell>

@@ -16,7 +16,6 @@
 	export let aug = 'tl-clip t-clip-x tr-clip-y br-clip b-rect bl-clip l-scoop border';
 	export let classes = '';
 
-	
 	const baseUrl = (config.storageBaseUrl ?? config.baseUrl).replace(/\/$/, '');
 
 	let imageLoaded = false;
@@ -39,7 +38,7 @@
 		hasVideo = true;
 		console.log('video loaded');
 	}
-	
+
 	function onCanPlay() {
 		console.log('can play');
 	}
@@ -68,26 +67,23 @@
 
 		const img = new Image();
 
-		if(imageUrl?.startsWith('http://') || imageUrl?.startsWith('https://')) {
+		if (imageUrl?.startsWith('http://') || imageUrl?.startsWith('https://')) {
 			img.src = imageUrl;
 		} else {
 			img.src = baseUrl + imageUrl;
 		}
-		
+
 		console.log(img.src);
 
 		img.onload = () => {
 			imageLoaded = true;
 			imageUrl = img.src;
-			console.log('image loaded',  hasVideo, imageLoaded, imageFailed);
-			
+			console.log('image loaded', hasVideo, imageLoaded, imageFailed);
 		};
 		img.onerror = () => {
 			imageLoaded = true;
 			imageUrl = '/assets/missing-image.png';
 		};
-
-		
 	});
 </script>
 
@@ -131,7 +127,7 @@
 			poster={imageUrl}
 		/>
 	{:else if !hasVideo && imageLoaded}
-		<img bind:this={image} src={imageUrl} class="fade-in" alt={title} />	
+		<img bind:this={image} src={imageUrl} class="fade-in" alt={title} />
 	{/if}
 </div>
 
@@ -147,10 +143,9 @@
 	video,
 	.image-wrapper {
 		height: var(--dc-image-height);
-		width: min(80dvw, var(--dc-image-width));
+		width: var(--dc-image-width);
 	}
 
-	
 	img,
 	video {
 		opacity: 0;
@@ -168,7 +163,9 @@
 	video:hover {
 		transform: scale(1.3) translate(-30%, -30%);
 	}
-
+	img {
+		object-fit: cover;
+	}
 	.hidden {
 		visibility: hidden;
 	}
