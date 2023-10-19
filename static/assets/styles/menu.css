@@ -4,6 +4,7 @@
 }
 .menu-item {
 	aspect-ratio: var(--dc-menu-item-aspect-ratio);
+	max-width: 80svw;
 	cursor: pointer;
 	padding: 1.25rem;
 	color: white;
