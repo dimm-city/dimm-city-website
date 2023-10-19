@@ -107,7 +107,7 @@
 		grid-area: description;
 		display: flex;
 		flex-direction: row;
-		align-items: center;
+		align-items: flex-start;
 		gap: 0.5rem;
 		font-size: small;
 	}

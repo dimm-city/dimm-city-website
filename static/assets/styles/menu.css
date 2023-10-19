@@ -1,5 +1,9 @@
+:root{
+
+	--dc-menu-item-aspect-ratio: 2/1;
+}
 .menu-item {
-	aspect-ratio: 2/1;
+	aspect-ratio: var(--dc-menu-item-aspect-ratio);
 	cursor: pointer;
 	padding: 1.25rem;
 	color: white;

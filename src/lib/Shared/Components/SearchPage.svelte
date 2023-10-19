@@ -141,6 +141,7 @@
 		}
 		.search-results-wrapper {
 			overflow: overlay;
+			overflow-x: hidden;
 			flex-direction: column-reverse;
 			display: flex;
 		}
