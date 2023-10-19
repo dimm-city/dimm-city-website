@@ -1,5 +1,5 @@
 <script>
-	import { onMount, afterUpdate } from 'svelte';
+	import { onMount } from 'svelte';
 	import { config } from '../config';
 
 	/**
@@ -16,9 +16,8 @@
 	export let aug = 'tl-clip t-clip-x tr-clip-y br-clip b-rect bl-clip l-scoop border';
 	export let classes = '';
 
-	let loaded = false;
-	let failed = false;
-	let loading = false;
+	
+	const baseUrl = (config.storageBaseUrl ?? config.baseUrl).replace(/\/$/, '');
 
 	let imageLoaded = false;
 	let imageFailed = false;
@@ -31,7 +30,6 @@
 	/** @type {HTMLVideoElement}*/
 	let video;
 	let hasVideo = false;
-	let hasImage = false;
 	/**
 	 * @type {string | null}
 	 */
@@ -41,14 +39,7 @@
 		hasVideo = true;
 		console.log('video loaded');
 	}
-	function onImageLoaded(e) {
-		hasImage = true;
-		console.log('image loaded', e);
-	}
-	function onImageError(e) {
-		console.log('image error', e);
-		hasImage = false;
-	}
+	
 	function onCanPlay() {
 		console.log('can play');
 	}
@@ -76,25 +67,27 @@
 		mediaUrl = videoUrl;
 
 		const img = new Image();
-		img.src = imageUrl;
+
+		if(imageUrl?.startsWith('http://') || imageUrl?.startsWith('https://')) {
+			img.src = imageUrl;
+		} else {
+			img.src = baseUrl + imageUrl;
+		}
+		
+		console.log(img.src);
 
 		img.onload = () => {
-			console.log('image loaded');
 			imageLoaded = true;
+			imageUrl = img.src;
+			console.log('image loaded',  hasVideo, imageLoaded, imageFailed);
+			
 		};
 		img.onerror = () => {
-			// loading = false;
-			// failed = true;
-			imageLoaded = false;
-			imageFailed = true;
-			console.log('error loading image');
-			img.src = '/assets/missing-image.png';
+			imageLoaded = true;
 			imageUrl = '/assets/missing-image.png';
 		};
 
-		if (image?.complete) {
-			hasImage = true;
-		}
+		
 	});
 </script>
 
@@ -106,18 +99,9 @@
 </svelte:head>
 <div
 	class="m-3 p-4 d-flex image-wrapper {classes}"
-	class:missing={!hasImage && !hasVideo && modelUrl == ''}
 	data-augmented-ui={aug}
 	style="position: relative;"
 >
-	{#if imageFailed}
-		<img
-			bind:this={image}
-			class="fade-in"
-			src="/assets/missing-image.png"
-			alt={title}
-		/>
-	{/if}
 	<!-- svelte-ignore a11y-media-has-caption -->
 	<video
 		bind:this={video}
@@ -147,9 +131,7 @@
 			poster={imageUrl}
 		/>
 	{:else if !hasVideo && imageLoaded}
-		<img bind:this={image} src={imageUrl} class="fade-in" class:hidden={!imageUrl} alt={title} />
-	{:else}
-		<img src="/assets/missing-image.png" alt={title} />
+		<img bind:this={image} src={imageUrl} class="fade-in" alt={title} />	
 	{/if}
 </div>
 
@@ -168,10 +150,7 @@
 		width: min(80dvw, var(--dc-image-width));
 	}
 
-	.image-wrapper.missing {
-		background-image: url('/assets/missing-image.png');
-		background-repeat: no-repeat;
-	}
+	
 	img,
 	video {
 		opacity: 0;

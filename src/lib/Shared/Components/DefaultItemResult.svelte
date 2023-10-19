@@ -13,7 +13,6 @@
 	 export let description = null;
 	const baseUrl = (config.storageBaseUrl ?? config.baseUrl).replace(/\/$/, '');
 	const onImageError = (e) => {
-		console.error(e);
 		e.preventDefault();
 		e.target.src = '/assets/missing-image.png';
 	};
