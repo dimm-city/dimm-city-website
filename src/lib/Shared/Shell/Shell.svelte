@@ -12,6 +12,7 @@
 	import MenuBar from './MenuBar.svelte';
 	import { config } from '$lib/Shared/config';
 	import MainMenu from './MainMenu.svelte';
+	import { fade } from 'svelte/transition';
 
 	export let title = '';
 	export let titleUrl = '';
@@ -52,7 +53,8 @@
 	<!-- <link rel="icon" type="image/x-icon" href="/assets/icons/shroom256.png" /> -->
 	<!-- <link rel="icon" type="image/x-icon" href="/assets/icons/shroom256.png" /> -->
 	<!-- <link rel="icon" type="image/x-icon" href="/assets/icons/shroom256.png" /> -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-TJ2LB9K4M4"></script>
+	<!-- <link rel="icon" type="image/x-icon" href="/assets/icons/shroom256.png" /> -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-TJ2LB9K4M4" />
 	<!-- <link rel="stylesheet" type="text/css" href="https://unpkg.com/augmented-ui@2/augmented-ui.min.css"> -->
 
 	<link rel="stylesheet" type="text/css" href="/assets/styles/main.css" />
@@ -82,7 +84,9 @@
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<div
 		slot="backdrop"
-		class="backdrop fade-in"
+		class="backdrop"
+		out:fade
+		in:fade
 		on:introstart
 		on:outroend
 		on:keyup
@@ -95,14 +99,15 @@
 <style>
 	:root {
 		--menu-bar-height: 7dvh;
+		--backdrop-padding: 10%;
 	}
 	.backdrop {
 		position: fixed;
-		top: 0;
-		bottom: 0;
-		right: 0;
-		left: 0;
-		background: var(--primary-accent); /* rgba(255, 255, 255, 0.8);*/
+		top: var(--backdrop-padding);
+		bottom: var(--backdrop-padding);
+		right: var(--backdrop-padding);
+		left: var(--backdrop-padding);
+		background: var(--backdrop);
 		--transition-in-delay: 50ms;
 		--transition-in-duration: 1s;
 		filter: blur(10rem);

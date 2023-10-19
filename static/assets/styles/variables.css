@@ -8,7 +8,7 @@
 
 	--default-letter-spacing: 1.5px;
 	--pink:   #ef1ebf;
-	--blue: #3e6ab3;
+	--blue: hsla(217, 49%, 47%, 1);
 	--yellow: #f8f400da;
 	--bs-body-font-family: var(--main-font-family);
 	--bg-main: #01242f;
@@ -20,6 +20,7 @@
 	--dark: rgba(0, 0, 0, 0.9);
 	--blue-accent: var(--blue);
 	--primary-accent: var(--blue-accent);
+	--backdrop: hsla(217, 49%, 47%, 0.6);
 	--secondary-accent: #c643ff;
 	--secondary-accent-muted: #c743ffad;
 	/* #ff8300; */

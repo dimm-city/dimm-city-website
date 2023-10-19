@@ -14,6 +14,7 @@
 	[data-augmented-ui]::before {
 		background-color: rgba(15, 31, 172, 0.39);
 	}
+
 	.modal {
 		position: fixed;
 		top: 0;
@@ -29,12 +30,12 @@
 	}
 
 	.contents {
-		min-width: 80vw;
+		max-width: 80vw;
 		margin: 2rem;
 		min-height: 10rem;
 		display: flex;
 		padding: 2.5rem;
-		background: rgba(0, 0, 0, 0.795);
+		background: rgba(0, 0, 0, 0.9);
 		pointer-events: auto;
 		color: var(--pink);
 		border: 1px;
@@ -47,7 +48,7 @@
 	}
 
 	.modal-content-container {
-		height: 80vh;
+		max-height: 80vh;
 		width: 100%;
 		overflow-y: scroll;
 		overflow-x: hidden;
