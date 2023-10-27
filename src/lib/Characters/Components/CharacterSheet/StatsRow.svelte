@@ -41,8 +41,8 @@
 		grid-template-columns: min-content 1fr 1fr;
 		grid-template-rows: min-content;
 		grid-template-areas: 'image-cell stats-cell cyber-cell';
-		padding-block: 1em;
-		padding-inline: 1rem;
+		padding-block: 1.25em;
+		padding-inline: 1.25rem;
 		column-gap: 2rem;
 		row-gap: 1rem;
 		--aug-border-all: 1px;

@@ -89,12 +89,13 @@
  * @property {string} attributes.backstory - The backstory of the character
  * @property {string} attributes.beliefs - The beliefs of the character
  * @property {string} attributes.flaws - The flaws of the character
- * @property {string} attributes.dreams - The dreams of the character
+ * @property {string} attributes.dreams - The dreams of the character 
  * @property {string} attributes.clothing - The clothing of the character
  * @property {string} attributes.movementDescription - The movement description of the character
  * @property {string} attributes.imageUrl - The image URL of the character
  * @property {boolean} attributes.playerUpdated - Indicates whether player updated
  * @property {boolean} attributes.playerCharacter - Indicates whether is player character
+ * @property {string} attributes.playerNotes - The player's notes about the character
  * @property {string} attributes.createdAt - The creation timestamp of the character
  * @property {string} attributes.updatedAt - The updated timestamp of the character
  * @property {string} attributes.publishedAt - The published timestamp of the character
@@ -306,6 +307,7 @@
  * @property {?string} attributes.problems - Problems of the race
  * @property {string} attributes.name - The name of the race
  * @property {string} attributes.slug - The slug of the race
+ * @property {string} attributes.tags - The slug of the race
  * @property {string} attributes.createdAt - The timestamp of race creation
  * @property {string} attributes.updatedAt - The timestamp of the last race update
  * @property {string} attributes.publishedAt - The timestamp of the race publication
@@ -313,6 +315,10 @@
  * @property {Strapi.Media} attributes.mainImage.data - Main image of the entity
  * @property {Object} attributes.mainVideo
  * @property {Strapi.Media} attributes.mainVideo.data - Main video of the entity
+ * @property {{data: DC.Location[]}} attributes.locations
+ * @property {{data: DC.Race[]}} attributes.enemies
+ * @property {{data: DC.Race[]}} attributes.allies
+ * @property {{data: DC.Ability[]}} attributes.abilities
  */
 /**
  * @typedef DC.SkillTree

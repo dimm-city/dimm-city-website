@@ -7,15 +7,11 @@
 <div class="points-container">
 	<div class="hp">
 		<h4>HP</h4>
-		<div data-augmented-ui="all-hex border">
-			<span contenteditable="{isEditing}">{character?.attributes.hp ?? (isPrinting ? ' ' : '10')}</span>
-			<hr />
-			<small>{ character?.attributes?.race?.data?.attributes?.hp ?? character?.attributes.hp ?? (isPrinting ? ' ' : '10')}</small>
-		</div>
+		<div data-augmented-ui="all-hex border" contenteditable="{isEditing}">{character?.attributes.hp ?? (isPrinting ? ' ' : '10')}</div>
 	</div>
 	<div class="ap">
 		<h4>AP</h4>
-		<div data-augmented-ui="all-hex border">{character?.attributes.ap ?? ''}</div>
+		<div data-augmented-ui="all-hex border" contenteditable="{isEditing}">{character?.attributes.ap ?? ''}</div>
 	</div>
 </div>
 
@@ -25,10 +21,10 @@
 		flex-direction: row;
 		gap: 2rem;
 	}
-	span {
-		margin-left: 0.5rem;
-	}
 
+	.ap,.hp{
+		position: relative;
+	}
 	.hp > div,
 	.ap > div {
 		display: grid;
@@ -36,28 +32,31 @@
 		overflow: visible;
 		--aug-border-all: 2px;
 		--aug-border-bg: var(--fourth-accent);
-		padding: 2rem;
+		padding: 1.35rem;
 	}
 	.hp h4,
 	.ap h4 {
-		position: relative;
+		position: absolute;
+		font-size: 0.5em;
+		bottom: -1em;
 		margin: 0;
 	}
 	.ap h4 {
 		text-align: right;
+		right: 0;
 	}
-	.hp span {
-		margin: 0;
-		height: 19px;
+@media screen and (max-width: 900px) {
+	.ap, .hp{
+		font-size: large;
 	}
-	.hp hr {
-		border: none;		
-		border-top: 1px solid var(--fourth-accent);
-		width: 20px;
+		.hp > div,
+	.ap > div {
+		padding: 2rem;
 	}
-	.hp small {
-		display: block;
-		font-size: 0.7rem;
-		height: 10px;
+	.hp h4,
+	.ap h4 {
+		font-size: 0.75em;
+		bottom: -1em;
 	}
+}
 </style>

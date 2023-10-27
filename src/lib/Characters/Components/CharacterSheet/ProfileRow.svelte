@@ -21,7 +21,7 @@
 
 <div class="profile-row">
 	<div class="row-frame" data-augmented-ui="tl-clip-x tr-clip-x br-clip-x bl-clip-x both" />
-	<div class="profile-heading"><h3>Profile</h3></div>
+	<!-- <div class="profile-heading"><h3>Profile</h3></div> -->
 	<section class="section-container profile">
 		<div class="label">Specialties:</div>
 		<div class="value">

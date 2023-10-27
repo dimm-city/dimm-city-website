@@ -25,11 +25,14 @@
 <style>
 	:global(.list) {
 		--list-gap: 0.5rem;
+		padding-inline: .5rem;
 	}
 	h3 {
 		margin: 0;
 		color: var(--fourth-accent);
 		margin-top: 0.25rem;
+		justify-content: start;
+		padding-inline-start: .5em;
 	}
 
 

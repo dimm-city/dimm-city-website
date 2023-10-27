@@ -22,7 +22,7 @@
 	.story-row {
 		position: relative;		
 		padding-block: 2rem;
-		padding-inline: 1rem;
+		padding-inline: 1.5rem;
 		display: flex;
 		width: 100%;
 		column-gap: 3rem;

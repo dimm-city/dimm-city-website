@@ -51,17 +51,18 @@
 		--default-aug: 7px;
 		position: relative;
 		display: grid;
-		gap: 0.75rem;
+		gap: 1.5rem;
 		margin-inline: 0.5rem;
 		width: 100%;
 		margin: auto;
+		padding-block: 2rem;
+		padding-inline: 1.5rem;
 		overflow: hidden;
 		grid-template-rows: 3fr 1fr;
 		grid-template-columns: repeat(3, 1fr);
 		grid-template-areas:
 			'skills skills items'
 			'notes notes scripts';
-		padding: 1em;
 	}
 	.lists-row .row-frame {
 		position: absolute;
@@ -78,8 +79,8 @@
 	}
 	.lists-row > div {
 		position: relative;
-		text-align: center;
-		padding-inline: 0.75rem;
+		text-align: start;
+		padding-inline: 1.25rem;
 		--aug-border-all: 1px;
 		--aug-border-bg: var(--fourth-accent);
 	}
@@ -99,6 +100,10 @@
 	.notes-container {
 		--aug-tr: var(--default-aug);
 		grid-area: notes;
+	}
+	.notes-container .section-title{
+		justify-content: start;
+		padding-inline-start: .5em;
 	}
 	/* .notes-container .text-content {
 		display: flex;

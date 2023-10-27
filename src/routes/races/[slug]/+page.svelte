@@ -11,8 +11,8 @@
 
 <Shell title={data.attributes.name} fullscreen={false} titleUrl="/races">
 	<ContentPane padding={2} scrollable={true}>
-		<!-- <RaceView race={data} /> -->
+		<RaceView race={data} />
 
-		<Article model={data} imageAug="tl-clip tr-clip-y br-clip bl-clip-y" />
+		<!-- <Article model={data} imageAug="tl-clip tr-clip-y br-clip bl-clip-y" /> -->
 	</ContentPane>
 </Shell>

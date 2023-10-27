@@ -68,23 +68,22 @@
 					</h1>
 				{/if}
 			</div>
-			<div class="specialties-heading">
-				<h2>
-					{#if isPrinting}
-						Dimm City RPG
-					{:else}
-						<!-- ts-ignore-->
-						{character.attributes.specialties?.data?.length > 0
-							? character.attributes.specialties?.data?.map((s) => s?.attributes?.name).join(', ')
-							: 'Unknown'}
-					{/if}
-				</h2>
+			<div class="points-heading">
+				<div
+					class="scores-container"
+					data-augmented-ui2="tl-clip-x tr-clip-x br-clip-x bl-clip-x both"
+				>
+					<Points {character} {isEditing} {isPrinting} />
+				</div>
 			</div>
 		</div>
 		<div class="container" data-augmented-ui-reset>
 			<StatsRow {character} {isEditing} {isPrinting} />
-			<div class="points-row ">
-				<div class="scores-container row-frame" data-augmented-ui="tl-clip-x tr-clip-x br-clip-x bl-clip-x both">
+			<div class="points-row">
+				<div
+					class="scores-container row-frame"
+					data-augmented-ui="tl-clip-x tr-clip-x br-clip-x bl-clip-x both"
+				>
 					<Points {character} {isEditing} {isPrinting} />
 				</div>
 			</div>
@@ -185,9 +184,12 @@
 		grid-template-rows: repeat(4, min-content) auto;
 		gap: 1.5rem;
 	}
-	.points-row {
+	.points-heading {
 		display: flex;
-		justify-content: center;
+		justify-content: end;
+	}
+	.points-row {
+		display: none;
 	}
 	.scores-container {
 		--aug-border-all: 1px;
@@ -197,7 +199,7 @@
 		--aug-bl: 7px;
 		--aug-br: 7px;
 		padding-block: 0.5em;
-		padding-inline: 3em;
+
 		display: flex;
 		flex-direction: row;
 		justify-content: space-evenly;
@@ -217,10 +219,19 @@
 		--aug-inlay: initial;
 		--aug-inlay-bg: var(--content-container-background);
 	}
-	@media (max-width: 767px) {
+	@media screen and (max-width: 900px) {
 		.scroll-wrapper {
 			overflow-y: auto;
 			padding-inline: 0.5rem;
+		}
+		div.heading {
+			grid-template-columns: 1fr;
+			grid-template-rows: min-content;
+		}
+		.scores-container {
+			display: flex;
+			justify-content: center;
+			width: 100%;
 		}
 		/* .sheet {
 			--aug-border-all: 3px;
@@ -232,16 +243,23 @@
 			--aug-l: 0px;
 			--aug-r: 0px;
 		} */
+		.points-row {
+			display: flex;
+		}
+		.scores-container {
+			padding: 2em;
+		}
+		.points-heading {
+			display: none;
+		}
 		.container {
-			grid-template-rows: repeat(4, min-content) auto;
+			grid-template-rows: repeat(5, min-content) auto;
 		}
 	}
 	@media (max-width: 500px) {
 		div.heading {
 			grid-template-columns: 1fr;
-		}
-		.specialties-heading {
-			display: none;
+			grid-template-rows: min-content;
 		}
 
 		:global(.image > div) {
