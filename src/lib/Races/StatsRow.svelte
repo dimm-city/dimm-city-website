@@ -91,6 +91,7 @@
 	.cybernetics-container {
 		grid-area: cyber-cell;
 		padding-bottom: 1rem;
+		padding-left: 1rem;
 		border-left: 1px solid var(--fourth-accent);
 	}
 	:global(.cybernetics-container .list .list-item) {

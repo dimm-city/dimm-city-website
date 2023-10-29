@@ -34,9 +34,12 @@
 		<article class="container" data-augmented-ui-reset>
 			<StatsRow {race} />
 			<div class="profile-row">
-				<div class="row-frame" data-augmented-ui="tl-clip-x tr-clip-x br-clip-x bl-clip-x both" />
 				<section class="section-container profile">
 					<div>
+						<div
+							class="cell-frame"
+							data-augmented-ui="tl-clip-x tr-clip-x br-clip-x bl-clip-x both"
+						/>
 						<h4>Common locations</h4>
 						<ul>
 							{#each race.attributes.locations.data as location}
@@ -45,6 +48,10 @@
 						</ul>
 					</div>
 					<div>
+						<div
+							class="cell-frame"
+							data-augmented-ui="tl-clip-x tr-clip-x br-clip-x bl-clip-x both"
+						/>
 						<h4>Allies</h4>
 						<ul>
 							{#each race.attributes.allies.data as ally}
@@ -53,6 +60,10 @@
 						</ul>
 					</div>
 					<div>
+						<div
+							class="cell-frame"
+							data-augmented-ui="tl-clip-x tr-clip-x br-clip-x bl-clip-x both"
+						/>
 						<h4>Enemies</h4>
 						<ul>
 							{#each race.attributes.enemies.data as enemy}
@@ -62,7 +73,7 @@
 					</div>
 				</section>
 			</div>
-			<div class="profile-row">
+			<div class="description-row">
 				<div class="row-frame" data-augmented-ui="tl-clip-x tr-clip-x br-clip-x bl-clip-x both" />
 				<section class="section-container description">
 					<div>
@@ -186,7 +197,7 @@
 		--aug-border-all: 2px;
 		--aug-border-bg: var(--fourth-accent);
 	}
-	:global(.row-frame) {
+	:global(.row-frame, .cell-frame) {
 		--aug-inlay: initial;
 		--aug-inlay-bg: var(--content-container-background);
 	}
@@ -195,26 +206,43 @@
 		display: grid;
 		grid-area: profile;
 		grid-template-columns: repeat(3, 1fr);
-		grid-column-gap: 0.5rem;
+		grid-column-gap: 0.75rem;
 		grid-auto-flow: row;
 	}
 
-	.section-container.profile > div:not(:first-of-type){
-		border-left: thin var(--fourth-accent) solid;
-		padding-left: 0.5rem;
+	.section-container.profile > div {
+		position: relative;
+		padding: 1.5rem;
 	}
-	.profile-row {
+
+	.profile-row,
+	.description-row {
 		position: relative;
 		width: 100%;
 
 		padding-block: 2rem;
 		padding-inline: 1rem;
-		gap: 1.5rem;
-		row-gap: 0.25rem;
-		align-content: center;
+	}
+	.profile-row {
+		padding: 0;
 	}
 
 	.row-frame {
+		position: absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+
+		--aug-border-all: 1px;
+		--aug-border-bg: var(--secondary-accent-muted);
+		--aug-tl: 13px;
+		--aug-tr: 13px;
+		--aug-bl: 13px;
+		--aug-br: 13px;
+	}
+
+	.cell-frame {
 		position: absolute;
 		top: 0;
 		left: 0;
@@ -236,5 +264,37 @@
 
 	ul {
 		padding: 0;
+	}
+
+	@media screen and (max-width: 900px) {
+		.scroll-wrapper {
+			overflow-y: auto;
+			padding-inline: 0.5rem;
+		}
+		div.heading {
+			grid-template-columns: 1fr;
+			grid-template-rows: min-content;
+		}
+		.scores-container {
+			display: flex;
+			justify-content: center;
+			width: 100%;
+		}
+
+		.section-container.profile {
+			grid-template-columns: repeat(1, 1fr);
+			gap: 1rem;
+		}
+		
+
+		.scores-container {
+			padding: 2em;
+		}
+		.points-heading {
+			display: none;
+		}
+		.container {
+			grid-template-rows: repeat(5, min-content) auto;
+		}
 	}
 </style>
