@@ -78,6 +78,16 @@
 		img.onload = () => {
 			imageLoaded = true;
 			imageUrl = img.src;
+
+			//https://www.phind.com/search?cache=tp48lxjdbever0bnkajysrtb
+			// const aspectRatio = img.naturalWidth / img.naturalHeight;
+			// const gcd = (a, b) => (b === 0 ? a : gcd(b, a % b));
+			// const ratio = aspectRatio.toFixed(2).split('.');
+			// const fraction = `${ratio[0]}:${parseInt(ratio[1])}`;
+
+			// // Set the aspect ratio as a CSS property in the :root pseudo-class
+			// document.documentElement.style.setProperty('--image-aspect-ratio', fraction);
+
 			console.log('image loaded', hasVideo, imageLoaded, imageFailed);
 		};
 		img.onerror = () => {

@@ -73,7 +73,7 @@
 					class="scores-container"
 					data-augmented-ui2="tl-clip-x tr-clip-x br-clip-x bl-clip-x both"
 				>
-					<Points {character} {isEditing} {isPrinting} />
+					<Points data={character} {isEditing} {isPrinting} />
 				</div>
 			</div>
 		</div>
@@ -84,7 +84,7 @@
 					class="scores-container row-frame"
 					data-augmented-ui="tl-clip-x tr-clip-x br-clip-x bl-clip-x both"
 				>
-					<Points {character} {isEditing} {isPrinting} />
+					<Points data={character} {isEditing} {isPrinting} />
 				</div>
 			</div>
 			<ProfileRow {character} {isEditing} />

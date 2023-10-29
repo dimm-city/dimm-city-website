@@ -1,5 +1,6 @@
 <script>
-	export let character;
+	/** @type DC.Character | DC.Race */
+	export let data;
 	export let isEditing = false;
 	export let isPrinting = false;
 </script>
@@ -7,12 +8,14 @@
 <div class="points-container">
 	<div class="hp">
 		<h4>HP</h4>
-		<div data-augmented-ui="all-hex border" contenteditable="{isEditing}">{character?.attributes.hp ?? (isPrinting ? ' ' : '10')}</div>
+		<div data-augmented-ui="all-hex border" contenteditable="{isEditing}">{data?.attributes.hp ?? (isPrinting ? ' ' : '10')}</div>
 	</div>
+	{#if data.attributes.ap}
 	<div class="ap">
 		<h4>AP</h4>
-		<div data-augmented-ui="all-hex border" contenteditable="{isEditing}">{character?.attributes.ap ?? ''}</div>
+		<div data-augmented-ui="all-hex border" contenteditable="{isEditing}">{data?.attributes.ap ?? ''}</div>
 	</div>
+	{/if}
 </div>
 
 <style>
