@@ -22,7 +22,8 @@
 	.points-container {
 		display: flex;
 		flex-direction: row;
-		gap: 2rem;
+		gap: 1rem;
+		padding-right: .25rem;
 	}
 
 	.ap,.hp{
@@ -46,7 +47,7 @@
 	}
 	.ap h4 {
 		text-align: right;
-		right: 0;
+		right: -5px;
 	}
 @media screen and (max-width: 900px) {
 	.ap, .hp{
