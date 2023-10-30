@@ -37,6 +37,14 @@
 			<strong>Appearance:</strong>
 			<span>{race.attributes.appearance ?? 'Unknown'}</span>
 		</p>
+		<p>
+			<strong>Ideals:</strong>
+			<span>{race.attributes.ideals ?? 'Unknown'}</span>
+		</p>
+		<p>
+			<strong>Flaws:</strong>
+			<span>{race.attributes.flaws ?? 'Unknown'}</span>
+		</p>
 	</div>
 	<div class="cybernetics-container">
 		<ItemsList

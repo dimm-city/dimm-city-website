@@ -1,7 +1,5 @@
 <script>
-	import ItemsList from '$lib/Characters/Components/CharacterSheet/ItemsList.svelte';
-	import Points from '$lib/Characters/Components/CharacterSheet/Points.svelte';
-	import Article from '$lib/Shared/Components/Article.svelte';
+	import Points from './Points.svelte';
 	import StatsRow from './StatsRow.svelte';
 
 	/** @type {DC.Race}*/
@@ -77,27 +75,45 @@
 				<div class="row-frame" data-augmented-ui="tl-clip-x tr-clip-x br-clip-x bl-clip-x both" />
 				<section class="section-container description">
 					<div>
-						<h3>Ideals</h3>
-						<hr />
-						<p>{race.attributes.ideals ?? 'Unknown'}</p>
-					</div>
-					<div>
-						<h3>Flaws</h3>
-						<hr />
-						<p>{race.attributes.flaws ?? 'Unknown'}</p>
-					</div>
-					<div>
-						<h3>Problems</h3>
-						<hr />
-						<p>{race.attributes.problems ?? 'Unknown'}</p>
-					</div>
-					<div>
 						<h3>Description</h3>
 						<hr />
 						<p>{race.attributes.description ?? 'Unable to locate description.'}</p>
 					</div>
 				</section>
 			</div>
+			<!-- <div class="description-row">
+				<div class="row-frame" data-augmented-ui="tl-clip-x tr-clip-x br-clip-x bl-clip-x both" />
+				<section class="section-container description">
+					
+					<div>
+						<h3>Problems</h3>
+						<hr />
+						<p>{race.attributes.problems ?? 'Unknown'}</p>
+					</div>
+					
+				</section>
+			</div>
+			<div class="description-row">
+				<div class="row-frame" data-augmented-ui="tl-clip-x tr-clip-x br-clip-x bl-clip-x both" />
+				<section class="section-container description">
+					<div>
+						<h3>Ideals</h3>
+						<hr />
+						<p>{race.attributes.ideals ?? 'Unknown'}</p>
+					</div>
+				</section>
+			</div>
+			<div class="description-row">
+				<div class="row-frame" data-augmented-ui="tl-clip-x tr-clip-x br-clip-x bl-clip-x both" />
+				<section class="section-container description">
+					
+					<div>
+						<h3>Flaws</h3>
+						<hr />
+						<p>{race.attributes.flaws ?? 'Unknown'}</p>
+					</div>					
+				</section>
+			</div> -->
 		</article>
 	</div>
 </div>
@@ -163,6 +179,21 @@
 
 	div.heading > div:last-of-type {
 		text-align: right;
+	}
+	.scores-container {
+		--aug-border-all: 1px;
+		--aug-border-bg: var(--secondary-accent-muted);
+		--aug-tl: 7px;
+		--aug-tr: 7px;
+		--aug-bl: 7px;
+		--aug-br: 7px;
+		padding-block: 0.5em;
+
+		display: flex;
+		flex-direction: row;
+		justify-content: space-evenly;
+		align-items: start;
+		grid-area: scores-cell;
 	}
 
 	h1 {
@@ -285,7 +316,6 @@
 			grid-template-columns: repeat(1, 1fr);
 			gap: 1rem;
 		}
-		
 
 		.scores-container {
 			padding: 2em;
