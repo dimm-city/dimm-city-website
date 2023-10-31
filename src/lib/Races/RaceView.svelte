@@ -1,11 +1,17 @@
 <script>
 	import Points from './Points.svelte';
-	import StatsRow from './StatsRow.svelte';
+	import Image from '$lib/Shared/Components/Image.svelte';
+	import ItemsList from '$lib/Characters/Components/CharacterSheet/ItemsList.svelte';
 
+	import { openModal } from 'svelte-modals';
+	import AbilityModal from '$lib/Abilities/AbilityModal.svelte';
 	/** @type {DC.Race}*/
 	export let race;
 	export let isEditing = false;
 	export let isPrinting = false;
+
+	const viewAbility = (/** @type {DC.Ability} */ ability) =>
+		openModal(AbilityModal, { data: ability });
 </script>
 
 <div class="scroll-wrapper">
@@ -30,16 +36,53 @@
 			</div>
 		</div>
 		<article class="container" data-augmented-ui-reset>
-			<StatsRow {race} />
+			<div class="top-row">
+				<div class="stats-row">
+					<div class="cell-frame" data-augmented-ui="tl-clip tr-clip br-clip-x bl-clip-x both" />
+
+					<div class="image">
+						<Image
+							title="Image of the race"
+							imageUrl={race.attributes.mainImage.data?.attributes.url}
+						/>
+					</div>
+					<p>
+						<strong>Size:</strong>
+						<span>{race.attributes.size ?? 'Unknown'}</span>
+					</p>
+
+					<p>
+						<strong>Ideals:</strong>
+						<span>{race.attributes.ideals ?? 'Unknown'}</span>
+					</p>
+					<p>
+						<strong>Flaws:</strong>
+						<span>{race.attributes.flaws ?? 'Unknown'}</span>
+					</p>
+					<p>
+						<span>{race.attributes.appearance ?? 'Unknown'}</span>
+					</p>
+				</div>
+				<div class="points-cell">
+					<div
+						class="cell-frame"
+						data-augmented-ui="tl-clip-x tr-clip-x br-clip-x bl-clip-x border"
+					/>
+					<Points data={race} {isEditing} {isPrinting} />
+				</div>
+				<div class="abilities-container">
+					<div class="cell-frame" data-augmented-ui="tl-clip tr-clip br-clip-x bl-clip-x both" />
+
+					<ItemsList
+						header="Abilities"
+						noItemsText="no abilities registered"
+						data={race.attributes.abilities?.data}
+						viewItem={viewAbility}
+					/>
+				</div>
+			</div>
 			<div class="profile-row">
 				<section class="section-container profile">
-					<div class="points-cell">
-						<div
-							class="cell-frame"
-							data-augmented-ui="tl-clip-x tr-clip-x br-clip-x bl-clip-x border"
-						/>
-						<Points data={race} {isEditing} {isPrinting} />
-					</div>
 					<div>
 						<div
 							class="cell-frame"
@@ -51,20 +94,6 @@
 								<li>{location.attributes.name}</li>
 							{/each}
 						</ul>
-					</div>
-					<div>
-						<div
-							class="cell-frame"
-							data-augmented-ui="tl-clip-x tr-clip-x br-clip-x bl-clip-x both"
-						/>
-						<p>
-							<strong>Ideals:</strong>
-							<span>{race.attributes.ideals ?? 'Unknown'}</span>
-						</p>
-						<p>
-							<strong>Flaws:</strong>
-							<span>{race.attributes.flaws ?? 'Unknown'}</span>
-						</p>
 					</div>
 					<div>
 						<div
@@ -93,7 +122,7 @@
 				</section>
 			</div>
 			<div class="description-row">
-				<div class="row-frame" data-augmented-ui="tl-clip-x tr-clip-x br-clip-x bl-clip-x both" />
+				<div class="cell-frame" data-augmented-ui="tl-clip-x tr-clip-x br-clip bl-clip both" />
 				<section class="section-container description">
 					<div>
 						<h3>Description</h3>
@@ -200,6 +229,13 @@
 	}
 	.points-cell {
 		display: none;
+		position: relative;
+		padding: 1.5rem;
+
+		flex-wrap: nowrap;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
 	}
 	.container {
 		height: max-content;
@@ -219,7 +255,7 @@
 		--aug-border-all: 2px;
 		--aug-border-bg: var(--fourth-accent);
 	}
-	:global(.row-frame, .cell-frame) {
+	.cell-frame {
 		--aug-inlay: initial;
 		--aug-inlay-bg: var(--content-container-background);
 		z-index: -1;
@@ -228,8 +264,7 @@
 	.section-container.profile {
 		display: grid;
 		grid-area: profile;
-		grid-template-columns: repeat(4, 1fr);
-		grid-column-gap: 0.75rem;
+		grid-template-columns: repeat(3, 1fr);
 		grid-auto-flow: row;
 	}
 
@@ -250,21 +285,6 @@
 		padding: 0;
 	}
 
-	.row-frame {
-		position: absolute;
-		top: 0;
-		left: 0;
-		bottom: 0;
-		right: 0;
-
-		--aug-border-all: 1px;
-		--aug-border-bg: var(--secondary-accent-muted);
-		--aug-tl: 13px;
-		--aug-tr: 13px;
-		--aug-bl: 13px;
-		--aug-br: 13px;
-	}
-
 	.cell-frame {
 		position: absolute;
 		top: 0;
@@ -280,6 +300,42 @@
 		--aug-br: 13px;
 	}
 	/**race*/
+	.top-row {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+	}
+	.image {
+		--dc-image-aspect-ratio: 3/4;
+		--dc-image-height: 240px;
+		--dc-image-width: auto;
+		float: left;
+		padding-right: 1em;
+	}
+
+	:global(.image > div) {
+		--aug-b: 3px;
+		--aug-l: 3px;
+		--aug-t: 3px;
+		--aug-tr: 7px;
+		--aug-border-all: 2px;
+		--aug-border-bg: var(--fourth-accent);
+		margin: auto;
+	}
+
+	.abilities-container {
+		position: relative;
+		padding: 1rem;
+	}
+	.abilities-container .cell-frame {
+		--aug-border-left: 0px;
+	}
+
+	.stats-row {
+		position: relative;
+
+		padding-block: 1.25em;
+		padding-inline: 1.25rem;
+	}
 	h4 {
 		margin: 0;
 		color: var(--fourth-accent);
@@ -300,13 +356,23 @@
 			padding-inline: 0.5rem;
 		}
 
+		.top-row {
+			grid-template-columns: 1fr;
+			row-gap: 1rem;
+		}
+		.abilities-container .cell-frame {
+			--aug-tr-inset2: calc(var(--aug-tr1) * 2);
+			--aug-tl-inset1: calc(var(--aug-tl1) * 2);
+			--aug-border-left: unset;
+		}
 		.section-container.profile {
 			grid-template-columns: repeat(2, 1fr);
-			gap: 1rem;
+			grid-template-rows: repeat(2, min-content) auto;
+			row-gap: 1rem;
 		}
 
-		.scores-container {
-			padding: 2em;
+		.section-container.profile > div:first-of-type {
+			grid-column: span 2;
 		}
 
 		.container {
@@ -318,27 +384,39 @@
 			grid-template-columns: 1fr;
 			grid-template-rows: min-content;
 		}
+		
 		.scores-container {
 			display: flex;
 			justify-content: center;
 			width: 100%;
+			margin-inline: auto;
 		}
 		.section-container.profile {
 			grid-template-columns: repeat(1, 1fr);
 			gap: 1rem;
 		}
+		.stats-row p{
+			margin-inline: auto;
+		}
+		.section-container.profile > div:first-of-type {
+			grid-column: unset;
+		}
 		.points-heading {
 			display: none;
 		}
+
 		.points-cell {
 			display: flex;
-			flex-wrap: nowrap;
-			justify-content: center;
-			align-items: center;
-			width: 100%;
 		}
-		.points-cell .cell-frame {
-			--aug-inlay-bg: transparent;
+	}
+	@media screen and (max-width: 500px) {
+		
+		.image {
+			padding: 0.5rem;
+			float:none;
+			--dc-image-aspect-ratio: 3/4;
+			--dc-image-height: unset;
+			--dc-image-width: auto;
 		}
 	}
 </style>

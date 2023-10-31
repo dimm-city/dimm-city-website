@@ -50,6 +50,12 @@
 		right: -5px;
 	}
 @media screen and (max-width: 768px) {
+	.points-container {
+		display: flex;
+		flex-direction: row;
+		gap: 1.5rem;
+		padding-right: unset;
+	}
 	.ap, .hp{
 		font-size: large;
 	}
