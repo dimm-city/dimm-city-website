@@ -142,6 +142,7 @@
 
 	@media (max-width: 767px) {
 		.search-grid {
+			--dc-menu-item-aspect-ratio: 9/10;
 			max-height: 100%;
 			margin-inline: 0;
 			grid-template-rows: auto min-content min-content;
@@ -150,7 +151,7 @@
 				'search'
 				'status';
 		}
-		
+
 		.search-results-wrapper {
 			overflow: overlay;
 			overflow-x: hidden;
