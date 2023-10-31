@@ -49,7 +49,7 @@
 		text-align: right;
 		right: -5px;
 	}
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 768px) {
 	.ap, .hp{
 		font-size: large;
 	}

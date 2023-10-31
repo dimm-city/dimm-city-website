@@ -1,8 +1,6 @@
 <script>
-	// import PhysicalStats from './PhysicalStats.svelte';
 	import { openModal } from 'svelte-modals';
 	import AbilityModal from '$lib/Abilities/AbilityModal.svelte';
-	// import ItemsList from './ItemsList.svelte';
 	import Image from '$lib/Shared/Components/Image.svelte';
 	import ItemsList from '$lib/Characters/Components/CharacterSheet/ItemsList.svelte';
 
@@ -16,44 +14,29 @@
 		openModal(AbilityModal, { data: ability });
 </script>
 
-<div class="stats-row row-frame" data-augmented-ui="tl-clip tr-clip br-clip-x bl-clip-x both">
+<div class="stats-row">
+	<div class="row-frame" data-augmented-ui="tl-clip tr-clip br-clip-x bl-clip-x both" />
 	<div class="image-cell">
 		<div class="image">
 			<Image title="Image of the race" imageUrl={race.attributes.mainImage.data?.attributes.url} />
 		</div>
 	</div>
 	<div class="stats-container">
-		<p><strong>HP:</strong> {race.attributes.hp}</p>
-		<p><strong>ATK:</strong> {race.attributes.atk}</p>
-		<!-- <p><strong>Playable:</strong> {race.attributes.playable ? 'Yes' : 'No'}</p> -->
-
-		<!-- <h4>Common locations</h4>
-		<ul>
-			{#each race.attributes.locations.data as location}
-				<li>{location.attributes.name}</li>
-			{/each}
-		</ul> -->
+		<!-- <p><strong>HP:</strong> {race.attributes.hp}</p>
+		<p><strong>ATK:</strong> {race.attributes.atk}</p> -->
 		<p>
 			<strong>Size:</strong>
 			<span>{race.attributes.size ?? 'Unknown'}</span>
 		</p>
 		<p>
-			<strong>Appearance:</strong>
+			<!-- <strong>Appearance:</strong> -->
 			<span>{race.attributes.appearance ?? 'Unknown'}</span>
-		</p>
-		<p>
-			<strong>Ideals:</strong>
-			<span>{race.attributes.ideals ?? 'Unknown'}</span>
-		</p>
-		<p>
-			<strong>Flaws:</strong>
-			<span>{race.attributes.flaws ?? 'Unknown'}</span>
 		</p>
 	</div>
 	<div class="cybernetics-container">
 		<ItemsList
-			header="Skills"
-			noItemsText="no skills registered"
+			header="Abilities"
+			noItemsText="no abilities registered"
 			data={race.attributes.abilities?.data}
 			viewItem={viewAbility}
 		/>
@@ -61,7 +44,22 @@
 </div>
 
 <style>
+	.row-frame {
+		position: absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+
+		--aug-border-all: 1px;
+		--aug-border-bg: var(--secondary-accent-muted);
+		--aug-tl: 13px;
+		--aug-tr: 13px;
+		--aug-bl: 13px;
+		--aug-br: 13px;
+	}
 	.stats-row {
+		position: relative;
 		display: grid;
 		grid-template-columns: min-content 1fr 1fr;
 		grid-template-rows: min-content;
@@ -70,14 +68,11 @@
 		padding-inline: 1.25rem;
 		column-gap: 2rem;
 		row-gap: 1rem;
-		--aug-border-all: 1px;
-		--aug-border-bg: var(--secondary-accent-muted);
-		--aug-tl: 13px;
-		--aug-tr: 13px;
-		--aug-bl: 13px;
-		--aug-br: 13px;
 	}
 
+	strong {
+		color: var(--fourth-accent);
+	}
 	.stats-container {
 		grid-area: stats-cell;
 	}

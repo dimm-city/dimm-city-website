@@ -33,6 +33,13 @@
 			<StatsRow {race} />
 			<div class="profile-row">
 				<section class="section-container profile">
+					<div class="points-cell">
+						<div
+							class="cell-frame"
+							data-augmented-ui="tl-clip-x tr-clip-x br-clip-x bl-clip-x border"
+						/>
+						<Points data={race} {isEditing} {isPrinting} />
+					</div>
 					<div>
 						<div
 							class="cell-frame"
@@ -44,6 +51,20 @@
 								<li>{location.attributes.name}</li>
 							{/each}
 						</ul>
+					</div>
+					<div>
+						<div
+							class="cell-frame"
+							data-augmented-ui="tl-clip-x tr-clip-x br-clip-x bl-clip-x both"
+						/>
+						<p>
+							<strong>Ideals:</strong>
+							<span>{race.attributes.ideals ?? 'Unknown'}</span>
+						</p>
+						<p>
+							<strong>Flaws:</strong>
+							<span>{race.attributes.flaws ?? 'Unknown'}</span>
+						</p>
 					</div>
 					<div>
 						<div
@@ -81,39 +102,6 @@
 					</div>
 				</section>
 			</div>
-			<!-- <div class="description-row">
-				<div class="row-frame" data-augmented-ui="tl-clip-x tr-clip-x br-clip-x bl-clip-x both" />
-				<section class="section-container description">
-					
-					<div>
-						<h3>Problems</h3>
-						<hr />
-						<p>{race.attributes.problems ?? 'Unknown'}</p>
-					</div>
-					
-				</section>
-			</div>
-			<div class="description-row">
-				<div class="row-frame" data-augmented-ui="tl-clip-x tr-clip-x br-clip-x bl-clip-x both" />
-				<section class="section-container description">
-					<div>
-						<h3>Ideals</h3>
-						<hr />
-						<p>{race.attributes.ideals ?? 'Unknown'}</p>
-					</div>
-				</section>
-			</div>
-			<div class="description-row">
-				<div class="row-frame" data-augmented-ui="tl-clip-x tr-clip-x br-clip-x bl-clip-x both" />
-				<section class="section-container description">
-					
-					<div>
-						<h3>Flaws</h3>
-						<hr />
-						<p>{race.attributes.flaws ?? 'Unknown'}</p>
-					</div>					
-				</section>
-			</div> -->
 		</article>
 	</div>
 </div>
@@ -210,6 +198,9 @@
 		display: flex;
 		justify-content: end;
 	}
+	.points-cell {
+		display: none;
+	}
 	.container {
 		height: max-content;
 		width: 100%;
@@ -231,12 +222,13 @@
 	:global(.row-frame, .cell-frame) {
 		--aug-inlay: initial;
 		--aug-inlay-bg: var(--content-container-background);
+		z-index: -1;
 	}
 
 	.section-container.profile {
 		display: grid;
 		grid-area: profile;
-		grid-template-columns: repeat(3, 1fr);
+		grid-template-columns: repeat(4, 1fr);
 		grid-column-gap: 0.75rem;
 		grid-auto-flow: row;
 	}
@@ -297,11 +289,31 @@
 		padding: 0;
 	}
 
+	p > strong {
+		color: var(--fourth-accent);
+	}
+
+	/* Media Queries */
 	@media screen and (max-width: 900px) {
 		.scroll-wrapper {
 			overflow-y: auto;
 			padding-inline: 0.5rem;
 		}
+
+		.section-container.profile {
+			grid-template-columns: repeat(2, 1fr);
+			gap: 1rem;
+		}
+
+		.scores-container {
+			padding: 2em;
+		}
+
+		.container {
+			grid-template-rows: repeat(5, min-content) auto;
+		}
+	}
+	@media screen and (max-width: 768px) {
 		div.heading {
 			grid-template-columns: 1fr;
 			grid-template-rows: min-content;
@@ -311,20 +323,22 @@
 			justify-content: center;
 			width: 100%;
 		}
-
 		.section-container.profile {
 			grid-template-columns: repeat(1, 1fr);
 			gap: 1rem;
 		}
-
-		.scores-container {
-			padding: 2em;
-		}
 		.points-heading {
 			display: none;
 		}
-		.container {
-			grid-template-rows: repeat(5, min-content) auto;
+		.points-cell {
+			display: flex;
+			flex-wrap: nowrap;
+			justify-content: center;
+			align-items: center;
+			width: 100%;
+		}
+		.points-cell .cell-frame {
+			--aug-inlay-bg: transparent;
 		}
 	}
 </style>
