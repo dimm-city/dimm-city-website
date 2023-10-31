@@ -34,6 +34,10 @@
 			{/each}
 		</ul> -->
 		<p>
+			<strong>Size:</strong>
+			<span>{race.attributes.size ?? 'Unknown'}</span>
+		</p>
+		<p>
 			<strong>Appearance:</strong>
 			<span>{race.attributes.appearance ?? 'Unknown'}</span>
 		</p>

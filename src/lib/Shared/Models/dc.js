@@ -299,6 +299,7 @@
  * @property {boolean} attributes.playable - If the race is playable
  * @property {number} attributes.hp - The HP of the race
  * @property {number} attributes.atk - The ATK of the race
+ * @property {string} attributes.size - The size of the race
  * @property {?string} attributes.occupations - Occupations of the race
  * @property {?string} attributes.appearance - Appearance of the race
  * @property {?string} attributes.ideals - Ideals of the race

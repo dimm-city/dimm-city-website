@@ -13,6 +13,11 @@ user.subscribe((value) => {
 	setSessionValue('user', value);
 });
 
+/**
+ * Loads the user profile asynchronously.
+ *
+ * @return {Promise<void>} - A promise that resolves when the profile is loaded.
+ */
 export async function loadProfile() {
 	const token = get(jwt);
 	const p = get(user);
