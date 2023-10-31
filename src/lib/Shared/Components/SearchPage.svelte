@@ -1,4 +1,5 @@
 <script>
+	import Root from './../../../../.svelte-kit/generated/root.svelte';
 	import { config } from '$lib/Shared/config';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import MenuItem from '$lib/Shared/Components/Menu/MenuItem.svelte';
@@ -91,6 +92,7 @@
 
 <style>
 	.search-grid {
+		--dc-menu-item-aspect-ratio: 3/2;
 		display: grid;
 		grid-template-rows: min-content min-content auto;
 		grid-template-areas:
@@ -129,6 +131,15 @@
 		display: grid;
 		justify-content: center;
 	}
+	:global(.results-list li:nth-child(odd) .item-result-image) {
+		float: left;
+		margin-right: 0.5rem;
+	}
+	:global(.results-list li:nth-child(even) .item-result-image) {
+		float: right;
+		margin-left: 0.5rem;
+	}
+
 	@media (max-width: 767px) {
 		.search-grid {
 			max-height: 100%;
@@ -139,6 +150,7 @@
 				'search'
 				'status';
 		}
+		
 		.search-results-wrapper {
 			overflow: overlay;
 			overflow-x: hidden;

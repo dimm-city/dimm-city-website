@@ -10,7 +10,7 @@
 	/**
 	 * @type {string|null}
 	 */
-	 export let description = null;
+	export let description = null;
 	const baseUrl = (config.storageBaseUrl ?? config.baseUrl).replace(/\/$/, '');
 	const onImageError = (e) => {
 		e.preventDefault();
@@ -29,7 +29,11 @@
 	<div class="item-result-description">
 		<div class="item-result-image" data-augmented-ui="tl-rect tr-rect br-clip bl-clip both">
 			{#if item.mainImage?.data}
-				<img src={baseUrl + item.mainImage?.data?.attributes?.formats?.thumbnail.url} alt="thumbnail" on:error={onImageError} />
+				<img
+					src={baseUrl + item.mainImage?.data?.attributes?.formats?.thumbnail.url}
+					alt="thumbnail"
+					on:error={onImageError}
+				/>
 			{:else}
 				<i class="bi {icon} text-light" />
 			{/if}
@@ -95,7 +99,7 @@
 	}
 	.item-result-image i {
 		font-size: 50px;
-		margin: auto;
+		margin: 0;
 		padding: 0;
 		height: var(--thumb-height);
 		aspect-ratio: var(--thumb-aspect-ratio);
@@ -105,10 +109,7 @@
 	}
 	.item-result-description {
 		grid-area: description;
-		display: flex;
-		flex-direction: row;
-		align-items: flex-start;
-		gap: 0.5rem;
+		
 		font-size: small;
 	}
 	.item-result-text {
@@ -116,4 +117,5 @@
 		width: 100%;
 		height: 100%;
 	}
+	
 </style>

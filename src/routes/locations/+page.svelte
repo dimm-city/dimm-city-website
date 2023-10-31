@@ -10,7 +10,7 @@
 
 <Shell title="Locations">
 	<SearchPage {endpoint} initialData={data}>
-		<svelte:fragment slot="result" let:result>
+		<!-- <svelte:fragment slot="result" let:result>
 			<div class="menu-item-content-wrapper">
 				<MenuItem
 					url={`/locations/${result.attributes.slug}`}
@@ -27,7 +27,7 @@
 					</p>
 				</MenuItem>
 			</div>
-		</svelte:fragment>
+		</svelte:fragment> -->
 	</SearchPage>
 </Shell>
 
