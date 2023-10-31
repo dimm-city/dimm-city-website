@@ -3,4 +3,5 @@
 	export let data;
 </script>
 
+
 <SporesIndex {data} />

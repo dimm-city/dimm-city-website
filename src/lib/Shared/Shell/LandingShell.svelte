@@ -1,10 +1,15 @@
 <script>
+	import { pageTitle } from '../Stores/ShellStore';
+
+
 	import LandingMenu from './LandingMenu.svelte';
 	export let imageUrl = '/assets/imgs/landing-bg.png';
 	export let videoUrl = 'https://files.dimm.city/assets/locations/burning-drab-square.mp4';
+	export let title = $pageTitle;
 </script>
 
 <svelte:head>
+	<title>{title} - Dimm City</title>
 	<link rel="stylesheet" href="/assets/styles/landing-styles.css" />
 </svelte:head>
 <div class="video-container">

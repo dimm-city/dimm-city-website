@@ -3,6 +3,7 @@
 	import LoggedInContainer from '$lib/Shared/Components/LoggedInContainer.svelte';
 	import LandingShell from '$lib/Shared/Shell/LandingShell.svelte';
 	import PagedResults from '$lib/Shared/Components/PagedResults.svelte';
+	import { marked } from 'marked';
 	/**
 	 * @type {Strapi.APIResponse<DC.Spore>}
 	 */
@@ -21,35 +22,10 @@
 					><i class="bi bi-reddit" />Sign in with Reddit</a
 				>
 			</div>
-			<div class="spore-container">
+			<div class="spore-container fade-in">
 				<h3>&lt;Dimm City 1-Page RPG&gt;</h3>
-
-				<div class="fade-in">
-					<p>
-						A Dimm City Spore is a rules light (Lasers & Feelings homebrew) introduction to the Dimm
-						City Campaign Setting for use with the Dimm City RPG.
-					</p>
-					<p>
-						In a Dimm City Spore, Dreamers (players) take on the role of a sporos hero doing good
-						deeds in a bad place using magic, technology, combat, and their own wits to succeed.
-						Dream Masters (the judge and storyteller) provide environmental descriptions,
-						atmosphere, challenges, and opponents along with the plot to drive the Dream (shared
-						story) forward. The Dream Master is not an enemy of the Dreamers, but a guide into Dimm
-						City and all the action, adventure, and secrets it holds. Dreamers and the DM work
-						together to create a story that is both exciting and unforgettable.
-					</p>
-					<p>
-						To download a copy of a spore, click one of the menu items below. Use the <a
-							href="/dashboard">console</a
-						> to learn more about Dimm City and it's citizens.
-					</p>
-
-					<p>
-						We hope you enjoy your journey,
-						<br />-the founders
-					</p>
-				</div>
-				<PagedResults results={data.data} autoLoad={false} page={data.meta.pagination.page}>
+				{@html marked.parse(data.pageData.attributes.content ?? "")}				
+				<PagedResults results={data.spores.data} autoLoad={false} page={data.spores.meta.pagination.page}>
 					<svelte:fragment slot="result" let:result>
 						<a
 							class="spore-item"
