@@ -1,5 +1,28 @@
 <script>
-	import { onMount } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
+	import panzoom from 'panzoom';
+
+	/**
+	 * @type {import("panzoom").PanZoom}
+	 */
+	let panzoomInstance;
+
+	/**
+	 * @type {HTMLElement | SVGElement | null}
+	 */
+	let canvas;
+
+	onMount(() => {
+		if (canvas === null) return;
+		panzoomInstance = panzoom(canvas);
+		skills = data.attributes.abilities.data;
+		console.log(skills, data);
+		// ...
+	});
+
+	onDestroy(() => {
+		panzoomInstance.dispose();
+	});
 
 	/** @type DC.SkillTree */
 	export let data;
@@ -9,66 +32,32 @@
 	/** @type DC.Ability|null */
 	let selectedSkill;
 
+	/**
+	 * @param {DC.Ability | null} skill
+	 */
 	function selectSkill(skill) {
 		selectedSkill = skill;
 		// Highlight children logic...
 	}
 
+	/**
+	 * @param {any} parent
+	 */
 	function unlockChildren(parent) {
 		// Unlocking children logic...
 	}
-
-	let canvas;
-	let canvasWidth = 800;
-	let row = 0;
-	let column = 0;
-	onMount(() => {
-		// Initial rendering or any setup...
-		skills = data.attributes.abilities.data;
-		canvasWidth = canvas?.clientWidth ?? 800;
-		console.log(canvas);
-	});
 </script>
 
-<svg class="skill-tree" bind:this={canvas}>
+<div bind:this={canvas} class="skill-tree-container">	
 	{#if skills?.length > 0}
 		{#each skills.filter((s) => s.attributes.parents?.data?.length < 1) as skill, s (skill.id)}		
-			{(skill.x = canvasWidth - Math.random() * canvasWidth)}
-			{(skill.y = skill.id + 50 * s)}
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<!-- svelte-ignore a11y-no-static-element-interactions -->
-			<circle
-				class="skill {skill.id ? 'unlocked' : 'locked'}"
-				cx={skill.x}
-				cy={skill.y}
-				r="20"
+			<button 
 				on:click={() => selectSkill(skill)}
-			/>
-			{#if selectedSkill && selectedSkill.id === skill.id}
-				<!-- Info button -->
-				<!-- svelte-ignore a11y-click-events-have-key-events -->
-				<!-- svelte-ignore a11y-no-static-element-interactions -->
-				<text x={skill.x + 25} y={skill.y} font-size="20" on:click={() => unlockChildren(skill)}
-					>i</text
-				>
-			{/if}
-			{#each skill.attributes.children?.data ?? [] as child, c (c)}
-				{child.x = skill.x + (c * 100)}
-				<line class="line" x1={skill.x} y1={skill.y} x2={child.x} y2={skill.y + 100} />
-				<!-- svelte-ignore a11y-click-events-have-key-events -->
-				<!-- svelte-ignore a11y-no-static-element-interactions -->
-				<circle
-					class="skill {skill.id ? 'unlocked' : 'locked'}"
-					cx={child.x}
-					cy={skill.y + 100}
-					r="20"
-					on:click={() => selectSkill(skill)}
-				/>
-			{/each}
+			>{skill.id}</button>
+			
 		{/each}
 	{/if}
-</svg>
-
+</div>	
 {#if selectedSkill}
 	<!-- Modal for displaying skill details -->
 	<div class="modal">
@@ -80,6 +69,22 @@
 {/if}
 
 <style>
+	.skill-tree-container{
+		width: 90vw;
+		height: 90vh;
+		position: relative;
+		display: grid;
+		background-image: url('/assets/imgs/landing-bg.png');
+		background-size: contain;
+	}
+	.skill-tree-container button {
+		border: 1px solid var(--fourth-accent);
+		position: absolute;
+		top: 10px;
+		height: 200px;
+		width: 200px;
+		aspect-ratio: 1;
+	}
 	/* Futuristic/Cyberpunk styling */
 	.skill-tree {
 		background-color: transparent;
