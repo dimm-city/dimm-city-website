@@ -22,6 +22,11 @@
 	let imageFailed = false;
 
 	/**
+	 * @type {HTMLDivElement}
+	 */
+	let imageWrapper;
+
+	/**
 	 * @type {HTMLImageElement}
 	 */
 	let image;
@@ -43,6 +48,38 @@
 		console.log('can play');
 	}
 
+	/**
+	 * @param {number} decimal
+	 */
+	function decimalToFraction(decimal) {
+		if(!decimal?.toString()?.includes('.')) {
+			return decimal;
+		}
+		const epsilon = 1e-8; // small value for precision
+		let numerator = decimal;
+		let denominator = 1;
+
+		// Find the greatest common divisor (GCD)
+		const gcd = (a, b) => (b === 0 ? a : gcd(b, a % b));
+		const precision = Math.pow(10, String(decimal).split('.')[1].length);
+		numerator *= precision;
+		denominator *= precision;
+		const divisor = gcd(numerator, denominator);
+
+		numerator /= divisor;
+		denominator /= divisor;
+
+		// Simplify the fraction
+		while (Math.abs(decimal - numerator / denominator) > epsilon) {
+			if (decimal > numerator / denominator) {
+				numerator++;
+			} else {
+				denominator++;
+			}
+		}
+
+		return `${numerator}/${denominator}`;
+	}
 	// $: if (imageUrl && !imageUrl?.startsWith(config.baseUrl)) {
 	// 	imageUrl = config.baseUrl.replace(/\/$/, '') + imageUrl;
 	// }
@@ -80,13 +117,17 @@
 			imageUrl = img.src;
 
 			//https://www.phind.com/search?cache=tp48lxjdbever0bnkajysrtb
-			// const aspectRatio = img.naturalWidth / img.naturalHeight;
-			// const gcd = (a, b) => (b === 0 ? a : gcd(b, a % b));
+			const aspectRatio = img.naturalWidth / img.naturalHeight;
+			// const gcd = (/** @type {number} */ a, /** @type {number} */ b) =>
+			// 	b === 0 ? a : gcd(b, a % b);
 			// const ratio = aspectRatio.toFixed(2).split('.');
-			// const fraction = `${ratio[0]}:${parseInt(ratio[1])}`;
+			// if (ratio[1] < 1) ratio[1] = '1';
+			const fraction = decimalToFraction(aspectRatio);
 
-			// // Set the aspect ratio as a CSS property in the :root pseudo-class
-			// document.documentElement.style.setProperty('--image-aspect-ratio', fraction);
+			console.log(fraction);
+			// Set the aspect ratio as a CSS property in the :root pseudo-class
+			//document.documentElement.style.setProperty('--dc-image-aspect-ratio', fraction);
+			imageWrapper.style.setProperty('--dc-image-aspect-ratio', fraction);
 
 			console.log('image loaded', hasVideo, imageLoaded, imageFailed);
 		};
@@ -104,6 +145,7 @@
 	></script>
 </svelte:head>
 <div
+	bind:this={imageWrapper}
 	class="m-3 p-4 d-flex image-wrapper {classes}"
 	data-augmented-ui={aug}
 	style="position: relative;"
