@@ -59,11 +59,8 @@
 		}
 	}
 	@media (width < 600px) {
-		:global(.menu-item) {
+		.menu-item-content-wrapper {
 			--dc-menu-item-aspect-ratio: 3/2;
 		}
-		/* :global(.menu-item) {
-			--dc-menu-item-aspect-ratio: 1;
-		}*/
 	}
 </style>
