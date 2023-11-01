@@ -29,6 +29,9 @@
 			<Button height="5rem" url={config.apiBaseUrl + '/connect/reddit'}
 				><i class="bi bi-reddit" />Login with Reddit</Button
 			>
+			<Button height="5rem" url={config.apiBaseUrl + '/connect/itchio'}
+				><i class="bi bi-reddit" />Login with itch.io</Button
+			>
 			<WalletLoginButton />	
 		</div>
 	</slot>

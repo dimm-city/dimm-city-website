@@ -6,7 +6,6 @@
 	export let data;
 
 	onMount(() => {
-		console.log(data);
 		const styleElement = document.getElementById('page-style');
 		if (styleElement) styleElement.innerHTML = data.attributes?.styles;
 	});

@@ -41,6 +41,9 @@
 							<a class="button" href={config.apiBaseUrl + '/connect/reddit'}
 								><i class="bi bi-reddit" />Sign with Reddit</a
 							>
+							<a class="button" href={config.apiBaseUrl + '/connect/itchio'}
+								><i class="bi bi-reddit" />Sign with itch.io</a
+							>
 						</div>
 					</section>
 				</div>
