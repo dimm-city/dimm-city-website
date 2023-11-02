@@ -3,6 +3,18 @@ import { getSessionValue, setSessionValue } from '$lib/Shared/Stores/StoreUtils'
 import { config } from '$lib/Shared/config';
 import { get } from 'svelte/store';
 
+export const getItchIoLoginUrl = () => {
+	const itchioUrl =
+		'https://itch.io/user/oauth?' +
+		'client_id=' +
+		config.itchio.client_id +
+		'&response_type=token&scope=' +
+		encodeURIComponent('profile:me') +
+		'&redirect_uri=' +
+		encodeURIComponent(config.baseUrl + '/connect/redirect/itchio');
+	return itchioUrl;
+};
+
 export const jwt = writable(getSessionValue('jwt') ?? null);
 jwt.subscribe((value) => {
 	setSessionValue('jwt', value);

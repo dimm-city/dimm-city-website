@@ -9,6 +9,8 @@
  * @property {string} graphUrl - The GraphQL endpoint URL for the application
  * @property {string} apiBaseUrl - The base API URL for the application
  * @property {string} stripePublicKey - The public key for Stripe
+ * @property {Object} itchio - Contains itchio settings
+ * @property {string} itchio.client_id - client id for app
  * @property {?Strapi.APIRequestParams} defaultSummaryQuery - The default summary query parameters
  */
 

@@ -1,12 +1,15 @@
 <script>
 	import { config } from '$lib/Shared/config';
 	import LandingShell from '$lib/Shared/Shell/LandingShell.svelte';
-	import { loggedIn, user } from '$lib/Shared/Stores/UserStore';
+	import { getItchIoLoginUrl, loggedIn, user } from '$lib/Shared/Stores/UserStore';
 	import { setSessionValue } from '$lib/Shared/Stores/StoreUtils';
 	import { onMount } from 'svelte';
 	import { marked } from 'marked';
 
 	export let data;
+
+	const itchioUrl = getItchIoLoginUrl();
+	
 	onMount(() => {
 		console.log('data', data);
 		setSessionValue('redirect', document?.location);
@@ -35,14 +38,12 @@
 					<section>
 						{@html marked.parse(data.public?.attributes.content ?? '')}
 						<div class="register-links">
+							<a class="button" href={itchioUrl}><i class="bi bi-house" />Sign with itch.io</a>
 							<a class="button" href={config.apiBaseUrl + '/connect/google'}
 								><i class="bi bi-google" />Sign in with Google</a
 							>
 							<a class="button" href={config.apiBaseUrl + '/connect/reddit'}
 								><i class="bi bi-reddit" />Sign with Reddit</a
-							>
-							<a class="button" href={config.apiBaseUrl + '/connect/itchio'}
-								><i class="bi bi-reddit" />Sign with itch.io</a
 							>
 						</div>
 					</section>

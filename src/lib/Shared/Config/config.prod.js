@@ -1,4 +1,3 @@
-
 /**@type {DC.Config} */
 export const config = {
 	version: '',
@@ -10,5 +9,8 @@ export const config = {
 	storageBaseUrl: '',
 	stripePublicKey:
 		'pk_live_51MmHcALeft6siyywYlGfYkkPlnaPrFais0iagFrfJyP9t93HCfjPsSn4KaJ5ZNFavn19uWiKvmZzzbHHt90jG42k00EFozLWPP',
-	defaultSummaryQuery: null
+	defaultSummaryQuery: null,
+	itchio: {
+		client_id: '76509a9dfebe7b260ffc488bac8e73a5'
+	}
 };
