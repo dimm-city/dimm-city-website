@@ -1,4 +1,5 @@
 <script>
+	import { page } from '$app/stores';
 	import LandingShell from '$lib/Shared/Shell/LandingShell.svelte';
 	import { marked } from 'marked';
 	import { onMount } from 'svelte';
@@ -9,17 +10,18 @@
 		const styleElement = document.getElementById('page-style');
 		if (styleElement) styleElement.innerHTML = data.attributes?.styles;
 	});
+
 </script>
 
 <svelte:head>
-	<title>{$page.title}</title>
+	<title>{$page.data.title}</title>
 	<meta name="description" content={data.attributes?.description} />
 	<meta name="keywords" content={data.attributes?.tags} />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<meta name="author" content={$page.author}>
+	<meta name="author" content={data.attributes.author}>
 	<meta name="robots" content="index, follow">
-	<link rel="canonical" href="{$page.url}">
+	<link rel="canonical" href="{$page.url?.toString()}">
 </svelte:head>
 <LandingShell title={data?.attributes?.title}>
 	<style id="page-style"></style>
