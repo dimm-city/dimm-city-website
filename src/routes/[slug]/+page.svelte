@@ -12,8 +12,14 @@
 </script>
 
 <svelte:head>
+	<title>{$page.title}</title>
 	<meta name="description" content={data.attributes?.description} />
 	<meta name="keywords" content={data.attributes?.tags} />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="author" content={$page.author}>
+	<meta name="robots" content="index, follow">
+	<link rel="canonical" href="{$page.url}">
 </svelte:head>
 <LandingShell title={data?.attributes?.title}>
 	<style id="page-style"></style>
