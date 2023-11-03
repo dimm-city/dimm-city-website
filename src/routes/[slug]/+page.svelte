@@ -22,6 +22,36 @@
 	<meta name="author" content={data.attributes.author}>
 	<meta name="robots" content="index, follow">
 	<link rel="canonical" href="{$page.url?.toString()}">
+
+	<!-- Open Graph / Facebook -->
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="{$page.url?.toString()}">
+	<meta property="og:title" content={$page.data.title}>
+	<meta property="og:description" content={data.attributes?.description}>
+	<meta property="og:image" content={data.attributes?.image}>
+
+	<!-- Twitter -->
+	<meta property="twitter:card" content="summary_large_image">
+	<meta property="twitter:url" content="{$page.url?.toString()}">
+	<meta property="twitter:title" content={$page.data.title}>
+	<meta property="twitter:description" content={data.attributes?.description}>
+	<meta property="twitter:image" content={data.attributes?.image}>
+
+	<!-- Structured Data -->
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "WebPage",
+		"url": "{$page.url?.toString()}",
+		"name": "{$page.data.title}",
+		"description": "{data.attributes?.description}",
+		"author": {
+			"@type": "Person",
+			"name": "{data.attributes.author}"
+		},
+		"image": "{data.attributes?.image}"
+	}
+	</script>
 </svelte:head>
 <LandingShell title={data?.attributes?.title}>
 	<style id="page-style"></style>
