@@ -22,7 +22,7 @@
 </script>
 
 <div class="container">
-	<div class="hero">
+	<!-- <div class="hero">
 		<div class="hero-title">
 			<h4><a href="/journal-entries">Founder's Notes</a></h4>
 			<hr />
@@ -30,7 +30,7 @@
 		<div class="hero-body">
 			<Hero data={latestNews} />
 		</div>
-	</div>
+	</div> -->
 	<div  class="reference-header">
 		<h4>Dimm City Reference</h4>
 		<hr />

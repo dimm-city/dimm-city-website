@@ -20,12 +20,12 @@
 			{/if}
 		</a>
 	</div>
-	<MenuItem
+	<!-- <MenuItem
 		icon="bi bi-journal-code"
 		title="Founder Journals"
 		url="/journal-entries"
 		description="Files from the founder's journals"
-	/>
+	/> -->
 
 	<MenuItem
 		url="/locations"
