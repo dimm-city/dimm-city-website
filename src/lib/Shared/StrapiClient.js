@@ -41,7 +41,7 @@ export class StrapiClient {
 		}
 
 		try {
-			const response = await fetch(url,options);
+			const response = await this.fetch(url,options);
 
 			if (!response.ok) {
 				throw new Error('Network response was not ok' + url);
@@ -73,7 +73,7 @@ export class StrapiClient {
 		const url = `${this.baseURL}/${contentType}/${id}?${qs.stringify(query)}`;
 
 		try {
-			const response = await fetch(url);
+			const response = await this.fetch(url);
 
 			if (!response.ok) {
 				throw new Error('Network response was not ok');
@@ -104,7 +104,7 @@ export class StrapiClient {
 		const url = this._getUrlWithQuery(contentType, query);
 
 		try {
-			const response = await fetch(url);
+			const response = await this.fetch(url);
 
 			if (!response.ok) {
 				throw new Error('Network response was not ok');
@@ -129,7 +129,7 @@ export class StrapiClient {
 	async updateEntity(contentType, entity) {
 		console.log('updating entity', entity);
 
-		await fetch(`${this.baseURL}/${contentType}/${entity.id}?populate=*`, {
+		await this.fetch(`${this.baseURL}/${contentType}/${entity.id}?populate=*`, {
 			method: 'PUT',
 			headers: {
 				Authorization: `Bearer ${this.jwt}`,
@@ -137,7 +137,7 @@ export class StrapiClient {
 			},
 			body: JSON.stringify({ data: entity })
 		})
-			.then(async (res) => {
+			.then(async (/** @type {{ json: () => PromiseLike<{ data: any; errors: any; }> | { data: any; errors: any; }; ok: any; }} */ res) => {
 				const { data, errors } = await res.json();
 				if (res.ok) {
 					console.assert(data != null);
@@ -147,7 +147,7 @@ export class StrapiClient {
 					console.error('failed', errors, data);
 				}
 			})
-			.catch((reason) => {
+			.catch((/** @type {any} */ reason) => {
 				console.log('could not update character', reason);
 			});
 	}

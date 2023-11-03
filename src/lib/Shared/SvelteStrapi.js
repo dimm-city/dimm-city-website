@@ -61,13 +61,13 @@ export async function loadSearchPageFromStrapi(
 }
 
 /**
- * @param {{params: {slug: any;};}} page
+ * @param {{params: {slug: any;}; fetch: any;}} page
  * @param {string} contentType
  * @param {any | undefined} [query]
  */
 export async function loadEntityPageFromStrapi(page, contentType, query) {
 	const slug = page.params.slug;
-	const strapi = new StrapiClient(config.apiBaseUrl);
+	const strapi = new StrapiClient(config.apiBaseUrl, '', page.fetch);
 	const item = await strapi.loadBySlug(contentType, slug, query);
 	return item ?? { attributes: {} };
 }

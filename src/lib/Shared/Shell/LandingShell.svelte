@@ -1,7 +1,6 @@
 <script>
 	import { pageTitle } from '../Stores/ShellStore';
 
-
 	import LandingMenu from './LandingMenu.svelte';
 	export let imageUrl = '/assets/imgs/landing-bg.png';
 	export let videoUrl = 'https://files.dimm.city/assets/locations/burning-drab-square.mp4';
@@ -21,7 +20,7 @@
 </div>
 
 <header>
-<LandingMenu />
+	<LandingMenu />
 </header>
 <main>
 	<slot />
@@ -66,7 +65,7 @@
 </footer>
 
 <style>
-	:global(article){
+	:global(article) {
 		opacity: 0;
 	}
 	.video-container {
@@ -89,6 +88,7 @@
 	main {
 		width: 100%;
 		max-width: 100ch;
-		margin: auto;
+		margin-inline: auto;
 	}
+
 </style>
