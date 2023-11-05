@@ -1,5 +1,5 @@
 <script>
-	import { getSessionValue } from '$lib/Shared/Stores/StoreUtils';
+	import { getSessionValue, setSessionValue } from '$lib/Shared/Stores/StoreUtils';
 	import { page } from '$app/stores';
 	import { config } from '$lib/Shared/config';
 	import { jwt, loadProfile, loadWallets, user } from '$lib/Shared/Stores/UserStore';
@@ -22,13 +22,42 @@
 
 		if (callback.ok) {
 			const cbData = await callback.json();
-			$jwt = cbData.jwt;
-			$user = { ...cbData };
 			if (document) {
-				await loadProfile();
-				await loadWallets(true);
 				redirect = getSessionValue('redirect');
-				document.location = redirect?.href ?? '/';
+				const isAssociatingProfile = getSessionValue('ap');
+
+				if (isAssociatingProfile === true && $jwt && $user) {
+					const secondary_token = cbData.jwt;
+					const secondary_response = await fetch(config.apiBaseUrl + '/profiles/associate-login', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+							Authorization: 'Bearer ' + $jwt
+						},
+						body: JSON.stringify({
+							secondary_token
+						})
+					});
+					if (secondary_response.ok) {
+						setSessionValue('ap', false);
+						const data = await secondary_response.json();
+						console.log('associated profile', data);
+						setSessionValue('user', data.profile);
+
+						//await loadProfile();
+						document.location = redirect?.href ?? '/profile';
+					} else {
+						console.warn('failed to associate profile');
+					}
+				} else {
+					//Logging in
+					setSessionValue('ap', false);
+					setSessionValue('jwt', cbData.jwt);
+					setSessionValue('user', cbData.user);
+					await loadProfile();
+					await loadWallets(true);
+					document.location = redirect?.href ?? '/';
+				}
 			}
 		} else {
 			console.warn('failed to complete authentication', callback.statusText, await callback.text());
