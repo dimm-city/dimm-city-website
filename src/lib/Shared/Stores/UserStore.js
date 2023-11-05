@@ -182,6 +182,63 @@ export async function loadWallets(force = false) {
 	}
 }
 
+/**
+ * @param {string | null} redirect
+ * @param {string} provider
+ * @param {string | null} token
+ */
+export async function handleOAuthCallback(provider, token, redirect) {
+	console.debug('handling oauth callback', provider, token, redirect);
+
+	const callback = await fetch(
+		config.apiBaseUrl + '/auth/' + provider + '/callback?access_token=' + token
+	);
+
+	if (callback.ok && document) {
+		
+		const cbData = await callback.json();
+		const _token = getSessionValue('jwt');
+		const _profile = getSessionValue('user');
+		
+		const isAssociatingProfile = getSessionValue('ap');
+
+		if (isAssociatingProfile === true && _token && _profile) {
+			const secondary_token = cbData.jwt;
+			const secondary_response = await fetch(config.apiBaseUrl + '/profiles/associate-login', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: 'Bearer ' + _token
+				},
+				body: JSON.stringify({
+					secondary_token
+				})
+			});
+			if (secondary_response.ok) {
+				setSessionValue('ap', false);
+				const data = await secondary_response.json();
+				console.log('associated profile', data);
+				setSessionValue('user', data.profile);
+
+				//await loadProfile();
+				document.location = '/profile';
+			} else {
+				console.warn('failed to associate profile');
+			}
+		} else {
+			//Logging in
+			setSessionValue('ap', false);
+			setSessionValue('jwt', cbData.jwt);
+			setSessionValue('user', cbData.user);
+			await loadProfile();
+			await loadWallets(true);
+			document.location = redirect ?? '/';
+		}
+	} else {
+		console.warn('failed to complete authentication', callback.statusText, await callback.text());
+	}
+}
+
 export const logout = () => {
 	jwt.set(null);
 	user.set(null);
