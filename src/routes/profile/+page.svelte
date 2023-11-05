@@ -8,9 +8,7 @@
 		updateProfile,
 		associateLogin,
 		removeLogin,
-
 		getItchIoLoginUrl
-
 	} from '$lib/Shared/Stores/UserStore';
 	import { config } from '$lib/Shared/config';
 	import { setSessionValue } from '$lib/Shared/Stores/StoreUtils';
@@ -19,7 +17,7 @@
 	onMount(() => {
 		setSessionValue('redirect', document?.location);
 	});
-	const itchioUrl = getItchIoLoginUrl()
+	const itchioUrl = getItchIoLoginUrl();
 	let editing = false;
 	/**
 	 * @type {any}
@@ -39,11 +37,6 @@
 		$user = JSON.parse(_temp);
 		editing = false;
 	}
-
-	// $: if ($user && $user.profile == null)
-	// 	$user.profile = {
-	// 		email: $user.email
-	// 	};
 
 	/**
 	 * @type {any[]}
@@ -116,49 +109,51 @@
 					<p>{@html $user?.bio ?? ''}</p>
 				{/if}
 			</div>
-
-			<div>
-				<h3>Connect Account</h3>
-				<div class="register-links">
-					{#if !associatedLogins.some((a) => a.provider === 'itchio')}
-						<button on:click={() => associateLogin(itchioUrl)} class="button"
-							><i class="bi bi-house" />Connect itch.io</button
-						>
-					{/if}
-					{#if !associatedLogins.some((a) => a.provider === 'google')}
-						<button
-							class="button"
-							on:click={() => associateLogin(config.apiBaseUrl + '/connect/google')}
-							><i class="bi bi-google" />Connect Google</button
-						>
-					{/if}
-					{#if !associatedLogins.some((a) => a.provider === 'reddit')}
-						<button
-							class="button"
-							on:click={() => associateLogin(config.apiBaseUrl + '/connect/reddit')}
-							><i class="bi bi-reddit" />Connect Reddit</button
-						>
-					{/if}
+			<hr />
+			<div class="accounts-container">
+				<div>
+					<h3>Connect Account</h3>
+					<div class="register-links">
+						{#if !associatedLogins.some((a) => a.provider === 'itchio')}
+							<button on:click={() => associateLogin(itchioUrl)} class="button"
+								><i class="bi bi-house" />Connect itch.io</button
+							>
+						{/if}
+						{#if !associatedLogins.some((a) => a.provider === 'google')}
+							<button
+								class="button"
+								on:click={() => associateLogin(config.apiBaseUrl + '/connect/google')}
+								><i class="bi bi-google" />Connect Google</button
+							>
+						{/if}
+						{#if !associatedLogins.some((a) => a.provider === 'reddit')}
+							<button
+								class="button"
+								on:click={() => associateLogin(config.apiBaseUrl + '/connect/reddit')}
+								><i class="bi bi-reddit" />Connect Reddit</button
+							>
+						{/if}
+					</div>
 				</div>
-			</div>
-			<div>
-				<h3>Remove Account</h3>
-				<div class="register-links">
-					{#if associatedLogins.some((a) => a.provider === 'itchio')}
-						<button on:click={() => removeLogin('itchio')} class="button"
-							><i class="bi bi-house" />Disconnect itch.io</button
-						>
-					{/if}
-					{#if associatedLogins.some((a) => a.provider === 'google')}
-						<button class="button" on:click={() => removeLogin('google')}
-							><i class="bi bi-google" />Disconnect Google</button
-						>
-					{/if}
-					{#if associatedLogins.some((a) => a.provider === 'reddit')}
-						<button class="button" on:click={() => removeLogin('reddit')}
-							><i class="bi bi-reddit" />Disconnect Reddit</button
-						>
-					{/if}
+				<div>
+					<h3>Remove Account</h3>
+					<div class="register-links">
+						{#if associatedLogins.some((a) => a.provider === 'itchio')}
+							<button on:click={() => removeLogin('itchio')} class="button"
+								><i class="bi bi-house" />Disconnect itch.io</button
+							>
+						{/if}
+						{#if associatedLogins.some((a) => a.provider === 'google')}
+							<button class="button" on:click={() => removeLogin('google')}
+								><i class="bi bi-google" />Disconnect Google</button
+							>
+						{/if}
+						{#if associatedLogins.some((a) => a.provider === 'reddit')}
+							<button class="button" on:click={() => removeLogin('reddit')}
+								><i class="bi bi-reddit" />Disconnect Reddit</button
+							>
+						{/if}
+					</div>
 				</div>
 			</div>
 		</LoggedInContainer>
@@ -184,7 +179,7 @@
 	h1 {
 		margin-bottom: 0.5rem;
 	}
-	h3{
+	h3 {
 		color: var(--highlight-color);
 	}
 	h4 > span:first-of-type {
@@ -199,5 +194,12 @@
 		padding: 0.2rem;
 		outline: 1px solid var(--secondary-color);
 		border-radius: 4px;
+	}
+
+	.accounts-container {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 1rem;
+		padding-top: 1em;		
 	}
 </style>

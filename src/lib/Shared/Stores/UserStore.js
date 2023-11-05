@@ -161,21 +161,28 @@ export const providers = readable([], (set) => {
 	});
 });
 
+/**
+ * Loads the wallets from the server.
+ *
+ * @param {boolean} force - Whether to force the loading of wallets from the server even if they are already stored in the session.
+ * @return {Promise<Array<CW.Wallet>>} An array of wallets.
+ */
 export async function loadWallets(force = false) {
 	if (!force) {
-		const wallets = getSessionValue('wallets');
-		if (wallets.length > 0) return wallets;
+		const _wallets = getSessionValue('wallets');
+		if (_wallets.length > 0) return _wallets;
 	}
 	console.log('updating wallets from server');
-	const token = get(jwt);
+	const _token = getSessionValue('jwt');
 	const response = await fetch(`${config.apiBaseUrl}/chain-wallets/wallets?populate=*`, {
 		headers: {
-			Authorization: `Bearer ${token}`
+			Authorization: `Bearer ${_token}`
 		}
 	});
 	if (response.ok) {
 		const data = await response.json();
-		wallets.set(data.results ?? []);
+		wallets.set(data ?? []);
+		setSessionValue('wallets', data ?? []);
 		return data.results ?? [];
 	} else {
 		return [];
@@ -227,6 +234,7 @@ export async function handleOAuthCallback(provider, token, redirect) {
 			}
 		} else {
 			//Logging in
+			console.log('Logged in', cbData);
 			setSessionValue('ap', false);
 			setSessionValue('jwt', cbData.jwt);
 			setSessionValue('user', cbData.user);

@@ -57,7 +57,7 @@
 
 		const data = await response.json();
 		if (data.error) console.log('Error fetching data', data.error);
-		totalPages = data.meta?.pagination?.pageCount ?? 1;
+		totalPages = data.pagination?.pageCount ?? 1;
 		return data;
 	}
 
