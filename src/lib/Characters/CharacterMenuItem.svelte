@@ -1,19 +1,20 @@
 <script>
+	import DefaultItemResult from '$lib/Shared/Components/DefaultItemResult.svelte';
 
-	import DefaultItemResult from "$lib/Shared/Components/DefaultItemResult.svelte";
+	/**
+	 * @type DC.Character | { attributes: any}
+	 */
+	export let result = { attributes: {} };
+	let specialties = 'Unknown';
+	const temp = result.attributes.specialties?.data ?? result.attributes.specialties ?? [];
 
-    /**
-     * @type DC.Character | { attributes: any}
-     */
-    export let result = { attributes: {}};
-    let specialties = "Unknown";
-    $: if(result.attributes.specialties?.data.length > 0){
-        specialties = result.attributes.specialties?.data.length > 1 ? 'Multiple' : result.attributes.specialties?.data[0].attributes.name;
-    } else {
-        specialties = 'Unknown';
-    }
-
+	$: if (temp.length > 0) {
+		specialties = temp.length > 1 ? 'Multiple' : temp[0].attributes.name;
+	} else {
+		specialties = 'Unknown';
+	}
 </script>
+
 <DefaultItemResult
 	item={result.attributes}
 	subtitle={result.attributes.tokenId ?? 'Unknown'}
@@ -35,8 +36,8 @@
 		row-gap: 0.5rem;
 		margin-block: 0;
 	}
-	
-	.citizen-menu-item-content div{
+
+	.citizen-menu-item-content div {
 		text-align: end;
 	}
 	:global(.menu-item) {
