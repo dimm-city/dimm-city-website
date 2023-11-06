@@ -21,7 +21,7 @@
 </script>
 
 <div class="header">
-	<h1>{$user?.profile?.displayName ?? $user?.username}</h1>
+	<h1>{$user?.displayName}</h1>
 	<!-- svelte-ignore a11y-missing-attribute -->
 	<!-- <p>{@html $profile?.settings?.bio ?? ''}</p> -->
 </div>

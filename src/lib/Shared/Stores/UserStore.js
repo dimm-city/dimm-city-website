@@ -1,4 +1,4 @@
-import { derived, writable } from 'svelte/store';
+import { derived, readable, writable } from 'svelte/store';
 import { getSessionValue, setSessionValue } from '$lib/Shared/Stores/StoreUtils';
 import { config } from '$lib/Shared/config';
 import { get } from 'svelte/store';
@@ -20,6 +20,10 @@ jwt.subscribe((value) => {
 	setSessionValue('jwt', value);
 });
 
+/**
+ * The logged in user.
+ * {@type {import('svelte/store').Writable<DC.User>}}
+ */
 export const user = writable(getSessionValue('user') ?? null);
 user.subscribe((value) => {
 	setSessionValue('user', value);
@@ -31,24 +35,56 @@ user.subscribe((value) => {
  * @return {Promise<void>} - A promise that resolves when the profile is loaded.
  */
 export async function loadProfile() {
-	const token = get(jwt);
-	const p = get(user);
-
-	if (token && p.username == null) {
+	const token = getSessionValue('jwt');
+	if (token) {
 		let result = null;
-		const response = await fetch(`${config.apiBaseUrl}/users/me?fields=*&populate=*`, {
+		const response = await fetch(`${config.apiBaseUrl}/profiles/me?fields=*&populate=*`, {
 			headers: {
 				Authorization: `Bearer ${token}`
 			}
 		});
-		if (response.ok) {
+		if (response.ok && response.status === 200) {
 			result = await response.json();
 			console.log('profile loaded', result);
+			if (result) setSessionValue('user', result);
 		}
-		if (result) user.set(result);
 	}
 }
+/**
+ * @param {string | Location} providerUrl
+ */
+export function associateLogin(providerUrl) {
+	setSessionValue('ap', true);
+	document.location = providerUrl;
+}
+/**
+ *
+ * @param {string} provider
+ */
+export async function removeLogin(provider) {
+	// @ts-ignore
+	const _profile = getSessionValue('user');
+	// @ts-ignore
+	const jwt = getSessionValue('jwt');
 
+	const id = _profile?.users?.find(
+		(/** @type {{ provider: string; }} */ u) => u.provider === provider
+	)?.id;
+	const response = await fetch(config.apiBaseUrl + '/profiles/remove-login/' + id, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: 'Bearer ' + jwt
+		}
+	});
+
+	if (response.ok) {
+		const data = await response.json();
+		console.log('removed login', data);
+		//setSessionValue('user', data.profile);
+		if (user) user.set(data.profile);
+	}
+}
 /**
  * @param {{ email: null; id: any; }} profile
  */
@@ -58,7 +94,7 @@ export async function updateProfile(profile) {
 
 	if (token && profile?.email != null) {
 		let result = null;
-		const response = await fetch(`${config.apiBaseUrl}/dimm-city/profiles/${profile.id}`, {
+		const response = await fetch(`${config.apiBaseUrl}/profiles/${profile.id}`, {
 			method: 'PUT',
 			headers: {
 				'Content-Type': 'application/json',
@@ -115,24 +151,99 @@ export function ownsToken(token) {
 	return result;
 }
 
+export const providers = readable([], (set) => {
+	fetch(`${config.apiBaseUrl}/auth/providers`).then(async (response) => {
+		if (response.ok) {
+			const data = await response.json();
+			set(data);
+			setSessionValue('providers', data);
+		}
+	});
+});
+
+/**
+ * Loads the wallets from the server.
+ *
+ * @param {boolean} force - Whether to force the loading of wallets from the server even if they are already stored in the session.
+ * @return {Promise<Array<CW.Wallet>>} An array of wallets.
+ */
 export async function loadWallets(force = false) {
 	if (!force) {
-		const wallets = getSessionValue('wallets');
-		if (wallets.length > 0) return wallets;
+		const _wallets = getSessionValue('wallets');
+		if (_wallets.length > 0) return _wallets;
 	}
 	console.log('updating wallets from server');
-	const token = get(jwt);
+	const _token = getSessionValue('jwt');
 	const response = await fetch(`${config.apiBaseUrl}/chain-wallets/wallets?populate=*`, {
 		headers: {
-			Authorization: `Bearer ${token}`
+			Authorization: `Bearer ${_token}`
 		}
 	});
 	if (response.ok) {
 		const data = await response.json();
-		wallets.set(data.results ?? []);
+		wallets.set(data ?? []);
+		setSessionValue('wallets', data ?? []);
 		return data.results ?? [];
 	} else {
 		return [];
+	}
+}
+
+/**
+ * @param {string | null} redirect
+ * @param {string} provider
+ * @param {string | null} token
+ */
+export async function handleOAuthCallback(provider, token, redirect) {
+	console.debug('handling oauth callback', provider, token, redirect);
+
+	const callback = await fetch(
+		config.apiBaseUrl + '/auth/' + provider + '/callback?access_token=' + token
+	);
+
+	if (callback.ok && document) {
+		
+		const cbData = await callback.json();
+		const _token = getSessionValue('jwt');
+		const _profile = getSessionValue('user');
+		
+		const isAssociatingProfile = getSessionValue('ap');
+
+		if (isAssociatingProfile === true && _token && _profile) {
+			const secondary_token = cbData.jwt;
+			const secondary_response = await fetch(config.apiBaseUrl + '/profiles/associate-login', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: 'Bearer ' + _token
+				},
+				body: JSON.stringify({
+					secondary_token
+				})
+			});
+			if (secondary_response.ok) {
+				setSessionValue('ap', false);
+				const data = await secondary_response.json();
+				console.log('associated profile', data);
+				setSessionValue('user', data.profile);
+
+				//await loadProfile();
+				document.location = '/profile';
+			} else {
+				console.warn('failed to associate profile');
+			}
+		} else {
+			//Logging in
+			console.log('Logged in', cbData);
+			setSessionValue('ap', false);
+			setSessionValue('jwt', cbData.jwt);
+			setSessionValue('user', cbData.user);
+			await loadProfile();
+			await loadWallets(true);
+			document.location = redirect ?? '/';
+		}
+	} else {
+		console.warn('failed to complete authentication', callback.statusText, await callback.text());
 	}
 }
 

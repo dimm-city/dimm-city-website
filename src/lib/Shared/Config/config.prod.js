@@ -11,6 +11,6 @@ export const config = {
 		'pk_live_51MmHcALeft6siyywYlGfYkkPlnaPrFais0iagFrfJyP9t93HCfjPsSn4KaJ5ZNFavn19uWiKvmZzzbHHt90jG42k00EFozLWPP',
 	defaultSummaryQuery: null,
 	itchio: {
-		client_id: '76509a9dfebe7b260ffc488bac8e73a5'
+		client_id: 'f1dc1c25483b353331f9298d00be612a'
 	}
 };

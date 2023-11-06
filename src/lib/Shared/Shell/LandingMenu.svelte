@@ -40,7 +40,7 @@
 			{#if $loggedIn}
 				<li><a href="/spores">Spores</a></li>
 				<li><a href="/dashboard">Console</a></li>
-				<li><a href="/profile">{$user?.profile?.displayName ?? $user?.username}</a></li>
+				<li><a href="/profile">{$user?.displayName ?? $user?.username}</a></li>
 			{:else}
 				<li><a href="/profile">Profile</a></li>
 			{/if}
