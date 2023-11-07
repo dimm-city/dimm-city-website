@@ -5,11 +5,21 @@
 
 <Shell title="Change Log">
 	<ContentPane scrollable={true}>
+		<h4 class="">Dimm City Console v0.11.0</h4>
+		<ul class="unstyled-list">
+			<li><a href="/console">Console navigation updated</a></li>
+			<li><a href="/profile">Login with Itch.io established</a></li>
+		</ul>
+		<h4 class="">Dimm City Console v0.10.0</h4>
+		<ul class="unstyled-list">
+			<li><a href="/console/races">Sporo data connection added</a></li>
+			<li><a href="/profile">Login with Reddit established</a></li>
+		</ul>
 		<h4 class="">Dimm City Console v0.9.0</h4>
 		<ul class="unstyled-list">
-			<li><a href="/items">Item data connection added</a></li>
+			<li><a href="/console/items">Item data connection added</a></li>
 			<li><a href="/console/dreams">Dream Console created</a></li>
-			<li><a href="/console">Login with Google established</a></li>
+			<li><a href="/profile">Login with Google established</a></li>
 		</ul>
 		<h4 class="">Dimm City Console v0.5.0</h4>
 		<ul class="unstyled-list">
@@ -19,29 +29,29 @@
 		<ul class="unstyled-list">
 			<li><a href="/journal-entries">Journal entries data added</a></li>
 			<li><a href="/">Navigation improved</a></li>
-			<li><a href="/citizens">Citizens are now searchable</a></li>
-			<li><a href="/specialties">Specialties are now searchable</a></li>
+			<li><a href="/console/citizens">Citizens are now searchable</a></li>
+			<li><a href="/console/specialties">Specialties are now searchable</a></li>
 		</ul>
 		<h4 class="">Dimm City Console v0.3.0</h4>
 		<ul class="unstyled-list">
-			<li><a href="/locations">Location data added</a></li>
-			<li><a href="/specialties">Initial specialty data extracted</a></li>
+			<li><a href="/console/locations">Location data added</a></li>
+			<li><a href="/console/specialties">Initial specialty data extracted</a></li>
 		</ul>
 		<h4 class="">Dimm City Console v0.2.0</h4>
 		<ul class="unstyled-list">
 			<li><a href="/console">Op Console</a></li>
 			<li><a href="/console">Sporo Data Recorder</a></li>
-			<li><a href="/citizens">Additional Citizen Data</a></li>
-			<li><a href="/history/prologue-scene-2">More Historical Data Extracted</a></li>
+			<li><a href="/console/citizens">Additional Citizen Data</a></li>
+			<li><a href="/console/history/prologue-scene-2">More Historical Data Extracted</a></li>
 		</ul>
 		<h4 class="">Dimm City Console v0.1.0</h4>
 		<ul class="unstyled-list">
 			<li>
-				<a href="/history/prologue-scene-1">Connection established...</a>
+				<a href="/console/history/prologue-scene-1">Connection established...</a>
 			</li>
-			<li><a href="/citizens">Initial citizen data extracted</a></li>
+			<li><a href="/console/citizens">Initial citizen data extracted</a></li>
 			<li>
-				<a href="/history/introduction">Dimm City Introduction record extracted</a>
+				<a href="/console/history/introduction">Dimm City Introduction record extracted</a>
 			</li>
 		</ul>
 	</ContentPane>
