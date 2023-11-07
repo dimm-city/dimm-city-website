@@ -9,7 +9,7 @@
 		<a href="/" data-augmented-ui="all-hex border" title="home">
 			<i class="bi bi-globe2 fade-in" />
 		</a>
-		<a href="/dashboard" data-augmented-ui="all-hex border" title="dashboard">
+		<a href="/console" data-augmented-ui="all-hex border" title="dashboard">
 			<i class="bi bi-window-dock fade-in" />
 		</a>
 		<a href="/profile" data-augmented-ui="all-hex border" title="profile">
@@ -28,32 +28,32 @@
 	/> -->
 
 	<MenuItem
-		url="/locations"
+		url="/console/locations"
 		icon="bi-map"
 		title="Locations"
 		description="Locations identified in Dimm City"
 	/>
 	<MenuItem
-		url="/citizens"
+		url="/console/citizens"
 		icon="bi-file-person"
 		title="Citizen Files"
 		description="Available citizen files"
 	/>
 	<MenuItem
-		url="/specialties"
+		url="/console/specialties"
 		icon="bi-code"
 		title="Specialties"
 		description="The true skills of the Sporos"
 	/>
-	<MenuItem url="/races" icon="bi-people" title="Races" description="Types of sentient beings" />
+	<MenuItem url="/console/races" icon="bi-people" title="Races" description="Types of sentient beings" />
 	<MenuItem
-		url="/items"
+		url="/console/items"
 		icon="bi-tools"
 		title="Items"
 		description="Search the items of Dimm City"
 	/>
 	<MenuItem
-		url="/dreams"
+		url="/console/dreams"
 		icon="bi-controller"
 		title="Dream Console"
 		description="Dimm City solo campaigns"
@@ -68,7 +68,7 @@
 	<MenuItem
 		icon="bi bi-diagram-3"
 		title="System Map"
-		url="/system-map"
+		url="/console/system-map"
 		description="Map of Dimm City Console"
 	/>
 </HexMenu>

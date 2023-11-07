@@ -308,7 +308,7 @@
 					<!-- <Button on:click={cancel}>skip</Button> -->
 					<!-- <Button on:click={() => }>Complete</Button> -->
 					<a class="aug-button" data-augmented-ui href="/console">Return to Op Console</a>
-					<a class="aug-button" data-augmented-ui href={'/citizens/' + character.tokenId}
+					<a class="aug-button" data-augmented-ui href={'/console/citizens/' + character.tokenId}
 						>Edit Citizen File</a
 					>
 					<!-- <Button url={'/console/characters/import/' + token.tokenId}>Create Citizen File</Button> -->

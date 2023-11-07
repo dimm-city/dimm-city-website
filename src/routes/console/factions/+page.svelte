@@ -9,6 +9,6 @@
 	<SearchPage 
 		initialData={data}
 		endpoint={'/dimm-city/factions'}
-		itemResultBaseUrl="/factions"
+		itemResultBaseUrl="/console/factions"
 		searchPlaceholder="Search dimm city factions" />
 </Shell>

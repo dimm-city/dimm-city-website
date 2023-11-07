@@ -11,7 +11,7 @@
 <Shell title="Items">
 	<SearchPage {endpoint} initialData={data}>
 		<svelte:fragment slot="result" let:result>
-			<MenuItem url={`/items/${result.attributes.slug}`}>
+			<MenuItem url={`/console/items/${result.attributes.slug}`}>
 				<DefaultItemResult
 					icon="bi-tools"
 					subtitle={result.attributes.type}

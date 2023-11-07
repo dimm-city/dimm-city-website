@@ -14,10 +14,10 @@
 				<li>Version: {config.version}</li>
 				<li>Connection Version: {data.version}</li>
 				<li>Connection Status: Weak</li>
-				<li><a href="/citizens">Citizen Files</a>: {data.character}</li>
-				<li><a href="/specialties">Specialties</a>: {data.specialty}</li>
-				<li><a href="/locations">Locations</a>: {data.location}</li>
-				<li><a href="/journal-entries">Journal entries</a>: {data['journal-entry']}</li>
+				<li><a href="/console/citizens">Citizen Files</a>: {data.character}</li>
+				<li><a href="/console/specialties">Specialties</a>: {data.specialty}</li>
+				<li><a href="/console/locations">Locations</a>: {data.location}</li>
+				<li><a href="/console/journal-entries">Journal entries</a>: {data['journal-entry']}</li>
 			</ul>
 		</div>
 		

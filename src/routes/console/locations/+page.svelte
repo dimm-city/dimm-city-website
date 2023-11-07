@@ -6,5 +6,5 @@
 </script>
 
 <Shell title="Locations">
-	<SearchPage {endpoint} initialData={data} itemResultBaseUrl="/locations" />
+	<SearchPage {endpoint} initialData={data} itemResultBaseUrl="/console/locations" />
 </Shell>

@@ -7,7 +7,7 @@
 	export let data;
 </script>
 
-<Shell title={data.attributes?.name} titleUrl="/locations">
+<Shell title={data.attributes?.name} titleUrl="/console/locations">
 	<ContentPane padding={2} scrollable={true}>
 		<div class="location">
 			<Article model={data} />

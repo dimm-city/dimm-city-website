@@ -8,7 +8,7 @@
 	export let data;
 </script>
 
-<Shell title={data.attributes.name} titleUrl="/specialties">
+<Shell title={data.attributes.name} titleUrl="/console/specialties">
 	<ContentPane padding={2} scrollable={true}>
 		<Article model={data} imageAug="tl-clip tr-clip-y br-clip bl-clip-y" />
 	</ContentPane>

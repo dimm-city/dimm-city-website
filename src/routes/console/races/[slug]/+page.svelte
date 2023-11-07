@@ -9,7 +9,7 @@
 	export let data;
 </script>
 
-<Shell title={data.attributes.name} fullscreen={false} titleUrl="/races">
+<Shell title={data.attributes.name} fullscreen={false} titleUrl="/console/races">
 	
 		<RaceView race={data} />
 

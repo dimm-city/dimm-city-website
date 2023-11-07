@@ -15,7 +15,7 @@ const getSystemMap = async () => {
 	_systemMap.pages = [
 		{
 			name: 'Dashboard',
-			slug: '/dashboard',
+			slug: 'console',
 			children: []
 		},
 		// {
@@ -25,29 +25,29 @@ const getSystemMap = async () => {
 		// },
 		{
 			name: 'Citizen Files',
-			slug: 'citizens',
+			slug: 'console/citizens',
 			children: []
 		},
 		{
 			name: 'Locations',
-			slug: 'locations',
+			slug: 'console/locations',
 			children: [] // await getDistricts()
 		},
 		{
 			name: 'Specialties',
-			slug: 'specialties',
+			slug: 'console/specialties',
 			children: [] // await getSpecialties()
 		},
 		{
 			name: 'Races',
-			slug: 'races',
+			slug: 'console/races',
 			children: []
 		},
-		{
-			name: 'Journal Entries',
-			slug: 'journal-entries',
-			children: [] //await getJournalEntries()
-		},
+		// {
+		// 	name: 'Journal Entries',
+		// 	slug: 'console/journal-entries',
+		// 	children: [] //await getJournalEntries()
+		// },
 		// {
 		// 	name: 'Spores',
 		// 	slug: 'spores'
@@ -69,16 +69,15 @@ const getSystemMap = async () => {
 		{
 			name: 'About',
 			slug: 'console/about',
-			children: [
-				{
-					name: 'Change Log',
-					slug: 'change-log'
-				},
-				{
-					name: 'Dependencies and Integrations',
-					slug: 'dependencies'
-				}
-			]
+			children: []
+		},
+		{
+			name: 'Change Log',
+			slug: 'console/about/change-log'
+		},
+		{
+			name: 'Dependencies and Integrations',
+			slug: 'console/about/dependencies'
 		}
 		// {
 		// 	name: 'Historical Record',

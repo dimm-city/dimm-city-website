@@ -13,6 +13,6 @@
 
 <Shell title={data.attributes.name}>
 	<ContentPane padding={0} scrollable={false}>
-		<StoryView story={defaultStory} bind:this={viewer} indexUrl="/stories" />
+		<StoryView story={defaultStory} bind:this={viewer} indexUrl="/console/stories" />
 	</ContentPane>
 </Shell>

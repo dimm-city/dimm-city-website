@@ -9,6 +9,6 @@
 	<SearchPage 
 		initialData={data}
 		endpoint={'/dimm-city/historical-events'}
-		itemResultBaseUrl="/history"
+		itemResultBaseUrl="/console/history"
 		searchPlaceholder="Search dimm city history" />
 </Shell>

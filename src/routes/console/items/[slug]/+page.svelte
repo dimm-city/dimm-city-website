@@ -8,7 +8,7 @@
 	export let data;
 </script>
 
-<Shell title={data?.attributes?.name} titleUrl="/items">
+<Shell title={data?.attributes?.name} titleUrl="/console/items">
 	<ContentPane padding={2} scrollable={true}>
 		<ItemView item={data} />		
 	</ContentPane>

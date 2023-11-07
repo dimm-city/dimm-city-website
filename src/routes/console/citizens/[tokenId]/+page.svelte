@@ -96,7 +96,7 @@
 	}
 </script>
 
-<Shell title={data?.attributes.name} titleUrl="/citizens" fullscreen={true}>
+<Shell title={data?.attributes.name} titleUrl="/console/citizens" fullscreen={true}>
 	{#if data?.id}
 		<Sheet character={data} {isEditing} />
 	{:else}
@@ -134,7 +134,7 @@
 			<a
 				title="print character"
 				target="_blank"
-				href="/citizens/{data.attributes.tokenId}/print"
+				href="/console/citizens/{data.attributes.tokenId}/print"
 				class="aug-button animate__fadeInDownBig"
 				data-augmented-ui=""><i class="bi bi-printer" /></a
 			>

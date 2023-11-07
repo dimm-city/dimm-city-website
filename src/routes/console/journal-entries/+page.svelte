@@ -15,7 +15,7 @@
 		<svelte:fragment slot="result" let:result>
 			<MenuItem
 				icon="bi-book"
-				url={`/journal-entries/${result.attributes.slug}`}
+				url={`/console/journal-entries/${result.attributes.slug}`}
 				title={result.attributes.name ?? 'Unknown'}
 				description={result.attributes.shortDescription}
 			/>

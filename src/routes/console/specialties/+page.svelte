@@ -8,6 +8,6 @@
 	<SearchPage
 		initialData={data}
 		endpoint={'/dimm-city/specialty'}
-		itemResultBaseUrl="/specialties"
+		itemResultBaseUrl="/console/specialties"
 	/>
 </Shell>
