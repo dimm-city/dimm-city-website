@@ -15,9 +15,22 @@ export const getItchIoLoginUrl = () => {
 	return itchioUrl;
 };
 
+/**
+ * The JWT for the logged in user.
+ * {@type {import('svelte/store').Writable<string>}}
+ */
 export const jwt = writable(getSessionValue('jwt') ?? null);
 jwt.subscribe((value) => {
 	setSessionValue('jwt', value);
+});
+
+/**
+ * The profile for the logged in user.
+ * {@type {import('svelte/store').Writable<DC.Profile>}}
+ */
+export const profile = writable(getSessionValue('profile') ?? null);
+profile.subscribe((value) => {
+	setSessionValue('profile', value);
 });
 
 /**
@@ -38,7 +51,7 @@ export async function loadProfile() {
 	const token = getSessionValue('jwt');
 	if (token) {
 		let result = null;
-		const response = await fetch(`${config.apiBaseUrl}/profiles/me?fields=*&populate=*`, {
+		const response = await fetch(`${config.apiBaseUrl}/users/me/profile`, {
 			headers: {
 				Authorization: `Bearer ${token}`
 			}
@@ -46,17 +59,45 @@ export async function loadProfile() {
 		if (response.ok && response.status === 200) {
 			result = await response.json();
 			console.log('profile loaded', result);
-			if (result) setSessionValue('user', result);
+			if (result) profile.set(result);
 		}
 	}
 }
 /**
+ * Begins flow to associate a login with the profile.
  * @param {string | Location} providerUrl
  */
-export function associateLogin(providerUrl) {
+export function requestAssociateLogin(providerUrl) {
 	setSessionValue('ap', true);
 	document.location = providerUrl;
 }
+
+/**
+ * @param {string} primaryToken
+ * @param {string} secondaryToken
+ */
+async function associateLogin(primaryToken, secondaryToken) {
+	const response = await fetch(config.apiBaseUrl + '/profiles/associate-login', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: 'Bearer ' + primaryToken
+		},
+		body: JSON.stringify({
+			secondary_token: secondaryToken
+		})
+	});
+	if (response.ok) {
+		setSessionValue('ap', false);
+		const data = await response.json();
+		console.log('associated profile', data);
+		profile.set(data.profile);
+		document.location = '/profile';
+	} else {
+		console.warn('failed to associate profile');
+	}
+}
+
 /**
  *
  * @param {string} provider
@@ -81,39 +122,26 @@ export async function removeLogin(provider) {
 	if (response.ok) {
 		const data = await response.json();
 		console.log('removed login', data);
-		//setSessionValue('user', data.profile);
-		if (user) user.set(data.profile);
+		profile.set(data.profile);
 	}
 }
 /**
- * @param {{ email: null; id: any; }} profile
+ * @param {{ email: null; id: any; }} data
  */
-export async function updateProfile(profile) {
+export async function updateProfile(data) {
 	const token = get(jwt);
-	const userValue = get(user);
 
-	if (token && profile?.email != null) {
-		let result = null;
-		const response = await fetch(`${config.apiBaseUrl}/profiles/${profile.id}`, {
+	if (token && data?.email != null) {
+		const response = await fetch(`${config.apiBaseUrl}/profiles/${data.id}?populate=*`, {
 			method: 'PUT',
 			headers: {
 				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`
 			},
-			body: JSON.stringify({ data: profile })
+			body: JSON.stringify({ data: data })
 		});
 		if (response.ok) {
-			result = await response.json();
-			console.log('profile updated', result);
-		}
-		if (result) {
-			user.set({
-				...userValue,
-				profile: {
-					id: result.data.id,
-					...result.data.attributes
-				}
-			});
+			await loadProfile();			
 		}
 	}
 }
@@ -164,25 +192,20 @@ export const providers = readable([], (set) => {
 /**
  * Loads the wallets from the server.
  *
- * @param {boolean} force - Whether to force the loading of wallets from the server even if they are already stored in the session.
  * @return {Promise<Array<CW.Wallet>>} An array of wallets.
  */
-export async function loadWallets(force = false) {
-	if (!force) {
-		const _wallets = getSessionValue('wallets');
-		if (_wallets.length > 0) return _wallets;
-	}
-	console.log('updating wallets from server');
+export async function loadWallets() {
+	console.debug('updating wallets from server');
 	const _token = getSessionValue('jwt');
-	const response = await fetch(`${config.apiBaseUrl}/chain-wallets/wallets?populate=*`, {
+	const response = await fetch(`${config.apiBaseUrl}/chain-wallets/wallets?force=1&populate=*`, {
 		headers: {
 			Authorization: `Bearer ${_token}`
 		}
 	});
 	if (response.ok) {
 		const data = await response.json();
-		wallets.set(data ?? []);
-		setSessionValue('wallets', data ?? []);
+		wallets.set(data?.results ?? []);
+		//setSessionValue('wallets', data ?? []);
 		return data.results ?? [];
 	} else {
 		return [];
@@ -190,6 +213,7 @@ export async function loadWallets(force = false) {
 }
 
 /**
+ * Handles the OAuth callback while logging in.
  * @param {string | null} redirect
  * @param {string} provider
  * @param {string | null} token
@@ -202,45 +226,17 @@ export async function handleOAuthCallback(provider, token, redirect) {
 	);
 
 	if (callback.ok && document) {
-		
-		const cbData = await callback.json();
-		const _token = getSessionValue('jwt');
-		const _profile = getSessionValue('user');
-		
+		const data = await callback.json();
+		const _jwt = getSessionValue('jwt');
+		const _user = getSessionValue('user');
+
 		const isAssociatingProfile = getSessionValue('ap');
 
-		if (isAssociatingProfile === true && _token && _profile) {
-			const secondary_token = cbData.jwt;
-			const secondary_response = await fetch(config.apiBaseUrl + '/profiles/associate-login', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: 'Bearer ' + _token
-				},
-				body: JSON.stringify({
-					secondary_token
-				})
-			});
-			if (secondary_response.ok) {
-				setSessionValue('ap', false);
-				const data = await secondary_response.json();
-				console.log('associated profile', data);
-				setSessionValue('user', data.profile);
-
-				//await loadProfile();
-				document.location = '/profile';
-			} else {
-				console.warn('failed to associate profile');
-			}
+		if (isAssociatingProfile === true && _jwt && _user) {
+			await associateLogin(_jwt, data.jwt);
 		} else {
 			//Logging in
-			console.log('Logged in', cbData);
-			setSessionValue('ap', false);
-			setSessionValue('jwt', cbData.jwt);
-			setSessionValue('user', cbData.user);
-			await loadProfile();
-			await loadWallets(true);
-			document.location = redirect ?? '/';
+			await login(data, redirect);
 		}
 	} else {
 		console.warn('failed to complete authentication', callback.statusText, await callback.text());
@@ -250,6 +246,23 @@ export async function handleOAuthCallback(provider, token, redirect) {
 export const logout = () => {
 	jwt.set(null);
 	user.set(null);
-
-	setSessionValue('wallets', []);
+	profile.set(null);
+	wallets.set(null);
 };
+
+/**
+ * Logs in the user with the provided data and redirects to the specified URL.
+ *
+ * @param {{ jwt: string; user: any; }} data - The login data.
+ * @param {string | null} redirect - The URL to redirect to after successful login (optional).
+ * @return {Promise<void>} - A promise that resolves once the login process is complete.
+ */
+async function login(data, redirect) {
+	console.log('Logged in', data);
+	setSessionValue('ap', false);
+	jwt.set(data.jwt);
+	user.set(data.user);
+	await loadProfile();
+	await loadWallets();
+	document.location = redirect ?? '/';
+}

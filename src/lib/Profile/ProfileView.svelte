@@ -1,6 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
-	import { user, jwt, logout, loadWallets } from '$lib/Shared/Stores/UserStore';
+	import { profile, jwt, logout, loadWallets } from '$lib/Shared/Stores/UserStore';
 	import PagedResults from '../Shared/Components/PagedResults.svelte';
 	import MenuItem from '../Shared/Components/Menu/MenuItem.svelte';
 	import CharacterMenuItem from '$lib/Characters/CharacterMenuItem.svelte';
@@ -21,7 +21,7 @@
 </script>
 
 <div class="header">
-	<h1>{$user?.displayName}</h1>
+	<h1>{$profile?.displayName}</h1>
 	<!-- svelte-ignore a11y-missing-attribute -->
 	<!-- <p>{@html $profile?.settings?.bio ?? ''}</p> -->
 </div>

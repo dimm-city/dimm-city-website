@@ -1,5 +1,5 @@
 <script>
-	import { loggedIn, user } from '../Stores/UserStore';
+	import { loggedIn,  profile } from '../Stores/UserStore';
 
 	let checked = false;
 
@@ -40,7 +40,7 @@
 			{#if $loggedIn}
 				<li><a href="/spores">Spores</a></li>
 				<li><a href="/console">Console</a></li>
-				<li><a href="/profile">{$user?.displayName ?? $user?.username}</a></li>
+				<li><a href="/profile">{$profile?.displayName ?? "Profile"}</a></li>
 			{:else}
 				<li><a href="/profile">Profile</a></li>
 			{/if}

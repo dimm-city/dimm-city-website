@@ -58,9 +58,9 @@ export function getLocalValue(key) {
  * Set the value in the local storage.
  * @param {string} key - The key to store the value.
  * @param {*} data - The data to be stored.
- * @param {number} expires - The expiration time of the data.
+ * @param {number|null} expires - The expiration time of the data.
  */
-export function setLocalValue(key, data, expires) {
+export function setLocalValue(key, data, expires = null) {
 	if (data !== undefined && browser && localStorage) {
 		if (expires) localStorage.setItem(key, JSON.stringify({ expires, data }));
 		else localStorage.setItem(key, JSON.stringify(data));

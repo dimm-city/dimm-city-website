@@ -1,4 +1,6 @@
 <script>
+// @ts-nocheck
+
 	import { getNotificationsContext } from 'svelte-notifications';
 	import StepWizard from 'svelte-step-wizard';
 	import Select from 'svelte-select';
@@ -56,6 +58,7 @@
 	}
 
 	async function processPayment(nextStep) {
+		//TODO: use profile id instead of user id
 		if (selectedRelease) {
 			isSaving = true;
 			metadata = {
@@ -109,7 +112,15 @@
 		try {
 			const response = await createCharacter(result.detail.paymentIntent.id);
 
-			loadWallets(true);
+			loadWallets();
+			addNotification({
+				id: `${new Date().getTime()}-${Math.floor(Math.random() * 9999)}`,
+				position: 'bottom-right',
+				heading: 'character created',
+				type: 'success',
+				removeAfter: 3000,
+				text: 'your character was created'
+			});
 
 			character = {
 				tokenId: response.token.slug,

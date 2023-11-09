@@ -1,7 +1,7 @@
 <script>
 	import { config } from '$lib/Shared/config';
 	import LandingShell from '$lib/Shared/Shell/LandingShell.svelte';
-	import {  loggedIn, user } from '$lib/Shared/Stores/UserStore';
+	import {  loggedIn, profile } from '$lib/Shared/Stores/UserStore';
 	import { setSessionValue } from '$lib/Shared/Stores/StoreUtils';
 	import { onMount } from 'svelte';
 	import { marked } from 'marked';
@@ -29,7 +29,7 @@
 			{#if $loggedIn}
 				<div class="logged-in fade-in">
 					<section>
-						<h2>Welcome {$user?.profile?.displayName ?? $user?.username}, fellow Dreamer</h2>
+						<h2>Welcome {$profile?.displayName}, fellow Dreamer</h2>
 						{@html marked.parse(data.loggedIn?.attributes.content ?? '')}
 					</section>
 				</div>

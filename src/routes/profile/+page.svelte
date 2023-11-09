@@ -4,9 +4,9 @@
 	import LandingShell from '$lib/Shared/Shell/LandingShell.svelte';
 	import {
 		logout,
-		user,
+		 profile,
 		updateProfile,
-		associateLogin,
+		requestAssociateLogin,
 		removeLogin,
 		getItchIoLoginUrl
 	} from '$lib/Shared/Stores/UserStore';
@@ -25,23 +25,23 @@
 	let _temp;
 	async function saveChanges() {
 		//Send to API
-		await updateProfile($user);
+		await updateProfile($profile);
 		editing = false;
 	}
 	function startEditing() {
-		_temp = JSON.stringify($user);
+		_temp = JSON.stringify($profile);
 		editing = true;
 	}
 	function cancelEditing() {
 		console.log('cancel');
-		$user = JSON.parse(_temp);
+		$profile = JSON.parse(_temp);
 		editing = false;
 	}
 
 	/**
 	 * @type {any[]}
 	 */
-	$: associatedLogins = $user?.users ?? [];
+	$: associatedLogins = $profile?.users ?? [];
 </script>
 
 <LandingShell title="Profile">
@@ -55,9 +55,9 @@
 				<div class="top-row">
 					{#if editing}
 						<!-- svelte-ignore a11y-missing-content -->
-						<h1 contenteditable="true" bind:innerText={$user.displayName} />
+						<h1 contenteditable="true" bind:innerText={$profile.displayName} />
 					{:else}
-						<h1>{$user.displayName}</h1>
+						<h1>{$profile.displayName}</h1>
 					{/if}
 					<div class="profile-menu">
 						{#if editing}
@@ -84,17 +84,17 @@
 				<h4>
 					<span>email:</span>
 					{#if editing}
-						<span contenteditable="true" bind:innerText={$user.email} />
+						<span contenteditable="true" bind:innerText={$profile.email} />
 					{:else}
-						<span>{$user?.email ?? 'Missing email address'}</span>
+						<span>{$profile?.email ?? 'Missing email address'}</span>
 					{/if}
 				</h4>
-				{#if $user?.email?.endsWith('strapi.io')}
+				{#if $profile?.email?.endsWith('strapi.io')}
 					<small class="warning">Please update your email address</small>
 				{/if}
 				<h4>
 					<Toggle
-						bind:checked={$user.notifications}
+						bind:checked={$profile.notifications}
 						label="Receive Dimm City News"
 						enabled={editing}
 					/>
@@ -103,10 +103,10 @@
 			<div>
 				<h4><span>bio:</span></h4>
 				{#if editing}
-					<p contenteditable="true" bind:innerHTML={$user.bio} />
+					<p contenteditable="true" bind:innerHTML={$profile.bio} />
 				{:else}
 					<!-- svelte-ignore a11y-missing-attribute -->
-					<p>{@html $user?.bio ?? ''}</p>
+					<p>{@html $profile?.bio ?? ''}</p>
 				{/if}
 			</div>
 			<hr />
@@ -115,21 +115,21 @@
 					<h3>Connect Account</h3>
 					<div class="register-links">
 						{#if !associatedLogins.some((a) => a.provider === 'itchio')}
-							<button on:click={() => associateLogin(itchioUrl)} class="button"
+							<button on:click={() => requestAssociateLogin(itchioUrl)} class="button"
 								><i class="bi bi-house" />Connect itch.io</button
 							>
 						{/if}
 						{#if !associatedLogins.some((a) => a.provider === 'google')}
 							<button
 								class="button"
-								on:click={() => associateLogin(config.apiBaseUrl + '/connect/google')}
+								on:click={() => requestAssociateLogin(config.apiBaseUrl + '/connect/google')}
 								><i class="bi bi-google" />Connect Google</button
 							>
 						{/if}
 						{#if !associatedLogins.some((a) => a.provider === 'reddit')}
 							<button
 								class="button"
-								on:click={() => associateLogin(config.apiBaseUrl + '/connect/reddit')}
+								on:click={() => requestAssociateLogin(config.apiBaseUrl + '/connect/reddit')}
 								><i class="bi bi-reddit" />Connect Reddit</button
 							>
 						{/if}
