@@ -37,6 +37,7 @@
 	 */
 	function selectSkill(skill) {
 		selectedSkill = skill;
+		console.log(selectedSkill);
 		// Highlight children logic...
 	}
 
@@ -48,17 +49,19 @@
 	}
 </script>
 
-<div bind:this={canvas} class="skill-tree-container">	
+<div bind:this={canvas} class="skill-tree-container">
 	{#if skills?.length > 0}
-		{#each skills as skill, s (skill.id)}		
-			<button 
-				on:click={() => selectSkill(skill)}
-				style="grid-row: {skill.attributes.level + 1}; grid-column: {skill.attributes.path + 1};"
-			>{skill.id}</button>
-			
+		{#each skills as skill, s (skill.id)}
+			<div class="skill-cell" style="grid-row: {skill.attributes.level ?? 1}; grid-column: {skill.attributes.path ??
+						3};">
+				<button
+					on:click={() => selectSkill(skill)}
+					>{skill.attributes.name}</button
+				>
+			</div>
 		{/each}
 	{/if}
-</div>	
+</div>
 {#if selectedSkill}
 	<!-- Modal for displaying skill details -->
 	<div class="modal">
@@ -70,24 +73,25 @@
 {/if}
 
 <style>
-	.skill-tree-container{
+	.skill-tree-container {
 		width: 90vw;
 		height: 90vh;
+		padding: 1em;
 		position: relative;
 		display: grid;
+		gap: 2em;
 		grid-template-columns: repeat(5, 1fr);
 		grid-template-rows: repeat(5, 1fr);
 		background-image: url('/assets/imgs/landing-bg.png');
 		background-size: cover;
 		background-repeat: no-repeat;
+		border: thin var(--fourth-accent) solid;
+
 	}
-	.skill-tree-container button {
-		border: 1px solid var(--fourth-accent);
-		position: absolute;
-		top: 10px;
-		height: 200px;
-		width: 200px;
-		aspect-ratio: 1;
+	.skill-tree-container div {
+		border: 1px solid var(--secondary-accent);	
+		height: 100%;
+		background-color: var(--secondary-accent-muted);
 	}
 	/* Futuristic/Cyberpunk styling */
 	.skill-tree {
