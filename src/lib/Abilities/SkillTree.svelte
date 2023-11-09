@@ -50,9 +50,10 @@
 
 <div bind:this={canvas} class="skill-tree-container">	
 	{#if skills?.length > 0}
-		{#each skills.filter((s) => s.attributes.parents?.data?.length < 1) as skill, s (skill.id)}		
+		{#each skills as skill, s (skill.id)}		
 			<button 
 				on:click={() => selectSkill(skill)}
+				style="grid-row: {skill.attributes.level + 1}; grid-column: {skill.attributes.path + 1};"
 			>{skill.id}</button>
 			
 		{/each}
@@ -74,6 +75,8 @@
 		height: 90vh;
 		position: relative;
 		display: grid;
+		grid-template-columns: repeat(5, 1fr);
+		grid-template-rows: repeat(5, 1fr);
 		background-image: url('/assets/imgs/landing-bg.png');
 		background-size: cover;
 		background-repeat: no-repeat;
