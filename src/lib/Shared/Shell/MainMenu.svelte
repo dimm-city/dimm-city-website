@@ -121,6 +121,9 @@
 		transition: transform 0.1s ease-in-out;
 	}
 	@media (max-width: 767px) {
+		.menu-toolbar a{
+			padding: 2rem;
+		}
 		:global(.main-menu .dropdown-content.visible) {
 			transform: translateY(0) translateX(0) !important;
 			bottom: 3rem !important;
