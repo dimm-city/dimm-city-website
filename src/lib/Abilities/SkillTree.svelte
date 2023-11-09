@@ -75,7 +75,8 @@
 		position: relative;
 		display: grid;
 		background-image: url('/assets/imgs/landing-bg.png');
-		background-size: contain;
+		background-size: cover;
+		background-repeat: no-repeat;
 	}
 	.skill-tree-container button {
 		border: 1px solid var(--fourth-accent);

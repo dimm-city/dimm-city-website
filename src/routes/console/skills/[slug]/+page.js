@@ -10,7 +10,11 @@ export const load = async (params) => {
     const data =  await loadEntityPageFromStrapi(params, 'dimm-city/skill-trees');
  
     const skills = await search(fetch, 'dimm-city/abilities', {
-        
+        filters: {
+            skillTrees: {
+                id: data.id
+            }
+        },
         populate: "*"
     })
 
