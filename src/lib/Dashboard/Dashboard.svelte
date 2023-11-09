@@ -24,7 +24,7 @@
 <div class="container">
 	<!-- <div class="hero">
 		<div class="hero-title">
-			<h4><a href="/journal-entries">Founder's Notes</a></h4>
+			<h4><a href="/console/journal-entries">Founder's Notes</a></h4>
 			<hr />
 		</div>
 		<div class="hero-body">
@@ -36,11 +36,11 @@
 		<hr />
 	</div>
 	<div class="col1 col" data-augmented-ui>
-		<h4><a href="/citizens">Citizens</a></h4>
+		<h4><a href="/console/citizens">Citizens</a></h4>
 		<hr />
 		<div class="list-container">
-			<List data={citizens} viewAllLink="/citizens">
-				<ListItemLink slot="item" let:item url="/citizens/{item.attributes.tokenId}" text={item.attributes.name} />
+			<List data={citizens} viewAllLink="/console/citizens">
+				<ListItemLink slot="item" let:item url="/console/citizens/{item.attributes.tokenId}" text={item.attributes.name} />
 			</List>
 		</div>
 	</div>
@@ -48,8 +48,8 @@
 		<h4><a href="/specialties">Specialties</a></h4>
 		<hr />
 		<div class="list-container">
-			<List data={specialties} viewAllLink="/specialties">
-				<ListItemLink slot="item" let:item url="/specialties/{item.attributes.slug}" text={item.attributes.name} />
+			<List data={specialties} viewAllLink="/console/specialties">
+				<ListItemLink slot="item" let:item url="/console/specialties/{item.attributes.slug}" text={item.attributes.name} />
 			</List>
 		</div>
 	</div>
@@ -57,13 +57,13 @@
 		<h4><a href="/locations">Locations</a></h4>
 		<hr />
 		<div class="list-container">
-			<List data={districts} viewAllLink="/locations">
-				<ListItemLink slot="item" let:item url="/locations/{item.attributes.slug}" text={item.attributes.name} />
+			<List data={districts} viewAllLink="/console/locations">
+				<ListItemLink slot="item" let:item url="/console/locations/{item.attributes.slug}" text={item.attributes.name} />
 			</List>
 		</div>
 	</div>
 	<!-- <div class="footer">
-		<a href="/system-map" class="small-menu-item" data-augmented-ui>&lt;system map&gt;</a> 
+		<a href="/console/system-map" class="small-menu-item" data-augmented-ui>&lt;system map&gt;</a> 
 	</div>-->
 </div>
 
