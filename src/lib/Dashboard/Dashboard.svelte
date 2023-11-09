@@ -54,7 +54,7 @@
 		</div>
 	</div>
 	<div class="col3 col" data-augmented-ui>
-		<h4><a href="/locations">Locations</a></h4>
+		<h4><a href="/console/locations">Locations</a></h4>
 		<hr />
 		<div class="list-container">
 			<List data={districts} viewAllLink="/console/locations">
