@@ -1,4 +1,3 @@
-
 /**
  * @typedef {Object} DC.Config
  * @property {string} version - The version of the application
@@ -13,8 +12,6 @@
  * @property {string} itchio.client_id - client id for app
  * @property {?Strapi.APIRequestParams} defaultSummaryQuery - The default summary query parameters
  */
-
-
 
 /**
  * @typedef {Object} DC.BaseEntity
@@ -35,11 +32,10 @@
  * @property {Strapi.Media} attributes.mainModel.data - The data of the main model of the item
  */
 
-
 /**
  * @typedef DC.SummaryItem
  * @property {number} id
- * @property {Object} attributes 
+ * @property {Object} attributes
  * @property {string} attributes.name
  * @property {string} attributes.slug
  * @property {?string} attributes.type
@@ -58,6 +54,10 @@
  * @property {boolean} cybernetic - The boolean flag indicating if the ability is cybernetic
  * @property {string} description - Description of the ability
  * @property {string} shortDescription - Short description of the ability
+ * @property {Object} parents - Description of the ability
+ * @property {DC.Ability[]} parents.data - Description of the ability
+ * @property {Object} children - Description of the ability
+ * @property {DC.Ability[]} children.data - Description of the ability
  * @property {string} createdAt - The timestamp of ability creation
  * @property {string} updatedAt - The timestamp of the last ability update
  * @property {string} publishedAt - The timestamp when the ability was published
@@ -91,7 +91,7 @@
  * @property {string} attributes.backstory - The backstory of the character
  * @property {string} attributes.beliefs - The beliefs of the character
  * @property {string} attributes.flaws - The flaws of the character
- * @property {string} attributes.dreams - The dreams of the character 
+ * @property {string} attributes.dreams - The dreams of the character
  * @property {string} attributes.clothing - The clothing of the character
  * @property {string} attributes.movementDescription - The movement description of the character
  * @property {string} attributes.imageUrl - The image URL of the character
@@ -127,7 +127,6 @@
  * @property {Strapi.Media} attributes.mainModel.data - Main model of the entity
  * @property {Object} attributes.token - The token of the character
  */
-
 
 /**
  * @typedef {Object} DC.CharacterRelease
@@ -281,7 +280,6 @@
  * @property {Strapi.Media} attributes.mainAudio.data - Main audio of the journal.
  */
 
-
 /**
  * @typedef {DC.BaseEntity} DC.Location
  * @property {Array<DC.Race>} attributes.races.data - Information about races in the location
@@ -330,6 +328,7 @@
  * @property {string} attributes.name
  * @property {string} attributes.slug
  * @property {string} attributes.shortDescription
+ * @property {?string} attributes.customCss
  * @property {string} attributes.description
  * @property {string} attributes.createdAt
  * @property {string} attributes.updatedAt
@@ -339,7 +338,6 @@
  * @property {{data: Strapi.Media}} attributes.mainVideo
  * @property {{data: DC.Ability[]}} attributes.abilities
  */
-
 
 /**
  * @typedef {Object} DC.Specialty
@@ -386,7 +384,6 @@
  * @property {Array<{id: number, value: string}>} attributes.twists
  * @property {Array<*>} attributes.localizations
  */
-
 
 /**
  * @typedef {Object} DC.World
