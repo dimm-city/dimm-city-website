@@ -2,6 +2,7 @@
 	import './skill-trees.css';
 	import { onMount, onDestroy } from 'svelte';
 	import panzoom from 'panzoom';
+	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 
 	/**
 	 * @type {import("panzoom").PanZoom}
@@ -15,7 +16,13 @@
 
 	onMount(() => {
 		if (canvas === null) return;
-		panzoomInstance = panzoom(canvas);
+		panzoomInstance = panzoom(canvas, {
+			maxZoom: 1,
+			minZoom: 0.75,
+			zoomSpeed: 0.1,
+			initialZoom: 0.8,
+			smoothScroll: true
+		});
 		skills = data.attributes.abilities.data;
 		console.log(skills, data);
 	});
@@ -32,41 +39,46 @@
 	 */
 	let skills = [];
 
-	/** @type DC.Ability|null */
+	/** @type DC.Ability | null */
 	let selectedSkill;
 
 	/**
 	 * @param {DC.Ability | null} skill
 	 */
 	function selectSkill(skill) {
-		selectedSkill = skill;
-		console.log(selectedSkill);
-		// Highlight children logic...
-
 		//remove 'unlocked' class from all elements
 		const skillCells = document.querySelectorAll('.skill-cell');
 		skillCells.forEach((cell) => {
 			cell.classList.remove('unlocked', 'selected');
 		});
-		//add 'selected' class to the selected element
-		if (selectedSkill) {
-			const skillCell = document.querySelector(
-				`.skill-cell[data-skill-index="${selectedSkill.id}"]`
-			);
-			if (skillCell) {
-				skillCell.classList.add('selected');
-			}
-		}
+		if (selectedSkill?.id == skill?.id) {
+			selectedSkill = null;
+			return;
+		} else {
+			selectedSkill = skill;
+			console.log(selectedSkill);
+			// Highlight children logic...
 
-		//add unlocked class to children
-		if (selectedSkill) {
-			const children = selectedSkill.attributes.children?.data ?? [];
-			children.forEach((child) => {
-				const skillCell = document.querySelector(`.skill-cell[data-skill-index="${child.id}"]`);
+			//add 'selected' class to the selected element
+			if (selectedSkill) {
+				const skillCell = document.querySelector(
+					`.skill-cell[data-skill-index="${selectedSkill.id}"]`
+				);
 				if (skillCell) {
-					skillCell.classList.add('unlocked');
+					skillCell.classList.add('selected');
 				}
-			});
+			}
+
+			//add unlocked class to children
+			if (selectedSkill) {
+				const children = selectedSkill.attributes.children?.data ?? [];
+				children.forEach((child) => {
+					const skillCell = document.querySelector(`.skill-cell[data-skill-index="${child.id}"]`);
+					if (skillCell) {
+						skillCell.classList.add('unlocked');
+					}
+				});
+			}
 		}
 	}
 
@@ -78,35 +90,37 @@
 	}
 </script>
 
-<div>
-	<style id="page-style"></style>
+<div class="skill-tree-page">
+	<ContentPane padding={0} scrollable={false}>
+		<style id="page-style"></style>
+		<div bind:this={canvas} class="skill-tree-container {data.attributes.slug}">
+			{#if skills?.length > 0}
+				{#each skills as skill, s (skill.id)}
+					<div
+						class="skill-cell {skill.attributes.slug}"
+						data-skill-index={skill.id}
+						data-augmented-ui="tl-clip tr-clip-x br-clip bl-clip both"
+					>
+						<div class="skill-cell-inner {skill.id ? 'unlocked' : 'locked'}">
+							<button on:click={() => selectSkill(skill)}>{skill.attributes.name}</button>
 
-	<div bind:this={canvas} class="skill-tree-container {data.attributes.slug}">
-		{#if selectedSkill}<div class="details-panel">
-				<p>{selectedSkill.attributes.description}</p>
+							{#if selectedSkill == skill}
+								<p>{selectedSkill.attributes.shortDescription}</p>
+							{/if}
+						</div>
+					</div>
+				{/each}
+			{/if}
+		</div>
+	</ContentPane>
+	<div class="bottom-panel" class:shown={selectedSkill}>
+		{#if selectedSkill}
+			<p>{selectedSkill.attributes.description}</p>
+			<div class="toolbar">
+				<button on:click={() => (selectedSkill = null)}>Close</button>
 			</div>
 		{/if}
-		{#if skills?.length > 0}
-			{#each skills as skill, s (skill.id)}
-				<div
-					class="skill-cell {skill.attributes.slug}"
-					data-skill-index={skill.id}
-					data-augmented-ui="tl-clip tr-clip-x br-clip bl-clip both"
-				>
-					<button on:click={() => selectSkill(skill)}>{skill.attributes.name}</button>
-				</div>
-			{/each}
-		{/if}
 	</div>
-	{#if selectedSkill}
-		<!-- Modal for displaying skill details -->
-		<div class="modal">
-			<h2>{selectedSkill.attributes.name}</h2>
-			<p>{selectedSkill.attributes.description}</p>
-			<!-- Close button -->
-			<button on:click={() => (selectedSkill = null)}>Close</button>
-		</div>
-	{/if}
 </div>
 
 <style>
@@ -115,9 +129,15 @@
 		--skill-cell-bg-color: var(--secondary-accent-muted);
 		--skill-cell-border-color: var(--secondary-accent);
 	}
+	.skill-tree-page {
+		display: grid;
+		grid-template-rows: 1fr min-content;
+		max-height: 92dvh;
+		row-gap: 1rem;
+	}
 	.skill-tree-container {
-		width: 90vw;
-		height: 90vh;
+		width: 1920px;
+		height: 1080px;
 		padding: 1em;
 		position: relative;
 		display: grid;
@@ -127,26 +147,38 @@
 		background-image: var(--skill-tree-bg-image);
 		background-size: cover;
 		background-repeat: no-repeat;
+
 		/* border: thin var(--fourth-accent) solid; */
 	}
-	.details-panel {
-		position: absolute;
-		top: -250px;
-		width: 50ch;
-		height: 250px;
-		padding: 1rem;
-		color: var(--secondary-accent);
-		background-color: var(--fourth-accent);
+	.bottom-panel {
+		height: 0;
+		z-index: 1000;
+		background-color: var(--secondary-accent);
+		color: var(--light);
+		transition: height 0.3s ease-in-out, padding-bottom 0.3s ease-in-out,
+			margin-top 0.3s ease-in-out;
+		padding-bottom: 0rem;
+		padding-inline: 1rem;
 	}
+	.bottom-panel.shown {
+		height: 250px;
+		padding-bottom: 5rem;
+	}
+
 	.skill-cell {
+		position: relative;
 		width: 15ch;
 		border: 1px solid var(--skill-cell-border-color);
-		height: 100%;
+		/* height: 100%; */
 		background-color: var(--skill-cell-bg-color);
 		transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+		height: min-content;
 	}
 	.skill-cell.selected {
 		--skill-cell-bg-color: var(--fourth-accent);
+	}
+	.skill-cell p {
+		padding-inline: 0.5rem;
 	}
 	.skill-cell.unlocked {
 		--skill-cell-bg-color: var(--third-accent);
