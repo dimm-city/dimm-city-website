@@ -3,6 +3,7 @@
 	import { onMount, onDestroy } from 'svelte';
 	import panzoom from 'panzoom';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
+	import { marked } from 'marked';
 
 	/**
 	 * @type {import("panzoom").PanZoom}
@@ -21,7 +22,8 @@
 			minZoom: 0.75,
 			zoomSpeed: 0.1,
 			initialZoom: 0.8,
-			smoothScroll: true
+			smoothScroll: true,
+			excludeClass: 'skill-cell'
 		});
 		skills = data.attributes.abilities.data;
 		console.log(skills, data);
@@ -96,40 +98,46 @@
 		<div bind:this={canvas} class="skill-tree-container {data.attributes.slug}">
 			{#if skills?.length > 0}
 				{#each skills as skill, s (skill.id)}
-					<div
+					<button
+						on:click={() => selectSkill(skill)}
 						class="skill-cell {skill.attributes.slug}"
 						data-skill-index={skill.id}
 						data-augmented-ui="tl-clip tr-clip-x br-clip bl-clip both"
 					>
 						<div class="skill-cell-inner {skill.id ? 'unlocked' : 'locked'}">
-							<button on:click={() => selectSkill(skill)}>{skill.attributes.name}</button>
+							<h1 class="skill-button">{skill.attributes.name}</h1>
 
-							{#if selectedSkill == skill}
-								<p>{selectedSkill.attributes.shortDescription}</p>
-							{/if}
+							<p>{@html marked.parse(skill?.attributes.shortDescription ?? '')}</p>
 						</div>
-					</div>
+					</button>
 				{/each}
 			{/if}
 		</div>
 	</ContentPane>
-	<div class="details-panel" class:shown={selectedSkill}>
-		{#if selectedSkill}
-			<div class="content">
-				<p>{selectedSkill?.attributes.description}</p>
+	<div
+		class="details-panel"
+		class:shown={selectedSkill}
+		class:hidden={!selectedSkill}
+		data-augmented-ui="tl-clip tr-clip br-clip bl-clip both"
+	>
+		<div class="content">
+			{#if selectedSkill}
+				<h1>{selectedSkill.attributes.name}</h1>
+				<p>{@html marked.parse(selectedSkill?.attributes.description ?? '')}</p>
 				<div class="toolbar">
 					<button on:click={() => (selectedSkill = null)}>Close</button>
 				</div>
-			</div>
-		{/if}
+			{/if}
+		</div>
 	</div>
 </div>
 
 <style>
 	:root {
 		--skill-tree-bg-image: url('/assets/imgs/landing-bg.png');
-		--skill-cell-bg-color: var(--secondary-accent-muted);
-		--skill-cell-border-color: var(--secondary-accent);
+
+		--skill-cell-bg-color: var(--dark);
+		--skill-cell-border-color: var(--light);
 	}
 	.skill-tree-page {
 		position: relative;
@@ -150,6 +158,7 @@
 		background-image: var(--skill-tree-bg-image);
 		background-size: cover;
 		background-repeat: no-repeat;
+		background-position: center;
 
 		/* border: thin var(--fourth-accent) solid; */
 	}
@@ -158,49 +167,106 @@
 		right: 0;
 		top: 1rem;
 		bottom: 1rem;
-		width: 0;
 		z-index: 1000;
+		width: 0;
+
+		display: flex;
+		flex-direction: column;
+		overflow-y: auto;
+
+		max-height: 100%;
+		visibility: collapse;
+
 		background-color: var(--secondary-accent);
 		color: var(--light);
-		transition: width 0.1s ease-in-out, padding 0.1s ease-in-out, visibility 0.2s ease-in-out 0.2s;
-		padding-bottom: 0rem;
-		visibility: collapse;
+		/* transition: width 0.1s ease-in-out, padding 0.1s ease-in-out, visibility 0.2s ease-in-out 0.2s; */
+
+		--aug-inlay-bg: var(--dark);
+		--aug-border-bg: var(--fourth-accent);
+		padding: 1rem;
+	}
+	.details-panel h1 {
+		text-align: center;
+		color: var(--fourth-accent);
 	}
 	.details-panel.shown {
 		visibility: visible;
-		width: 20ch;
-		padding-inline: 1rem;
-		transition: width 0.2s ease-in-out, padding 0.2s ease-in-out;
+		opacity: 1;
+		width: 30ch;
+		transition: width 0.2s ease-in-out, visibility 0.2s ease-in-out 0s, opacity 0.1s ease-in-out;
+		transition-delay: 0s;
+	}
+	.details-panel.hidden {
+		visibility: collapse;
+		opacity: 0;
+		width: 3ch;
+		transition: width 0.2s ease-in-out, visibility 0.2s ease-in-out 0.3s, opacity 0.3s ease-in-out;
 	}
 	.details-panel .content {
+		display: grid;
+		min-height: 100%;
+		grid-template-rows: min-content 1fr min-content;
+		overflow: auto;
 		opacity: 0;
-		transition: none;
-		transition-delay: 0s;
+		transition: opacity 0.3s ease-in-out;
+		transition-delay: 0.3s;
 	}
 	.details-panel.shown .content {
 		opacity: 1;
-		transition: opacity 0.3s ease-in-out;
-		transition-delay: 0.3s;
 	}
 
 	.skill-cell {
 		position: relative;
-		width: 15ch;
+		width: 20ch;
 		border: 1px solid var(--skill-cell-border-color);
 		background-color: var(--skill-cell-bg-color);
-		transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+		--aug-border-bg: var(--skill-cell-border-color);
+		transition: all 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 		height: min-content;
+		padding-bottom: 0.5rem;
+		--aug-border-all: 1px;
+		--aug-tr1: 7px;
+		text-align: center;
+		cursor: pointer;
+		margin: 0;
+		padding: 0;
+		display: block;
 	}
+
 	.skill-cell.selected {
+		--aug-border-all: 2px;
+		--aug-tr1: 0px;
 		--skill-cell-bg-color: var(--fourth-accent);
+		--skill-cell-border-color: var(--secondary-accent);
+		color: var(--dark);
+		box-shadow: inset 3px -1px 20px 7px var(--skill-cell-border-color);
+	}
+	.skill-cell h1 {
+		width: 100%;
+		padding: 0.5rem 1rem;
+		background-color: rgba(17, 17, 17, 0.75);
+		border: 0;
+		color: var(--third-accent);
+		font-size: 1rem;
+		font-family: var(--main-font-family);
+		border: 1px var(--third-accent) solid;
+		margin: 0;
 	}
 	.skill-cell p {
 		padding-inline: 0.5rem;
 	}
 	.skill-cell.unlocked {
-		--skill-cell-bg-color: var(--third-accent);
+		
+		--skill-cell-bg-color: var(--secondary-accent);
+		--skill-cell-border-color: var(--fourth-accent);
+		color: var(--dark);
+
+		box-sizing: border-box;
+
 		/*add glowing effect around unlocked cells*/
-		box-shadow: 0 0 20px var(--third-accent);
+		box-shadow: inset 3px -1px 20px 7px var(--skill-cell-border-color);
+
+		transition: box-shadow 0.3s ease-in-out;
 	}
 	/* Futuristic/Cyberpunk styling */
 	.skill-tree {

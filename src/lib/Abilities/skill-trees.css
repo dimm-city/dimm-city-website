@@ -2,65 +2,42 @@
         --content-container-background: black;
     }
 
-    .skill-tree-container.the-fifth-profession {
+    .the-fifth-profession {
         --skill-tree-bg-image: url('/assets/skill-trees/leaves.png');
-        background-position: center;
     }
-
-    .skill-cell.unlocked {
-        border: 2px solid var(--primary-accent);
-
-    }
-
-    .skill-cell {
-        --aug-border-all: 1px;
-    }
-
 
 
     .spit-flame {
         grid-row: 1;
         grid-column: 3;
-        right: -110px;
+        right: -194px;
         top: 115px;
-        --aug-t: 0px;
-        /* --aug-tl: 10px;
-        --aug-tl-inest1: var(--aug-tr1);
-        --aug-tl-inest2: var(--aug-tr2);
-        --aug-tl-extend1: var(--aug-tr1);
-        --aug-tl-extend2: var(--aug-tr2);
-        --aug-tr1: 10px;
-        --aug-tr2: 10px;
-        --aug-tr-inest1: var(--aug-tr1);
-        --aug-tr-inest2: var(--aug-tr2);
-        --aug-tr-extend1: var(--aug-tr1);
-        --aug-tr-extend2: var(--aug-tr2); */
     }
 
     .bodycover {
         grid-row: 2;
         grid-column: 2;
-        right: 60px;
-        top: 150px;
+        right: -39px;
+        top: 185px;
     }
 
     .blitz {
         grid-row: 3;
         grid-column: 4;
-        right: 310px;
+        right: 395px;
         top: -32px;
     }
 
     .strategic-withdrawal {
         grid-row: 4;
         grid-column: 4;
-        right: -130px;
-        top: -72px;
+        right: -151px;
+        top: -61px;
     }
 
     .executive-protection {
         grid-row: 5;
         grid-column: 3;
-        right: -200px;
-        top: -85px;
+        right: -305px;
+        top: -96px;
     }
