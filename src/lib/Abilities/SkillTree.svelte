@@ -21,10 +21,17 @@
 			maxZoom: 1,
 			minZoom: 0.75,
 			zoomSpeed: 0.1,
-			initialZoom: 0.8,
+			initialZoom: 0.75,
 			smoothScroll: true,
-			excludeClass: 'skill-cell'
+			bounds: true,
+			boundsPadding: 0.85,
+			onTouch: function (e) {
+				// `e` - is current touch event.
+
+				return false; // tells the library to not preventDefault.
+			}
 		});
+
 		skills = data.attributes.abilities.data;
 		console.log(skills, data);
 	});
@@ -47,7 +54,8 @@
 	/**
 	 * @param {DC.Ability | null} skill
 	 */
-	function selectSkill(skill) {
+	function selectSkill(e, skill) {
+		e.preventDefault();
 		//remove 'unlocked' class from all elements
 		const skillCells = document.querySelectorAll('.skill-cell');
 		skillCells.forEach((cell) => {
@@ -99,7 +107,7 @@
 			{#if skills?.length > 0}
 				{#each skills as skill, s (skill.id)}
 					<button
-						on:click={() => selectSkill(skill)}
+						on:click={(e) => selectSkill(e, skill)}
 						class="skill-cell {skill.attributes.slug}"
 						data-skill-index={skill.id}
 						data-augmented-ui="tl-clip tr-clip-x br-clip bl-clip both"
@@ -140,6 +148,7 @@
 		--skill-cell-border-color: var(--light);
 	}
 	.skill-tree-page {
+		--content-panel-aspect-ratio: auto;
 		position: relative;
 		display: grid;
 		grid-template-columns: 1fr min-content;
@@ -153,7 +162,7 @@
 		position: relative;
 		display: grid;
 		gap: 2em;
-		grid-template-columns: repeat(5, 1fr);
+		grid-template-columns: repeat(5background-color, 1fr);
 		grid-template-rows: repeat(5, 1fr);
 		background-image: var(--skill-tree-bg-image);
 		background-size: cover;
@@ -256,7 +265,6 @@
 		padding-inline: 0.5rem;
 	}
 	.skill-cell.unlocked {
-		
 		--skill-cell-bg-color: var(--secondary-accent);
 		--skill-cell-border-color: var(--fourth-accent);
 		color: var(--dark);
@@ -290,5 +298,13 @@
 	}
 	.locked {
 		fill: #555;
+	}
+
+	@media (max-width: 767px){
+		.skill-tree-page .content-container {
+			--content-panel-aspect-ratio: 9/16;
+			
+			/* aspect-ratio: 3/4; */
+		}
 	}
 </style>

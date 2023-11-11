@@ -3,14 +3,35 @@
 	export let scrollable: boolean = false;
 </script>
 
+<div class="content-container">
+	<div
+		class="content-wrapper"
+		data-augmented-ui="bl-clip-inset br-clip-inset tl-2-clip-xy tr-2-clip-xy l-rect r-rect t-clip"
+	>
+		<div class="content-slot padding-{padding}" class:scrollable>
+			<slot />
+		</div>
+	</div>
+	<div class="content-decoration-glow">
+		<div
+			aria-hidden="true"
+			class="augmented-content-decoration"
+			data-augmented-ui="bl-clip-inset br-clip-inset tl-2-clip-xy tr-2-clip-xy l-rect r-rect t-clip"
+		/>
+	</div>
+</div>
+
 <style>
+	:root{
+		--content-panel-aspect-ratio: unset;
+	}
 	.content-decoration-glow {
 		position: absolute;
 		top: 0;
 		bottom: 0;
 		left: 0;
 		right: 0;
-		filter: var(--content-decoration-filter) ;
+		filter: var(--content-decoration-filter);
 		pointer-events: none;
 	}
 	.augmented-content-decoration {
@@ -45,9 +66,9 @@
 		position: relative;
 		min-height: 100%;
 		width: 100%;
-		overflow: hidden;	
+		overflow: hidden;
 	}
-	
+
 	.content-container .content-wrapper {
 		display: block;
 		width: 100%;
@@ -55,7 +76,7 @@
 		margin: auto;
 		overflow: hidden;
 		filter: var(--content-container-filter);
-		background: var(--content-container-background); 
+		background: var(--content-container-background);
 		color: var(--light);
 		scrollbar-color: var(--third-accent) var(--secondary-accent);
 		scrollbar-width: thin;
@@ -67,7 +88,7 @@
 		overflow: hidden;
 		padding: 0 3rem;
 	}
-	.content-slot.padding-0{
+	.content-slot.padding-0 {
 		padding: 0.5rem !important;
 	}
 	.content-slot.scrollable {
@@ -75,7 +96,6 @@
 	}
 	.content-wrapper::-webkit-scrollbar {
 		color: var(--secondary-accent);
-
 	}
 
 	/* https://css-tricks.com/custom-scrollbars-in-webkit/ */
@@ -83,49 +103,31 @@
 		width: 0.35rem; /* width of the entire scrollbar */
 	}
 
-	.padding-1{
-			padding: 1.5rem !important;
-		}
+	.padding-1 {
+		padding: 1.5rem !important;
+	}
 
 	@media all and (max-width: 767px), (max-aspect-ratio: 0.74) {
+		:root{
+			--content-panel-aspect-ratio: 3/4;
+		}
 		.content-container {
 			position: relative;
 			height: 100%;
 			width: 100%;
-			aspect-ratio: 3/4;
+			aspect-ratio: var(--content-panel-aspect-ratio);
 		}
 	}
 
 	@media (max-width: 750px) {
-	
 		.augmented-content-decoration {
 			--aug-border-all: 0.25vh;
 		}
-		.padding-1{
+		.padding-1 {
 			padding: 1rem !important;
 		}
-		.padding-3{
+		.padding-3 {
 			padding: 0.3rem !important;
 		}
 	}
-
-	
 </style>
-
-<div class="content-container">
-	<div
-		class="content-wrapper"
-		data-augmented-ui="bl-clip-inset br-clip-inset tl-2-clip-xy tr-2-clip-xy l-rect r-rect t-clip"
-	>
-		<div class="content-slot padding-{padding}" class:scrollable>
-			<slot />
-		</div>
-	</div>
-	<div class="content-decoration-glow">
-		<div
-			aria-hidden="true"
-			class="augmented-content-decoration"
-			data-augmented-ui="bl-clip-inset br-clip-inset tl-2-clip-xy tr-2-clip-xy l-rect r-rect t-clip"
-		/>
-	</div>
-</div>
