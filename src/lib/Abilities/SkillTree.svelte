@@ -113,11 +113,13 @@
 			{/if}
 		</div>
 	</ContentPane>
-	<div class="bottom-panel" class:shown={selectedSkill}>
+	<div class="details-panel" class:shown={selectedSkill}>
 		{#if selectedSkill}
-			<p>{selectedSkill.attributes.description}</p>
-			<div class="toolbar">
-				<button on:click={() => (selectedSkill = null)}>Close</button>
+			<div class="content">
+				<p>{selectedSkill?.attributes.description}</p>
+				<div class="toolbar">
+					<button on:click={() => (selectedSkill = null)}>Close</button>
+				</div>
 			</div>
 		{/if}
 	</div>
@@ -130,8 +132,9 @@
 		--skill-cell-border-color: var(--secondary-accent);
 	}
 	.skill-tree-page {
+		position: relative;
 		display: grid;
-		grid-template-rows: 1fr min-content;
+		grid-template-columns: 1fr min-content;
 		max-height: 92dvh;
 		row-gap: 1rem;
 	}
@@ -150,26 +153,40 @@
 
 		/* border: thin var(--fourth-accent) solid; */
 	}
-	.bottom-panel {
-		height: 0;
+	.details-panel {
+		position: absolute;
+		right: 0;
+		top: 1rem;
+		bottom: 1rem;
+		width: 0;
 		z-index: 1000;
 		background-color: var(--secondary-accent);
 		color: var(--light);
-		transition: height 0.3s ease-in-out, padding-bottom 0.3s ease-in-out,
-			margin-top 0.3s ease-in-out;
+		transition: width 0.1s ease-in-out, padding 0.1s ease-in-out, visibility 0.2s ease-in-out 0.2s;
 		padding-bottom: 0rem;
-		padding-inline: 1rem;
+		visibility: collapse;
 	}
-	.bottom-panel.shown {
-		height: 250px;
-		padding-bottom: 5rem;
+	.details-panel.shown {
+		visibility: visible;
+		width: 20ch;
+		padding-inline: 1rem;
+		transition: width 0.2s ease-in-out, padding 0.2s ease-in-out;
+	}
+	.details-panel .content {
+		opacity: 0;
+		transition: none;
+		transition-delay: 0s;
+	}
+	.details-panel.shown .content {
+		opacity: 1;
+		transition: opacity 0.3s ease-in-out;
+		transition-delay: 0.3s;
 	}
 
 	.skill-cell {
 		position: relative;
 		width: 15ch;
 		border: 1px solid var(--skill-cell-border-color);
-		/* height: 100%; */
 		background-color: var(--skill-cell-bg-color);
 		transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 		height: min-content;
