@@ -69,6 +69,9 @@
  * @typedef {Object} DC.Ability
  * @property {number} id - Unique ID of the ability
  * @property {DC.AbilityAttributes} attributes - Detailed properties of the ability
+ * @property {boolean} selected - The boolean flag indicating if the ability is selected in the UI
+ * @property {boolean} unlocked - The boolean flag indicating if the ability is locked
+ * @property {boolean} available - The boolean flag indicating if the ability is disabled
  */
 
 /**

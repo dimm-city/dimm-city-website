@@ -7,7 +7,7 @@
     }
 
 
-    .spit-flame {
+   .spit-flame {
         grid-row: 1;
         grid-column: 3;
         right: -194px;
@@ -40,4 +40,29 @@
         grid-column: 3;
         right: -305px;
         top: -96px;
+    } 
+
+    /* .spit-flame {
+        grid-row: 1;
+        grid-column: 3;
     }
+
+    .bodycover {
+        grid-row: 2;
+        grid-column: 3;
+    }
+
+    .blitz {
+        grid-row: 3;
+        grid-column: 3;
+    }
+
+    .strategic-withdrawal {
+        grid-row: 4;
+        grid-column: 3;
+    }
+
+    .executive-protection {
+        grid-row: 5;
+        grid-column: 3;
+    } */
