@@ -101,7 +101,7 @@
 </script>
 
 <div class="skill-tree-page">
-	<ContentPane padding={0} scrollable={false}>
+	<ContentPane padding={0} scrollable={true}>
 		<style id="page-style"></style>
 		<div bind:this={canvas} class="skill-tree-container {data.attributes.slug}">
 			{#if skills?.length > 0}
@@ -122,20 +122,28 @@
 			{/if}
 		</div>
 	</ContentPane>
-	<div
-		class="details-panel"
-		class:shown={selectedSkill}
-		class:hidden={!selectedSkill}
-		data-augmented-ui="tl-clip tr-clip br-clip bl-clip both"
-	>
+	<div class="details-panel" data-augmented-ui="tl-clip tr-clip br-clip bl-clip both">
 		<div class="content">
 			{#if selectedSkill}
-				<h1>{selectedSkill.attributes.name}</h1>
+				<h1><i class="bi bi-icon-name"></i> {selectedSkill.attributes.name}</h1>
 				<p>{@html marked.parse(selectedSkill?.attributes.description ?? '')}</p>
 				<div class="toolbar">
 					<button on:click={() => (selectedSkill = null)}>Close</button>
 				</div>
+			{:else}
+				<h1><i class="bi bi-icon-name"></i> Default Skill Tree Information</h1>
+				<p>Default description...</p>
 			{/if}
+		</div>
+	</div>
+	<div class="bottom-toolbar">
+		<div class="left-group">
+			<button>Button 1</button>
+			<button>Button 2</button>
+		</div>
+		<div class="right-group">
+			<button>Button 3</button>
+			<button>Button 4</button>
 		</div>
 	</div>
 </div>
