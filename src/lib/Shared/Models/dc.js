@@ -72,6 +72,9 @@
  * @property {boolean} selected - The boolean flag indicating if the ability is selected in the UI
  * @property {boolean} unlocked - The boolean flag indicating if the ability is locked
  * @property {boolean} available - The boolean flag indicating if the ability is disabled
+ * @property {boolean} acquired - The boolean flag indicating if the ability has been acquired by the character
+ * @property {number} level - The of the ability in the matrix
+ * @property {number} path - The path of the ability in the matrix
  */
 
 /**

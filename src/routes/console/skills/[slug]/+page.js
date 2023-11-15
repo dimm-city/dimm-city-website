@@ -1,4 +1,4 @@
-import { loadEntityPageFromStrapi, search } from '$lib/Shared/SvelteStrapi';
+import { loadEntityPageFromStrapi } from '$lib/Shared/SvelteStrapi';
 
 /**
  *
@@ -6,23 +6,26 @@ import { loadEntityPageFromStrapi, search } from '$lib/Shared/SvelteStrapi';
  * @returns {Promise<any>}
  */
 export const load = async (params) => {
-	const { fetch } = params;
-    const data =  await loadEntityPageFromStrapi(params, 'dimm-city/skill-trees');
- 
-    const skills = await search(fetch, 'dimm-city/abilities', {
+    const data =  await loadEntityPageFromStrapi(params, 'dimm-city/skill-trees', {
         filters: {
-            skillTrees: {
-                id: data.id
+            slug: {
+                $eq: params.params.slug
             }
         },
-        populate: "*"
-    })
-
-    console.log(skills);
-    if(!data.attributes.abilities)
-        data.attributes.abilites = {};
-    
-    data.attributes.abilities.data = skills.data;
+        populate: {
+            abilities: {
+                populate: {
+                    children: {
+                        fields: ['id']
+                    },
+                    parents: {
+                        fields: ['id']
+                    }
+                }
+            }
+        }
+    });
+ 
     console.log(data);
     return data;
 };

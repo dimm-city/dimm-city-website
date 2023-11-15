@@ -1,89 +1,74 @@
 <script>
 	import { marked } from 'marked';
 	import './skill-trees.css';
-	import { onMount, onDestroy } from 'svelte';
-
-	onMount(() => {});
 
 	/** @type DC.Ability */
 	export let data;
-	export let available = false;
-	// export let unlocked = false;
-	// export let selected = false;
-	// export let available = false;
-
-	// $: if (data.selected) {
-	//     console.log('selected');
-	// 	data.attributes.children.data.forEach((child) => {
-	// 		child.unlocked = true;
-	// 	});
-	// 	data.attributes.children.data = [...data.attributes.children.data];
-	// }
-	// class:unlocked={data.unlocked}}
-	// class:available={data.available}
 </script>
-<div class="skin-cell-container  {data.attributes.slug}" 
-	class:selected={data.selected}>
-    
-<button
-	on:click
-	class="skill-cell"
-	class:selected={data.selected}
-	class:available
-	data-skill-index={data.id}
-	data-augmented-ui="tl-clip tr-clip-x br-clip bl-clip both"
->
-	<div class="aug-border" />
-	<div class="skill-cell-inner {data.id ? 'unlocked' : 'locked'}">
-		<!-- <div class="top-toolbar">
-			<i class="bi bi-braces" /></div> -->
-		<div class="header">
-			<h1 class="skill-button">{data.attributes.name}</h1>
-		</div>
-		<div class="skill-description">
-			{@html marked.parse(data?.attributes.shortDescription ?? '')}
-		</div>
-		<div class="bottom-toolbar">
-			<div class="left-group">AP: {data.attributes.ap}</div>
-			<div class="right-group" />
-		</div>
-	</div>
-</button>
 
+<div class="skin-cell-container {data.attributes.slug}" class:selected={data.selected}>
+	<button
+		on:click
+		class="skill-cell"
+		class:selected={data.selected}
+		class:unlocked={data.unlocked}
+		class:available={data.available}
+		data-skill-index={data.id}
+		data-augmented-ui="tl-clip tr-clip-x br-clip bl-clip both"
+	>
+		<div class="aug-border" />
+		<div class="skill-cell-inner">
+			<!-- <div class="top-toolbar">
+			<i class="bi bi-braces" /></div> -->
+			<div class="header">
+				<h1 class="skill-button">{data.attributes.name}</h1>
+			</div>
+			<div class="skill-description">
+				{@html marked.parse(data?.attributes.shortDescription ?? '')}
+			</div>
+			<div class="bottom-toolbar">
+				<div class="left-group">AP: {data.attributes.ap}</div>
+				<div class="right-group">
+					<i class="bi" class:bi-check={data.acquired} class:bi-x={!data.acquired}></i>
+					<i class="bi" class:bi-unlock={data.unlocked} class:bi-lock={!data.unlocked}></i>					
+				</div>
+			</div>
+		</div>
+	</button>
 </div>
+
 <style>
 	:root {
 		--skill-cell-bg-color: var(--dark);
 		--skill-cell-border-color: var(--light);
+		--skill-cell-width: 250px;
+		--skill-cell-height: 175px;
 	}
 
-    .skin-cell-container {
-
+	.skin-cell-container {
 		position: relative;
-		width: 200px;
-		height: 175px;
-        
-    }
+		width: var(--skill-cell-width);
+		height: var(--skill-cell-height);
+	}
 
-    .skin-cell-container:before {
-
+	.skin-cell-container:before {
 		position: absolute;
-        content: ' ';
-        top: 0;
-        left: 0;
-		width: 200px;
-		height: 175px;
-        
-        box-shadow:  3px -1px 20px 2px var(--skill-cell-border-color);
-         filter: blur(15px);
-		transition: box-shadow 0.3s ease-in-out;
-    }
+		content: ' ';
+		top: 0;
+		left: 0;
+		width: var(--skill-cell-width);
+		height: var(--skill-cell-height);
 
-    .skin-cell-container.selected:before {
-		box-shadow: 1px -1px 75px 33px var(--skill-cell-border-color);  
-    }
+		box-shadow: 3px -1px 20px 2px var(--skill-cell-border-color);
+		filter: blur(15px);
+		transition: box-shadow 0.3s ease-in-out;
+	}
+
+	.skin-cell-container.selected:before {
+		box-shadow: 1px -1px 75px 33px var(--skill-cell-border-color);
+	}
 	.aug-border {
-        content: ' ';
+		content: ' ';
 		position: absolute;
 		top: 0;
 		left: 0;
@@ -92,7 +77,7 @@
 		box-sizing: border-box;
 
 		/* add glowing effect around cells */
-		box-shadow: inset 3px -1px 20px 7px var(--skill-cell-border-color);   
+		box-shadow: inset 3px -1px 20px 7px var(--skill-cell-border-color);
 		transition: box-shadow 0.3s ease-in-out;
 
 		z-index: -1;
@@ -102,8 +87,9 @@
 		--aug-border-all: 1px;
 	}
 	.skill-cell {
-		width: 200px;
-		height: 175px;
+		
+		width: var(--skill-cell-width);
+		height: var(--skill-cell-height);
 		border: 1px solid var(--skill-cell-border-color);
 		background-color: var(--skill-cell-bg-color);
 		--aug-border-bg: var(--skill-cell-border-color);
@@ -116,10 +102,10 @@
 		margin: 0;
 		padding: 0;
 
-        box-sizing: border-box;
+		box-sizing: border-box;
 
 		/* add glowing effect around cells */
-		box-shadow:  3px -1px 20px 7px var(--skill-cell-border-color);   
+		box-shadow: 3px -1px 20px 7px var(--skill-cell-border-color);
 		transition: box-shadow 0.3s ease-in-out;
 	}
 
@@ -178,21 +164,20 @@
 		box-sizing: border-box;
 
 		/*add glowing effect around unlocked cells*/
-		box-shadow:  3px -1px 20px 7px var(--skill-cell-border-color);
+		box-shadow: 3px -1px 20px 7px var(--skill-cell-border-color);
 
 		transition: box-shadow 0.3s ease-in-out;
 	}
-    .bottom-toolbar {
+	.bottom-toolbar {
 		display: flex;
 		justify-content: space-between;
-		padding-bottom: .5rem;
-        padding-inline: 1rem;
+		padding-bottom: 0.75rem;
+		padding-inline: 1rem;
 	}
 
 	.left-group,
 	.right-group {
 		display: flex;
-		gap: .25rem;
+		gap: 0.25rem;
 	}
-
 </style>

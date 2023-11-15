@@ -4,8 +4,8 @@
 	import './skill-trees.css';
 	import { onMount, onDestroy } from 'svelte';
 	import panzoom from 'panzoom';
-	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import { marked } from 'marked';
+	import { writable } from 'svelte/store';
 
 	/**
 	 * @type {import("panzoom").PanZoom}
@@ -16,6 +16,32 @@
 	 * @type {HTMLElement | SVGElement | null}
 	 */
 	let canvas;
+
+	// Function to get the parent of an item
+	/**
+	 * @param {DC.Ability} item
+	 */
+	function getParent(item) {
+		if (item.attributes.parents.data.length > 0) {
+			// Return the parent item using the item map
+			return data.attributes.abilities.data.find(
+				(i) => i.id === item.attributes.parents.data[0].id
+			);
+		}
+		return null;
+	}
+
+	// Function to count the number of parent levels of an item
+	/**
+	 * @param {DC.Ability} item
+	 */
+	function countParentLevels(item, count = 0) {
+		let parent = getParent(item);
+		if (parent) {
+			return countParentLevels(parent, count + 1);
+		}
+		return count;
+	}
 
 	onMount(() => {
 		if (canvas === null) return;
@@ -34,8 +60,24 @@
 			}
 		});
 
-		skills = data.attributes.abilities.data;
-		console.log(skills, data);
+		// Add the ability level
+		data.attributes.abilities.data.forEach((ability) => {
+			ability.level = countParentLevels(ability) + 1;
+		});
+
+		// Add the path
+		for (let index = 1; index <= 5; index++) {
+			let path = data.attributes.abilities.data
+				.filter((ability) => ability.level == index)
+				.reduce((a, b) => a + b.path, 0);
+			data.attributes.abilities.data
+				.filter((ability) => ability.level == index && ability.path == 0)
+				.forEach((a) => {
+					a.path = path;
+					path++;
+				});
+		}
+		skills.set(data.attributes.abilities.data);
 	});
 
 	onDestroy(() => {
@@ -46,12 +88,58 @@
 	export let data;
 
 	/**
-	 * @type {DC.Ability[]}
+	 * @type {import('svelte/store').Writable<DC.Ability[]>}
 	 */
-	let skills = [];
+	let skills = writable([]);
 
 	/** @type DC.Ability | null */
 	let selectedSkill;
+
+	let advancedMode = false;
+
+	/**
+	 * @param {DC.Ability[]} values
+	 * @param {DC.Ability} skill
+	 */
+	function updateMatrix(values, skill) {
+		if (advancedMode) {
+			advancedUpdate(values, skill);
+		} else {
+			simpleUpdate(values, skill);
+		}
+	}
+
+	/**
+	 * @param {DC.Ability[]} values
+	 * @param {DC.Ability} skill
+	 */
+	function simpleUpdate(values, skill) {
+		values.forEach((s) => {
+			s.selected = s === skill;
+			s.unlocked = false;
+			s.available = false;
+		});
+		
+		// Get the max level of a skill that has been acquired
+		let maxLevel = Math.max(...values
+			.filter((s) => s.acquired).map((s) => s.level)) + 1;
+
+			
+
+		values
+			.filter((s) => s.level <= maxLevel)
+			.forEach((s) => {
+				s.available = true;
+				s.unlocked = true;
+			});
+	}
+	/**
+	 * @param {DC.Ability[]} values
+	 * @param {DC.Ability} skill
+	 */
+	function advancedUpdate(values, skill) {
+		throw new Error('Function not implemented.');
+	}
 
 	/**
 	 * @param {DC.Ability | null} skill
@@ -59,42 +147,47 @@
 	 */
 	function selectSkill(e, skill) {
 		e.preventDefault();
-		const skillCells = document.querySelectorAll('.skill-cell');
-		skillCells.forEach((cell) => {
-			cell.classList.remove('unlocked', 'selected');
-		});
-		skills.forEach((s) => {
-			s.selected = false;
-		});
-		if (skill) {
-			skill.selected = !skill.selected;
-			const children = skill.attributes.children?.data ?? [];
-			children.forEach((child) => {
-				child.available = true;
-				const skillCell = document.querySelector(`.skill-cell[data-skill-index="${child.id}"]`);
-				if (skillCell) {
-					skillCell.classList.add('unlocked');
-				}
-			});
+		selectedSkill = skill;
+		skills.update((values) => {
+			if (skill == null) {
+				values.forEach((s) => {
+					s.selected = false;
+				});
+			} else {
+				updateMatrix(values, skill);
+			}
 
-			selectedSkill = skill;
-			console.log(selectedSkill);
-		} else {
-			selectedSkill = null;
-		}
-		skills = [...skills];
+			return values;
+		});
+		console.log($skills);
 	}
-
 	/**
-	 * @param {any} parent
+	 * @param {DC.Ability} skill
 	 */
-	function gainSkill(parent) {
-		// Unlocking children logic...
-		parent.unlocked = true;
-		parent.attributes.children.data.forEach((child) => {
-			child.available = true;
+	function gainSkill(skill) {
+		skills.update((values) => {
+			const value = values.find((s) => s.id === skill.id);
+			if (value) {
+				value.acquired = true;
+				updateMatrix(values, skill);
+			}
+			return values;
 		});
-		parent.attributes.children.data = [...parent.attributes.children.data];
+	}
+	/**
+	 * @param {DC.Ability | null} skill
+	 */
+	function toggleSkill(skill) {
+		if (skill == null) return;
+
+		skills.update((values) => {
+			const value = values.find((s) => s.id === skill.id);
+			if (value) {
+				value.acquired = !value.acquired;
+				updateMatrix(values, skill);
+			}
+			return values;
+		});
 	}
 </script>
 
@@ -105,9 +198,11 @@
 		data-augmented-ui="bl-clip-inset br-clip-inset tl-2-clip-xy tr-2-clip-xy l-rect r-rect t-clip both"
 	>
 		<div bind:this={canvas} class="skill-tree-container {data.attributes.slug}">
-			{#if skills?.length > 0}
-				{#each skills as skill, s (skill.id)}
-					<SkillTreeCard data={skill} on:click={(e) => selectSkill(e, skill)} />
+			{#if $skills?.length > 0}
+				{#each $skills as skill, s (skill.id)}
+					<div class="matrix-cell" style="grid-row: {skill.level}; grid-column: {skill.path};">
+						<SkillTreeCard data={skill} on:click={(e) => selectSkill(e, skill)} />
+					</div>
 				{/each}
 			{/if}
 		</div>
@@ -120,7 +215,7 @@
 		</div>
 		<div class="right-group">
 			<button>View Details</button>
-			<button on:click={() => gainSkill(selectedSkill)}>Gain Skill</button>
+			<button on:click={() => toggleSkill(selectedSkill)}>Toggle Skill</button>
 		</div>
 	</div>
 </div>
@@ -184,6 +279,11 @@
 
 		/* border: thin var(--fourth-accent) solid; */
 	}
+	.matrix-cell {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
 	.details-panel {
 		position: absolute;
 		right: -3ch;
@@ -239,20 +339,6 @@
 	}
 	.details-panel.shown .content {
 		opacity: 1;
-	}
-
-	/* Futuristic/Cyberpunk styling */
-	.skill-tree {
-		background-color: transparent;
-		color: var(--third-accent);
-		/* #0ff; */
-		border: 2px solid var(--secondary-accent);
-		height: 100%;
-		width: 100%;
-	}
-	.skill {
-		border: 1px solid var(--third-accent);
-		border-radius: 50%;
 	}
 
 	.bottom-toolbar {
