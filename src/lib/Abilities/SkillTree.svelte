@@ -63,6 +63,9 @@
 		// Add the ability level
 		data.attributes.abilities.data.forEach((ability) => {
 			ability.level = countParentLevels(ability) + 1;
+			if(ability.level == 1) {
+				ability.unlocked = true;
+			}
 		});
 
 		// Add the path
@@ -96,6 +99,7 @@
 	let selectedSkill;
 
 	let advancedMode = false;
+	let showDetails = false;
 
 	/**
 	 * @param {DC.Ability[]} values
@@ -116,7 +120,7 @@
 	function simpleUpdate(values, skill) {
 		values.forEach((s) => {
 			s.selected = s === skill;
-			s.unlocked = false;
+			s.unlocked = s.level == 1;
 			s.available = false;
 		});
 		
@@ -161,19 +165,7 @@
 		});
 		console.log($skills);
 	}
-	/**
-	 * @param {DC.Ability} skill
-	 */
-	function gainSkill(skill) {
-		skills.update((values) => {
-			const value = values.find((s) => s.id === skill.id);
-			if (value) {
-				value.acquired = true;
-				updateMatrix(values, skill);
-			}
-			return values;
-		});
-	}
+
 	/**
 	 * @param {DC.Ability | null} skill
 	 */
@@ -214,7 +206,7 @@
 			<button>Button 2</button>
 		</div>
 		<div class="right-group">
-			<button>View Details</button>
+			<button on:click={() => (showDetails = !showDetails)}>Toggle Details</button>
 			<button on:click={() => toggleSkill(selectedSkill)}>Toggle Skill</button>
 		</div>
 	</div>
@@ -222,8 +214,8 @@
 
 <div
 	class="details-panel"
-	class:shown={selectedSkill}
-	class:hidden={!selectedSkill}
+	class:shown={showDetails}
+	class:hidden={!showDetails}
 	data-augmented-ui="tl-clip tr-clip br-clip bl-clip both"
 >
 	<div class="content">
@@ -231,7 +223,7 @@
 			<h1>{selectedSkill.attributes.name}</h1>
 			<p>{@html marked.parse(selectedSkill?.attributes.description ?? '')}</p>
 			<div class="toolbar">
-				<button on:click={() => (selectedSkill = null)}>Close</button>
+				<button on:click={() => showDetails = false}>Close</button>
 			</div>
 		{:else}
 			<h1><i class="bi bi-icon-name" /> Default Skill Tree Information</h1>
