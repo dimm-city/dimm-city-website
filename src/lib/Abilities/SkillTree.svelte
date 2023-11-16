@@ -17,37 +17,6 @@
 	 */
 	let canvas;
 
-	onMount(() => {
-		if (canvas === null) return;
-		panzoomInstance = panzoom(canvas, {
-			maxZoom: 1.2,
-			minZoom: 0.75,
-			zoomSpeed: 0.1,
-			initialZoom: 0.75,
-			smoothScroll: false,
-			bounds: true,
-			boundsPadding: 0.8,
-			onTouch: function (e) {
-				// `e` - is current touch event.
-
-				return false; // tells the library to not preventDefault.
-			}
-		});
-
-		// Add the ability level
-		data.attributes.abilities.data.forEach((ability) => {
-			if (ability.attributes.level == 1) {
-				ability.unlocked = true;
-			}
-		});
-
-		skills.set(data.attributes.abilities.data);
-	});
-
-	onDestroy(() => {
-		panzoomInstance.dispose();
-	});
-
 	/** @type DC.SkillTree */
 	export let data;
 
@@ -60,7 +29,64 @@
 	let selectedSkill;
 
 	let advancedMode = false;
-	let showDetails = false;
+	let showDetails = true;
+	let maxRows = 5;
+	let maxColumns = 5;
+
+	/** @type {string|undefined }*/
+	let pageImage = '';
+
+	onMount(() => {
+		if (canvas === null) return;
+		panzoomInstance = panzoom(canvas, {
+			maxZoom: 1.2,
+			minZoom: 0.75,
+			zoomSpeed: 0.1,
+			initialZoom: 0.75,
+			smoothScroll: false,
+			bounds: true,
+			boundsPadding: 0.8,
+			beforeWheel: function (e) {
+				// Prevent the browser from scrolling.
+				e.preventDefault();
+
+				// allow wheel-zoom only if altKey is down. Otherwise - ignore
+				const shouldIgnore = !e.altKey;
+				// panzoomInstance.smoothZoomAbs(0, 0, 1 + e.deltaY * 0.001);
+				// console.log('zoomie');
+				return false;
+			},
+			onTouch: function (e) {
+				// `e` - is current touch event.
+
+				return true; // tells the library to not preventDefault.
+			}
+		});
+
+		// Add the ability level
+		data.attributes.abilities.data.forEach((ability) => {
+			if (ability.attributes.level == 1) {
+				ability.unlocked = true;
+			}
+		});
+
+		maxRows = data.attributes.abilities.data
+			.map((a) => a.attributes.level)
+			.reduce((a, b) => Math.max(a, b));
+		maxColumns = data.attributes.abilities.data
+			.map((a) => a.attributes.module)
+			.reduce((a, b) => Math.max(a, b));
+
+		pageImage = data.attributes.mainImage?.data?.attributes.url;
+		if (!pageImage)
+			pageImage = data.attributes.specialty.data?.attributes.mainImage.data.attributes.url;
+
+		skills.set(data.attributes.abilities.data);
+	});
+
+	onDestroy(() => {
+		panzoomInstance.dispose();
+	});
 
 	/**
 	 * @param {DC.Ability[]} values
@@ -110,9 +136,9 @@
 		e.preventDefault();
 		if (!skill) return;
 
-		selectedSkill = skill;
+		selectedSkill = skill == selectedSkill ? null : skill;
 		skills.update((values) => {
-			if (skill == null) {
+			if (selectedSkill == null) {
 				values.forEach((s) => {
 					s.selected = false;
 				});
@@ -123,13 +149,13 @@
 			return values;
 		});
 
-		const skillElement = document.querySelector('[data-skill-index="' + skill.id + '"]');
-		if (skillElement) {
-			const rect = skillElement.getBoundingClientRect();
-			const x = rect.left + window.scrollX;
-			const y = rect.top + window.scrollY;
-			panzoomInstance.smoothZoomAbs(x, y, 1);
-		}		
+		// const skillElement = document.querySelector('[data-skill-index="' + skill.id + '"]');
+		// if (skillElement) {
+		// 	const rect = skillElement.getBoundingClientRect();
+		// 	const x = rect.left + window.scrollX;
+		// 	const y = rect.top + window.scrollY;
+		// 	panzoomInstance.smoothZoomAbs(x, y, 1);
+		// }
 	}
 
 	/**
@@ -149,34 +175,43 @@
 	}
 </script>
 
-<div class="skill-tree-page">
+<div class="skill-tree-page" style="--skill-tree-bg-image: url({pageImage});">
 	<style id="page-style"></style>
 	<div
 		class="viewer-panel"
 		data-augmented-ui="bl-clip-inset br-clip-inset tl-2-clip-xy tr-2-clip-xy l-rect r-rect t-clip both"
 	>
 		<div bind:this={canvas} class="skill-tree-container {data.attributes.slug}">
-			{#if $skills?.length > 0}
-				{#each $skills as skill, s (skill.id)}
-					<div
-						class="matrix-cell"
-						style="grid-row: {skill.attributes.level}; grid-column: {skill.attributes.module};"
-					>
-						<SkillTreeCard data={skill} on:click={(e) => selectSkill(e, skill)} />
-					</div>
-				{/each}
-			{/if}
+			<div
+				class="skill-matrix"
+				style="grid-template-columns: repeat({maxColumns}, 1fr); grid-template-columns: repeat({maxRows}, 1fr);"
+			>
+				{#if $skills?.length > 0}
+					{#each $skills as skill, s (skill.id)}
+						<div
+							class="matrix-cell"
+							style="grid-row: {skill.attributes.level}; grid-column: {skill.attributes.module};"
+						>
+							<SkillTreeCard
+								data={skill}
+								on:click={(e) => selectSkill(e, skill)}
+								on:acquired={(e) => toggleSkill(e.detail)}
+							/>
+						</div>
+					{/each}
+				{/if}
+			</div>
 		</div>
 	</div>
 
 	<div class="bottom-toolbar">
 		<div class="left-group">
-			<button on:click={() => toggleSkill(selectedSkill)}>Toggle Skill</button>
-			<button>Button 1</button>
+			<!-- <button>Button 1</button> 
+			<button on:click={() => toggleSkill(selectedSkill)}>Toggle Skill</button>-->
 		</div>
 		<div class="right-group">
-			<button>Button 2</button>
-			<button on:click={() => (showDetails = !showDetails)}>Toggle Details</button>
+			<!-- <button>Button 2</button>
+			<button on:click={() => (showDetails = !showDetails)}>Toggle Details</button> -->
 		</div>
 	</div>
 </div>
@@ -192,11 +227,24 @@
 			<h1>{selectedSkill.attributes.name}</h1>
 			<p>{@html marked.parse(selectedSkill?.attributes.description ?? '')}</p>
 			<div class="toolbar">
-				<button on:click={() => (showDetails = false)}>Close</button>
+				<button on:click={() => toggleSkill(selectedSkill)}>
+					<!-- {#if selectedSkill.acquired == false}
+						<i class="bi bi-plus" />Acquire Skill
+					{:else}
+						<i class="bi bi-dash" />Remove Skill
+					{/if} -->
+					Toggle Skill
+				</button>
 			</div>
 		{:else}
-			<h1><i class="bi bi-icon-name" /> Default Skill Tree Information</h1>
-			<p>Default description...</p>
+			<div>
+				<h1><i class="bi bi-icon-name" />{data.attributes.name}</h1>
+				<h3><i class="bi bi-icon-type" />{data.attributes.specialty?.data?.attributes.name}</h3>
+			</div>
+			<div>
+				<h4><i class="bi bi-icon-page" />Description</h4>
+				<p>{@html marked.parse(data?.attributes.description ?? '')}</p>
+			</div>
 		{/if}
 	</div>
 	<button class="text-button" on:click={() => (showDetails = !showDetails)}>
@@ -232,15 +280,23 @@
 		height: 1080px;
 		padding: 1em;
 		position: relative;
-		display: grid;
-		gap: 0.2em;
-		grid-template-columns: repeat(5, 1fr);
-		grid-template-rows: repeat(5, 1fr);
+
 		background-image: var(--skill-tree-bg-image);
-		background-size: cover;
+		background-size: contain;
 		background-repeat: no-repeat;
 		background-position: center;
 	}
+	.skill-matrix {
+		display: grid;
+		gap: 2em 4em;
+		height: 100%;
+		width: 100%;
+		margin: auto;
+
+		grid-template-columns: repeat(5, 1fr);
+		grid-template-rows: repeat(5, 1fr);
+	}
+
 	.matrix-cell {
 		display: flex;
 		justify-content: center;
@@ -266,18 +322,18 @@
 		--aug-border-bg: var(--fourth-accent);
 		padding: 1rem;
 	}
-	.details-panel button {
+	.details-panel > button {
 		position: absolute;
 		top: 5px;
 		right: 25px;
 		transition: width 0.2s ease-in-out, right 0.2s ease-in-out, rotate 0.2s ease-in-out 0s,
 			left 0.1s ease-in-out;
 	}
-	.details-panel button > i {
+	.details-panel > button > i {
 		rotate: 0deg;
 		transition: rotate 0.2s ease-in-out 0s;
 	}
-	.details-panel.shown button {
+	.details-panel.shown > button {
 		right: 5px;
 	}
 	.details-panel.shown > button i {
@@ -285,14 +341,16 @@
 		rotate: 180deg;
 		transition: rotate 0.2s ease-in-out 0s;
 	}
-	.details-panel h1 {
+	.details-panel h1,
+	h3 {
 		text-align: center;
 		color: var(--fourth-accent);
 	}
+
 	.details-panel.shown {
 		/* visibility: visible; */
 		opacity: 1;
-		width: 30ch;
+		width: 25dvw;
 		right: 0ch;
 		transition: width 0.2s ease-in-out, right 0.2s ease-in-out, visibility 0.2s ease-in-out 0s,
 			opacity 0.1s ease-in-out;

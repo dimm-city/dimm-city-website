@@ -13,7 +13,7 @@
 <Shell title="Skill Trees">
 	<SearchPage {endpoint} initialData={data}>
 		<svelte:fragment slot="result" let:result>
-			<MenuItem url={`/skills/${result.attributes.slug}`}>
+			<MenuItem url={`/console/skills/${result.attributes.slug}`}>
 				<DefaultItemResult
 					icon="bi-tools"
 					subtitle={result.attributes.type}

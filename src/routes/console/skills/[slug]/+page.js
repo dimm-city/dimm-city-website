@@ -13,6 +13,12 @@ export const load = async (params) => {
             }
         },
         populate: {
+            mainImage: true,
+            specialty: {
+                populate: {
+                    mainImage: true
+                }
+            },
             abilities: {
                 populate: {
                     children: {

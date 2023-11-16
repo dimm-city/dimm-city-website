@@ -1,9 +1,19 @@
 <script>
 	import { marked } from 'marked';
 	import './skill-trees.css';
+	import { createEventDispatcher } from 'svelte';
 
 	/** @type DC.Ability */
 	export let data;
+
+	const dispatcher = createEventDispatcher();
+	dispatcher('acquired', data);
+
+	function toggleAcquired() {
+		data.acquired = !data.acquired;
+		dispatcher('acquired', data);
+		
+	}
 </script>
 
 <div
@@ -11,18 +21,23 @@
 	class:selected={data.selected}
 	class:unlocked={data.unlocked}
 	class:acquired={data.acquired}
+	role="button"
+	tabindex="0"
+	on:click
+	on:dblclick
+	on:keydown
 >
-	<button
-		on:click
+	<div
 		class="skill-cell"
+		data-augmented2-ui="tl-clip tr-clip-x br-clip bl-clip both"
 		data-skill-index={data.id}
-		data-augmented-ui="tl-clip tr-clip-x br-clip bl-clip both"
 	>
-		<div class="aug-border" />
 		<div class="skill-cell-inner">
 			<div class="header">
-				<i class="bi" class:bi-unlock={data.unlocked} class:bi-lock={!data.unlocked} />
-				<h1 class="skill-button">{data.attributes.name}</h1>
+				<!-- svelte-ignore a11y-no-static-element-interactions -->
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
+				<i class="bi" class:bi-unlock={data.unlocked} class:bi-lock={!data.unlocked}  />
+				<h1>{data.attributes.name}</h1>
 			</div>
 			<div class="skill-description">
 				{@html marked.parse(data?.attributes.shortDescription ?? '')}
@@ -34,22 +49,44 @@
 				</div>
 			</div>
 		</div>
-	</button>
+	</div>
 </div>
 
 <style>
 	:root {
 		--skill-cell-bg-color: var(--dark);
 		--skill-cell-border-color: rgba(68, 68, 68, 0.849);
+		--skill-cell-border-radius: 10px;
 		--skill-cell-glow-color: var(--light);
 		--skill-cell-width: 250px;
 		--skill-cell-height: 175px;
 	}
 
 	.skin-cell-container {
+		cursor: pointer;
 		position: relative;
 		width: var(--skill-cell-width);
 		height: var(--skill-cell-height);
+
+		/* border: 1px solid var(--skill-cell-border-color);
+		background-color: var(--skill-cell-bg-color);
+		--aug-inlay-bg: transparent;
+		--aug-border-bg: var(--skill-cell-border-color);
+		--aug-border-all: 1px;
+		--aug-tr1: 7px; */
+
+		/* From https://css.glass */
+		background: rgba(255, 255, 255, 0.35);
+		border-radius: var(--skill-cell-border-radius);
+		box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+		backdrop-filter: blur(3.7px);
+		-webkit-backdrop-filter: blur(3.7px);
+		border: 1px solid rgba(255, 255, 255, 0.59);
+		transition: all 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+	}
+	.skin-cell-container.selected {
+		box-shadow: 0 0 15px 15px rgba(197, 197, 197, 0.911);
+		transition: all 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 	}
 
 	.skin-cell-container:before {
@@ -59,68 +96,44 @@
 		left: 0;
 		width: var(--skill-cell-width);
 		height: var(--skill-cell-height);
-
 		box-shadow: none;
 		transition: box-shadow 0.3s ease-in-out;
 		transform: scale(0.85);
 	}
 
-	.skin-cell-container.selected:before {
-		box-shadow: 1px -1px 35px 23px var(--skill-cell-glow-color);
-		filter: blur(5px);
-		/*scale to 1.1*/
-	}
-	.aug-border {
-		content: ' ';
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		box-sizing: border-box;
-
-		box-shadow: inset 0px 0px 0px 0px var(--skill-cell-border-color);
-		transition: box-shadow 0.3s ease-in-out;
-
-		z-index: -1;
-		pointer-events: none;
-		transition: all 0.3s ease-in-out;
-		--aug-border-bg: var(--skill-cell-border-color);
-		--aug-border-all: 1px;
-	}
-
 	.unlocked {
 		--skill-cell-border-color: var(--secondary-accent);
 	}
-	.unlocked .aug-border {
-		box-shadow: inset 0px -3px 9px 3px var(--skill-cell-border-color);
-	}
+
 	.acquired {
 		--skill-cell-border-color: var(--fourth-accent);
 	}
-	.acquired .aug-border {
-		box-shadow: inset 0px -3px 9px 3px var(--skill-cell-border-color);
-	}
 
 	.skill-cell {
+		background-color: rgba(17, 17, 17, 0.75);
+
+		color: var(--third-accent);
+		font-size: 1rem;
+		font-family: var(--main-font-family);
+		border: 1px var(--third-accent) solid;
+
 		width: var(--skill-cell-width);
 		height: var(--skill-cell-height);
-		border: 1px solid var(--skill-cell-border-color);
-		background-color: var(--skill-cell-bg-color);
-		--aug-border-bg: var(--skill-cell-border-color);
-		transition: all 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-		padding-bottom: 0.5rem;
-		--aug-border-all: 1px;
-		--aug-tr1: 7px;
+
+		border-radius: var(--skill-cell-border-radius);
+
 		text-align: center;
-		cursor: pointer;
+
+		transition: all 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+
 		margin: 0;
 		padding: 0;
 
+		overflow: hidden;
 		box-sizing: border-box;
 
 		/* add glowing effect around cells */
-		box-shadow: 3px -1px 20px 7px var(--skill-cell-border-color);
+		box-shadow: 0 0 10px 7px var(--skill-cell-border-color);
 		transition: box-shadow 0.3s ease-in-out;
 	}
 	.skill-cell-inner {
@@ -136,10 +149,8 @@
 		background-color: rgba(17, 17, 17, 0.75);
 		border: 0;
 		color: var(--third-accent);
-		font-family: var(--main-font-family);
-		border: 1px var(--third-accent) solid;
+		border-bottom: 1px var(--third-accent) solid;
 		justify-content: space-evenly;
-		align-content: start;
 	}
 
 	.skill-cell .header i {
@@ -167,7 +178,7 @@
 	.bottom-toolbar {
 		display: flex;
 		justify-content: space-between;
-		padding-bottom: 0.75rem;
+		padding-bottom: 0;
 		padding-inline: 1rem;
 	}
 
