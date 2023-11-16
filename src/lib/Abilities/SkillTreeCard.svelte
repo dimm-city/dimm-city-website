@@ -20,8 +20,6 @@
 	>
 		<div class="aug-border" />
 		<div class="skill-cell-inner">
-			<!-- <div class="top-toolbar">
-			<i class="bi bi-braces" /></div> -->
 			<div class="header">
 				<i class="bi" class:bi-unlock={data.unlocked} class:bi-lock={!data.unlocked} />
 				<h1 class="skill-button">{data.attributes.name}</h1>

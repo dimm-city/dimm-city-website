@@ -17,37 +17,11 @@
 	 */
 	let canvas;
 
-	// Function to get the parent of an item
-	/**
-	 * @param {DC.Ability} item
-	 */
-	function getParent(item) {
-		if (item.attributes.parents.data.length > 0) {
-			// Return the parent item using the item map
-			return data.attributes.abilities.data.find(
-				(i) => i.id === item.attributes.parents.data[0].id
-			);
-		}
-		return null;
-	}
-
-	// Function to count the number of parent levels of an item
-	/**
-	 * @param {DC.Ability} item
-	 */
-	function countParentLevels(item, count = 0) {
-		let parent = getParent(item);
-		if (parent) {
-			return countParentLevels(parent, count + 1);
-		}
-		return count;
-	}
-
 	onMount(() => {
 		if (canvas === null) return;
 		panzoomInstance = panzoom(canvas, {
-			maxZoom: 1,
-			minZoom: 0.65,
+			maxZoom: 1.2,
+			minZoom: 0.75,
 			zoomSpeed: 0.1,
 			initialZoom: 0.75,
 			smoothScroll: false,
@@ -62,24 +36,11 @@
 
 		// Add the ability level
 		data.attributes.abilities.data.forEach((ability) => {
-			ability.level = countParentLevels(ability) + 1;
-			if(ability.level == 1) {
+			if (ability.attributes.level == 1) {
 				ability.unlocked = true;
 			}
 		});
 
-		// Add the path
-		for (let index = 1; index <= 5; index++) {
-			let path = data.attributes.abilities.data
-				.filter((ability) => ability.level == index)
-				.reduce((a, b) => a + b.path, 0);
-			data.attributes.abilities.data
-				.filter((ability) => ability.level == index && ability.path == 0)
-				.forEach((a) => {
-					a.path = path;
-					path++;
-				});
-		}
 		skills.set(data.attributes.abilities.data);
 	});
 
@@ -114,26 +75,22 @@
 	}
 
 	/**
+	 * Update the skill matrix
 	 * @param {DC.Ability[]} values
 	 * @param {DC.Ability} skill
 	 */
 	function simpleUpdate(values, skill) {
 		values.forEach((s) => {
 			s.selected = s === skill;
-			s.unlocked = s.level == 1;
-			s.available = false;
+			s.unlocked = s.attributes.level == 1;
 		});
-		
-		// Get the max level of a skill that has been acquired
-		let maxLevel = Math.max(...values
-			.filter((s) => s.acquired).map((s) => s.level)) + 1;
 
-			
+		// Get the max level of a skill that has been acquired
+		let maxLevel = Math.max(...values.filter((s) => s.acquired).map((s) => s.attributes.level)) + 1;
 
 		values
-			.filter((s) => s.level <= maxLevel)
+			.filter((s) => s.attributes.level <= maxLevel)
 			.forEach((s) => {
-				s.available = true;
 				s.unlocked = true;
 			});
 	}
@@ -151,6 +108,8 @@
 	 */
 	function selectSkill(e, skill) {
 		e.preventDefault();
+		if (!skill) return;
+
 		selectedSkill = skill;
 		skills.update((values) => {
 			if (skill == null) {
@@ -163,7 +122,14 @@
 
 			return values;
 		});
-		console.log($skills);
+
+		const skillElement = document.querySelector('[data-skill-index="' + skill.id + '"]');
+		if (skillElement) {
+			const rect = skillElement.getBoundingClientRect();
+			const x = rect.left + window.scrollX;
+			const y = rect.top + window.scrollY;
+			panzoomInstance.smoothZoomAbs(x, y, 1);
+		}		
 	}
 
 	/**
@@ -192,7 +158,10 @@
 		<div bind:this={canvas} class="skill-tree-container {data.attributes.slug}">
 			{#if $skills?.length > 0}
 				{#each $skills as skill, s (skill.id)}
-					<div class="matrix-cell" style="grid-row: {skill.level}; grid-column: {skill.path};">
+					<div
+						class="matrix-cell"
+						style="grid-row: {skill.attributes.level}; grid-column: {skill.attributes.module};"
+					>
 						<SkillTreeCard data={skill} on:click={(e) => selectSkill(e, skill)} />
 					</div>
 				{/each}
@@ -223,13 +192,16 @@
 			<h1>{selectedSkill.attributes.name}</h1>
 			<p>{@html marked.parse(selectedSkill?.attributes.description ?? '')}</p>
 			<div class="toolbar">
-				<button on:click={() => showDetails = false}>Close</button>
+				<button on:click={() => (showDetails = false)}>Close</button>
 			</div>
 		{:else}
 			<h1><i class="bi bi-icon-name" /> Default Skill Tree Information</h1>
 			<p>Default description...</p>
 		{/if}
 	</div>
+	<button class="text-button" on:click={() => (showDetails = !showDetails)}>
+		<i class="btn bi bi-chevron-left" /></button
+	>
 </div>
 
 <style>
@@ -268,8 +240,6 @@
 		background-size: cover;
 		background-repeat: no-repeat;
 		background-position: center;
-
-		/* border: thin var(--fourth-accent) solid; */
 	}
 	.matrix-cell {
 		display: flex;
@@ -278,7 +248,7 @@
 	}
 	.details-panel {
 		position: absolute;
-		right: -3ch;
+		right: -2ch;
 		top: 1rem;
 		bottom: 1rem;
 		z-index: 1000;
@@ -290,15 +260,30 @@
 		overflow-y: auto;
 
 		max-height: 100%;
-		/* visibility: collapse;
-
-		background-color: var(--secondary-accent); */
 		color: var(--light);
-		/* transition: width 0.1s ease-in-out, padding 0.1s ease-in-out, visibility 0.2s ease-in-out 0.2s; */
 
 		--aug-inlay-bg: var(--dark);
 		--aug-border-bg: var(--fourth-accent);
 		padding: 1rem;
+	}
+	.details-panel button {
+		position: absolute;
+		top: 5px;
+		right: 25px;
+		transition: width 0.2s ease-in-out, right 0.2s ease-in-out, rotate 0.2s ease-in-out 0s,
+			left 0.1s ease-in-out;
+	}
+	.details-panel button > i {
+		rotate: 0deg;
+		transition: rotate 0.2s ease-in-out 0s;
+	}
+	.details-panel.shown button {
+		right: 5px;
+	}
+	.details-panel.shown > button i {
+		right: 5px;
+		rotate: 180deg;
+		transition: rotate 0.2s ease-in-out 0s;
 	}
 	.details-panel h1 {
 		text-align: center;

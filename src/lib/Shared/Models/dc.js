@@ -54,15 +54,13 @@
  * @property {boolean} cybernetic - The boolean flag indicating if the ability is cybernetic
  * @property {string} description - Description of the ability
  * @property {string} shortDescription - Short description of the ability
- * @property {Object} parents - Description of the ability
- * @property {DC.Ability[]} parents.data - Description of the ability
- * @property {Object} children - Description of the ability
- * @property {DC.Ability[]} children.data - Description of the ability
  * @property {string} createdAt - The timestamp of ability creation
  * @property {string} updatedAt - The timestamp of the last ability update
  * @property {string} publishedAt - The timestamp when the ability was published
  * @property {Object} mainImage - The main image of the ability
  * @property {Strapi.Media} mainImage.data - The data of the main image of the ability
+ * @property {number} level - The of the ability in the matrix
+ * @property {number} module - The path of the ability in the matrix
  */
 
 /**
@@ -71,10 +69,8 @@
  * @property {DC.AbilityAttributes} attributes - Detailed properties of the ability
  * @property {boolean} selected - The boolean flag indicating if the ability is selected in the UI
  * @property {boolean} unlocked - The boolean flag indicating if the ability is locked
- * @property {boolean} available - The boolean flag indicating if the ability is disabled
  * @property {boolean} acquired - The boolean flag indicating if the ability has been acquired by the character
- * @property {number} level - The of the ability in the matrix
- * @property {number} path - The path of the ability in the matrix
+
  */
 
 /**
