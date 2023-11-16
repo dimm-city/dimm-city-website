@@ -202,12 +202,12 @@
 
 	<div class="bottom-toolbar">
 		<div class="left-group">
+			<button on:click={() => toggleSkill(selectedSkill)}>Toggle Skill</button>
 			<button>Button 1</button>
-			<button>Button 2</button>
 		</div>
 		<div class="right-group">
+			<button>Button 2</button>
 			<button on:click={() => (showDetails = !showDetails)}>Toggle Details</button>
-			<button on:click={() => toggleSkill(selectedSkill)}>Toggle Skill</button>
 		</div>
 	</div>
 </div>
