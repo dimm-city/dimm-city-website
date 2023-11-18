@@ -16,7 +16,8 @@ export const load = async (params) => {
             mainImage: true,
             specialty: {
                 populate: {
-                    mainImage: true
+                    mainImage: true,
+                    skillTrees: true
                 }
             },
             abilities: {

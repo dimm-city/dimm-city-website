@@ -352,6 +352,8 @@
  * @property {string} attributes.createdAt
  * @property {string} attributes.updatedAt
  * @property {string} attributes.publishedAt
+ * @property {Object} attributes.skillTrees
+ * @property {DC.SkillTree[]} attributes.skillTrees.data - List of skill trees for the specialty
  * @property {Object} attributes.mainImage
  * @property {Strapi.Media} attributes.mainImage.data - Main image of the entity
  * @property {Object} attributes.mainVideo

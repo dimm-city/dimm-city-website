@@ -1,4 +1,6 @@
 <script>
+	import DetailsPanel from './DetailsPanel.svelte';
+
 	import SkillTreeCard from './SkillTreeCard.svelte';
 
 	import './skill-trees.css';
@@ -29,7 +31,7 @@
 	let selectedSkill;
 
 	let advancedMode = false;
-	let showDetails = true;
+	let showDetails = false;
 	let maxRows = 5;
 	let maxColumns = 5;
 
@@ -37,6 +39,7 @@
 	let pageImage = '';
 
 	onMount(() => {
+		console.log('mounting');
 		if (canvas === null) return;
 		panzoomInstance = panzoom(canvas, {
 			maxZoom: 1.2,
@@ -62,31 +65,33 @@
 				return true; // tells the library to not preventDefault.
 			}
 		});
+	});
 
-		// Add the ability level
+	onDestroy(() => {
+		panzoomInstance.dispose();
+	});
+
+	function initData() {
 		data.attributes.abilities.data.forEach((ability) => {
 			if (ability.attributes.level == 1) {
 				ability.unlocked = true;
 			}
 		});
 
-		maxRows = data.attributes.abilities.data
-			.map((a) => a.attributes.level)
-			.reduce((a, b) => Math.max(a, b));
-		maxColumns = data.attributes.abilities.data
-			.map((a) => a.attributes.module)
-			.reduce((a, b) => Math.max(a, b));
-
+		if (data.attributes.abilities.data?.length > 0) {
+			maxRows = data.attributes.abilities.data
+				.map((a) => a.attributes.level)
+				.reduce((a, b) => Math.max(a, b));
+			maxColumns = data.attributes.abilities.data
+				.map((a) => a.attributes.module)
+				.reduce((a, b) => Math.max(a, b));
+		}
 		pageImage = data.attributes.mainImage?.data?.attributes.url;
 		if (!pageImage)
 			pageImage = data.attributes.specialty.data?.attributes.mainImage.data.attributes.url;
 
 		skills.set(data.attributes.abilities.data);
-	});
-
-	onDestroy(() => {
-		panzoomInstance.dispose();
-	});
+	}
 
 	/**
 	 * @param {DC.Ability[]} values
@@ -134,7 +139,10 @@
 	 */
 	function selectSkill(e, skill) {
 		e.preventDefault();
-		if (!skill) return;
+		if (!skill) {
+			showDetails = false;
+			return;
+		}
 
 		selectedSkill = skill == selectedSkill ? null : skill;
 		skills.update((values) => {
@@ -149,6 +157,7 @@
 			return values;
 		});
 
+		showDetails = true;
 		// const skillElement = document.querySelector('[data-skill-index="' + skill.id + '"]');
 		// if (skillElement) {
 		// 	const rect = skillElement.getBoundingClientRect();
@@ -172,6 +181,10 @@
 			}
 			return values;
 		});
+	}
+
+	$: if(data){
+		initData();
 	}
 </script>
 
@@ -216,46 +229,50 @@
 	</div>
 </div>
 
-<div
-	class="details-panel"
-	class:shown={showDetails}
-	class:hidden={!showDetails}
-	data-augmented-ui="tl-clip tr-clip br-clip bl-clip both"
->
-	<div class="content">
-		{#if selectedSkill}
-			<h1>{selectedSkill.attributes.name}</h1>
-			<p>{@html marked.parse(selectedSkill?.attributes.description ?? '')}</p>
-			<div class="toolbar">
-				<button on:click={() => toggleSkill(selectedSkill)}>
-					<!-- {#if selectedSkill.acquired == false}
-						<i class="bi bi-plus" />Acquire Skill
-					{:else}
-						<i class="bi bi-dash" />Remove Skill
-					{/if} -->
-					Toggle Skill
-				</button>
-			</div>
-		{:else}
-			<div>
-				<h1><i class="bi bi-icon-name" />{data.attributes.name}</h1>
-				<h3><i class="bi bi-icon-type" />{data.attributes.specialty?.data?.attributes.name}</h3>
-			</div>
-			<div>
-				<h4><i class="bi bi-icon-page" />Description</h4>
-				<p>{@html marked.parse(data?.attributes.description ?? '')}</p>
-			</div>
-		{/if}
+<DetailsPanel bind:showDetails>
+	{#if selectedSkill}
+		<h1>{selectedSkill.attributes.name}</h1>
+		<p>{@html marked.parse(selectedSkill?.attributes.description ?? '')}</p>
+		<div class="toolbar">
+			<button on:click={() => toggleSkill(selectedSkill)}> Toggle Skill </button>
+		</div>
+	{:else}
+		<h1>No Skill Selected</h1>
+	{/if}
+</DetailsPanel>
+<DetailsPanel side="left">
+	<div class="specialty-details">
+		<h1><i class="bi bi-icon-name" />{data.attributes.name}</h1>
 	</div>
-	<button class="text-button" on:click={() => (showDetails = !showDetails)}>
-		<i class="btn bi bi-chevron-left" /></button
-	>
-</div>
+	<div>
+		<!-- <h4><i class="bi bi-icon-page" />Description</h4>
+		<p>{@html marked.parse(data?.attributes.description ?? '')}</p> -->
+
+		<div>
+			<h3>
+				<i class="bi bi-icon-type" />Specialty: {data.attributes.specialty?.data?.attributes.name}
+			</h3>
+			<h4>Additional Skill Trees</h4>
+			{#if data.attributes.specialty.data?.attributes.skillTrees?.data}
+				{#each data.attributes.specialty.data?.attributes.skillTrees.data as tree}
+					<a href={tree.attributes.slug}>
+						<div data-augmented-ui class="small-menu-item">
+							<h5><i class="bi bi-icon-type" />{tree.attributes.name}</h5>
+						</div>
+					</a>
+				{/each}
+			{/if}
+		</div>
+	</div>
+</DetailsPanel>
 
 <style>
 	:root {
 		--skill-tree-bg-image: none;
 		/* url('/assets/imgs/landing-bg.png'); */
+	}
+	.small-menu-item {
+		padding-block: 0.25em;
 	}
 	.skill-tree-page {
 		--content-panel-aspect-ratio: auto;
@@ -301,79 +318,6 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-	}
-	.details-panel {
-		position: absolute;
-		right: -2ch;
-		top: 1rem;
-		bottom: 1rem;
-		z-index: 1000;
-		width: 0;
-		height: 80dvh;
-		margin: auto;
-		display: flex;
-		flex-direction: column;
-		overflow-y: auto;
-
-		max-height: 100%;
-		color: var(--light);
-
-		--aug-inlay-bg: var(--dark);
-		--aug-border-bg: var(--fourth-accent);
-		padding: 1rem;
-	}
-	.details-panel > button {
-		position: absolute;
-		top: 5px;
-		right: 25px;
-		transition: width 0.2s ease-in-out, right 0.2s ease-in-out, rotate 0.2s ease-in-out 0s,
-			left 0.1s ease-in-out;
-	}
-	.details-panel > button > i {
-		rotate: 0deg;
-		transition: rotate 0.2s ease-in-out 0s;
-	}
-	.details-panel.shown > button {
-		right: 5px;
-	}
-	.details-panel.shown > button i {
-		right: 5px;
-		rotate: 180deg;
-		transition: rotate 0.2s ease-in-out 0s;
-	}
-	.details-panel h1,
-	h3 {
-		text-align: center;
-		color: var(--fourth-accent);
-	}
-
-	.details-panel.shown {
-		/* visibility: visible; */
-		opacity: 1;
-		width: 25dvw;
-		right: 0ch;
-		transition: width 0.2s ease-in-out, right 0.2s ease-in-out, visibility 0.2s ease-in-out 0s,
-			opacity 0.1s ease-in-out;
-		transition-delay: 0s;
-	}
-	.details-panel.hidden {
-		/* visibility: collapse;
-		opacity: 0; */
-		width: 5ch;
-		transition: width 0.2s ease-in-out, right 0.2s ease-in-out, visibility 0.2s ease-in-out 0.3s,
-			opacity 0.3s ease-in-out;
-	}
-	.details-panel .content {
-		display: grid;
-		min-height: 100%;
-		grid-template-rows: min-content 1fr min-content;
-		overflow: auto;
-		opacity: 0;
-		transition: opacity 0.3s ease-in-out;
-		transition-delay: 0.3s;
-	}
-	.details-panel.shown .content {
-		opacity: 1;
 	}
 
 	.bottom-toolbar {
