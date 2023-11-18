@@ -9,6 +9,20 @@
       "url": "http://localhost:5173",
       "webRoot": "${workspaceFolder}",
       "preLaunchTask": "npm run dev",
-    }
+    },
+        {
+          "name": "Launch server",
+          "request": "launch",
+          "runtimeArgs": [
+            "run-script",
+            "dev"
+          ],
+          "runtimeExecutable": "npm",
+          "skipFiles": [
+            "<node_internals>/**"
+          ],
+          "type": "node",
+          "console": "integratedTerminal"
+        }
   ]
 }

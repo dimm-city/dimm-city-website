@@ -27,7 +27,7 @@ export function getSessionValue(key) {
  * @param {*} data - The data to be stored.
  */
 export function setSessionValue(key, data) {
-	if (data !== undefined && browser && sessionStorage) {
+	if ( browser && data !== undefined && sessionStorage) {
 		console.debug('updating session', key, data);
 		sessionStorage.setItem(key, JSON.stringify(data));
 	}
