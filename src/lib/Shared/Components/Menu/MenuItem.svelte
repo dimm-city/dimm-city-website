@@ -46,6 +46,9 @@
 	.menu-item-container {
 		position: relative;
 		background: transparent;
+		display: grid;
+		height: var(--dc-menu-item-height);
+		width: var(--dc-menu-item-width);
 	}
 	.menu-item-container::before {
 		content: ' ';

@@ -5,6 +5,7 @@
 	--dc-menu-item-width: 'auto';
 }
 .menu-item {
+	display: grid;
 	aspect-ratio: var(--dc-menu-item-aspect-ratio);
 	height: var(--dc-menu-item-height);
 	width: var(--dc-menu-item-width);
