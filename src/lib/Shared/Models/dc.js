@@ -59,7 +59,7 @@
  * @property {string} publishedAt - The timestamp when the ability was published
  * @property {Object} mainImage - The main image of the ability
  * @property {Strapi.Media} mainImage.data - The data of the main image of the ability
- * @property {number} level - The of the ability in the matrix
+ * @property {number} level - The level of the ability in the matrix
  * @property {number} module - The path of the ability in the matrix
  */
 
