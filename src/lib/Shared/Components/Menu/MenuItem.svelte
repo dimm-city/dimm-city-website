@@ -41,7 +41,9 @@
 <style>
 	:root {
 		--dc-menu-item-selected-color: rgb(255, 20, 204, 0.35);
-		--dc-menu-item-selected-drop-shadow: 0 0 20px 10px rgb(255, 20, 204, 0.85);
+		--dc-menu-item-selected-drop-shadow-color: rgb(255, 20, 204, 0.85);
+		--dc-menu-item-selected-drop-shadow: 0 0 20px 10px
+			var(--dc-menu-item-selected-drop-shadow-color);
 	}
 	.menu-item-container {
 		position: relative;
@@ -59,12 +61,19 @@
 		bottom: 0;
 		z-index: -1;
 	}
-	.menu-item-container.selected::before {	
+	.menu-item-container.selected::before {
 		box-shadow: var(--dc-menu-item-selected-drop-shadow);
 		transition: all 0.1s ease-in-out;
 	}
-	
-	.selected .menu-item{
-		clip-path: border-box;
+
+	.selected .menu-item {
+		/* clip-path: border-box; */
+		--aug-tl1: 0vh;
+		--aug-tr1: 0vh;
+		--aug-br1: 0vh;
+		--aug-bl1: 0vh;
+		--aug-border-bg: var(--dc-menu-item-selected-color);
+		--aug-border-all: 2px;
+		background-color: var(--menu-inlay-bg-color-hover);
 	}
 </style>

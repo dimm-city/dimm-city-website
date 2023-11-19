@@ -33,7 +33,7 @@
 	let modal;
 
 	let maxColumns = 1;
-	$: if (data) {
+	$: if (data.attributes.abilities.data?.length > 0) {
 		maxColumns = data.attributes.abilities.data
 			.map((a) => a.attributes.module)
 			.reduce((a, b) => Math.max(a, b));
@@ -92,6 +92,8 @@
 	:root {
 		--dc-sidebar-width: 400px;
 		--dc-sidebar-height: 90%;
+		--dc-menu-item-selected-color: var(--fourth-accent);
+		--dc-menu-item-selected-drop-shadow-color: var(--fourth-accent);
 	}
 	.abilities-list {
 		--dc-menu-item-aspect-ratio: auto;
