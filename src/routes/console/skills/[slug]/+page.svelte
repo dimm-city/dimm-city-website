@@ -127,11 +127,9 @@
 		padding-left: 0;
 	}
 
-	/* @media (max-width: 800px) {
+	 @media (max-width: 800px) {
 		.abilities-list {
-			--dc-menu-item-aspect-ratio: auto;
-			--dc-menu-item-height: auto;
-			--dc-menu-item-width: 100%;
+			grid-template-columns: 1fr !important;
 		}
-	} */
+	} 
 </style>
