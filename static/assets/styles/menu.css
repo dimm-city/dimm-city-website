@@ -18,7 +18,9 @@
 	transition: 
 		color var(--easing),
 		background-color var(--quick-in),
-		opacity var(--quick-in);
+		opacity var(--quick-in)
+		clip-path var(--quick-in)
+		box-shadow var(--quick-in);
 	--aug-clip-tl1: initial;
 	--aug-clip-tr1: initial;
 	--aug-clip-bl1: initial;

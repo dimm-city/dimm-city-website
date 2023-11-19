@@ -41,10 +41,11 @@
 <style>
 	:root {
 		--dc-menu-item-selected-color: rgb(255, 20, 204, 0.35);
-		--dc-menu-item-selected-drop-shadow: 0 0 20px 5px rgb(255, 20, 204, 0.95);
+		--dc-menu-item-selected-drop-shadow: 0 0 20px 10px rgb(255, 20, 204, 0.85);
 	}
 	.menu-item-container {
 		position: relative;
+		background: transparent;
 	}
 	.menu-item-container::before {
 		content: ' ';
@@ -55,12 +56,12 @@
 		bottom: 0;
 		z-index: -1;
 	}
-	.menu-item-container.selected::before {
-		background-color: var(--dc-menu-item-selected-color);
-
-		background-clip: border-box;
-
+	.menu-item-container.selected::before {	
 		box-shadow: var(--dc-menu-item-selected-drop-shadow);
 		transition: all 0.1s ease-in-out;
+	}
+	
+	.selected .menu-item{
+		clip-path: border-box;
 	}
 </style>

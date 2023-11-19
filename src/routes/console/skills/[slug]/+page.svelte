@@ -77,10 +77,10 @@
 		--dc-sidebar-height: 90%;
 	}
 	.abilities-list {
-		--dc-menu-item-aspect-ratio: 20/5;
-		/* --dc-menu-item-aspect-ratio: auto; */
-		--dc-menu-item-height: auto;
-		--dc-menu-item-width: 100%;
+		
+			--dc-menu-item-aspect-ratio: auto;
+			--dc-menu-item-height: auto;
+			--dc-menu-item-width: 100%;
 		margin-inline: auto;
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(var(--dc-menu-item-width), 1fr));
@@ -88,11 +88,18 @@
 		height: min-content;
 	}
 
-
 	:global(.ability-description strong) {
 		color: var(--pink);
 	}
 	:global(.ability-description ul) {
 		padding-left: 0;
+	}
+
+	@media (max-width: 800px) {
+		.abilities-list {
+			--dc-menu-item-aspect-ratio: auto;
+			--dc-menu-item-height: auto;
+			--dc-menu-item-width: 100%;
+		}
 	}
 </style>
