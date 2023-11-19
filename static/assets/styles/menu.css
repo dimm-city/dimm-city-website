@@ -1,9 +1,13 @@
 :root{
 
 	--dc-menu-item-aspect-ratio: 2/1;
+	--dc-menu-item-height: 'fit-content';
+	--dc-menu-item-width: 'auto';
 }
 .menu-item {
 	aspect-ratio: var(--dc-menu-item-aspect-ratio);
+	height: var(--dc-menu-item-height);
+	width: var(--dc-menu-item-width);
 	max-width: 80svw;
 	cursor: pointer;
 	padding: 1.25rem;
@@ -82,7 +86,7 @@
 }
 
 .small-menu-item {
-	height: fit-content;
+	height: var(--dc-menu-item-height);
 	cursor: pointer;
 	padding: 1rem;
 	min-height: 20%;

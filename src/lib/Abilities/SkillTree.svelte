@@ -157,7 +157,7 @@
 			return values;
 		});
 
-		showDetails = true;
+		showDetails = true;    
 		// const skillElement = document.querySelector('[data-skill-index="' + skill.id + '"]');
 		// if (skillElement) {
 		// 	const rect = skillElement.getBoundingClientRect();
@@ -183,7 +183,7 @@
 		});
 	}
 
-	$: if(data){
+	$: if (data) {
 		initData();
 	}
 </script>
@@ -243,11 +243,6 @@
 <DetailsPanel side="left">
 	<div class="specialty-details">
 		<h1><i class="bi bi-icon-name" />{data.attributes.name}</h1>
-	</div>
-	<div>
-		<!-- <h4><i class="bi bi-icon-page" />Description</h4>
-		<p>{@html marked.parse(data?.attributes.description ?? '')}</p> -->
-
 		<div>
 			<h3>
 				<i class="bi bi-icon-type" />Specialty: {data.attributes.specialty?.data?.attributes.name}
@@ -320,6 +315,15 @@
 		align-items: center;
 	}
 
+	.specialty-details {
+		padding: 0.5rem;
+		overflow: hidden;
+	}
+	.specialty-details h1 {
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		font-size: clamp(1rem, 1.25rem, 1.5rem);
+	}
 	.bottom-toolbar {
 		display: flex;
 		justify-content: space-between;
