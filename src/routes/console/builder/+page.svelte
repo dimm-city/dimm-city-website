@@ -1,12 +1,18 @@
 <script>
 	import DetailsPanel from '$lib/Builder/DetailsPanel.svelte';
 	import SkillTree from '$lib/Builder/SkillTree.svelte';
+	import CharacterMenuItem from '$lib/Characters/CharacterMenuItem.svelte';
 	import Sheet from '$lib/Characters/Components/CharacterSheet/Sheet.svelte';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
+	import MenuItem from '$lib/Shared/Components/Menu/MenuItem.svelte';
 	import Shell from '$lib/Shared/Shell/Shell.svelte';
 	import { jwt } from '$lib/Shared/Stores/UserStore';
 	import { StrapiClient } from '$lib/Shared/StrapiClient';
 	import { config } from '$lib/Shared/config';
+	import { exampleCharacter } from './example';
+
+	
+	let showMainPanel = false;
 	/**
 	 * @type {any}
 	 */
@@ -15,6 +21,8 @@
 	let characterSlug = data.citizen ?? 'dcs1r1-29';
 	let skillTreeSlug = data.skillTree;
 
+	/** @type {DC.Character[]} */
+	let availableCharacters = [exampleCharacter];
 	/** @type {DC.Character} */
 	let character = data.citizenData;
 	let skillTree = data.skillTreeData;
@@ -39,14 +47,19 @@
 			}
 		});
 
-		mode = 'overview';
+		changeMode('overview');
 	}
 
 	async function loadSkillTree(tree) {
 		if (tree) skillTreeSlug = tree.attributes.slug;
 
 		skillTree = await client.loadBySlug('dimm-city/skill-trees', skillTreeSlug);
-		mode = 'skill-tree';
+		changeMode('skill-tree');
+	}
+
+	function changeMode(newMode) {
+		mode = newMode;
+		showMainPanel = false;
 	}
 </script>
 
@@ -75,57 +88,81 @@
 			</div>
 		</DetailsPanel> -->
 	{:else if mode === 'citizen'}
-		<div>
+		<div class="citizen">
 			<Sheet bind:character isEditing={true} on:save />
 		</div>
 	{:else if mode === 'overview'}
-		<div>
+		<div class="overview">
 			<Sheet bind:character isEditing={false} on:save />
 		</div>
 	{:else}
 		<ContentPane padding={3}>
-			<div>
+			<div class="select">
 				<h1>Select your Sporo</h1>
-				<button on:click={() => loadCharacter()}>Load an example</button>
-
+				{#each availableCharacters as c}
+					<MenuItem on:click={() => loadCharacter(c.tokenId)}>
+						<CharacterMenuItem result={c} /></MenuItem
+					>
+				{/each}
 				<strong><em>*Sign in to select your Sporo coming soon</em></strong>
 			</div>
 		</ContentPane>
 	{/if}
-	<DetailsPanel side="left">
-		<div class="specialty-details">
-			{#if character?.id > 0}
-				<h1><i class="bi bi-icon-name" />{character.attributes.name}</h1>
-				<div>
-					<!-- <h3>
-							<i class="bi bi-icon-type" />Specialty: {character.attributes.specialty?.data
-								?.attributes.name}
-						</h3> -->
-					<h4>Available Skill Trees</h4>
-					{#if character.attributes.specialties.data?.length > 0}
-						{#each character.attributes.specialties.data as specialty}
-							{#if specialty.attributes.skillTrees?.data.length > 0}
-								{#each specialty.attributes.skillTrees?.data as tree}
-									<a
-										href="#skill-tree={tree?.attributes.slug}"
-										on:click|preventDefault={() => loadSkillTree(tree)}
-									>
-										<div data-augmented-ui class="small-menu-item">
-											<h5><i class="bi bi-icon-type" />{tree.attributes.name}</h5>
-										</div>
-									</a>
-								{/each}
-							{/if}
-						{/each}
-					{/if}
-				</div>
-				<button on:click={() => (mode = 'overview')}>Overview</button>
-				<button on:click={() => (mode = 'citizen')}>Edit Character</button>
-				<!-- <button on:click={() => (mode = 'skill-tree')}>Edit Skills</button> -->
-				<button on:click={() => (mode = 'select')}>Select Character</button>
-			{:else}
-				<div>Please select a character</div>
-			{/if}
-		</div>
-	</DetailsPanel>
+	{#if mode !== 'select'}
+		<DetailsPanel side="left" bind:showDetails={showMainPanel}>
+			<div class="main-panel">
+				{#if character?.id > 0}
+					<h1><i class="bi bi-icon-name" />{character.attributes.name}</h1>
+					<div>
+						<h3>
+							<i class="bi bi-icon-type" />Specialty: {character.attributes.specialties?.data.map(e => e.attributes.name).join( ", ")}
+						</h3>
+						<h4>Available Skill Trees</h4>
+						{#if character.attributes.specialties.data?.length > 0}
+							{#each character.attributes.specialties.data as specialty}
+								{#if specialty.attributes.skillTrees?.data.length > 0}
+									{#each specialty.attributes.skillTrees?.data as tree}
+										<a
+											href="#skill-tree={tree?.attributes.slug}"
+											on:click|preventDefault={() => loadSkillTree(tree)}
+										>
+											<div data-augmented-ui class="small-menu-item">
+												<h5><i class="bi bi-icon-type" />{tree.attributes.name}</h5>
+											</div>
+										</a>
+									{/each}
+								{/if}
+							{/each}
+						{/if}
+					</div>
+				{:else}
+					<div>Please select a character</div>
+				{/if}
+			</div>
+		</DetailsPanel>
+	{/if}
+	<svelte:fragment slot="action-menu">
+		<button on:click={() => changeMode('overview')}>Overview</button>
+		<button on:click={() => changeMode('citizen')}>Edit Character</button>
+		<!-- <button on:click={() => (mode = 'skill-tree')}>Edit Skills</button> -->
+		<button on:click={() => changeMode('select')}>Select Character</button>
+	</svelte:fragment>
 </Shell>
+
+<style>
+	.select {
+		--dc-menu-item-height: auto;
+		--dc-menu-item-width: 15rem;
+		--dc-menu-item-aspect-ratio: 14/16;
+	}
+	.overview {
+		overflow-y: auto;
+		padding-left: 2rem;
+	}
+
+	.main-panel{
+		padding-top: 1rem;
+	}
+
+
+</style>

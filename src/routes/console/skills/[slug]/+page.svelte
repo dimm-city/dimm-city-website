@@ -70,22 +70,22 @@
 				</div>
 			{/each}
 		</div>
-		<ModalSideBar bind:this={modal} on:dismiss={closeAbility} isOpen={selectedSkill != null}>
-			{#if selectedSkill?.attributes}
-				<div class="ability-header">
-					<h2>{selectedSkill?.attributes.name}</h2>
-					<div>AP: {selectedSkill?.attributes.ap}</div>
-				</div>
-
-				<hr />
-				<div class="ability-description">
-					{@html marked.parse(selectedSkill?.attributes?.description ?? '')}
-				</div>
-			{:else}
-				<span>Not found</span>
-			{/if}
-		</ModalSideBar>
 	</ContentPane>
+	<ModalSideBar bind:this={modal} on:dismiss={closeAbility} isOpen={selectedSkill != null}>
+		{#if selectedSkill?.attributes}
+			<div class="ability-header">
+				<h2>{selectedSkill?.attributes.name}</h2>
+				<div>AP: {selectedSkill?.attributes.ap}</div>
+			</div>
+
+			<hr />
+			<div class="ability-description">
+				{@html marked.parse(selectedSkill?.attributes?.description ?? '')}
+			</div>
+		{:else}
+			<span>Not found</span>
+		{/if}
+	</ModalSideBar>
 </Shell>
 
 <style>
@@ -115,7 +115,7 @@
 		margin-block: 0;
 	}
 	.ability-footer {
-		border-top: 1px solid  var(--fourth-accent);
+		border-top: 1px solid var(--fourth-accent);
 		padding-top: 0.25rem;
 		display: flex;
 		justify-content: space-between;
@@ -127,9 +127,9 @@
 		padding-left: 0;
 	}
 
-	 @media (max-width: 800px) {
+	@media (max-width: 800px) {
 		.abilities-list {
 			grid-template-columns: 1fr !important;
 		}
-	} 
+	}
 </style>
