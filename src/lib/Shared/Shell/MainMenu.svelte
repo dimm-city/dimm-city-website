@@ -43,6 +43,12 @@
 		url="/console/specialties"
 		icon="bi-code"
 		title="Specialties"
+		description="The professionals of dimm city"
+	/>
+		<MenuItem
+		url="/console/skills"
+		icon="bi-code"
+		title="Skills"
 		description="The true skills of the Sporos"
 	/>
 	<MenuItem url="/console/races" icon="bi-people" title="Races" description="Types of sentient beings" />

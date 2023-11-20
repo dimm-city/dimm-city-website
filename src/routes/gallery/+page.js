@@ -143,6 +143,6 @@ export const load = async ({ fetch, params }) => {
 	// console.log('loaded gallery');
 	return biggerPictureFormat;
 };
-export const ssr = false;
+export const ssr = true;
 export const csr = true;
 export const prerender = true;

@@ -7,4 +7,4 @@ export const load = async (/** @type {{ params: { slug: any; }; }} */ page) =>
 
 
 
-export const prerender = 'false';
+export const prerender = false;

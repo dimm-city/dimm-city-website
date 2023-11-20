@@ -4,6 +4,6 @@ export const load = async (page) => {
 		page,
 		'dimm-city/skill-trees',
 		['slug', 'name', 'shortDescription'],
-		['mainImage']
+		['mainImage', 'specialty'],
 	);
 };
