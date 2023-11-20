@@ -29,7 +29,7 @@
 
 	<MenuItem
 		url="/console/locations"
-		icon="bi-map"
+		icon="bi-pin-map"
 		title="Locations"
 		description="Locations identified in Dimm City"
 	/>
@@ -41,17 +41,22 @@
 	/>
 	<MenuItem
 		url="/console/specialties"
-		icon="bi-code"
+		icon="bi-nut"
 		title="Specialties"
 		description="The professionals of dimm city"
 	/>
-		<MenuItem
+	<MenuItem
 		url="/console/skills"
 		icon="bi-code"
 		title="Skills"
 		description="The true skills of the Sporos"
 	/>
-	<MenuItem url="/console/races" icon="bi-people" title="Races" description="Types of sentient beings" />
+	<MenuItem
+		url="/console/races"
+		icon="bi-people"
+		title="Races"
+		description="Types of sentient beings"
+	/>
 	<MenuItem
 		url="/console/items"
 		icon="bi-tools"
@@ -60,9 +65,15 @@
 	/>
 	<MenuItem
 		url="/console/dreams"
-		icon="bi-controller"
+		icon="bi-hypnotize"
 		title="Dream Console"
 		description="Dimm City solo campaigns"
+	/>
+		<MenuItem
+		url="/console/builder"
+		icon="bi-brilliance"
+		title="Builder"
+		description="Build your Sporos"
 	/>
 	<!-- <MenuItem url="/spores" icon="bi-hypnotize" title="Spores" description="Dreams of Dimm City" /> -->
 	<MenuItem
@@ -97,7 +108,7 @@
 		margin-inline: 0.25rem;
 	}
 
-	:global(.main-menu .menu-item){
+	:global(.main-menu .menu-item) {
 		aspect-ratio: 3/1;
 	}
 	.menu-toolbar a {
@@ -127,7 +138,7 @@
 		transition: transform 0.1s ease-in-out;
 	}
 	@media (max-width: 767px) {
-		.menu-toolbar a{
+		.menu-toolbar a {
 			padding: 2rem;
 		}
 		:global(.main-menu .dropdown-content.visible) {
