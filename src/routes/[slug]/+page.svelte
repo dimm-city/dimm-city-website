@@ -16,7 +16,7 @@
 			"@type": "Person",
 			"name": data.attributes.author
 		},
-		"image": window.location.origin + data.attributes?.mainImage?.data?.attributes.url
+		"image":  data.attributes?.mainImage?.data?.attributes.url
 	};
 
 	onMount(() => {
@@ -44,14 +44,14 @@
 	<meta property="og:url" content="{$page.url?.toString()}">
 	<meta property="og:title" content={data.attributes.title}>
 	<meta property="og:description" content={data.attributes?.description}>
-	<meta property="og:image" content={window.location.origin + data.attributes?.mainImage?.data?.attributes.url}>
+	<!-- <meta property="og:image" content={window.location.origin + data.attributes?.mainImage?.data?.attributes.url}> -->
 
 	<!-- Twitter -->
 	<meta property="twitter:card" content="summary_large_image">
 	<meta property="twitter:url" content="{$page.url?.toString()}">
 	<meta property="twitter:title" content={$page.data.title}>
 	<meta property="twitter:description" content={data.attributes?.description}>
-	<meta property="twitter:image" content={window.location.origin + data.attributes?.mainImage?.data?.attributes.url}>
+	<!-- <meta property="twitter:image" content={window.location.origin + data.attributes?.mainImage?.data?.attributes.url}> -->
 
 	<!-- Structured Data -->
 	<script type="application/ld+json" id="structured-data">
