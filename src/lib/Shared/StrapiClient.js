@@ -92,7 +92,7 @@ export class StrapiClient {
 	 * @param {any} query
 	 */
 	async loadBySlug(contentType, slug, query = {}) {
-		query.slug = slug;
+		//query.slug = slug;
 		if (query.populate == null) query.populate = '*';
 		if (query.filters == null)
 			query.filters = {
@@ -104,10 +104,14 @@ export class StrapiClient {
 		const url = this._getUrlWithQuery(contentType, query);
 
 		try {
-			const response = await this.fetch(url);
+			const response = await this.fetch(url, {
+				Authorization: `Bearer ${this.jwt}`,
+				'Content-Type': 'application/json',
+				'Allow-Control-Allow-Origin': '*'
+			});
 
 			if (!response.ok) {
-				throw new Error('Network response was not ok');
+				throw new Error('Network response was not ok', response.statusText);
 			}
 
 			const json = await response.json();

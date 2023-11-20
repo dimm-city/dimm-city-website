@@ -2,14 +2,19 @@ import { loadEntityPageFromStrapi } from '$lib/Shared/SvelteStrapi';
 
 /**
  *
- * @param {any} params
+ * @param {import('./$types').PageLoadEvent} page
  * @returns {Promise<any>}
  */
-export const load = async (params) => {
-    const data =  await loadEntityPageFromStrapi(params, 'dimm-city/skill-trees', {
+export const load = async (page) => {
+
+    const mode = page.url.searchParams.get('mode');
+    const citizen = page.url.searchParams.get('citizen');
+    const skillTree = page.url.searchParams.get('skill-tree');
+
+    const skillTreeData =  await loadEntityPageFromStrapi(page, 'dimm-city/skill-trees', {
         filters: {
             slug: {
-                $eq: params.params.slug
+                $eq: skillTree
             }
         },
         populate: {
@@ -33,6 +38,13 @@ export const load = async (params) => {
         }
     });
 
+    const data = {
+        mode,
+        citizen,
+        skillTree,
+        skillTreeData
+    };
+    console.log(data, 'data');
     return data;
 };
 

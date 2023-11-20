@@ -88,7 +88,7 @@
 		}
 		pageImage = data.attributes.mainImage?.data?.attributes.url;
 		if (!pageImage)
-			pageImage = data.attributes.specialty.data?.attributes.mainImage.data.attributes.url;
+			pageImage = data.attributes.specialty.data?.attributes.mainImage?.data?.attributes.url;
 
 		skills.set(data.attributes.abilities.data);
 	}
@@ -240,7 +240,7 @@
 		<h1>No Skill Selected</h1>
 	{/if}
 </DetailsPanel>
-<DetailsPanel side="left">
+<!-- <DetailsPanel side="left">
 	<div class="specialty-details">
 		<h1><i class="bi bi-icon-name" />{data.attributes.name}</h1>
 		<div>
@@ -259,7 +259,7 @@
 			{/if}
 		</div>
 	</div>
-</DetailsPanel>
+</DetailsPanel> -->
 
 <style>
 	:root {

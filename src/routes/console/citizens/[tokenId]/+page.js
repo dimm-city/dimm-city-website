@@ -16,4 +16,4 @@ export const load = async (/** @type {{ params: any; }} */ page) => {
 };
 
 
-export const prerender = 'auto';
+export const prerender = false;
