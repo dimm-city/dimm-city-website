@@ -1,5 +1,4 @@
 <script>
-	//@ts-nocheck
 	import Select from 'svelte-select';
 	import Input from '$lib/Shared/Components/Input.svelte';
 	import Textarea from '$lib/Shared/Components/Textarea.svelte';
@@ -11,7 +10,11 @@
 	 * @type {DC.Character}
 	 */
 	export let character;
-	export let isEditing = false;
+	let originLocation;
+
+	$: if (!character.attributes.originLocation) character.attributes.originLocation = {};
+
+	$: character.attributes.originLocation.set = [character.attributes.originLocation?.data];
 </script>
 
 <div class="profile-row">
@@ -20,30 +23,79 @@
 	<section class="section-container profile">
 		<div class="label">Specialties:</div>
 		<div class="value">
-			<span>{formatCharacterSpecialties(character)}</span>
+			<div class="aug-select">
+				<Select
+					loadOptions={getSpecialties}
+					placeholder="Select up to two specialties"
+					label="name"
+					itemId="id"
+					multiple={true}
+					hideEmptyState={true}
+					bind:value={character.attributes.specialties.data}
+				>
+					<div slot="selection" let:selection>
+						<span>{selection.name ?? selection.attributes?.name ?? 'Unknown'}</span>
+					</div>
+					<div slot="item" let:item let:index>
+						<span>{item.name ?? item.attributes?.name ?? 'Unknown'}</span>
+					</div>
+				</Select>
+			</div>
 		</div>
 
 		<div class="label">Beliefs:</div>
 		<div class="value">
-			<span>{character.attributes.beliefs ?? ''}</span>
+			<Textarea maxlength="150" bind:value={character.attributes.beliefs} />
 		</div>
 
 		<div class="label">Residency:</div>
 		<div class="value">
-			<span>{character.attributes.currentLocation?.data?.attributes?.name ?? ''}</span>
+			<div class="current-location aug-select">
+				<Select
+					loadOptions={getDistricts}
+					placeholder="Select a district"
+					label="name"
+					itemId="id"
+					--list-z-index="8888888"
+					bind:value={character.attributes.currentLocation.data}
+				>
+					<div slot="selection" let:selection>
+						<span>{selection.name ?? selection.attributes?.name ?? ''}</span>
+					</div>
+					<div slot="item" let:item let:index>
+						<span>{item.name ?? item.attributes?.name ?? ''}</span>
+					</div>
+				</Select>
+			</div>
 		</div>
 		<div class="label">Vibe:</div>
 		<div class="value">
-			<span>{character.attributes.vibe ?? ''}</span>
+			<Input bind:value={character.attributes.vibe} maxlength="50" class="inline" />
 		</div>
 		<div class="label">Origin:</div>
 		<div class="value">
-			<span>{character.attributes.originLocation?.data?.attributes?.name ?? ''}</span>
+			<div class="current-location aug-select">
+				<Select
+					loadOptions={getDistricts}
+					placeholder="Select a district"
+					label="name"
+					itemId="id"
+					bind:justValue={originLocation}
+					bind:value={character.attributes.originLocation.data}
+				>
+					<div slot="selection" let:selection>
+						<span>{selection.name ?? selection.attributes?.name ?? ''}</span>
+					</div>
+					<div slot="item" let:item let:index>
+						<span>{item.name ?? item.attributes?.name ?? ''}</span>
+					</div>
+				</Select>
+			</div>
 		</div>
 
 		<div class="label">Flaws:</div>
 		<div class="value">
-			<span>{character.attributes.flaws ?? ''}</span>
+			<Textarea maxlength="150" bind:value={character.attributes.flaws} />
 		</div>
 	</section>
 </div>
