@@ -32,18 +32,25 @@ export async function getCharactersByIds(
 }
 
 /**
- * @param {string} jwt
+ * Retrieves characters associated with a user.
+ * @param {string} jwt - The JSON Web Token for authentication.
+ * @returns {Promise<Strapi.APIResponse<DC.Character>>} - A promise that resolves to an array of character objects.
  */
 export async function getCharactersByUser(jwt) {
+	// Create a new instance of the StrapiClient with the API base URL and JWT.
 	const strapi = new StrapiClient(config.apiBaseUrl, jwt);
-	const results = await strapi.search('dimm-city/profiles/tokens', {
-		sort: ['name:asc'],		
-		fields: summaryFields,
-		populate: summaryRelationships,
+
+	// Use the StrapiClient to search for profiles/tokens in the 'dimm-city' collection.
+	// Sort the results by name in ascending order.
+	// Include only the specified fields and relationships in the results.
+	// Filter the results to only include live records in the 'en' locale.
+	const results = await strapi.search('dimm-city/my/characters', {
+		sort: ['name:asc'],
 		publicationState: 'live',
 		locale: ['en']
 	});
 
+	// Return the search results.
 	return results;
 }
 

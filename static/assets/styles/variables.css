@@ -74,6 +74,10 @@
 		radial-gradient(circle at top right, var(--blue) 20px, transparent 30px),
 		radial-gradient(circle at bottom right, var(--pink) 40px, transparent 50px),
 		radial-gradient(circle at bottom left, var(--blue) 20px, transparent 30px);
+
+
+		/*svelte-select*/
+		--list-z-index: 999;
 }
 
 @-webkit-keyframes background-gradient {

@@ -18,31 +18,6 @@
 		originalCharacter = JSON.stringify(data);
 	}
 
-	// async function updateCharacter(character) {
-	// 	console.log('updateCharacter');
-
-	// 	fetch(`${config.apiBaseUrl}/characters/${character.id}?populate=*`, {
-	// 		method: 'PUT',
-	// 		headers: {
-	// 			Authorization: `Bearer ${get(jwt)}`,
-	// 			'Content-Type': 'application/json'
-	// 		},
-	// 		body: JSON.stringify({ data: character })
-	// 	})
-	// 		.then(async (res) => {
-	// 			const { data, errors } = await res.json();
-	// 			if (res.ok) {
-	// 				console.assert(data != null);
-	// 				console.log('saved', data);
-	// 			} else {
-	// 				//TODO: display error
-	// 				console.error('failed', errors, data);
-	// 			}
-	// 		})
-	// 		.catch((reason) => {
-	// 			console.log('could not update character', reason);
-	// 		});
-	// }
 
 	async function saveChanges() {
 		if (ownsToken(data.attributes.tokenId)) {

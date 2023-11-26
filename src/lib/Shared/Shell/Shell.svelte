@@ -54,7 +54,9 @@
 	<!-- <link rel="icon" type="image/x-icon" href="/assets/icons/shroom256.png" /> -->
 	<!-- <link rel="icon" type="image/x-icon" href="/assets/icons/shroom256.png" /> -->
 	<!-- <link rel="icon" type="image/x-icon" href="/assets/icons/shroom256.png" /> -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-TJ2LB9K4M4" />
+	<!-- <link rel="icon" type="image/x-icon" href="/assets/icons/shroom256.png" /> -->
+	<!-- <link rel="icon" type="image/x-icon" href="/assets/icons/shroom256.png" /> -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-TJ2LB9K4M4"></script>
 	<!-- <link rel="stylesheet" type="text/css" href="https://unpkg.com/augmented-ui@2/augmented-ui.min.css"> -->
 
 	<link rel="stylesheet" type="text/css" href="/assets/styles/main.css" />
@@ -72,8 +74,10 @@
 					<MainMenu />
 				</slot>
 			</svelte:fragment>
-			<svelte:fragment slot="action-menu">
-				<slot name="action-menu" />
+			<svelte:fragment slot="right-button">
+				<slot name="right-button">
+					<slot name="action-menu" />
+				</slot>
 			</svelte:fragment>
 		</MenuBar>
 	</div>

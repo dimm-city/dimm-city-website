@@ -2,6 +2,7 @@
 
 <style>
 	.page-background {
+		z-index: -1;;
 		background: var(--page-background);
 		background-size: 400% 400%;
 		/* animation: background-gradient 30s ease infinite; */

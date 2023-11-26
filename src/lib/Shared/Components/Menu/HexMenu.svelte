@@ -69,20 +69,21 @@
 	.aug-button:hover,
 	.aug-button:focus {
 		color: white;
-		/* opacity: 0.75; */
 
 		--aug-border-bg: var(--pink);
 	}
+	.aug-button:hover i,
+    .aug-button:focus i{
+        font-size: 1.25rem;
+    }
 	.dropdown-button {
 		cursor: pointer;
 		aspect-ratio: 1/1;
-		/* background: var(--pink); */
 		--aug-border-all: 1px;
 		--aug-border-bg: var(--yellow);
 		--aug-all-width: max(45px, 2vw);
 		--aug-inlay-bg: var(--pink);
 		transition: transform var(--easing);
-
 		opacity: 1;
 	}
 
@@ -96,11 +97,8 @@
 		max-height: 80dvh;
 		overflow-y: hidden;
 		--aug-inlay-bg: #141414ad;
-		/* var(--dark); */
 		--aug-border-all: 1px;
 		--aug-border-bg: var(--blue);
-		/* transform: translateY(-100px); */
-
 		--aug-bl: 0.33rem;
 		--aug-br: 0.33rem;
 		--aug-tl: 0.33rem;
@@ -158,17 +156,13 @@
 	}
 
 	:global(.dropdown-content-grid *) {
-		/* transform: translateY(-200px); */
 		opacity: 0;
 		transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
-		/* transition-delay: 0.3s; */
 	}
 	:global(.dropdown-content.visible .dropdown-content-grid *) {
-		/* transform: translateY(0); */
 		opacity: 1;
 	}
 	:global(.dropdown-content.hidden .dropdown-content-grid *) {
-		/* transform: translateY(-200px); */
 		opacity: 0;
 		transition-delay: 0;
 		transition: opacity 1s ease-in-out, transform 0.5s ease;

@@ -77,7 +77,7 @@
 		rotate: 0deg;
 		transition: rotate 0.2s ease-in-out 0s;
 	}
-    .details-panel.left > button > i {
+	.details-panel.left > button > i {
 		rotate: 180deg;
 	}
 	.details-panel.shown > button {
@@ -91,7 +91,7 @@
 		rotate: 180deg;
 		transition: rotate 0.2s ease-in-out 0s;
 	}
-    .details-panel.shown.left > button i {
+	.details-panel.shown.left > button i {
 		right: 5px;
 		rotate: 0deg;
 		transition: rotate 0.2s ease-in-out 0s;
@@ -108,5 +108,22 @@
 	}
 	.details-panel.shown .content {
 		opacity: 1;
+	}
+
+	@media (max-width: 768px) {
+		.details-panel.shown {
+			width: 50dvw;
+		}
+		.details-panel.hidden {
+		/* visibility: collapse;*/
+		opacity: 0.5; 
+		width: 4ch;
+		}
+	}
+
+		@media (max-width: 500px) {
+		.details-panel.shown {
+			width: 90dvw;
+		}
 	}
 </style>

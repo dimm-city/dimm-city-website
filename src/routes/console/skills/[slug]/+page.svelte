@@ -38,6 +38,7 @@
 			.map((a) => a.attributes.module)
 			.reduce((a, b) => Math.max(a, b));
 	}
+	
 </script>
 
 <Shell title={data?.attributes?.name} titleUrl="/console/skills">

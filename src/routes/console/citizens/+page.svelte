@@ -31,7 +31,7 @@
 </Shell>
 
 <style>
-	dl {
+	/* dl {
 		display: grid;
 		grid-template-columns: 1fr 2fr;
 		row-gap: 0.5rem;
@@ -51,7 +51,7 @@
 		margin: 0;
 		overflow: hidden;
 		text-overflow: ellipsis;
-	}
+	} */
 
 	:global(.menu-item){
 		--menu-item-height: 175px;

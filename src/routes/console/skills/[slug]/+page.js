@@ -6,6 +6,7 @@ import { loadEntityPageFromStrapi } from '$lib/Shared/SvelteStrapi';
  * @returns {Promise<any>}
  */
 export const load = async (params) => {
+    
     const data =  await loadEntityPageFromStrapi(params, 'dimm-city/skill-trees', {
         filters: {
             slug: {

@@ -38,9 +38,11 @@
 			{/if}
 		</div>
 		<div>
-			<HexMenu title="action menu">
-				<slot name="action-menu" />
-			</HexMenu>
+			<slot name="right-button">
+				<HexMenu title="action menu">
+					<slot name="action-menu" />
+				</HexMenu>
+			</slot>
 		</div>
 	</div>
 	<div class="version"><small><span>DCC</span> <span>v{config.version}</span></small></div>
@@ -49,6 +51,10 @@
 <style>
 	:root {
 		--menu-bar-height: 5dvh;
+	}
+	.search-container {
+		align-items: center;
+		text-align: center;
 	}
 	.search-container h4 {
 		position: absolute;
@@ -135,10 +141,6 @@
 		/* transition: all var(--transition-in-time); */
 		font-size: 0.75rem;
 		white-space: nowrap;
-	}
-
-	.search-container {
-		align-items: center;
 	}
 
 	@media (max-width: 767px) {

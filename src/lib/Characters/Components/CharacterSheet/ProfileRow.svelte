@@ -5,6 +5,7 @@
 	import Textarea from '$lib/Shared/Components/Textarea.svelte';
 	import { getDistricts } from '$lib/Shared/Stores/getDistricts';
 	import { getSpecialties } from '$lib/Shared/Stores/getSpecialties';
+	import { formatCharacterSpecialties } from '$lib/Shared/FormatFunctions';
 
 	/**
 	 * @type {DC.Character}
@@ -46,9 +47,7 @@
 				</div>
 			{:else}
 				<span
-					>{character.attributes.specialties?.data?.length > 0
-						? character.attributes.specialties?.data?.map((s) => s.attributes?.name).join(', ')
-						: ''}</span
+					>{formatCharacterSpecialties(character)}</span
 				>
 			{/if}
 		</div>
