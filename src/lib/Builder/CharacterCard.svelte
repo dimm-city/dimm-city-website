@@ -99,7 +99,6 @@
 	}
 
 	.selected .menu-item {
-		/* clip-path: border-box; */
 		--aug-tl1: 0vh;
 		--aug-tr1: 0vh;
 		--aug-br1: 0vh;

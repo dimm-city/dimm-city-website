@@ -1,12 +1,11 @@
 <script>
 	import CharacterCard from '$lib/Builder/CharacterCard.svelte';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
-	import MenuItem from '$lib/Shared/Components/Menu/MenuItem.svelte';
 	import { jwt } from '$lib/Shared/Stores/UserStore';
 	import { getCharactersByUser } from '$lib/Shared/Stores/getCharacters';
 	import { StrapiClient } from '$lib/Shared/StrapiClient';
 	import { config } from '$lib/Shared/config';
-	import { createEventDispatcher, onMount } from 'svelte';
+	import { onMount } from 'svelte';
 
 	const client = new StrapiClient(config.apiBaseUrl, $jwt);
 
@@ -25,9 +24,8 @@
 	});
 	async function loadAvailableCharacters() {
 		const results = await getCharactersByUser($jwt);
-		console.log('ac', results);
 		if (results.data?.length > 0) {
-			availableCharacters = [...results.data];
+			availableCharacters = [...results.data];		
 		}
 	}
 
@@ -35,7 +33,7 @@
 	 * @param {any} tokenId
 	 * @param {MouseEvent} e
 	 */
-	async function loadCharacter(tokenId, e) {
+	export async function loadCharacter(tokenId, e) {
 		console.log('loadCharacter', tokenId);
 		const data = await client.loadBySlug('dimm-city/characters', tokenId, {
 			filters: {
@@ -104,9 +102,9 @@
 		margin: auto;
 	}
 
-    .character-card-container {
-        position: relative;
-    }
+	.character-card-container {
+		position: relative;
+	}
 	.character-card-container::before {
 		content: ' ';
 		position: absolute;

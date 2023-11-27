@@ -3,13 +3,11 @@
 	import DetailsPanel from '$lib/Builder/DetailsPanel.svelte';
 	import SkillTree from '$lib/Builder/SkillTree.svelte';
 	import Sheet from '$lib/Characters/Components/CharacterSheet/Sheet.svelte';
-	import HexMenu from '$lib/Shared/Components/Menu/HexMenu.svelte';
 	import Shell from '$lib/Shared/Shell/Shell.svelte';
 	import { jwt } from '$lib/Shared/Stores/UserStore';
 	import { StrapiClient } from '$lib/Shared/StrapiClient';
 	import { updateEntity } from '$lib/Shared/SvelteStrapi';
 	import { config } from '$lib/Shared/config';
-	import { writable } from 'svelte/store';
 	import EditCharacter from './CharacterEditor.svelte';
 	import MainMenu from '$lib/Shared/Shell/MainMenu.svelte';
 	import { formatCharacterSpecialties } from '$lib/Shared/FormatFunctions';
@@ -20,7 +18,6 @@
 	 */
 	export let data;
 
-	let characterSlug = data.citizen ?? 'dcs1r1-29';
 	let skillTreeSlug = data.skillTree;
 
 	/** @type {DC.Character} */
@@ -28,15 +25,16 @@
 
 	let skillTree = data.skillTreeData;
 
-	let mode = data.mode ?? 'select';
+	let mode = data.mode ?? 'select-character';
 
 	let originalCharacter = '';
 
 	const client = new StrapiClient(config.apiBaseUrl, $jwt);
 
+
 	function startEditing() {
 		originalCharacter = JSON.stringify(character);
-		changeMode('citizen');
+		changeMode('edit-character');
 	}
 
 	async function saveChanges() {
@@ -77,7 +75,7 @@
 	function cancelChanges(goBack = false) {
 		character = JSON.parse(originalCharacter);
 		if (goBack) {
-			changeMode('select');
+			changeMode('select-character');
 		}
 	}
 	async function loadSkillTree(tree) {
@@ -96,20 +94,19 @@
 	}
 
 	function printCharacter() {
-		//TODO
-		console.log('print character');
-		
+		//open url in new window
+		window.open(`/console/citizens/${character.attributes.tokenId}/print`, '_blank');	
 	}
 </script>
 
 <Shell title={character?.attributes.name ?? 'Sporo Builder'} titleUrl="/console/builder">
 	{#if mode === 'skill-tree'}
 		<SkillTree data={skillTree} />
-	{:else if mode === 'citizen'}
+	{:else if mode === 'edit-character'}
 		<div class="citizen">
 			<EditCharacter bind:character />
 		</div>
-	{:else if mode === 'overview'}
+	{:else if mode === 'view-character'}
 		<div class="overview">
 			<Sheet bind:character isEditing={false} on:save />
 		</div>
@@ -117,10 +114,11 @@
 		<CharacterSelector
 			bind:selectedCharacter={character}
 			on:edit={startEditing}
-			on:view={() => changeMode('overview')}
+			on:print={printCharacter}
+			on:view={() => changeMode('view-character')}
 		/>
 	{/if}
-	{#if mode !== 'select'}
+	{#if mode !== 'select-character'}
 		<DetailsPanel side="left" bind:showDetails={showMainPanel}>
 			<div class="main-panel">
 				{#if character?.id > 0}
@@ -154,16 +152,16 @@
 		</DetailsPanel>
 	{/if}
 	<svelte:fragment slot="left-button">
-		{#if mode !== 'select'}
+		{#if mode !== 'select-character'}
 			<button
 				class="dropdown-button aug-button"
 				data-augmented-ui="all-hex both"
 				title="select character"
-				on:click={() => changeMode('select')}
+				on:click={() => changeMode('select-character')}
 			>
 				<i class="bi bi-arrow-left" />
 			</button>
-		{:else if mode == 'citizen'}
+		{:else if mode == 'edit-character'}
 			<button
 				class="dropdown-button aug-button"
 				data-augmented-ui="all-hex both"
@@ -177,7 +175,7 @@
 		{/if}
 	</svelte:fragment>
 	<svelte:fragment slot="right-button">
-		{#if mode == 'citizen'}
+		{#if mode == 'edit-character'}
 			<button
 				class="aug-button"
 				data-augmented-ui="all-hex both"
@@ -196,9 +194,9 @@
 			>
 		{:else}
 			<!-- <HexMenu title="action menu">
-				<button on:click={() => changeMode('overview')}>Overview</button>
+				<button on:click={() => changeMode('view-character')}>Overview</button>
 				<button on:click={() => startEditing()}>Edit Character</button>
-				<button on:click={() => changeMode('select')}>Select Character</button>
+				<button on:click={() => changeMode('select-character')}>Select Character</button>
 			</HexMenu> -->
 		{/if}
 	</svelte:fragment>
