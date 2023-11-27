@@ -4,83 +4,154 @@
 	import Textarea from '$lib/Shared/Components/Textarea.svelte';
 	import { getDistricts } from '$lib/Shared/Stores/getDistricts';
 	import { getSpecialties } from '$lib/Shared/Stores/getSpecialties';
+	import { onMount } from 'svelte';
 
+	onMount(async () => {
+		console.log('character', character);
+	});
 	/**
 	 * @type {DC.Character}
 	 */
 	export let character;
+
+	const ageOptions = [
+		'Childhood',
+		'Adolescence',
+		'Young Adulthood',
+		'Adulthood',
+		'Middle-Age',
+		'Old Age',
+		'Ancient'
+	];
+
 	const flaws = [
-		{ id: 'fearful', name: 'Fearful' },
-		{ id: 'paranoia', name: 'Paranoia' },
-		{ id: 'megalomaniac', name: 'Megalomaniac' },
-		{ id: 'addictive-personality', name: 'Addictive Personality' },
-		{ id: 'foolish', name: 'Foolish' },
-		{ id: 'impulsive', name: 'Impulsive' },
-		{ id: 'impish', name: 'Impish' },
-		{ id: 'socially-awkward', name: 'Socially Awkward' },
-		{ id: 'oblivious', name: 'Oblivious' },
-		{ id: 'cold-hearted', name: 'Cold-hearted' },
-		{ id: 'thief', name: 'Thief' },
-		{ id: 'control-freak', name: 'Control Freak' },
-		{ id: 'hedonist', name: 'Hedonist' },
-		{ id: 'technophile', name: 'Technophile' },
-		{ id: 'liar', name: 'Liar' },
-		{ id: 'cynic', name: 'Cynic' },
-		{ id: 'reckless', name: 'Reckless' },
-		{ id: 'solipsist', name: 'Solipsist' },
-		{ id: 'wrathful', name: 'Wrathful' },
-		{ id: 'fatalistic', name: 'Fatalistic' },
-		{ id: 'vain', name: 'Vain' },
-		{ id: 'nihilist', name: 'Nihilist' }
+		'Fearful',
+		'Paranoia',
+		'Megalomaniac',
+		'Addictive Personality',
+		'Foolish',
+		'Impulsive',
+		'Impish',
+		'Socially Awkward',
+		'Oblivious',
+		'Cold-hearted',
+		'Thief',
+		'Control Freak',
+		'Hedonist',
+		'Technophile',
+		'Liar',
+		'Cynic',
+		'Reckless',
+		'Solipsist',
+		'Wrathful',
+		'Fatalistic',
+		'Vain',
+		'Nihilist'
 	];
 
 	const ideals = [
-		{ id: 'individualism', name: 'Individualism' },
-		{ id: 'generosity', name: 'Generosity' },
-		{ id: 'anti-establishment', name: 'Anti-establishment' },
-		{ id: 'anti-technology', name: 'Anti-technology' },
-		{ id: 'pragmatism', name: 'Pragmatism' },
-		{ id: 'pleasure', name: 'Pleasure' },
-		{ id: 'technological-adaptation', name: 'Technological Adaptation' },
-		{ id: 'honor', name: 'Honor' },
-		{ id: 'information-freedom', name: 'Information Freedom' },
-		{ id: 'salvation', name: 'Salvation' },
-		{ id: 'empathy-for-the-marginalized', name: 'Empathy for the Marginalized' },
-		{ id: 'power', name: 'Power' },
-		{ id: 'survival-and-adaptability', name: 'Survival and Adaptability' },
-		{ id: 'the-ends', name: 'The Ends' },
-		{ id: 'transmortalism', name: 'Transmortalism' },
-		{ id: 'order', name: 'Order' },
-		{ id: 'justice', name: 'Justice' },
-		{ id: 'heroism', name: 'Heroism' },
-		{ id: 'compassion', name: 'Compassion' }
+		'Individualism',
+		'Generosity',
+		'Anti-establishment',
+		'Anti-technology',
+		'Pragmatism',
+		'Pleasure',
+		'Technological Adaptation',
+		'Honor',
+		'Information Freedom',
+		'Salvation',
+		'Empathy for the Marginalized',
+		'Power',
+		'Survival and Adaptability',
+		'The Ends',
+		'Transmortalism',
+		'Order',
+		'Justice',
+		'Heroism',
+		'Compassion'
 	];
 
 	const vibes = [
-		{ id: 'long-shadow', name: 'Long shadow' },
-		{ id: 'sleepy-mood', name: 'Sleepy mood' },
-		{ id: 'street-smart', name: 'Street-smart' },
-		{ id: 'outcast-mannerisms', name: 'Outcast mannerisms' },
-		{ id: 'permanent-grimace', name: 'Permanent grimace' },
-		{ id: 'corporate-air', name: 'Corporate air' },
-		{ id: 'bursting-energy', name: 'Bursting energy' },
-		{ id: 'mysterious-aspect', name: 'Mysterious aspect' },
-		{ id: 'gentle-disposition', name: 'Gentle disposition' },
-		{ id: 'androgynous-mien', name: 'Androgynous mien' },
-		{ id: 'thousand-yard-stare', name: 'Thousand-yard stare' },
-		{ id: 'high-strung', name: 'High-strung' },
-		{ id: 'brooding-presence', name: 'Brooding presence' },
-		{ id: 'friendly-demeanor', name: 'Friendly demeanor' },
-		{ id: 'meandering-gaze', name: 'Meandering gaze' },
-		{ id: 'graceful-carriage', name: 'Graceful carriage' },
-		{ id: 'captivating-grin', name: 'Captivating grin' },
-		{ id: 'raucous-laugh', name: 'Raucous laugh' },
-		{ id: 'flawless-poise', name: 'Flawless poise' },
-		{ id: 'fiery-temper', name: 'Fiery temper' },
-		{ id: 'menacing-aura', name: 'Menacing aura' }
+		'Long shadow',
+		'Sleepy mood',
+		'Street-smart',
+		'Outcast mannerisms',
+		'Permanent grimace',
+		'Corporate air',
+		'Bursting energy',
+		'Mysterious aspect',
+		'Gentle disposition',
+		'Androgynous mien',
+		'Thousand-yard stare',
+		'High-strung',
+		'Brooding presence',
+		'Friendly demeanor',
+		'Meandering gaze',
+		'Graceful carriage',
+		'Captivating grin',
+		'Raucous laugh',
+		'Flawless poise',
+		'Fiery temper',
+		'Menacing aura'
 	];
+
+	
+	async function setVibeItem() {
+		const vibesList = vibes.map((item) => ({ id: item, name: item }));
+		character.attributes.vibeItem = vibesList.find((v) => v.name == character.attributes.vibe);
+		return vibesList;
+	}
+
+	async function setFlawItem() {
+		const flawsList = flaws.map((item) => ({ id: item, name: item }));
+		character.attributes.flawItem = flawsList.find((v) => v.name == character.attributes.flaw);
+		return flawsList;
+	}
+
+	async function setIdealItem() {
+		const idealsList = ideals.map((item) => ({ id: item, name: item }));
+		character.attributes.idealItem = idealsList.find((v) => v.name == character.attributes.ideal);
+		return idealsList;
+
+	}
 </script>
 
+<div class="grid-container">
+	<div class="label">Race:</div>
+	<div class="value">
+		{#if character.attributes.race}
+			<span>{character.attributes.race.data?.attributes?.name}</span>
+		{/if}
+	</div>
+	<div class="label">Pronouns:</div>
+	<div class="value">
+		<Input bind:value={character.attributes.pronouns} class="inline" maxlength="50" />
+	</div>
+	<div class="label">Age:</div>
+	<div class="value aug-select">
+		<Select
+			value={character.attributes.age}
+			bind:justValue={character.attributes.age}
+			items={ageOptions}
+		/>
+	</div>
+	<div class="label">Height:</div>
+	<div class="value suffix">
+		<Input bind:value={character.attributes.height} class="inline" />
+
+		<!-- <span>cm</span> -->
+	</div>
+	<div class="label">Weight:</div>
+	<div class="value suffix">
+		<Input bind:value={character.attributes.weight} class="inline" />
+
+		<!-- <span>kg</span> -->
+	</div>
+	<div class="label">Eyes:</div>
+	<div class="value"><span>{character.attributes.eyes || ''}</span></div>
+	<div class="label">Skin:</div>
+	<div class="value"><span>{character.attributes.skin || ''}</span></div>
+</div>
 <div class="profile-row">
 	<div class="row-frame" data-augmented-ui="tl-clip-x tr-clip-x br-clip-x bl-clip-x both" />
 	<section class="section-container profile">
@@ -108,12 +179,13 @@
 
 		<div class="label">Ideal:</div>
 		<div class="value aug-select">
-			<Select
-				items={ideals}
+			<Select	
+				loadOptions={()=> setIdealItem()}	
 				placeholder="Select an ideal"
-				label="name"
 				itemId="id"
-				bind:justValue={character.attributes.beliefs}
+				label="name"
+				bind:value={character.attributes.idealItem}
+				bind:justValue={character.attributes.ideal}
 			/>
 		</div>
 
@@ -137,8 +209,16 @@
 			</div>
 		</div>
 		<div class="label">Vibe:</div>
-		<div class="value">
-			<Input bind:value={character.attributes.vibe} maxlength="50" class="inline" />
+		<div class="value aug-select">
+			<Select	
+				loadOptions={()=> setVibeItem()}	
+				placeholder="Select an vibe"
+				itemId="id"
+				label="name"
+				bind:value={character.attributes.vibeItem}
+				bind:justValue={character.attributes.vibe}
+			/>
+			<!-- <Input value={JSON.stringify(character.attributes.vibe)} maxlength="50" class="inline" /> -->
 		</div>
 		<div class="label">Origin:</div>
 		<div class="value">
@@ -160,13 +240,14 @@
 			</div>
 		</div>
 
-		<div class="label">Flaws:</div>
+		<div class="label">Flaw:</div>
 		<div class="value aug-select">
-			<Select
-				items={flaws}
-				placeholder="Select an flaw"
-				label="name"
+			<Select	
+				loadOptions={()=> setFlawItem()}	
+				placeholder="Select an vibe"
 				itemId="id"
+				label="name"
+				bind:value={character.attributes.flawItem}
 				bind:justValue={character.attributes.flaw}
 			/>
 		</div>
