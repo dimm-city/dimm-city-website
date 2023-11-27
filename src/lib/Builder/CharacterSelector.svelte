@@ -104,6 +104,8 @@
 
 	.character-card-container {
 		position: relative;
+        width: fit-content;
+        margin: auto;
 	}
 	.character-card-container::before {
 		content: ' ';
