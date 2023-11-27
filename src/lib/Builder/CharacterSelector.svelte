@@ -61,13 +61,11 @@
 				<MenuItem on:click={() => loadCharacter(c.attributes.tokenId)} selected={c.id === selectedCharacter?.id}>
 					<CharacterCard character={c} />
                     {#if c.id === selectedCharacter?.id}
-                        <!-- CODE: add a panel that slides in from the bottom it should contain three buttons
-                            1. edit
-                            2. view
-                            3. print
-
-                            The buttons should use the aug-button class
-                        -->
+                        <div class="panel">
+                            <button class="aug-button">Edit</button>
+                            <button class="aug-button">View</button>
+                            <button class="aug-button">Print</button>
+                        </div>
                     {/if}
 				</MenuItem>
 			{/each}
