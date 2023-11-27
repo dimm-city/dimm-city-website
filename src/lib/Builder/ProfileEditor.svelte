@@ -323,11 +323,11 @@
 
 	@media screen and (max-width: 767px) {
 		.section-container.profile {
-			grid-template-columns: min-content 1fr;
-			grid-template-rows: repeat(8, min-content);
+			grid-template-columns: 1fr;
+			grid-template-rows: repeat(16, min-content);
 		}
-		.label {
-			align-items: start;
+		.label, .value {
+			width: 100%;
 		}
 	}
 </style>
