@@ -10,7 +10,6 @@
 
 	const client = new StrapiClient(config.apiBaseUrl, $jwt);
 
-
 	/**
 	 * @type {any[]}
 	 */
@@ -54,11 +53,11 @@
 			}
 		});
 
-        selectedCharacter = {
-            ...data
-        };
+		selectedCharacter = {
+			...data
+		};
 
-        //e.target?.scrollIntoView({ behavior: 'smooth' });
+		//e.target?.scrollIntoView({ behavior: 'smooth' });
 	}
 </script>
 
@@ -67,13 +66,16 @@
 		<h1>Select your Sporo</h1>
 		<div class="characters">
 			{#each availableCharacters as c}
-				
-					<CharacterCard character={c} 
-                        on:click={(e) => loadCharacter(c.attributes.tokenId, e)}
-                        on:edit on:view on:print
-					    selected={c.id === selectedCharacter?.id} />
-
-					
+				<div class="character-card-container" class:selected={c.id === selectedCharacter?.id}>
+					<CharacterCard
+						character={c}
+						on:click={(e) => loadCharacter(c.attributes.tokenId, e)}
+						on:edit
+						on:view
+						on:print
+						selected={c.id === selectedCharacter?.id}
+					/>
+				</div>
 			{/each}
 		</div>
 	</div>
@@ -82,7 +84,6 @@
 <style>
 	:root {
 		--dc-character-card-transition: bottom 0.2s ease-in-out, opacity 0.1s ease-in-out;
-
 	}
 	h1 {
 		text-align: center;
@@ -93,7 +94,7 @@
 	.select .characters {
 		display: grid;
 		width: 100%;
-		row-gap: 2rem;
+		gap: 2rem;
 		margin-inline: auto;
 		--dc-menu-item-aspect-ratio: auto;
 		grid-template-columns: repeat(auto-fill, minmax(150px, 300px));
@@ -103,6 +104,22 @@
 		margin: auto;
 	}
 
+    .character-card-container {
+        position: relative;
+    }
+	.character-card-container::before {
+		content: ' ';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: -1;
+	}
+	.character-card-container.selected::before {
+		box-shadow: var(--dc-menu-item-selected-drop-shadow);
+		transition: all 0.1s ease-in-out;
+	}
 
 	@media (max-width: 800px) {
 		.select .characters {

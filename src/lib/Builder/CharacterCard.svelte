@@ -38,9 +38,9 @@
 		</div>
 	</div>
 	<div class="panel" class:selected>
-		<button class="aug-button" on:click={() => dispatcher('edit', character)}>Edit</button>
-		<button class="aug-button" on:click={() => dispatcher('view', character)}>View</button>
-		<button class="aug-button" on:click={() => dispatcher('print', character)}>Print</button>
+		<button data-augmented-ui  class="aug-button" on:click={() => dispatcher('edit', character)}>Edit</button>
+		<button data-augmented-ui class="aug-button" on:click={() => dispatcher('view', character)}>View</button>
+		<button data-augmented-ui class="aug-button" on:click={() => dispatcher('print', character)}>Print</button>
 	</div>
 </div>
 
@@ -94,7 +94,7 @@
 		z-index: -1;
 	}
 	.menu-item-container.selected::before {
-		box-shadow: var(--dc-menu-item-selected-drop-shadow);
+		box-shadow: inset var(--dc-menu-item-selected-drop-shadow);
 		transition: all 0.1s ease-in-out;
 	}
 
@@ -111,12 +111,25 @@
 
 	.panel {
 		position: absolute;
-		bottom: -50px;
+		bottom: -500px;
 		opacity: 0;
-		background: rgba(0, 0, 0, 0.95);
-		width: 100%;
+    right: 0;
+    left: 0;
+		background: black;
+    margin: 1rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    border: 1px solid var(--third-accent);
 		transition: var(--dc-character-card-transition);
 	}
+
+  .panel .aug-button{
+    --aug-tr1: 0.5rem;
+  }
 	.selected.panel {
 		bottom: 0;
 		opacity: 1;
