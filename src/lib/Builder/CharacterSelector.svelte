@@ -70,7 +70,7 @@
 				
 					<CharacterCard character={c} 
                         on:click={(e) => loadCharacter(c.attributes.tokenId, e)}
-                        on:edit on:view
+                        on:edit on:view on:print
 					    selected={c.id === selectedCharacter?.id} />
 
 					

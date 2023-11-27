@@ -33,7 +33,7 @@
 
 			<div class="details">
 				<p>{formatCharacterSpecialties(character)}</p>
-				<p>{character.attributes.currentLocation?.data?.attributes.name}</p>
+				<p>{character.attributes.currentLocation?.data?.attributes.name ?? 'Unknown'}</p>
 			</div>
 		</div>
 	</div>

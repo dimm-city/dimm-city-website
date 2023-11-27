@@ -94,6 +94,12 @@
 		mode = newMode;
 		showMainPanel = false;
 	}
+
+	function printCharacter() {
+		//TODO
+		console.log('print character');
+		
+	}
 </script>
 
 <Shell title={character?.attributes.name ?? 'Sporo Builder'} titleUrl="/console/builder">
@@ -152,7 +158,7 @@
 			<button
 				class="dropdown-button aug-button"
 				data-augmented-ui="all-hex both"
-				title="toggle main panel"
+				title="select character"
 				on:click={() => changeMode('select')}
 			>
 				<i class="bi bi-arrow-left" />
