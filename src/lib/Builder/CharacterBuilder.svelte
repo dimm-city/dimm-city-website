@@ -31,7 +31,6 @@
 
 	const client = new StrapiClient(config.apiBaseUrl, $jwt);
 
-
 	function startEditing() {
 		originalCharacter = JSON.stringify(character);
 		changeMode('edit-character');
@@ -95,7 +94,7 @@
 
 	function printCharacter() {
 		//open url in new window
-		window.open(`/console/citizens/${character.attributes.tokenId}/print`, '_blank');	
+		window.open(`/console/citizens/${character.attributes.tokenId}/print`, '_blank');
 	}
 </script>
 
@@ -103,9 +102,7 @@
 	{#if mode === 'skill-tree'}
 		<SkillTree data={skillTree} />
 	{:else if mode === 'edit-character'}
-		<div class="citizen">
-			<EditCharacter bind:character />
-		</div>
+		<EditCharacter bind:character />
 	{:else if mode === 'view-character'}
 		<div class="overview">
 			<Sheet bind:character isEditing={false} on:save />
@@ -118,7 +115,7 @@
 			on:view={() => changeMode('view-character')}
 		/>
 	{/if}
-	{#if mode !== 'select-character'}
+	{#if mode === 'skill-tree'}
 		<DetailsPanel side="left" bind:showDetails={showMainPanel}>
 			<div class="main-panel">
 				{#if character?.id > 0}
@@ -209,13 +206,14 @@
 		margin-bottom: 2rem;
 	}
 
-	.overview,
-	.citizen {
+	.overview {
 		overflow-y: auto;
 		padding-left: 3rem;
-
+		display: grid;
+		height: 100%;
 		color: var(--light);
 	}
+
 	.main-panel {
 		padding-top: 1rem;
 	}

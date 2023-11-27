@@ -91,8 +91,10 @@
  * @property {string} attributes.vibe - The vibe of the character
  * @property {string} attributes.noticeableTraits - The noticeable traits of the character
  * @property {string} attributes.backstory - The backstory of the character
- * @property {string} attributes.beliefs - The beliefs of the character
- * @property {string} attributes.flaws - The flaws of the character
+ * @property {string} attributes.beliefs - DEPRECATED The beliefs of the character
+ * @property {string} attributes.ideal - The beliefs of the character
+ * @property {string} attributes.flaws - DEPRECATED The flaws of the character
+ * @property {string} attributes.flaw - The flaws of the character
  * @property {string} attributes.dreams - The dreams of the character
  * @property {string} attributes.clothing - The clothing of the character
  * @property {string} attributes.movementDescription - The movement description of the character

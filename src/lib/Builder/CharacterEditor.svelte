@@ -3,6 +3,7 @@
 	import StoryRow from '../Characters/Components/CharacterSheet/StoryRow.svelte';
 	import SkillTree from './SkillTree.svelte';
 	import ProfileEditor from './ProfileEditor.svelte';
+	import CharacterStory from './CharacterStory.svelte';
 
 	/**
 	 * @type {DC.Character}
@@ -10,46 +11,69 @@
 	export let character;
 	let currentTab = 'profile';
 
-    let selectedSkillTree = null;
-
+	let selectedSkillTree = null;
 </script>
 
-<div class="tabs">
-	<button class="aug-button tab" class:active={currentTab === 'profile'} data-augmented-ui on:click={() => (currentTab = 'profile')}
-		>Profile</button
-	>
-	<button class="aug-button tab" class:active={currentTab === 'story'} data-augmented-ui on:click={() => (currentTab = 'story')}
-		>Story</button
-	>
-	<button class="aug-button tab" class:active={currentTab === 'tech'} data-augmented-ui on:click={() => (currentTab = 'tech')}
-		>Tech</button
-	>
-	<button class="aug-button tab" class:active={currentTab === 'skills'} data-augmented-ui on:click={() => (currentTab = 'skills')}
-		>Skills</button
-	>
-	<button class="aug-button tab"  class:active={currentTab === 'points'} data-augmented-ui on:click={() => (currentTab = 'points')}
-		>Points</button
-	>
-</div>
-<div class="tabs-container">
-{#if currentTab === 'profile'}
-	<!-- <StatsRow bind:character isEditing={true} />
-	<ProfileRow bind:character isEditing={true} /> -->
-    <ProfileEditor bind:character />
-{:else if currentTab === 'tech'}
-	<ListsRow bind:character isEditing={true} />
-{:else if currentTab === 'skills'}
-	<SkillTree bind:data={selectedSkillTree}/>
-{:else if currentTab === 'story'}
-	<StoryRow bind:character isEditing={true} />
-{/if}
+<div class="character-editor-container">
+	<div class="tabs">
+		<button
+			class="aug-button tab"
+			class:active={currentTab === 'profile'}
+			data-augmented-ui
+			on:click={() => (currentTab = 'profile')}>Profile</button
+		>
+		<button
+			class="aug-button tab"
+			class:active={currentTab === 'story'}
+			data-augmented-ui
+			on:click={() => (currentTab = 'story')}>Story</button
+		>
+		<button
+			class="aug-button tab"
+			class:active={currentTab === 'tech'}
+			data-augmented-ui
+			on:click={() => (currentTab = 'tech')}>Tech</button
+		>
+		<button
+			class="aug-button tab"
+			class:active={currentTab === 'skills'}
+			data-augmented-ui
+			on:click={() => (currentTab = 'skills')}>Skills</button
+		>
+		<button
+			class="aug-button tab"
+			class:active={currentTab === 'points'}
+			data-augmented-ui
+			on:click={() => (currentTab = 'points')}>Points</button
+		>
+	</div>
+	<div class="tabs-container">
+		{#if currentTab === 'profile'}
+			<!-- <StatsRow bind:character isEditing={true} /> -->
+			<ProfileEditor bind:character />
+		{:else if currentTab === 'tech'}
+			<ListsRow bind:character isEditing={true} />
+		{:else if currentTab === 'skills'}
+			<SkillTree bind:data={selectedSkillTree} />
+		{:else if currentTab === 'story'}
+			<CharacterStory bind:character />
+		{/if}
+	</div>
 </div>
 
 <style>
+	.character-editor-container {
+		
+		display: grid;
+		grid-template-rows: min-content auto;
+		height: 100%;
+		color: var(--light);
+		overflow: hidden;
+	}
 	.tabs {
 		display: flex;
 		justify-content: space-around;
-		padding-bottom: 2em;        
+		padding-bottom: 2em;
 	}
 
 	.tab {
@@ -88,8 +112,9 @@
 		--aug-bl1: 0rem;
 	}
 
-    .tabs-container {
-        display: gird;
-        min-height: 100%;
-    }
+	.tabs-container {
+		display: grid;
+		min-height: 100%;
+		overflow: hidden;
+	}
 </style>
