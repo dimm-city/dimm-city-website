@@ -40,6 +40,7 @@
 
 <style>
 	:root {
+		--dc-menu-item-background-color: transparent;
 		--dc-menu-item-selected-color: rgb(255, 20, 204, 0.35);
 		--dc-menu-item-selected-drop-shadow-color: rgb(255, 20, 204, 0.85);
 		--dc-menu-item-selected-drop-shadow: 0 0 20px 10px
@@ -47,7 +48,7 @@
 	}
 	.menu-item-container {
 		position: relative;
-		background: transparent;
+		background: var(--dc-menu-item-background-color);
 		display: grid;
 		height: var(--dc-menu-item-height);
 		width: var(--dc-menu-item-width);

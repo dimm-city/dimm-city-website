@@ -1,7 +1,5 @@
 <script>
-	import StatsRow from '../Characters/Components/CharacterSheet/StatsRow.svelte';
 	import ListsRow from '../Characters/Components/CharacterSheet/ListsRow.svelte';
-	import ProfileRow from '../Characters/Components/CharacterSheet/ProfileRow.svelte';
 	import StoryRow from '../Characters/Components/CharacterSheet/StoryRow.svelte';
 	import SkillTree from './SkillTree.svelte';
 	import ProfileEditor from './ProfileEditor.svelte';

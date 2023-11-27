@@ -45,9 +45,7 @@ export async function getCharactersByUser(jwt) {
 	// Include only the specified fields and relationships in the results.
 	// Filter the results to only include live records in the 'en' locale.
 	const results = await strapi.search('dimm-city/my/characters', {
-		sort: ['name:asc'],
-		publicationState: 'live',
-		locale: ['en']
+		sort: ['name:asc']
 	});
 
 	// Return the search results.
