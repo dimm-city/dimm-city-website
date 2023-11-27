@@ -95,7 +95,6 @@
 		'Menacing aura'
 	];
 
-	
 	async function setVibeItem() {
 		const vibesList = vibes.map((item) => ({ id: item, name: item }));
 		character.attributes.vibeItem = vibesList.find((v) => v.name == character.attributes.vibe);
@@ -112,48 +111,48 @@
 		const idealsList = ideals.map((item) => ({ id: item, name: item }));
 		character.attributes.idealItem = idealsList.find((v) => v.name == character.attributes.ideal);
 		return idealsList;
-
 	}
 </script>
 
-<div class="grid-container">
-	<div class="label">Race:</div>
-	<div class="value">
-		{#if character.attributes.race}
-			<span>{character.attributes.race.data?.attributes?.name}</span>
-		{/if}
-	</div>
-	<div class="label">Pronouns:</div>
-	<div class="value">
-		<Input bind:value={character.attributes.pronouns} class="inline" maxlength="50" />
-	</div>
-	<div class="label">Age:</div>
-	<div class="value aug-select">
-		<Select
-			value={character.attributes.age}
-			bind:justValue={character.attributes.age}
-			items={ageOptions}
-		/>
-	</div>
-	<div class="label">Height:</div>
-	<div class="value suffix">
-		<Input bind:value={character.attributes.height} class="inline" />
-
-		<!-- <span>cm</span> -->
-	</div>
-	<div class="label">Weight:</div>
-	<div class="value suffix">
-		<Input bind:value={character.attributes.weight} class="inline" />
-
-		<!-- <span>kg</span> -->
-	</div>
-	<div class="label">Eyes:</div>
-	<div class="value"><span>{character.attributes.eyes || ''}</span></div>
-	<div class="label">Skin:</div>
-	<div class="value"><span>{character.attributes.skin || ''}</span></div>
-</div>
 <div class="profile-row">
 	<div class="row-frame" data-augmented-ui="tl-clip-x tr-clip-x br-clip-x bl-clip-x both" />
+
+	<div class="grid-container">
+		<div class="label">Race:</div>
+		<div class="value">
+			{#if character.attributes.race}
+				<span>{character.attributes.race.data?.attributes?.name}</span>
+			{/if}
+		</div>
+		<div class="label">Pronouns:</div>
+		<div class="value">
+			<Input bind:value={character.attributes.pronouns} class="inline" maxlength="50" />
+		</div>
+		<div class="label">Age:</div>
+		<div class="value aug-select">
+			<Select
+				value={character.attributes.age}
+				bind:justValue={character.attributes.age}
+				items={ageOptions}
+			/>
+		</div>
+		<div class="label">Height:</div>
+		<div class="value suffix">
+			<Input bind:value={character.attributes.height} class="inline" />
+
+			<!-- <span>cm</span> -->
+		</div>
+		<div class="label">Weight:</div>
+		<div class="value suffix">
+			<Input bind:value={character.attributes.weight} class="inline" />
+
+			<!-- <span>kg</span> -->
+		</div>
+		<div class="label">Eyes:</div>
+		<div class="value"><span>{character.attributes.eyes || ''}</span></div>
+		<div class="label">Skin:</div>
+		<div class="value"><span>{character.attributes.skin || ''}</span></div>
+	</div>
 	<section class="section-container profile">
 		<div class="label">Specialties:</div>
 		<div class="value">
@@ -179,8 +178,8 @@
 
 		<div class="label">Ideal:</div>
 		<div class="value aug-select">
-			<Select	
-				loadOptions={()=> setIdealItem()}	
+			<Select
+				loadOptions={() => setIdealItem()}
 				placeholder="Select an ideal"
 				itemId="id"
 				label="name"
@@ -210,9 +209,9 @@
 		</div>
 		<div class="label">Vibe:</div>
 		<div class="value aug-select">
-			<Select	
-				loadOptions={()=> setVibeItem()}	
-				placeholder="Select an vibe"
+			<Select
+				loadOptions={() => setVibeItem()}
+				placeholder="Select a vibe"
 				itemId="id"
 				label="name"
 				bind:value={character.attributes.vibeItem}
@@ -242,9 +241,9 @@
 
 		<div class="label">Flaw:</div>
 		<div class="value aug-select">
-			<Select	
-				loadOptions={()=> setFlawItem()}	
-				placeholder="Select an vibe"
+			<Select
+				loadOptions={() => setFlawItem()}
+				placeholder="Select a flaw"
 				itemId="id"
 				label="name"
 				bind:value={character.attributes.flawItem}
@@ -326,7 +325,8 @@
 			grid-template-columns: 1fr;
 			grid-template-rows: repeat(16, min-content);
 		}
-		.label, .value {
+		.label,
+		.value {
 			width: 100%;
 		}
 	}

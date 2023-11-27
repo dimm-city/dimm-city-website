@@ -1,22 +1,14 @@
 <script>
-	//@ts-nocheck
-	import Select from 'svelte-select';
-	import Input from '$lib/Shared/Components/Input.svelte';
-	import Textarea from '$lib/Shared/Components/Textarea.svelte';
-	import { getDistricts } from '$lib/Shared/Stores/getDistricts';
-	import { getSpecialties } from '$lib/Shared/Stores/getSpecialties';
 	import { formatCharacterSpecialties } from '$lib/Shared/FormatFunctions';
 
 	/**
 	 * @type {DC.Character}
 	 */
 	export let character;
-	export let isEditing = false;
 </script>
 
 <div class="profile-row">
 	<div class="row-frame" data-augmented-ui="tl-clip-x tr-clip-x br-clip-x bl-clip-x both" />
-	<!-- <div class="profile-heading"><h3>Profile</h3></div> -->
 	<section class="section-container profile">
 		<div class="label">Specialties:</div>
 		<div class="value">
@@ -49,11 +41,6 @@
 </div>
 
 <style>
-	h3 {
-		margin: 0;
-		color: var(--fourth-accent);
-	}
-
 	.section-container {
 		position: relative;
 		display: flex;
@@ -114,23 +101,13 @@
 		--aug-bl: 13px;
 		--aug-br: 13px;
 	}
-	.profile-heading {
-		grid-area: heading;
-	}
-
-	.current-location {
-		display: flex;
-		width: 100%;
-		color: var(--third-accent);
-		font-family: var(--main-font-family);
-	}
 
 	@media screen and (max-width: 767px) {
 		.section-container.profile {
 			grid-template-columns: min-content 1fr;
 			grid-template-rows: repeat(8, min-content);
 		}
-		.label{
+		.label {
 			align-items: start;
 		}
 	}

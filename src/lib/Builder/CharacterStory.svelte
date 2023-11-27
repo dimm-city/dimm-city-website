@@ -12,11 +12,11 @@
 	<div class="row-frame" data-augmented-ui="tl-clip-x tr-clip-x br-clip-inset bl-clip-inset both" />
 	
 	<div class="backstory"><h2>Backstory</h2>
-		<Textarea {isEditing} bind:data={character.attributes.backstory} />
+		<Textarea {isEditing} bind:value={character.attributes.backstory} />
 	</div>
 	<div class="dreams">
 		<h2>Dreams</h2>
-		<Textarea {isEditing} bind:data={character.attributes.dreams} />
+		<Textarea {isEditing} bind:value={character.attributes.dreams} />
 	</div>
 </div>
 

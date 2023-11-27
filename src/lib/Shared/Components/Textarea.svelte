@@ -1,5 +1,5 @@
-<script lang="ts">
-	export let value: any = '';
+<script >
+	export let value = '';
 </script>
 
 <div data-augmented-ui class="aug-textarea" disabled={$$props.disabled}>
