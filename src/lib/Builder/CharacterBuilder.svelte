@@ -64,7 +64,7 @@
 			}
 		});
 
-		changeMode('overview');
+		changeMode('citizen');
 	}
 
 	function startEditing() {
@@ -84,8 +84,8 @@
 		delete importData.mainVideo;
 		delete importData.mainAudio;
 
-		importData.currentLocation = character.attributes.currentLocation?.data?.id;
-		importData.originLocation = character.attributes.originLocation?.data?.id;
+		importData.currentLocation = character.attributes.currentLocation; 
+		importData.originLocation = character.attributes.originLocation;
 
 		if (character.attributes.specialties.data?.length > 0)
 			importData.specialties = [

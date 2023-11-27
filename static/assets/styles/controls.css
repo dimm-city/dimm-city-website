@@ -171,7 +171,8 @@ input:read-only,
 }
 
 .aug-button:hover,
-.aug-button:focus {
+.aug-button:focus-visible,
+.aug-button.active {
 	background-color: #ffffff1e;
 	opacity: 1;
 	color: var(--third-accent);

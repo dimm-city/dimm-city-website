@@ -10,16 +10,11 @@
 	 * @type {DC.Character}
 	 */
 	export let character;
-	let originLocation;
 
-	$: if (!character.attributes.originLocation) character.attributes.originLocation = {};
-
-	$: character.attributes.originLocation.set = [character.attributes.originLocation?.data];
 </script>
 
 <div class="profile-row">
 	<div class="row-frame" data-augmented-ui="tl-clip-x tr-clip-x br-clip-x bl-clip-x both" />
-	<!-- <div class="profile-heading"><h3>Profile</h3></div> -->
 	<section class="section-container profile">
 		<div class="label">Specialties:</div>
 		<div class="value">
@@ -57,7 +52,7 @@
 					label="name"
 					itemId="id"
 					--list-z-index="8888888"
-					bind:value={character.attributes.currentLocation.data}
+					bind:justValue={character.attributes.currentLocation}
 				>
 					<div slot="selection" let:selection>
 						<span>{selection.name ?? selection.attributes?.name ?? ''}</span>
@@ -80,8 +75,7 @@
 					placeholder="Select a district"
 					label="name"
 					itemId="id"
-					bind:justValue={originLocation}
-					bind:value={character.attributes.originLocation.data}
+					bind:justValue={character.attributes.originLocation}
 				>
 					<div slot="selection" let:selection>
 						<span>{selection.name ?? selection.attributes?.name ?? ''}</span>

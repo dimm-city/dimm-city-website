@@ -3,6 +3,8 @@
 	import ListsRow from '../Characters/Components/CharacterSheet/ListsRow.svelte';
 	import ProfileRow from '../Characters/Components/CharacterSheet/ProfileRow.svelte';
 	import StoryRow from '../Characters/Components/CharacterSheet/StoryRow.svelte';
+	import SkillTree from './SkillTree.svelte';
+	import ProfileEditor from './ProfileEditor.svelte';
 
 	/**
 	 * @type {DC.Character}
@@ -10,33 +12,36 @@
 	export let character;
 	let currentTab = 'profile';
 
+    let selectedSkillTree = null;
+
 </script>
 
 <div class="tabs">
-	<button class="aug-button tab" data-augmented-ui on:click={() => (currentTab = 'profile')}
+	<button class="aug-button tab" class:active={currentTab === 'profile'} data-augmented-ui on:click={() => (currentTab = 'profile')}
 		>Profile</button
 	>
-	<button class="aug-button tab" data-augmented-ui on:click={() => (currentTab = 'story')}
+	<button class="aug-button tab" class:active={currentTab === 'story'} data-augmented-ui on:click={() => (currentTab = 'story')}
 		>Story</button
 	>
-	<button class="aug-button tab" data-augmented-ui on:click={() => (currentTab = 'tech')}
+	<button class="aug-button tab" class:active={currentTab === 'tech'} data-augmented-ui on:click={() => (currentTab = 'tech')}
 		>Tech</button
 	>
-	<button class="aug-button tab" data-augmented-ui on:click={() => (currentTab = 'skills')}
+	<button class="aug-button tab" class:active={currentTab === 'skills'} data-augmented-ui on:click={() => (currentTab = 'skills')}
 		>Skills</button
 	>
-	<button class="aug-button tab" data-augmented-ui on:click={() => (currentTab = 'points')}
+	<button class="aug-button tab"  class:active={currentTab === 'points'} data-augmented-ui on:click={() => (currentTab = 'points')}
 		>Points</button
 	>
 </div>
 <div class="tabs-container">
 {#if currentTab === 'profile'}
-	<StatsRow bind:character isEditing={true} />
-	<ProfileRow bind:character isEditing={true} />
+	<!-- <StatsRow bind:character isEditing={true} />
+	<ProfileRow bind:character isEditing={true} /> -->
+    <ProfileEditor bind:character />
 {:else if currentTab === 'tech'}
 	<ListsRow bind:character isEditing={true} />
 {:else if currentTab === 'skills'}
-	<ProfileRow bind:character isEditing={true} />
+	<SkillTree bind:data={selectedSkillTree}/>
 {:else if currentTab === 'story'}
 	<StoryRow bind:character isEditing={true} />
 {/if}
