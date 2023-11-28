@@ -6,7 +6,7 @@ export const config = {
 	baseUrl: 'http://localhost:5173',
 	storageBaseUrl: '',
 	graphUrl: 'http://0.0.0.0:1337/graphql',
-	apiBaseUrl: 'http://0.0.0.0:1337/api',
+	apiBaseUrl: 'http://localhost:1337/api',
 	stripePublicKey:
 		'pk_test_51MmHcALeft6siyywTseJIs5awwWr469e2D9RQMI5a79oz1NGhg8ijvPNH1NbgMrM2aIn4KadqswLuTF2kc4tZVNp00UQj2pA8Z',
 	defaultSummaryQuery: null,
