@@ -110,17 +110,20 @@
 	}
 
 	@media (max-width: 768px) {
+		.details-panel {
+			bottom: 7rem;
+		}
 		.details-panel.shown {
 			width: 50dvw;
 		}
 		.details-panel.hidden {
-		/* visibility: collapse;*/
-		opacity: 0.5; 
-		width: 4ch;
+			/* visibility: collapse;*/
+			opacity: 0.5;
+			width: 4ch;
 		}
 	}
 
-		@media (max-width: 500px) {
+	@media (max-width: 500px) {
 		.details-panel.shown {
 			width: 90dvw;
 		}

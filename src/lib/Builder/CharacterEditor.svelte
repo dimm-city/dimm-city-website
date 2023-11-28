@@ -5,6 +5,7 @@
 	import SkillTreeSelector from './SkillTreeSelector.svelte';
 	import EditSkills from './EditSkills.svelte';
 	import StatsRow from '$lib/Characters/Components/CharacterSheet/StatsRow.svelte';
+	import ManageGear from './ManageGear.svelte';
 
 	/**
 	 * @type {DC.Character}
@@ -33,19 +34,19 @@
 			<span>Story</span></button
 		>
 		<button
-			title="tech"
-			class="aug-button tab"
-			class:active={currentTab === 'tech'}
-			data-augmented-ui
-			on:click={() => (currentTab = 'tech')}><i class="bi bi-file-lock" /><span>Tech</span></button
-		>
-		<button
 			title="skills"
 			class="aug-button tab"
 			class:active={currentTab === 'skills'}
 			data-augmented-ui
 			on:click={() => (currentTab = 'skills')}
 			><i class="bi bi-file-code" /><span>Skills</span></button
+		>
+		<button
+			title="tech"
+			class="aug-button tab"
+			class:active={currentTab === 'tech'}
+			data-augmented-ui
+			on:click={() => (currentTab = 'tech')}><i class="bi bi-file-lock" /><span>Tech</span></button
 		>
 		<button
 			title="appearance"
@@ -60,7 +61,7 @@
 		{#if currentTab === 'profile'}
 			<ProfileEditor bind:character />
 		{:else if currentTab === 'tech'}
-			<ListsRow bind:character isEditing={true} />
+			<ManageGear bind:character />
 		{:else if currentTab === 'skills'}
 			<EditSkills bind:character />
 		{:else if currentTab === 'story'}
@@ -131,6 +132,15 @@
 		display: grid;
 		min-height: 100%;
 		overflow: hidden;
+	}
+	.aug-button{
+		background-color: var(--dark);
+	}
+	.aug-button:hover{
+		color: var(--fourth-accent);
+	}
+	.aug-button.active{
+		color: var(--fourth-accent);
 	}
 
 	@media (max-width: 768px) {
