@@ -88,7 +88,8 @@
  * @property {string} attributes.eyes - The eye color of the character
  * @property {string} attributes.skin - The skin color of the character
  * @property {string} attributes.hair - The hair description of the character
- * @property {string} attributes.vibe - The vibe of the character
+ * @property {string} attributes.vibe - DEPRECATED The vibe of the character
+ * @property {string} attributes.vibes - The vibe of the character
  * @property {string} attributes.noticeableTraits - The noticeable traits of the character
  * @property {string} attributes.backstory - The backstory of the character
  * @property {string} attributes.beliefs - DEPRECATED The beliefs of the character

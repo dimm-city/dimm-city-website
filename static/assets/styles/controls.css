@@ -110,7 +110,7 @@ input:read-only,
 	/* --multi-select-input-margin: 0; */
 	/* --multi-select-padding: var(--padding); */
 	width: 100%;
-	z-index: var(--list-z-index);
+	/* z-index: var(--list-z-index); */
 }
 .aug-input {
 	width: 100%;

@@ -15,9 +15,9 @@
 			<span>{formatCharacterSpecialties(character)}</span>
 		</div>
 
-		<div class="label">Beliefs:</div>
+		<div class="label">Ideal:</div>
 		<div class="value">
-			<span>{character.attributes.beliefs ?? ''}</span>
+			<span>{character.attributes.ideal ?? ''}</span>
 		</div>
 
 		<div class="label">Residency:</div>
@@ -33,9 +33,9 @@
 			<span>{character.attributes.originLocation?.data?.attributes?.name ?? ''}</span>
 		</div>
 
-		<div class="label">Flaws:</div>
+		<div class="label">Flaw:</div>
 		<div class="value">
-			<span>{character.attributes.flaws ?? ''}</span>
+			<span>{character.attributes.flaw ?? ''}</span>
 		</div>
 	</section>
 </div>
