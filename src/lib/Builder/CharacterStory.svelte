@@ -18,6 +18,10 @@
 		<h2>Dreams</h2>
 		<Textarea {isEditing} bind:value={character.attributes.dreams} />
 	</div>
+	<div class="notes">
+		<h2>Notes</h2>
+		<Textarea {isEditing} bind:value={character.attributes.playerNotes} />
+	</div>
 </div>
 
 <style>

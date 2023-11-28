@@ -4,21 +4,63 @@
 	import { config } from '$lib/Shared/config';
 	import { jwt } from '$lib/Shared/Stores/UserStore';
 
+	/**
+	 * @type {DC.Character}
+	 */
+	export let character;
+
+	/**
+	 * @type {DC.SkillTree}
+	 */
+	 export let selectedSkillTree;
+
 	const client = new StrapiClient(config.apiBaseUrl, $jwt);
 
-	let skillTrees = [];
+	/**
+	 * @type {DC.SkillTree[]}
+	 */
+	export let skillTrees = [];
 
 	onMount(async () => {
-		const response = await client.get('skill-trees');
+		const response = await client.search('dimm-city/skill-trees', {
+			filters: {
+				specialty: character.attributes.specialties.data.map((s) => s.id)
+			},
+			populate: '*'
+		});
 		if (response.data?.length > 0) {
 			skillTrees = [...response.data];
 		}
 	});
 
-	export let selectedSkillTree;
+		/**
+	 * @param {string} slug
+	 */
+	export async function loadSkillTree(slug) {
+		console.log('loadSkillTree', slug);
+		const data = await client.loadBySlug('dimm-city/skill-trees', slug, {
+			filters: {
+				slug: slug
+			},
+			populate: {
+				mainImage: true,
+				abilities: true,
+				specialties: true
+			}
+		});
 
-	function selectSkillTree(skillTree) {
-		selectedSkillTree = skillTree;
+		selectedSkillTree = {
+			...data
+		};
+
+		//e.target?.scrollIntoView({ behavior: 'smooth' });
+	}
+
+	/**
+	 * @param {string} slug
+	 */
+	function selectSkillTree(slug) {
+		loadSkillTree(slug);
 	}
 </script>
 
@@ -26,7 +68,7 @@
 	<h1>Select a Skill Tree</h1>
 	<ul>
 		{#each skillTrees as skillTree}
-			<li on:click={() => selectSkillTree(skillTree)}>
+			<li on:click={() => selectSkillTree(skillTree.attributes.slug)}>
 				{skillTree.attributes.name}
 			</li>
 		{/each}

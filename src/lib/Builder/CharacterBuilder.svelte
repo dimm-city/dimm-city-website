@@ -100,7 +100,7 @@
 
 <Shell title={character?.attributes.name ?? 'Sporo Builder'} titleUrl="/console/builder">
 	{#if mode === 'skill-tree'}
-		<SkillTree data={skillTree} />
+		<SkillTree selectedSkillTree={skillTree} />
 	{:else if mode === 'edit-character'}
 		<EditCharacter bind:character />
 	{:else if mode === 'view-character'}

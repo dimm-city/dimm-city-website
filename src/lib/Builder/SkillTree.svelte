@@ -20,7 +20,8 @@
 	let canvas;
 
 	/** @type DC.SkillTree */
-	export let data;
+	export let selectedSkillTree;
+	
 
 	/**
 	 * @type {import('svelte/store').Writable<DC.Ability[]>}
@@ -72,25 +73,25 @@
 	});
 
 	function initData() {
-		data.attributes.abilities.data.forEach((ability) => {
+		selectedSkillTree.attributes.abilities?.data?.forEach((ability) => {
 			if (ability.attributes.level == 1) {
 				ability.unlocked = true;
 			}
 		});
 
-		if (data.attributes.abilities.data?.length > 0) {
-			maxRows = data.attributes.abilities.data
+		if (selectedSkillTree.attributes.abilities?.data?.length > 0) {
+			maxRows = selectedSkillTree.attributes.abilities.data
 				.map((a) => a.attributes.level)
 				.reduce((a, b) => Math.max(a, b));
-			maxColumns = data.attributes.abilities.data
+			maxColumns = selectedSkillTree.attributes.abilities.data
 				.map((a) => a.attributes.module)
 				.reduce((a, b) => Math.max(a, b));
 		}
-		pageImage = data.attributes.mainImage?.data?.attributes.url;
+		pageImage = selectedSkillTree.attributes.mainImage?.data?.attributes.url;
 		if (!pageImage)
-			pageImage = data.attributes.specialty.data?.attributes.mainImage?.data?.attributes.url;
+			pageImage = selectedSkillTree.attributes.specialty?.data?.attributes.mainImage?.data?.attributes.url;
 
-		skills.set(data.attributes.abilities.data);
+		skills.set(selectedSkillTree.attributes.abilities?.data);
 	}
 
 	/**
@@ -183,7 +184,7 @@
 		});
 	}
 
-	$: if (data) {
+	$: if (selectedSkillTree) {
 		initData();
 	}
 </script>
@@ -194,7 +195,7 @@
 		class="viewer-panel"
 		data-augmented-ui="bl-clip-inset br-clip-inset tl-2-clip-xy tr-2-clip-xy l-rect r-rect t-clip both"
 	>
-		<div bind:this={canvas} class="skill-tree-container {data.attributes.slug}">
+		<div bind:this={canvas} class="skill-tree-container {selectedSkillTree.attributes.slug}">
 			<div
 				class="skill-matrix"
 				style="grid-template-columns: repeat({maxColumns}, 1fr); grid-template-columns: repeat({maxRows}, 1fr);"
@@ -240,26 +241,6 @@
 		<h1>No Skill Selected</h1>
 	{/if}
 </DetailsPanel>
-<!-- <DetailsPanel side="left">
-	<div class="specialty-details">
-		<h1><i class="bi bi-icon-name" />{data.attributes.name}</h1>
-		<div>
-			<h3>
-				<i class="bi bi-icon-type" />Specialty: {data.attributes.specialty?.data?.attributes.name}
-			</h3>
-			<h4>Additional Skill Trees</h4>
-			{#if data.attributes.specialty.data?.attributes.skillTrees?.data}
-				{#each data.attributes.specialty.data?.attributes.skillTrees.data as tree}
-					<a href={tree.attributes.slug}>
-						<div data-augmented-ui class="small-menu-item">
-							<h5><i class="bi bi-icon-type" />{tree.attributes.name}</h5>
-						</div>
-					</a>
-				{/each}
-			{/if}
-		</div>
-	</div>
-</DetailsPanel> -->
 
 <style>
 	:root {
@@ -274,7 +255,7 @@
 		position: relative;
 		display: grid;
 		grid-template-rows: 1fr min-content;
-		max-height: 92dvh;
+		max-height:87dvh;
 		row-gap: 0.25rem;
 	}
 	.skill-tree-page > .viewer-panel {

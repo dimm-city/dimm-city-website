@@ -21,7 +21,6 @@
 	.details-panel {
 		position: absolute;
 		right: -2ch;
-		top: 1rem;
 		bottom: 1rem;
 		z-index: 1000;
 		width: 0;
