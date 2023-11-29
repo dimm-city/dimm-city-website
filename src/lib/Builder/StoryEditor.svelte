@@ -8,10 +8,9 @@
 	let isEditing = true;
 </script>
 
-<div class="story-row">
-	<div class="row-frame" data-augmented-ui="tl-clip-x tr-clip-x br-clip-inset bl-clip-inset both" />
-	
-	<div class="backstory"><h2>Backstory</h2>
+<div class="story-row" data-augmented-ui="tl-clip-x tr-clip-x br-clip-inset bl-clip-inset both">
+	<div class="backstory">
+		<h2>Backstory</h2>
 		<Textarea {isEditing} bind:value={character.attributes.backstory} />
 	</div>
 	<div class="dreams">
@@ -35,19 +34,14 @@
 		width: 100%;
 		gap: 3rem;
 		overflow-y: scroll;
-	}
-	.story-row .row-frame {
-		position: absolute;
-		top: 0;
-		left: 0;
-		bottom: 0;
-		right: 0;
 		--aug-border-all: 1px;
 		--aug-border-bg: var(--secondary-accent-muted);
+		--aug-inlay-bg: var(--opaque-dark);
 		--aug-tl: 13px;
 		--aug-tr: 13px;
 		--aug-bl: 13px;
 		--aug-br: 13px;
+		box-shadow: inset 0 0 5rem var(--secondary-accent-muted);
 	}
 	h2 {
 		margin: 0;
@@ -58,6 +52,4 @@
 	.backstory {
 		width: 100%;
 	}
-
-
 </style>

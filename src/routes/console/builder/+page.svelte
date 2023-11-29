@@ -1,11 +1,6 @@
 <script>
-	import CharacterBuilder from '$lib/Builder/CharacterBuilder.svelte';
-	/**
-	 * @type {DC.Character}
-	 */
-	export let data;
-
-	
+	import SporoManager from '$lib/Builder/SporoManager.svelte';
+	export let data;	
 </script>
 
-<CharacterBuilder {data} />
+<SporoManager {data} />

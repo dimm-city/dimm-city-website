@@ -1,11 +1,9 @@
-<script>
-	import ListsRow from '../Characters/Components/CharacterSheet/ListsRow.svelte';
+<script>	
 	import ProfileEditor from './ProfileEditor.svelte';
-	import CharacterStory from './CharacterStory.svelte';
-	import SkillTreeSelector from './SkillTreeSelector.svelte';
-	import EditSkills from './EditSkills.svelte';
+	import CharacterStory from './StoryEditor.svelte';
+	import SkillEditor from './SkillEditor.svelte';
 	import StatsRow from '$lib/Characters/Components/CharacterSheet/StatsRow.svelte';
-	import ManageGear from './ManageGear.svelte';
+	import TechEditor from './TechEditor.svelte';
 
 	/**
 	 * @type {DC.Character}
@@ -61,9 +59,9 @@
 		{#if currentTab === 'profile'}
 			<ProfileEditor bind:character />
 		{:else if currentTab === 'tech'}
-			<ManageGear bind:character />
+			<TechEditor bind:character />
 		{:else if currentTab === 'skills'}
-			<EditSkills bind:character />
+			<SkillEditor bind:character />
 		{:else if currentTab === 'story'}
 			<CharacterStory bind:character />
 		{:else if currentTab === 'appearance'}

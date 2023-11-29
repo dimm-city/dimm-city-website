@@ -1,16 +1,13 @@
 <script>
 	import CharacterSelector from './CharacterSelector.svelte';
-	import DetailsPanel from '$lib/Builder/DetailsPanel.svelte';
-	import SkillTree from '$lib/Builder/SkillTree.svelte';
 	import Sheet from '$lib/Characters/Components/CharacterSheet/Sheet.svelte';
 	import Shell from '$lib/Shared/Shell/Shell.svelte';
 	import { jwt } from '$lib/Shared/Stores/UserStore';
 	import { StrapiClient } from '$lib/Shared/StrapiClient';
 	import { updateEntity } from '$lib/Shared/SvelteStrapi';
 	import { config } from '$lib/Shared/config';
-	import EditCharacter from './CharacterEditor.svelte';
+	import CharacterEditor from './CharacterEditor.svelte';
 	import MainMenu from '$lib/Shared/Shell/MainMenu.svelte';
-	import { formatCharacterSpecialties } from '$lib/Shared/FormatFunctions';
 
 	let showMainPanel = false;
 	/**
@@ -77,12 +74,6 @@
 			changeMode('select-character');
 		}
 	}
-	async function loadSkillTree(tree) {
-		if (tree) skillTreeSlug = tree.attributes.slug;
-
-		skillTree = await client.loadBySlug('dimm-city/skill-trees', skillTreeSlug);
-		changeMode('skill-tree');
-	}
 
 	/**
 	 * @param {string} newMode
@@ -98,15 +89,11 @@
 	}
 </script>
 
-<Shell title={character?.attributes.name ?? 'Sporo Builder'} titleUrl="/console/builder">
-	{#if mode === 'skill-tree'}
-		<SkillTree selectedSkillTree={skillTree} />
-	{:else if mode === 'edit-character'}
-		<EditCharacter bind:character />
+<Shell title={character?.attributes.name ?? 'Sporo Manager'} titleUrl="/console/builder">
+	{#if mode === 'edit-character'}
+		<CharacterEditor bind:character />
 	{:else if mode === 'view-character'}
-		<div class="overview">
-			<Sheet bind:character isEditing={false} on:save />
-		</div>
+		<Sheet bind:character isEditing={false} on:save />
 	{:else}
 		<CharacterSelector
 			bind:selectedCharacter={character}
@@ -114,39 +101,6 @@
 			on:print={printCharacter}
 			on:view={() => changeMode('view-character')}
 		/>
-	{/if}
-	{#if mode === 'skill-tree'}
-		<DetailsPanel side="left" bind:showDetails={showMainPanel}>
-			<div class="main-panel">
-				{#if character?.id > 0}
-					<h1><i class="bi bi-icon-name" />{character.attributes.name}</h1>
-					<div>
-						<h3>
-							<i class="bi bi-icon-type" />Specialty: {formatCharacterSpecialties(character)}
-						</h3>
-						<h4>Available Skill Trees</h4>
-						{#if character.attributes.specialties.data?.length > 0}
-							{#each character.attributes.specialties.data as specialty}
-								{#if specialty.attributes.skillTrees?.data.length > 0}
-									{#each specialty.attributes.skillTrees?.data as tree}
-										<a
-											href="#skill-tree={tree?.attributes.slug}"
-											on:click|preventDefault={() => loadSkillTree(tree)}
-										>
-											<div data-augmented-ui class="small-menu-item">
-												<h5><i class="bi bi-icon-type" />{tree.attributes.name}</h5>
-											</div>
-										</a>
-									{/each}
-								{/if}
-							{/each}
-						{/if}
-					</div>
-				{:else}
-					<div>Please select a character</div>
-				{/if}
-			</div>
-		</DetailsPanel>
 	{/if}
 	<svelte:fragment slot="left-button">
 		{#if mode !== 'select-character'}
@@ -189,12 +143,17 @@
 			>
 				<i class="bi bi-check" /></button
 			>
+		{:else if mode == 'view-character'}
+			<button
+				class="aug-button"
+				data-augmented-ui="all-hex both"
+				title="print character"
+				on:click={() => printCharacter()}
+			>
+				<i class="bi bi-printer" /></button
+			>
 		{:else}
-			<!-- <HexMenu title="action menu">
-				<button on:click={() => changeMode('view-character')}>Overview</button>
-				<button on:click={() => startEditing()}>Edit Character</button>
-				<button on:click={() => changeMode('select-character')}>Select Character</button>
-			</HexMenu> -->
+			<!---->
 		{/if}
 	</svelte:fragment>
 </Shell>
@@ -204,18 +163,6 @@
 		text-align: center;
 		margin: 0;
 		margin-bottom: 2rem;
-	}
-
-	.overview {
-		overflow-y: auto;
-		padding-left: 3rem;
-		display: grid;
-		height: 100%;
-		color: var(--light);
-	}
-
-	.main-panel {
-		padding-top: 1rem;
 	}
 
 	.aug-button {
@@ -243,12 +190,5 @@
 
 	.aug-button:not(:last-of-type) {
 		margin-right: 1rem;
-	}
-
-	@media (max-width: 800px) {
-		.overview,
-		.citizen {
-			padding-left: 0rem;
-		}
 	}
 </style>

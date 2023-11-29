@@ -19,12 +19,6 @@
 	 */
 	let selectedSkillTree = writable();
 
-	// selectedSkillTree.subscribe((value) => {
-	// 	console.log('selectedSkillTree', value);
-	// 	if (value) {
-	// 		//loadSkillTree(value.attributes.slug);
-	// 	}
-	// });
 	/**
 	 * @type {DC.Character}
 	 */
@@ -64,7 +58,10 @@
 	}
 </script>
 
-<div>
+		<div
+			class="section-container"
+			data-augmented-ui="tl-clip-x tr-clip-x br-clip-inset bl-clip-inset both"
+		>
 	{#if $selectedSkillTree}
 		<SkillTree selectedSkillTree={$selectedSkillTree} />
 		<DetailsPanel side="left">
@@ -91,23 +88,47 @@
 			</div>
 		</DetailsPanel>
 	{:else}
-		<div>
-			<h1>Select a Skill Tree</h1>
-			<ul>
-				{#each skillTrees as skillTree}
-					<li >
-						<button data-augmented-ui
-								class="small-menu-item" on:click={() => loadSkillTree(skillTree.attributes.slug)}>
-						{skillTree.attributes.name}
-						</button>
-					</li>
-				{/each}
-			</ul>
-		</div>
+			<div>
+				<h1>Select a Skill Tree</h1>
+				<ul>
+					{#each skillTrees as skillTree}
+						<li>
+							<button
+								data-augmented-ui
+								class="small-menu-item"
+								on:click={() => loadSkillTree(skillTree.attributes.slug)}
+							>
+								{skillTree.attributes.name}
+							</button>
+						</li>
+					{/each}
+				</ul>
+			</div>
 	{/if}
 </div>
+
 <style>
-	ul{
+	.section-container {
+		padding-top: 1.5rem;
+		padding-bottom: 3rem;
+		padding-inline: 1.5rem;
+		display: grid;
+		grid-template-columns: 1fr;
+		width: 100%;
+		height: 100%;
+		align-items: start;
+		gap: 3rem;
+		overflow: hidden;
+		--aug-border-all: 1px;
+		--aug-border-bg: var(--secondary-accent-muted);
+		--aug-inlay-bg: var(--opaque-dark);
+		--aug-tl: 13px;
+		--aug-tr: 13px;
+		--aug-bl: 13px;
+		--aug-br: 13px;
+		box-shadow: inset 0 0 5rem var(--secondary-accent-muted);
+	}
+	ul {
 		margin: auto;
 		padding: 0;
 	}

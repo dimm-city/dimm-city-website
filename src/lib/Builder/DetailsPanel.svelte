@@ -55,11 +55,8 @@
 		right: unset;
 	}
 	.details-panel.hidden {
-		/* visibility: collapse;
-		opacity: 0; */
 		width: 5ch;
-		transition: width 0.2s ease-in-out, right 0.2s ease-in-out, visibility 0.2s ease-in-out 0.3s,
-			opacity 0.3s ease-in-out;
+		transition: width 0.2s ease-in-out 10ms, right 0.2s ease-in-out, visibility 0.2s ease-in-out 0.31s;
 	}
 
 	.details-panel > button {
@@ -107,6 +104,10 @@
 	}
 	.details-panel.shown .content {
 		opacity: 1;
+	}
+	.details-panel.hidden .content {
+		opacity: 0;
+		transition: opacity 100ms ease-in-out;
 	}
 
 	@media (max-width: 768px) {

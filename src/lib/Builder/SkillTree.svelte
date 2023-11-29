@@ -189,11 +189,11 @@
 	}
 </script>
 
+
 <div class="skill-tree-page" style="--skill-tree-bg-image: url({pageImage});">
 	<style id="page-style"></style>
 	<div
 		class="viewer-panel"
-		data-augmented-ui="bl-clip-inset br-clip-inset tl-2-clip-xy tr-2-clip-xy l-rect r-rect t-clip both"
 	>
 		<div bind:this={canvas} class="skill-tree-container {selectedSkillTree.attributes.slug}">
 			<div
@@ -217,19 +217,7 @@
 			</div>
 		</div>
 	</div>
-
-	<div class="bottom-toolbar">
-		<div class="left-group">
-			<!-- <button>Button 1</button> 
-			<button on:click={() => toggleSkill(selectedSkill)}>Toggle Skill</button>-->
-		</div>
-		<div class="right-group">
-			<!-- <button>Button 2</button>
-			<button on:click={() => (showDetails = !showDetails)}>Toggle Details</button> -->
-		</div>
-	</div>
 </div>
-
 <DetailsPanel bind:showDetails>
 	{#if selectedSkill}
 		<h1>{selectedSkill.attributes.name}</h1>
@@ -246,6 +234,24 @@
 	:root {
 		--skill-tree-bg-image: none;
 		/* url('/assets/imgs/landing-bg.png'); */
+	}
+	.section-container{
+		padding-top: 1.5rem;
+		padding-bottom: 3rem;
+		padding-inline: 1.5rem;
+		display: grid;
+		grid-template-columns: 1fr;
+		width: 100%;
+		gap: 3rem;
+		overflow-y: scroll;
+		--aug-border-all: 1px;
+		--aug-border-bg: var(--secondary-accent-muted);
+		--aug-inlay-bg: var(--opaque-dark);
+		--aug-tl: 13px;
+		--aug-tr: 13px;
+		--aug-bl: 13px;
+		--aug-br: 13px;
+		box-shadow: inset 0 0 5rem var(--secondary-accent-muted);
 	}
 	.small-menu-item {
 		padding-block: 0.25em;
@@ -296,30 +302,7 @@
 		align-items: center;
 	}
 
-	.specialty-details {
-		padding: 0.5rem;
-		overflow: hidden;
-	}
-	.specialty-details h1 {
-		white-space: nowrap;
-		text-overflow: ellipsis;
-		font-size: clamp(1rem, 1.25rem, 1.5rem);
-	}
-	.bottom-toolbar {
-		display: flex;
-		justify-content: space-between;
-		padding: 1rem;
-	}
-
-	.left-group,
-	.right-group {
-		display: flex;
-		gap: 1rem;
-	}
-
-	.bottom-toolbar button {
-		white-space: nowrap;
-	}
+	
 
 	.line {
 		stroke: #0ff;
