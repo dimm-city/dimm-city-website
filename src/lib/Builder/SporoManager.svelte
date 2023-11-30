@@ -38,7 +38,6 @@
 
 		const importData = JSON.parse(JSON.stringify(character.attributes));
 		importData.playerUpdated = true;
-		//importData.slug = character.name.replace(' ', '-');
 
 		delete importData.mainImage;
 		delete importData.mainModel;
