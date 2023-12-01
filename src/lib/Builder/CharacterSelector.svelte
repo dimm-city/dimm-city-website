@@ -41,8 +41,10 @@
 			},
 			populate: {
 				mainImage: true,
+				race: true,
 				originalLocation: true,
 				currentLocation: true,
+				selectedAbilities: true,
 				specialties: {
 					populate: {
 						skillTrees: true

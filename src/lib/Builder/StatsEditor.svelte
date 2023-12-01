@@ -3,6 +3,7 @@
 	import { ages } from '$lib/Shared/Enums';
 	import Select from 'svelte-select/Select.svelte';
 	import { writable } from 'svelte/store';
+	import ProfileEditor from './ProfileEditor.svelte';
 
 	/**
 	 * @type {DC.Character}
@@ -84,7 +85,7 @@
 		<div class="label">Skin:</div>
 		<div class="value"><span>{character.attributes.skin || ''}</span></div>
 	</div>
-	{character.attributes.height}
+	<!-- <ProfileEditor bind:character /> -->
 </div>
 
 <style>
