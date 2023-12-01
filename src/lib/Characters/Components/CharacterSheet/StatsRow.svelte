@@ -25,14 +25,6 @@
 	<div class="stats-container">
 		<PhysicalStats {character} {isEditing} />
 	</div>
-	<div class="cybernetics-container">
-		<ItemsList
-			header="Cybernetics"
-			noItemsText="no scripts detected"
-			data={character.attributes.cybernetics?.data}
-			viewItem={viewAbility}
-		/>		
-	</div>
 </div>
 
 <style>
@@ -60,8 +52,8 @@
 		grid-area: image-cell;
 	}
 	.image {
-		--dc-image-aspect-ratio: 3/4;
-		--dc-image-height: 240px;
+		--dc-image-aspect-ratio: 1/1;
+		--dc-image-height: 320px;
 		--dc-image-width: auto;
 	}
 
