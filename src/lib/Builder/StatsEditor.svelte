@@ -1,0 +1,131 @@
+<script>
+	import Input from '$lib/Shared/Components/Input.svelte';
+	import Select from 'svelte-select/Select.svelte';
+	import { writable } from 'svelte/store';
+
+	/**
+	 * @type {DC.Character}
+	 */
+	export let character;
+	const ageOptions = [
+		'Childhood',
+		'Adolescence',
+		'Young Adulthood',
+		'Adulthood',
+		'Middle-Age',
+		'Old Age',
+		'Ancient'
+	];
+
+	/** 
+	 * character.attributes.height and character.attributes.weight are stored using metric values. 
+	 * this component lets users toggle between metric values and imperial values. However, the 
+	 * if the user updates the values, the component will update the character.attributes.height and character.attributes.weight values 
+	 * with the appropriate metric values.
+	 * 
+	 * Place a button at the end of the input element for height and weight. The button should toggle between metric values and imperial values.
+	 * 
+	 * Implement functions for updating the character.attributes.height and character.attributes.weight values with the correct metric values.
+	 * 
+	 * The input elements can use a local variable to hold the displayed values for height and weight.
+	 * 
+	 * When converting height, use inches in imperial and centimeters in metric.
+	 * When converting weight, use pounds in imperial and kilograms in metric.
+	*/
+</script>
+
+<div class="physical-stats">
+	<div class="grid-container">
+		<div class="label">Race:</div>
+		<div class="value">
+			{#if character.attributes.race}
+				<span>{character.attributes.race.data?.attributes?.name}</span>
+			{/if}
+		</div>
+		<div class="label">Pronouns:</div>
+		<div class="value">
+			<Input bind:value={character.attributes.pronouns} class="inline" maxlength="50" />
+		</div>
+		<div class="label">Age:</div>
+		<div class="value aug-select">
+			<Select
+				value={character.attributes.age}
+				bind:justValue={character.attributes.age}
+				items={ageOptions}
+			/>
+		</div>
+		<div class="label">Height:</div>
+		<div class="value suffix">
+			<Input bind:value={character.attributes.height} class="inline" />
+
+			<!-- <span>cm</span> -->
+		</div>
+		<div class="label">Weight:</div>
+		<div class="value suffix">
+			<Input bind:value={character.attributes.weight} class="inline" />
+
+			<!-- <span>kg</span> -->
+		</div>
+		<div class="label">Eyes:</div>
+		<div class="value"><span>{character.attributes.eyes || ''}</span></div>
+		<div class="label">Skin:</div>
+		<div class="value"><span>{character.attributes.skin || ''}</span></div>
+	</div>
+</div>
+
+<style>
+	.physical-stats {
+		width: 100%;
+		height: 100%;
+		display: grid;
+		align-content: start;
+		gap: 1rem;
+	}
+
+	.grid-container {
+		display: grid;
+		grid-template-columns: min-content auto;
+		gap: 1rem;
+	}
+
+	.label {
+		text-align: right;
+		margin-right: 0.5rem;
+		font-weight: bold;
+		align-items: center;
+		justify-content: start;
+		display: flex;
+	}
+
+	.value {
+		white-space: nowrap;
+		margin-left: 0.25rem;
+		text-transform: capitalize;
+	}
+
+	.value.suffix {
+		display: flex;
+		align-items: center;
+		gap: 0.25rem;
+	}
+
+	:global(input.inline) {
+		display: inline;
+	}
+	@media (max-width: 767px) {
+		.physical-stats {
+			padding-bottom: 2rem;
+		}
+		.grid-container {
+			grid-template-columns: min-content auto;
+		}
+		.label {
+			align-items: start;
+			justify-content: start;
+			display: flex;
+		}
+		.value {
+			white-space: inherit;
+		}
+	}
+</style>
