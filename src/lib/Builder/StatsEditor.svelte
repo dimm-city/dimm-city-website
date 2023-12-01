@@ -1,49 +1,52 @@
 <script>
 	import Input from '$lib/Shared/Components/Input.svelte';
+	import { ages } from '$lib/Shared/Enums';
 	import Select from 'svelte-select/Select.svelte';
 	import { writable } from 'svelte/store';
 
-	let isMetric = writable(true);
 	/**
 	 * @type {DC.Character}
 	 */
 	export let character;
-	const ageOptions = [
-		'Childhood',
-		'Adolescence',
-		'Young Adulthood',
-		'Adulthood',
-		'Middle-Age',
-		'Old Age',
-		'Ancient'
-	];
 
-	function toggleUnits() {
-		isMetric.update(value => !value);
-		if (isMetric) {
-			character.attributes.height = character.attributes.height / 2.54;
-			character.attributes.weight = character.attributes.weight / 0.45359237;
-		} else {
-			character.attributes.height = character.attributes.height * 2.54;
-			character.attributes.weight = character.attributes.weight * 0.45359237;
-		}
-	}
-
-	/** 
-	 * character.attributes.height and character.attributes.weight are stored using metric values. 
-	 * this component lets users toggle between metric values and imperial values. However, the 
-	 * if the user updates the values, the component will update the character.attributes.height and character.attributes.weight values 
+	/**
+	 * character.attributes.height and character.attributes.weight are stored using metric values.
+	 * this component lets users toggle between metric values and imperial values. However, the
+	 * if the user updates the values, the component will update the character.attributes.height and character.attributes.weight values
 	 * with the appropriate metric values.
-	 * 
+	 *
 	 * Place a button at the end of the input element for height and weight. The button should toggle between metric values and imperial values.
-	 * 
+	 *
 	 * Implement functions for updating the character.attributes.height and character.attributes.weight values with the correct metric values.
-	 * 
+	 *
 	 * The input elements can use a local variable to hold the displayed values for height and weight.
-	 * 
+	 *
 	 * When converting height, use inches in imperial and centimeters in metric.
 	 * When converting weight, use pounds in imperial and kilograms in metric.
-	*/
+	 */
+	let isMetric = writable(true);
+	let tempHeight = writable(character.attributes.height);
+	tempHeight.subscribe((value) => {
+		if ($isMetric) character.attributes.height = value;
+		else character.attributes.height = Math.round(value * 2.54);
+	});
+
+	let tempWeight = writable(character.attributes.weight);
+	tempWeight.subscribe((value) => {
+		if ($isMetric) character.attributes.weight = value;
+		else character.attributes.weight = Math.round(value / 0.45359237);
+	});
+
+	function toggleUnits() {
+		isMetric.update((value) => !value);
+		if ($isMetric) {
+			$tempHeight = Math.round($tempHeight * 2.54);
+			$tempWeight = Math.round($tempWeight / 0.45359237);
+		} else {
+			$tempHeight = Math.round($tempHeight / 2.54);
+			$tempWeight = Math.round($tempWeight * 0.45359237);
+		}
+	}
 </script>
 
 <div class="physical-stats">
@@ -63,17 +66,17 @@
 			<Select
 				value={character.attributes.age}
 				bind:justValue={character.attributes.age}
-				items={ageOptions}
+				items={ages}
 			/>
 		</div>
 		<div class="label">Height:</div>
 		<div class="value suffix">
-			<Input bind:value={character.attributes.height} class="inline" />
+			<Input bind:value={$tempHeight} class="inline" />
 			<button on:click={toggleUnits}>{$isMetric ? 'cm' : 'in'}</button>
 		</div>
 		<div class="label">Weight:</div>
 		<div class="value suffix">
-			<Input bind:value={character.attributes.weight} class="inline" />
+			<Input bind:value={$tempWeight} class="inline" />
 			<button on:click={toggleUnits}>{$isMetric ? 'kg' : 'lb'}</button>
 		</div>
 		<div class="label">Eyes:</div>
@@ -81,6 +84,7 @@
 		<div class="label">Skin:</div>
 		<div class="value"><span>{character.attributes.skin || ''}</span></div>
 	</div>
+	{character.attributes.height}
 </div>
 
 <style>

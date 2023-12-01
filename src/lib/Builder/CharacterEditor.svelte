@@ -2,8 +2,8 @@
 	import ProfileEditor from './ProfileEditor.svelte';
 	import CharacterStory from './StoryEditor.svelte';
 	import SkillEditor from './SkillEditor.svelte';
-	import StatsRow from '$lib/Characters/Components/CharacterSheet/StatsRow.svelte';
 	import TechEditor from './TechEditor.svelte';
+	import AppearanceEditor from './AppearanceEditor.svelte';
 
 	/**
 	 * @type {DC.Character}
@@ -21,6 +21,14 @@
 			data-augmented-ui
 			on:click={() => (currentTab = 'profile')}
 			><i class="bi bi-file-person" /><span>Profile</span></button
+		>
+		<button
+			title="appearance"
+			class="aug-button tab"
+			class:active={currentTab === 'appearance'}
+			data-augmented-ui
+			on:click={() => (currentTab = 'appearance')}
+			><i class="bi bi-file-image" /><span>Appearance</span></button
 		>
 		<button
 			title="story"
@@ -46,14 +54,6 @@
 			data-augmented-ui
 			on:click={() => (currentTab = 'tech')}><i class="bi bi-file-lock" /><span>Tech</span></button
 		>
-		<button
-			title="appearance"
-			class="aug-button tab"
-			class:active={currentTab === 'appearance'}
-			data-augmented-ui
-			on:click={() => (currentTab = 'appearance')}
-			><i class="bi bi-file-image" /><span>Appearance</span></button
-		>
 	</div>
 	<div class="tabs-container">
 		{#if currentTab === 'profile'}
@@ -65,7 +65,7 @@
 		{:else if currentTab === 'story'}
 			<CharacterStory bind:character />
 		{:else if currentTab === 'appearance'}
-			<StatsRow bind:character isEditing={false} />
+			<AppearanceEditor bind:character />
 		{/if}
 	</div>
 </div>

@@ -14,7 +14,7 @@ import { config } from '$lib/Shared/config';
 export async function searchArchive(searchText = '', itemTypes = ['all']) {
     //POST: /api/dimm-city/archives/search
 
-    var requestOptions = {
+    const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -33,7 +33,7 @@ export async function searchArchive(searchText = '', itemTypes = ['all']) {
             results = await response.json();
         }
     } catch (error) {
-        throw new Error(`Failed to fetch archive items: ${error.message}`);
+        throw new Error(`Failed to fetch archive items: ${error?.message}`);
     }
     return results;
 }

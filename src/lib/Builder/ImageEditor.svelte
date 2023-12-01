@@ -1,0 +1,27 @@
+<script>
+	import Image from '$lib/Shared/Components/Image.svelte';
+	import { config } from '$lib/Shared/config';
+
+	/**
+	 * @type {DC.Character}
+	 */
+	export let character;
+
+	//trim last slash from config.baseUrl
+	const baseUrl = (config.storageBaseUrl ?? config.baseUrl).replace(/\/$/, '');
+	const { mainImage, mainModel, mainVideo, name } = character.attributes;
+	let relativeUrl =
+		mainImage?.data?.attributes?.url ?? mainImage?.data?.attributes?.formats?.large?.url;
+
+	if (relativeUrl == '') relativeUrl = `${baseUrl}/assets/missing-image.png`;
+	if (!relativeUrl.startsWith('http')) relativeUrl = baseUrl + relativeUrl;
+	const imageUrl = relativeUrl;
+</script>
+
+<Image
+	{imageUrl}
+	modelUrl={mainModel?.data?.attributes.url}
+	videoUrl={mainVideo?.data?.attributes.url}
+	title={name}
+	on:click
+/>

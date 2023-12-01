@@ -7,6 +7,7 @@
 	import { config } from '$lib/Shared/config';
 	import { jwt } from '$lib/Shared/Stores/UserStore';
 	import { writable } from 'svelte/store';
+	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 
 	const client = new StrapiClient(config.apiBaseUrl, $jwt);
 	/**
@@ -58,36 +59,34 @@
 	}
 </script>
 
-		<div
-			class="section-container"
-			data-augmented-ui="tl-clip-x tr-clip-x br-clip-inset bl-clip-inset both"
-		>
-	{#if $selectedSkillTree}
-		<SkillTree selectedSkillTree={$selectedSkillTree} />
-		<DetailsPanel side="left">
-			<div class="specialty-details">
-				<h1><i class="bi bi-icon-name" />{$selectedSkillTree.attributes.name}</h1>
-				<div>
-					<h3>
-						<i class="bi bi-icon-type" />Specialty: {$selectedSkillTree.attributes.specialty?.data
-							?.attributes.name}
-					</h3>
-					<h4>Additional Skill Trees</h4>
-					{#if skillTrees?.length > 0}
-						{#each skillTrees as tree}
-							<button
-								on:click={() => loadSkillTree(tree.attributes.slug)}
-								data-augmented-ui
-								class="small-menu-item"
-							>
-								<h5><i class="bi bi-icon-type" />{tree.attributes.name}</h5>
-							</button>
-						{/each}
-					{/if}
+<ContentPane scrollable={false}>
+	<div class="section-container">
+		{#if $selectedSkillTree}
+			<SkillTree selectedSkillTree={$selectedSkillTree} />
+			<DetailsPanel side="left">
+				<div class="specialty-details">
+					<h1><i class="bi bi-icon-name" />{$selectedSkillTree.attributes.name}</h1>
+					<div>
+						<h3>
+							<i class="bi bi-icon-type" />Specialty: {$selectedSkillTree.attributes.specialty?.data
+								?.attributes.name}
+						</h3>
+						<h4>Additional Skill Trees</h4>
+						{#if skillTrees?.length > 0}
+							{#each skillTrees as tree}
+								<button
+									on:click={() => loadSkillTree(tree.attributes.slug)}
+									data-augmented-ui
+									class="small-menu-item"
+								>
+									<h5><i class="bi bi-icon-type" />{tree.attributes.name}</h5>
+								</button>
+							{/each}
+						{/if}
+					</div>
 				</div>
-			</div>
-		</DetailsPanel>
-	{:else}
+			</DetailsPanel>
+		{:else}
 			<div>
 				<h1>Select a Skill Tree</h1>
 				<ul>
@@ -104,8 +103,9 @@
 					{/each}
 				</ul>
 			</div>
-	{/if}
-</div>
+		{/if}
+	</div>
+</ContentPane>
 
 <style>
 	.section-container {
@@ -119,14 +119,6 @@
 		align-items: start;
 		gap: 3rem;
 		overflow: hidden;
-		--aug-border-all: 1px;
-		--aug-border-bg: var(--secondary-accent-muted);
-		--aug-inlay-bg: var(--opaque-dark);
-		--aug-tl: 13px;
-		--aug-tr: 13px;
-		--aug-bl: 13px;
-		--aug-br: 13px;
-		box-shadow: inset 0 0 5rem var(--secondary-accent-muted);
 	}
 	ul {
 		margin: auto;

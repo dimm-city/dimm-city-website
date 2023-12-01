@@ -1,4 +1,5 @@
 <script>
+	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import Textarea from '$lib/Shared/Components/Textarea.svelte';
 
 	/**
@@ -8,20 +9,22 @@
 	let isEditing = true;
 </script>
 
-<div class="story-row" data-augmented-ui="tl-clip-x tr-clip-x br-clip-inset bl-clip-inset both">
-	<div class="backstory">
-		<h2>Backstory</h2>
-		<Textarea {isEditing} bind:value={character.attributes.backstory} />
+<ContentPane scrollable={true}>
+	<div class="story-row">
+		<div class="backstory">
+			<h2>Backstory</h2>
+			<Textarea {isEditing} bind:value={character.attributes.backstory} />
+		</div>
+		<div class="dreams">
+			<h2>Dreams</h2>
+			<Textarea {isEditing} bind:value={character.attributes.dreams} />
+		</div>
+		<div class="notes">
+			<h2>Notes</h2>
+			<Textarea {isEditing} bind:value={character.attributes.playerNotes} />
+		</div>
 	</div>
-	<div class="dreams">
-		<h2>Dreams</h2>
-		<Textarea {isEditing} bind:value={character.attributes.dreams} />
-	</div>
-	<div class="notes">
-		<h2>Notes</h2>
-		<Textarea {isEditing} bind:value={character.attributes.playerNotes} />
-	</div>
-</div>
+</ContentPane>
 
 <style>
 	.story-row {
@@ -33,15 +36,6 @@
 		grid-template-columns: 1fr;
 		width: 100%;
 		gap: 3rem;
-		overflow-y: scroll;
-		--aug-border-all: 1px;
-		--aug-border-bg: var(--secondary-accent-muted);
-		--aug-inlay-bg: var(--opaque-dark);
-		--aug-tl: 13px;
-		--aug-tr: 13px;
-		--aug-bl: 13px;
-		--aug-br: 13px;
-		box-shadow: inset 0 0 5rem var(--secondary-accent-muted);
 	}
 	h2 {
 		margin: 0;

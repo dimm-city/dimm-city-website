@@ -1,4 +1,5 @@
 <script>
+	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import List from '$lib/Shared/Components/List.svelte';
 
 	/**
@@ -12,45 +13,52 @@
 	function viewItem(item) {}
 </script>
 
-<div
-	class="section-container"
-	data-augmented-ui="tl-clip-x tr-clip-x br-clip-inset bl-clip-inset both"
->
-	<section data-augmented-ui="tl-clip tr-clip br-clip bl-clip border">
-		<h3 class="section-title">Items</h3>
-		<List data={character.attributes.items?.data} maxItems={-1} noItemsText="no inventory recorded">
-			<div let:item slot="item">
-				<button data-augmented-ui class="aug-button" on:click={() => viewItem(item)}
-					>{item.attributes.name}</button
-				>
-			</div>
-		</List>
-	</section>
-	<section data-augmented-ui="tl-clip tr-clip br-clip bl-clip border">
-		<h3 class="section-title">Cybernetics</h3>
-		<List
-			data={character.attributes.cybernetics?.data}
-			maxItems={-1}
-			noItemsText="no cybernetics detected"
-		>
-			<div let:item slot="item">
-				<button data-augmented-ui class="aug-button" on:click={() => viewItem(item)}
-					>{item.attributes.name}</button
-				>
-			</div>
-		</List>
-	</section>
-	<section data-augmented-ui="tl-clip tr-clip br-clip bl-clip border">
-		<h3 class="section-title">Scripts</h3>
-		<List data={character.attributes.scripts?.data} maxItems={-1} noItemsText="no scripts detected">
-			<div let:item slot="item">
-				<button data-augmented-ui class="aug-button" on:click={() => viewItem(item)}
-					>{item.attributes.name}</button
-				>
-			</div>
-		</List>
-	</section>
-</div>
+<ContentPane scrollable={true}>
+	<div class="section-container">
+		<section data-augmented-ui="tl-clip tr-clip br-clip bl-clip border">
+			<h3 class="section-title">Items</h3>
+			<List
+				data={character.attributes.items?.data}
+				maxItems={-1}
+				noItemsText="no inventory recorded"
+			>
+				<div let:item slot="item">
+					<button data-augmented-ui class="aug-button" on:click={() => viewItem(item)}
+						>{item.attributes.name}</button
+					>
+				</div>
+			</List>
+		</section>
+		<section data-augmented-ui="tl-clip tr-clip br-clip bl-clip border">
+			<h3 class="section-title">Cybernetics</h3>
+			<List
+				data={character.attributes.cybernetics?.data}
+				maxItems={-1}
+				noItemsText="no cybernetics detected"
+			>
+				<div let:item slot="item">
+					<button data-augmented-ui class="aug-button" on:click={() => viewItem(item)}
+						>{item.attributes.name}</button
+					>
+				</div>
+			</List>
+		</section>
+		<section data-augmented-ui="tl-clip tr-clip br-clip bl-clip border">
+			<h3 class="section-title">Scripts</h3>
+			<List
+				data={character.attributes.scripts?.data}
+				maxItems={-1}
+				noItemsText="no scripts detected"
+			>
+				<div let:item slot="item">
+					<button data-augmented-ui class="aug-button" on:click={() => viewItem(item)}
+						>{item.attributes.name}</button
+					>
+				</div>
+			</List>
+		</section>
+	</div>
+</ContentPane>
 
 <style>
 	.section-container {
@@ -62,15 +70,6 @@
 		grid-template-columns: 1fr;
 		width: 100%;
 		gap: 3rem;
-		overflow-y: scroll;
-		--aug-border-all: 1px;
-		--aug-border-bg: var(--secondary-accent-muted);
-		--aug-inlay-bg: var(--opaque-dark);
-		--aug-tl: 13px;
-		--aug-tr: 13px;
-		--aug-bl: 13px;
-		--aug-br: 13px;
-		box-shadow: inset 0 0 5rem var(--secondary-accent-muted);
 	}
 
 	:global(.list) {

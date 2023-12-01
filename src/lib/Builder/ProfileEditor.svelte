@@ -1,10 +1,9 @@
 <script>
 	import Select from 'svelte-select';
-	import Input from '$lib/Shared/Components/Input.svelte';
 	import { getDistricts } from '$lib/Shared/Stores/getDistricts';
 	import { getSpecialties } from '$lib/Shared/Stores/getSpecialties';
 	import { onMount } from 'svelte';
-	import { ages, flaws, ideals, vibes } from '$lib/Shared/Enums';
+	import {  flaws, ideals, vibes } from '$lib/Shared/Enums';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 
 	onMount(async () => {
@@ -19,30 +18,7 @@
 <ContentPane scrollable={true} padding={3}>
 	<div class="profile-row">
 		<section class="section-container profile">
-			<div class="label">Pronouns:</div>
-			<div class="value">
-				<Input bind:value={character.attributes.pronouns} class="inline" maxlength="50" />
-			</div>
-			<div class="label">Age:</div>
-			<div class="value aug-select">
-				<Select
-					value={character.attributes.age}
-					bind:justValue={character.attributes.age}
-					items={ages}
-				/>
-			</div>
-			<div class="label">Height:</div>
-			<div class="value suffix">
-				<Input bind:value={character.attributes.height} class="inline" />
-
-				<!-- <span>cm</span> -->
-			</div>
-			<div class="label">Weight:</div>
-			<div class="value suffix">
-				<Input bind:value={character.attributes.weight} class="inline" />
-
-				<!-- <span>kg</span> -->
-			</div>
+			
 			<div class="label">Specialties:</div>
 			<div class="value aug-select">
 				<Select
