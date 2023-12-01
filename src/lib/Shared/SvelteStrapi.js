@@ -1,11 +1,17 @@
+/**
+ * @module SvelteStrapi
+ */
+
 import qs from 'qs';
 import { getSessionValue } from './Stores/StoreUtils';
 import { StrapiClient } from './StrapiClient';
 import { config } from './config';
 
 /**
- * @param {string} contentType
- * @param {any} query
+ * @description Function to generate URL with query parameters for Strapi API.
+ * @param {string} contentType - The content type of the resource.
+ * @param {any} query - An object containing the query parameters.
+ * @returns {string} - The generated URL with query parameters.
  */
 function _getUrlWithQuery(contentType, query) {
 	const stringifiedQuery = qs.stringify(query);
@@ -13,9 +19,11 @@ function _getUrlWithQuery(contentType, query) {
 }
 
 /**
- * @param {(arg0: string) => any} _fetch
- * @param {string} contentType
- * @param {any} query
+ * @description Function to search for resources in Strapi API.
+ * @param {Function} _fetch - A function that fetches data from the server.
+ * @param {string} contentType - The content type of the resource.
+ * @param {any} query - An object containing the query parameters.
+ * @returns {Promise<any>} - A promise that resolves with the search results.
  */
 export async function search(_fetch, contentType, query) {
 	const url = _getUrlWithQuery(contentType, query);
@@ -30,9 +38,11 @@ export async function search(_fetch, contentType, query) {
 		const data = await response.json();
 		return data;
 	} catch (error) {
-		console.error('Error in search:', error);
+		console.error(error);
+		throw error;
 	}
 }
+
 /**
  * @param {{params: {pagination: any;sort: any;};}} page
  * @param {string} contentType
@@ -61,9 +71,11 @@ export async function loadSearchPageFromStrapi(
 }
 
 /**
- * @param {{params: {slug: any;}; fetch: any;}} page
- * @param {string} contentType
- * @param {any | undefined} [query]
+ * @description Function to load resources by slug from Strapi API.
+ * @param {any} page - An object containing the fetch function and params.
+ * @param {string} contentType - The content type of the resource.
+ * @param {any | undefined} [query] - An optional query parameter object.
+ * @returns {Promise<any>} - A promise that resolves with the loaded entity.
  */
 export async function loadEntityPageFromStrapi(page, contentType, query) {
 	const slug = page.params.slug;
@@ -73,8 +85,10 @@ export async function loadEntityPageFromStrapi(page, contentType, query) {
 }
 
 /**
- * @param {any} contentType
- * @param {{ id: any; attributes: any; }} entity
+ * @description Function to update an entity in Strapi API.
+ * @param {string} contentType - The content type of the resource.
+ * @param {any} entity - An object containing the updated data for the entity.
+ * @returns {Promise<void>} - A promise that resolves when the entity is updated.
  */
 export async function updateEntity(contentType, entity) {
 	let data = JSON.parse(JSON.stringify(entity));
