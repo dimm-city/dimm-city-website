@@ -3,6 +3,7 @@
 	import Select from 'svelte-select/Select.svelte';
 	import { writable } from 'svelte/store';
 
+	let isMetric = writable(true);
 	/**
 	 * @type {DC.Character}
 	 */
@@ -16,6 +17,17 @@
 		'Old Age',
 		'Ancient'
 	];
+
+	function toggleUnits() {
+		isMetric.update(value => !value);
+		if (isMetric) {
+			character.attributes.height = character.attributes.height / 2.54;
+			character.attributes.weight = character.attributes.weight / 0.45359237;
+		} else {
+			character.attributes.height = character.attributes.height * 2.54;
+			character.attributes.weight = character.attributes.weight * 0.45359237;
+		}
+	}
 
 	/** 
 	 * character.attributes.height and character.attributes.weight are stored using metric values. 
@@ -57,14 +69,12 @@
 		<div class="label">Height:</div>
 		<div class="value suffix">
 			<Input bind:value={character.attributes.height} class="inline" />
-
-			<!-- <span>cm</span> -->
+			<button on:click={toggleUnits}>{$isMetric ? 'cm' : 'in'}</button>
 		</div>
 		<div class="label">Weight:</div>
 		<div class="value suffix">
 			<Input bind:value={character.attributes.weight} class="inline" />
-
-			<!-- <span>kg</span> -->
+			<button on:click={toggleUnits}>{$isMetric ? 'kg' : 'lb'}</button>
 		</div>
 		<div class="label">Eyes:</div>
 		<div class="value"><span>{character.attributes.eyes || ''}</span></div>
