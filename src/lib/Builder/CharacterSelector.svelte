@@ -42,7 +42,7 @@
 			populate: {
 				mainImage: true,
 				race: true,
-				originalLocation: true,
+				originLocation: true,
 				currentLocation: true,
 				selectedAbilities: true,
 				specialties: {
