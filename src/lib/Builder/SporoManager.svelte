@@ -54,7 +54,7 @@
 			removeAfter: 3000,
 			allowRemove: true,
 			heading: 'character-updated',
-			type: 'info',
+			type: 'warning',
 			text: 'changes have been saved'
 		});
 	}

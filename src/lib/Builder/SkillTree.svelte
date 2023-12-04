@@ -99,7 +99,7 @@
 			removeAfter: 3000,
 			allowRemove: true,
 			heading: 'skill-updated',
-			type: 'info',
+			type: 'warning',
 			text: 'skills have been saved'
 		});
 	}
