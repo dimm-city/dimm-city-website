@@ -9,54 +9,11 @@
 	import { writable } from 'svelte/store';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 
-	const client = new StrapiClient(config.apiBaseUrl, $jwt);
-	/**
-	 * @type { DC.SkillTree[]}
-	 */
-	let skillTrees = [];
-
-	/**
-	 * @type { import('svelte/store').Writable<DC.SkillTree>}
-	 */
-	let selectedSkillTree = writable();
-
-	/**
-	 * @type {DC.Character}
-	 */
-	export let character;
+	import { selectedCharacter, loadSkillTree, selectedSkillTree, skillTrees } from './BuilderStore.js';
 
 	onMount(async () => {
-		const response = await client.search('dimm-city/skill-trees', {
-			filters: {
-				specialty: character.attributes.specialties.data.map((s) => s.id)
-			},
-			populate: '*'
-		});
-		if (response.data?.length > 0) {
-			skillTrees = [...response.data];
-		}
+		loadSkillTree();
 	});
-
-	/**
-	 * @param {string} slug
-	 */
-	export async function loadSkillTree(slug) {
-		console.log('loadSkillTree', slug);
-		const data = await client.loadBySlug('dimm-city/skill-trees', slug, {
-			filters: {
-				slug: slug
-			},
-			populate: {
-				mainImage: true,
-				abilities: true,
-				specialties: true
-			}
-		});
-
-		$selectedSkillTree = {
-			...data
-		};
-	}
 </script>
 
 <ContentPane scrollable={false}>

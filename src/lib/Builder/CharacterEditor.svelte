@@ -5,10 +5,7 @@
 	import TechEditor from './TechEditor.svelte';
 	import AppearanceEditor from './AppearanceEditor.svelte';
 
-	/**
-	 * @type {DC.Character}
-	 */
-	export let character;
+	import { selectedCharacter } from './BuilderStore.js';
 	let currentTab = 'profile';
 </script>
 

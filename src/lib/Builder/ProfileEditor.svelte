@@ -9,10 +9,7 @@
 	onMount(async () => {
 		console.log('character', character);
 	});
-	/**
-	 * @type {DC.Character}
-	 */
-	export let character;
+	import { selectedCharacter } from './BuilderStore.js';
 </script>
 
 <ContentPane scrollable={true} padding={3}>

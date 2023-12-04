@@ -7,58 +7,11 @@
 	import { config } from '$lib/Shared/config';
 	import { onMount } from 'svelte';
 
-	const client = new StrapiClient(config.apiBaseUrl, $jwt);
-
-	/**
-	 * @type {any[]}
-	 */
-	let availableCharacters = [];
-
-	/**
-	 * @type {DC.Character}
-	 */
-	export let selectedCharacter;
+	import { availableCharacters, selectedCharacter, loadCharacter } from './BuilderStore.js';
 
 	onMount(async () => {
 		loadAvailableCharacters();
 	});
-	async function loadAvailableCharacters() {
-		const results = await getCharactersByUser($jwt);
-		if (results.data?.length > 0) {
-			availableCharacters = [...results.data];		
-		}
-	}
-
-	/**
-	 * @param {any} tokenId
-	 * @param {MouseEvent} e
-	 */
-	export async function loadCharacter(tokenId, e) {
-		console.log('loadCharacter', tokenId);
-		const data = await client.loadBySlug('dimm-city/characters', tokenId, {
-			filters: {
-				tokenId: tokenId
-			},
-			populate: {
-				mainImage: true,
-				race: true,
-				originLocation: true,
-				currentLocation: true,
-				selectedAbilities: true,
-				specialties: {
-					populate: {
-						skillTrees: true
-					}
-				}
-			}
-		});
-
-		selectedCharacter = {
-			...data
-		};
-
-		//e.target?.scrollIntoView({ behavior: 'smooth' });
-	}
 </script>
 
 <ContentPane padding={3} scrollable={true}>

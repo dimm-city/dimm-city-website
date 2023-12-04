@@ -2,10 +2,7 @@
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import List from '$lib/Shared/Components/List.svelte';
 
-	/**
-	 * @type {DC.Character}
-	 */
-	export let character;
+	import { selectedCharacter } from './BuilderStore.js';
 
 	/**
 	 * @param {any} item
