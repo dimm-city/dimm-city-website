@@ -3,6 +3,7 @@ import { StrapiClient } from '$lib/Shared/StrapiClient';
 import { config } from '$lib/Shared/config';
 import { jwt } from '$lib/Shared/Stores/UserStore';
 import { getCharactersByUser } from '$lib/Shared/Stores/getCharacters';
+import { updateEntity } from '$lib/Shared/SvelteStrapi';
 
 const client = new StrapiClient(config.apiBaseUrl, get(jwt));
 
@@ -44,7 +45,7 @@ export async function loadAvailableCharacters() {
  * @param {any} tokenId
  */
 export async function loadCharacter(tokenId) {
-    console.log('loadCharacter', tokenId);
+	console.log('loadCharacter', tokenId);
 	const data = await client.loadBySlug('dimm-city/characters', tokenId, {
 		filters: {
 			tokenId: tokenId
@@ -70,6 +71,44 @@ export async function loadCharacter(tokenId) {
 		loadAvailableSkillTrees(
 			data?.attributes?.specialties?.data?.map((/** @type {{ id: any; }} */ s) => s.id)
 		);
+}
+
+export async function updateCharacter() {
+	//if (ownsToken(data.attributes.tokenId)) {
+
+	const currentData = get(selectedCharacter);
+
+	const importData = JSON.parse(JSON.stringify(currentData.attributes));
+	importData.playerUpdated = true;
+
+	delete importData.mainImage;
+	delete importData.mainModel;
+	delete importData.mainVideo;
+	delete importData.mainAudio;
+
+	importData.currentLocation = currentData.attributes.currentLocation;
+	importData.originLocation = currentData.attributes.originLocation;
+
+	if (currentData.attributes.specialties.data?.length > 0)
+		importData.specialties = [
+			...currentData.attributes.specialties.data.map((r) => ({
+				id: Number.parseInt(r.id)
+			}))
+		];
+	else importData.specialties = [];
+
+	await updateEntity('dimm-city/characters', {
+		id: currentData.id,
+		...importData
+	})
+		.then(() => {
+			console.log('character saved', currentData);
+		})
+		.catch((reason) => {
+			console.error('Error updating citizen file', reason);
+		});
+
+	//}
 }
 
 /**
@@ -100,7 +139,11 @@ export async function loadSkillTree(slug) {
 		populate: {
 			mainImage: true,
 			abilities: true,
-			specialties: true
+			specialty: {
+                populate: {
+                    mainImage: true
+                }
+            }
 		}
 	});
 

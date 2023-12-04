@@ -20,6 +20,7 @@
 					<h1><i class="bi bi-icon-name" />{$selectedSkillTree.attributes.name}</h1>
 					<div>
 						<h3>
+							{@debug $selectedSkillTree}
 							<i class="bi bi-icon-type" />Specialty: {$selectedSkillTree.attributes.specialty?.data
 								?.attributes.name}
 						</h3>

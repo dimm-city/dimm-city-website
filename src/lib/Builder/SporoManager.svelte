@@ -2,37 +2,30 @@
 	import CharacterSelector from './CharacterSelector.svelte';
 	import Sheet from '$lib/Characters/Components/CharacterSheet/Sheet.svelte';
 	import Shell from '$lib/Shared/Shell/Shell.svelte';
-	import { jwt } from '$lib/Shared/Stores/UserStore';
-	import { StrapiClient } from '$lib/Shared/StrapiClient';
-	import { updateEntity } from '$lib/Shared/SvelteStrapi';
-	import { config } from '$lib/Shared/config';
 	import CharacterEditor from './CharacterEditor.svelte';
 	import MainMenu from '$lib/Shared/Shell/MainMenu.svelte';
-	import { loadAvailableCharacters, loadCharacter, selectedCharacter } from './BuilderStore';
+	import { loadAvailableCharacters, loadCharacter, selectedCharacter, updateCharacter } from './BuilderStore';
 	import { onMount } from 'svelte';
 
-	let showMainPanel = false;
-
-	onMount(async () => {
-		loadAvailableCharacters();
-	});
 	/**
 	 * @type {any}
 	 */
 	export let data;
 
-	let skillTreeSlug = data.skillTree;
+	let showMainPanel = false;
 
-	/** @type {DC.Character} */
-	let character = data.citizenData;
+	onMount(async () => {
+		//TODO: support deep linking to character editor tabs and preloading data
+		// let skillTreeSlug = data.skillTree;
+		// let skillTree = data.skillTreeData;
+		// if (data.citizenData) $selectedCharacter = data.citizenData;
 
-	let skillTree = data.skillTreeData;
+		loadAvailableCharacters();
+	});
 
 	let mode = data.mode ?? 'select-character';
 
 	let originalCharacter = '';
-
-	const client = new StrapiClient(config.apiBaseUrl, $jwt);
 
 	async function viewCharacter() {
 		await loadCharacter($selectedCharacter.attributes.tokenId);
@@ -43,43 +36,14 @@
 		originalCharacter = JSON.stringify($selectedCharacter);
 		changeMode('edit-character');
 	}
-
+	
 	async function saveChanges() {
-		//if (ownsToken(data.attributes.tokenId)) {
-
-		const importData = JSON.parse(JSON.stringify(character.attributes));
-		importData.playerUpdated = true;
-
-		delete importData.mainImage;
-		delete importData.mainModel;
-		delete importData.mainVideo;
-		delete importData.mainAudio;
-
-		importData.currentLocation = character.attributes.currentLocation;
-		importData.originLocation = character.attributes.originLocation;
-
-		if (character.attributes.specialties.data?.length > 0)
-			importData.specialties = [
-				...character.attributes.specialties.data.map((r) => ({ id: Number.parseInt(r.id) }))
-			];
-		else importData.specialties = [];
-
-		await updateEntity('dimm-city/characters', {
-			id: character.id,
-			...importData
-		})
-			.then(() => {
-				console.log('character saved', character);
-			})
-			.catch((reason) => {
-				console.error('Error updating citizen file', reason);
-			});
-
-		//}
+		await updateCharacter();
+		//TODO: show toast alert notification
 	}
 
 	function cancelChanges(goBack = false) {
-		character = JSON.parse(originalCharacter);
+		$selectedCharacter = JSON.parse(originalCharacter);
 		if (goBack) {
 			changeMode('select-character');
 		}
@@ -95,21 +59,17 @@
 
 	function printCharacter() {
 		//open url in new window
-		window.open(`/console/citizens/${character.attributes.tokenId}/print`, '_blank');
+		window.open(`/console/citizens/${$selectedCharacter?.attributes?.tokenId}/print`, '_blank');
 	}
 </script>
 
-<Shell title={character?.attributes.name ?? 'Sporo Manager'} titleUrl="/console/builder">
+<Shell title={$selectedCharacter?.attributes.name ?? 'Sporo Manager'} titleUrl="/console/builder">
 	{#if mode === 'edit-character'}
 		<CharacterEditor />
 	{:else if mode === 'view-character'}
 		<Sheet bind:character={$selectedCharacter} isEditing={false} on:save />
 	{:else}
-		<CharacterSelector
-			on:edit={startEditing}
-			on:print={printCharacter}
-			on:view={viewCharacter}
-		/>
+		<CharacterSelector on:edit={startEditing} on:print={printCharacter} on:view={viewCharacter} />
 	{/if}
 	<svelte:fragment slot="left-button">
 		{#if mode !== 'select-character'}
@@ -168,11 +128,6 @@
 </Shell>
 
 <style>
-	h1 {
-		text-align: center;
-		margin: 0;
-		margin-bottom: 2rem;
-	}
 
 	.aug-button {
 		aspect-ratio: 1/1;
