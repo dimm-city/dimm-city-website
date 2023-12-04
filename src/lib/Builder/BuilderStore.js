@@ -7,6 +7,8 @@ import { updateEntity } from '$lib/Shared/SvelteStrapi';
 
 const client = new StrapiClient(config.apiBaseUrl, get(jwt));
 
+let advancedSkillMatrixMode = false;
+
 /**
  * @type {import('svelte/store').Writable<DC.Character[]>}
  */
@@ -34,6 +36,110 @@ export let availableSkills = writable([]);
 export let selectedSkill = writable();
 
 /**
+ * @param {DC.SkillTree} _skillTree
+ */
+function setSkillTreeProperties(_skillTree) {
+	if (_skillTree.attributes.abilities?.data?.length > 0) {
+		_skillTree.maxRows = _skillTree.attributes.abilities.data
+			.map((a) => a.attributes.level)
+			.reduce((a, b) => Math.max(a, b));
+		_skillTree.maxColumns = _skillTree.attributes.abilities.data
+			.map((a) => a.attributes.module)
+			.reduce((a, b) => Math.max(a, b));
+	}
+
+	_skillTree.pageImage = _skillTree.attributes.mainImage?.data?.attributes.url;
+
+	if (!_skillTree.pageImage)
+		_skillTree.pageImage =
+			_skillTree.attributes.specialty?.data?.attributes.mainImage?.data?.attributes.url;
+
+	if (!_skillTree.pageImage) _skillTree.pageImage = '/assets/missing-image.png';
+}
+
+/**
+ * @param {DC.Ability[]} abilities
+ */
+function updateSkillMatrix(abilities) {
+	if (advancedSkillMatrixMode) {
+		//TODO: Implement advanced mode, unlock only adjacent skills
+		throw new Error('Function not implemented.');
+	} else {
+		//Get selected characters selected abilities
+		const charactersAbilities = get(selectedCharacter)?.attributes.selectedAbilities.data;
+
+		// Get the max level of a skill that has been acquired
+		let maxLevel = Math.max(...(charactersAbilities?.map((s) => s.attributes.level) ?? [0])) + 1;
+
+		if (maxLevel < 0) maxLevel = 1;
+
+		//Set all skill tree abilities acquired property to true if
+		// that skill is in the selected characters selected abilities.
+		// Unlock all abilities at the max acquired level + 1
+		abilities.forEach((s) => {
+			s.unlocked = s.attributes.level <= maxLevel;
+			s.acquired = charactersAbilities?.map((a) => a.id).includes(s.id) ?? false;
+		});
+
+		return abilities;
+	}
+}
+
+/**
+ * @param {string} action
+ * @param {DC.Ability} ability
+ */
+async function updateCharacterAbility(action, ability) {
+	await fetch(
+		`${config.apiBaseUrl}/dimm-city/characters/${get(selectedCharacter)?.id}/${action}-ability/${
+			ability.id
+		}`,
+		{
+			method: 'PUT',
+			headers: {
+				Authorization: `Bearer ${get(jwt)}`,
+				'Content-Type': 'application/json'
+			}
+		}
+	)
+		.then(
+			async (
+				/** @type {{ json: () => PromiseLike<{ data: any; errors: any; }> | { data: any; errors: any; }; ok: any; }} */ res
+			) => {
+				const { data, errors } = await res.json();
+				if (res.ok) {
+					// @ts-ignore
+					selectedCharacter.update((c) => {
+						if (!c) return;
+
+						if (action === 'add') {
+							c.attributes.selectedAbilities.data.push(ability);
+						} else {
+							c.attributes.selectedAbilities.data = [
+								...c.attributes.selectedAbilities.data.filter((a) => a.id !== ability.id)
+							];
+						}
+						console.log('updated', c.attributes.selectedAbilities.data);
+						return c;
+					});
+					
+                    availableSkills.update((values) => {
+						updateSkillMatrix(values);
+						return values;
+					});
+
+				} else {
+					//TODO: display error
+					console.error('failed', errors, data);
+				}
+			}
+		)
+		.catch((/** @type {any} */ reason) => {
+			console.log('could not update character', reason);
+		});
+}
+
+/**
  * Load available characters
  */
 export async function loadAvailableCharacters() {
@@ -49,6 +155,8 @@ export async function loadAvailableCharacters() {
  */
 export async function loadCharacter(tokenId) {
 	console.log('loadCharacter', tokenId);
+
+	/** @type {DC.Character} */
 	const data = await client.loadBySlug('dimm-city/characters', tokenId, {
 		filters: {
 			tokenId: tokenId
@@ -70,10 +178,8 @@ export async function loadCharacter(tokenId) {
 	selectedCharacter.set({
 		...data
 	});
-	if (data?.attributes?.selectedAbilities?.data)
-		loadAvailableSkillTrees(
-			data?.attributes?.specialties?.data?.map((/** @type {{ id: any; }} */ s) => s.id)
-		);
+	if (data?.attributes?.specialties?.data)
+		loadAvailableSkillTrees(data?.attributes?.specialties?.data?.map((s) => s.id));
 }
 
 export async function updateCharacter() {
@@ -117,7 +223,7 @@ export async function updateCharacter() {
 }
 
 /**
- * @param {string[]} specialtyIds
+ * @param {Number[]} specialtyIds
  */
 export async function loadAvailableSkillTrees(specialtyIds) {
 	if (specialtyIds?.length === 0) return;
@@ -139,7 +245,7 @@ export async function loadSkillTree(slug) {
 	console.log('loadSkillTree', slug);
 
 	/** @type {DC.SkillTree} */
-	const _skillTree = await client.loadBySlug('dimm-city/skill-trees', slug, {
+	const skillTree = await client.loadBySlug('dimm-city/skill-trees', slug, {
 		filters: {
 			slug: slug
 		},
@@ -154,68 +260,15 @@ export async function loadSkillTree(slug) {
 		}
 	});
 
-	_skillTree.attributes.abilities?.data?.forEach((ability) => {
-		if (ability.attributes.level == 1) {
-			ability.unlocked = true;
-		}
-	});
+	setSkillTreeProperties(skillTree);
 
-	if (_skillTree.attributes.abilities?.data?.length > 0) {
-		_skillTree.maxRows = _skillTree.attributes.abilities.data
-			.map((a) => a.attributes.level)
-			.reduce((a, b) => Math.max(a, b));
-		_skillTree.maxColumns = _skillTree.attributes.abilities.data
-			.map((a) => a.attributes.module)
-			.reduce((a, b) => Math.max(a, b));
-	}
-
-	_skillTree.pageImage = _skillTree.attributes.mainImage?.data?.attributes.url;
-
-	if (!_skillTree.pageImage)
-		_skillTree.pageImage =
-			_skillTree.attributes.specialty?.data?.attributes.mainImage?.data?.attributes.url;
-
-	if (!_skillTree.pageImage) _skillTree.pageImage = '/assets/missing-image.png';
-
-	unlockSkills(_skillTree.attributes.abilities.data ?? []);
+	updateSkillMatrix(skillTree.attributes.abilities.data ?? []);
 
 	selectedSkillTree.set({
-		..._skillTree
+		...skillTree
 	});
 
-	availableSkills.set([..._skillTree.attributes.abilities.data]);
-}
-
-let advancedMode = false;
-/**
- * @param {DC.Ability[]} abilities
- */
-function unlockSkills(abilities) {
-	if (advancedMode) {
-		//TODO: Implement advanced mode, unlock only adjacent skills
-		throw new Error('Function not implemented.');
-	} else {
-		//Get selected characters selected abilities
-		const charactersAbilities = get(selectedCharacter)?.attributes.selectedAbilities.data;
-
-		//Set all skill tree abilities acquired property to true if
-		// that skill is in the selected characters selected abilities
-		abilities.forEach((a) => {
-			if (charactersAbilities?.map((s) => s.id).includes(a.id)) a.acquired = true;
-		});
-
-		// Get the max level of a skill that has been acquired
-		let maxLevel =
-			Math.max(...abilities.filter((s) => s.acquired).map((s) => s.attributes.level)) + 1;
-
-		if (maxLevel < 0) maxLevel = 1;
-
-		abilities.forEach((s) => {
-			s.unlocked = s.attributes.level <= maxLevel;
-		});
-
-		return abilities;
-	}
+	availableSkills.set([...skillTree.attributes.abilities.data]);
 }
 
 /**
@@ -228,12 +281,6 @@ export function selectSkill(skill) {
 		skill.selected = true;
 		selectedSkill.set(skill);
 	}
-	availableSkills.update((values) => {	    
-		values.forEach((s) => {
-			s.selected = s === skill;
-		});		
-        return values;
-	});
 }
 
 /**
@@ -241,19 +288,7 @@ export function selectSkill(skill) {
  */
 export async function acquireSkill(skill) {
 	if (skill == null) return;
-	skill.acquired = true;
-	availableSkills.update((values) => {
-
-		const value = values.find((s) => s.id === skill.id);
-		if (value) {
-			value.acquired = true;
-			//TODO: update character via API
-		}
-
-        unlockSkills(values);
-		return values;
-	});
-
+	await updateCharacterAbility('add', skill);
 }
 
 /**
@@ -261,14 +296,5 @@ export async function acquireSkill(skill) {
  */
 export async function removeSkill(skill) {
 	if (skill == null) return;
-	skill.acquired = false;
-	availableSkills.update((values) => {
-		const value = values.find((s) => s.id === skill.id);
-		if (value) {
-			value.acquired = false;
-			//TODO: update character via API
-		}
-        unlockSkills(values);
-		return values;
-	});
+	await updateCharacterAbility('remove', skill);
 }
