@@ -3,18 +3,42 @@
 	import { config } from '$lib/Shared/config';
 
 	/**
-	 * @type {DC.Character}
+	 * @type {DC.Character | null}
 	 */
 	export let character;
 
 	//trim last slash from config.baseUrl
 	const baseUrl = (config.storageBaseUrl ?? config.baseUrl).replace(/\/$/, '');
-	const { mainImage, mainModel, mainVideo, name } = character.attributes;
-	let relativeUrl =
-		mainImage?.data?.attributes?.url ?? mainImage?.data?.attributes?.formats?.large?.url;
+	let mainImage;
+	/**
+	 * @type {{ data: any; }}
+	 */
+	let mainModel;
+	/**
+	 * @type {{ data: any; }}
+	 */
+	let mainVideo;
+	/**
+	 * @type {string}
+	 */
+	let name;
 
-	if (!relativeUrl) relativeUrl = `${baseUrl}/assets/missing-image.png`;
-	if (!relativeUrl.startsWith('http')) relativeUrl = baseUrl + relativeUrl;
+	let relativeUrl;
+	if (character) {
+		//mainImage, mainModel, mainVideo;
+		name = character.attributes.name;
+		mainImage = character.attributes.mainImage;
+		mainModel = character.attributes.mainModel;
+		mainVideo = character.attributes.mainVideo;
+
+		relativeUrl =
+			mainImage?.data?.attributes?.url ?? mainImage?.data?.attributes?.formats?.large?.url;
+
+		if (!relativeUrl) relativeUrl = `${baseUrl}/assets/missing-image.png`;
+		if (!relativeUrl.startsWith('http')) relativeUrl = baseUrl + relativeUrl;
+	} else {
+		relativeUrl = `${baseUrl}/assets/missing-image.png`;
+	}
 	const imageUrl = relativeUrl;
 </script>
 
