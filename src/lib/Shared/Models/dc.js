@@ -329,6 +329,9 @@
 /**
  * @typedef DC.SkillTree
  * @property {number} id
+ * @property {string | undefined} pageImage
+ * @property {number} maxRows
+ * @property {number} maxColumns
  * @property {Object} attributes
  * @property {string} attributes.name
  * @property {string} attributes.slug

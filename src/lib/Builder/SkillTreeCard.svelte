@@ -29,7 +29,7 @@
 			<div class="header">
 				<!-- svelte-ignore a11y-no-static-element-interactions -->
 				<!-- svelte-ignore a11y-click-events-have-key-events -->
-				<i class="bi" class:bi-unlock={data.unlocked} class:bi-lock={!data.unlocked}  />
+				<i class="bi" class:bi-unlock={unlocked} class:bi-lock={!unlocked}  />
 				<h1>{data.attributes.name}</h1>
 			</div>
 			<div class="skill-description">
@@ -38,7 +38,7 @@
 			<div class="bottom-toolbar">
 				<div class="left-group">AP: {data.attributes.ap}</div>
 				<div class="right-group">
-					<i class="bi" class:bi-check={data.acquired} class:bi-x={!data.acquired} />
+					<i class="bi" class:bi-check={acquired} class:bi-x={!acquired} />
 				</div>
 			</div>
 		</div>
