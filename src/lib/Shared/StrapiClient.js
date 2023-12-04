@@ -117,7 +117,7 @@ export class StrapiClient {
 			const json = await response.json();
 
 			if (json?.data[0] == null)
-				console.error('No data returned during load by slug', url, contentType, query, json);
+				console.debug('No data returned during load by slug', url, contentType, query, json);
 			// Since we're searching by slug, we might get multiple results.
 			// We're interested only in the first one.
 			return json.data[0];

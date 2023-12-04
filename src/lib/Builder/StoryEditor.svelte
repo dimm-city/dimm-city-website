@@ -1,11 +1,9 @@
 <script>
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import Textarea from '$lib/Shared/Components/Textarea.svelte';
+	import { selectedCharacter } from './BuilderStore';
 
-	/**
-	 * @type {DC.Character}}
-	 */
-	export let character;
+
 	let isEditing = true;
 </script>
 
@@ -13,15 +11,15 @@
 	<div class="story-row">
 		<div class="backstory">
 			<h2>Backstory</h2>
-			<Textarea {isEditing} bind:value={character.attributes.backstory} />
+			<Textarea {isEditing} bind:value={$selectedCharacter.attributes.backstory} />
 		</div>
 		<div class="dreams">
 			<h2>Dreams</h2>
-			<Textarea {isEditing} bind:value={character.attributes.dreams} />
+			<Textarea {isEditing} bind:value={$selectedCharacter.attributes.dreams} />
 		</div>
 		<div class="notes">
 			<h2>Notes</h2>
-			<Textarea {isEditing} bind:value={character.attributes.playerNotes} />
+			<Textarea {isEditing} bind:value={$selectedCharacter.attributes.playerNotes} />
 		</div>
 	</div>
 </ContentPane>

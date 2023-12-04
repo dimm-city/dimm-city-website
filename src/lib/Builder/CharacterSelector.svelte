@@ -1,32 +1,24 @@
 <script>
 	import CharacterCard from '$lib/Builder/CharacterCard.svelte';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
-	import { jwt } from '$lib/Shared/Stores/UserStore';
-	import { getCharactersByUser } from '$lib/Shared/Stores/getCharacters';
-	import { StrapiClient } from '$lib/Shared/StrapiClient';
-	import { config } from '$lib/Shared/config';
-	import { onMount } from 'svelte';
-
 	import { availableCharacters, selectedCharacter, loadCharacter } from './BuilderStore.js';
 
-	onMount(async () => {
-		loadAvailableCharacters();
-	});
+
 </script>
 
 <ContentPane padding={3} scrollable={true}>
 	<div class="select">
 		<h1>Select your Sporo</h1>
 		<div class="characters">
-			{#each availableCharacters as c}
-				<div class="character-card-container" class:selected={c.id === selectedCharacter?.id}>
+			{#each $availableCharacters as c}
+				<div class="character-card-container" class:selected={c.id === $selectedCharacter?.id}>
 					<CharacterCard
 						character={c}
-						on:click={(e) => loadCharacter(c.attributes.tokenId, e)}
+						on:click={(e) => $selectedCharacter = {...c}}
 						on:edit
 						on:view
 						on:print
-						selected={c.id === selectedCharacter?.id}
+						selected={c.id === $selectedCharacter?.id}
 					/>
 				</div>
 			{/each}

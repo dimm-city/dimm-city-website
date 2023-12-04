@@ -1,25 +1,20 @@
 <script>
 	import SkillTree from './SkillTree.svelte';
 	import DetailsPanel from './DetailsPanel.svelte';
-
-	import { onMount } from 'svelte';
-	import { StrapiClient } from '$lib/Shared/StrapiClient';
-	import { config } from '$lib/Shared/config';
-	import { jwt } from '$lib/Shared/Stores/UserStore';
-	import { writable } from 'svelte/store';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 
-	import { selectedCharacter, loadSkillTree, selectedSkillTree, skillTrees } from './BuilderStore.js';
+	import {
+		loadSkillTree,
+		selectedSkillTree,
+		availableSkillTrees
+	} from './BuilderStore.js';
 
-	onMount(async () => {
-		loadSkillTree();
-	});
 </script>
 
 <ContentPane scrollable={false}>
 	<div class="section-container">
-		{#if $selectedSkillTree}
-			<SkillTree selectedSkillTree={$selectedSkillTree} />
+		{#if $selectedSkillTree?.id > 0}
+			<SkillTree />
 			<DetailsPanel side="left">
 				<div class="specialty-details">
 					<h1><i class="bi bi-icon-name" />{$selectedSkillTree.attributes.name}</h1>
@@ -29,8 +24,8 @@
 								?.attributes.name}
 						</h3>
 						<h4>Additional Skill Trees</h4>
-						{#if skillTrees?.length > 0}
-							{#each skillTrees as tree}
+						{#if $availableSkillTrees?.length > 0}
+							{#each $availableSkillTrees as tree}
 								<button
 									on:click={() => loadSkillTree(tree.attributes.slug)}
 									data-augmented-ui
@@ -47,14 +42,14 @@
 			<div>
 				<h1>Select a Skill Tree</h1>
 				<ul>
-					{#each skillTrees as skillTree}
+					{#each $availableSkillTrees as item}
 						<li>
 							<button
 								data-augmented-ui
 								class="small-menu-item"
-								on:click={() => loadSkillTree(skillTree.attributes.slug)}
+								on:click={() => loadSkillTree(item.attributes.slug)}
 							>
-								{skillTree.attributes.name}
+								{item.attributes.name}
 							</button>
 						</li>
 					{/each}

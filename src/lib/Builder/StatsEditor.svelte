@@ -3,12 +3,7 @@
 	import { ages } from '$lib/Shared/Enums';
 	import Select from 'svelte-select/Select.svelte';
 	import { writable } from 'svelte/store';
-	import ProfileEditor from './ProfileEditor.svelte';
-
-	/**
-	 * @type {DC.Character}
-	 */
-	export let character;
+	import { selectedCharacter } from './BuilderStore';
 
 	/**
 	 * character.attributes.height and character.attributes.weight are stored using metric values.
@@ -26,16 +21,16 @@
 	 * When converting weight, use pounds in imperial and kilograms in metric.
 	 */
 	let isMetric = writable(true);
-	let tempHeight = writable(character.attributes.height);
+	let tempHeight = writable($selectedCharacter.attributes.height);
 	tempHeight.subscribe((value) => {
-		if ($isMetric) character.attributes.height = value;
-		else character.attributes.height = Math.round(value * 2.54);
+		if ($isMetric) $selectedCharacter.attributes.height = value;
+		else $selectedCharacter.attributes.height = Math.round(value * 2.54);
 	});
 
-	let tempWeight = writable(character.attributes.weight);
+	let tempWeight = writable($selectedCharacter.attributes.weight);
 	tempWeight.subscribe((value) => {
-		if ($isMetric) character.attributes.weight = value;
-		else character.attributes.weight = Math.round(value / 0.45359237);
+		if ($isMetric) $selectedCharacter.attributes.weight = value;
+		else $selectedCharacter.attributes.weight = Math.round(value / 0.45359237);
 	});
 
 	function toggleUnits() {
@@ -54,19 +49,19 @@
 	<div class="grid-container">
 		<div class="label">Race:</div>
 		<div class="value">
-			{#if character.attributes.race}
-				<span>{character.attributes.race.data?.attributes?.name}</span>
+			{#if $selectedCharacter.attributes.race}
+				<span>{$selectedCharacter.attributes.race.data?.attributes?.name}</span>
 			{/if}
 		</div>
 		<div class="label">Pronouns:</div>
 		<div class="value">
-			<Input bind:value={character.attributes.pronouns} class="inline" maxlength="50" />
+			<Input bind:value={$selectedCharacter.attributes.pronouns} class="inline" maxlength="50" />
 		</div>
 		<div class="label">Age:</div>
 		<div class="value aug-select">
 			<Select
-				value={character.attributes.age}
-				bind:justValue={character.attributes.age}
+				value={$selectedCharacter.attributes.age}
+				bind:justValue={$selectedCharacter.attributes.age}
 				items={ages}
 			/>
 		</div>
@@ -81,9 +76,9 @@
 			<button on:click={toggleUnits}>{$isMetric ? 'kg' : 'lb'}</button>
 		</div>
 		<div class="label">Eyes:</div>
-		<div class="value"><span>{character.attributes.eyes || ''}</span></div>
+		<div class="value"><span>{$selectedCharacter.attributes.eyes || ''}</span></div>
 		<div class="label">Skin:</div>
-		<div class="value"><span>{character.attributes.skin || ''}</span></div>
+		<div class="value"><span>{$selectedCharacter.attributes.skin || ''}</span></div>
 	</div>
 	<!-- <ProfileEditor bind:character /> -->
 </div>

@@ -6,8 +6,9 @@
 	import {  flaws, ideals, vibes } from '$lib/Shared/Enums';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 
+
 	onMount(async () => {
-		console.log('character', character);
+		console.log('character', $selectedCharacter);
 	});
 	import { selectedCharacter } from './BuilderStore.js';
 </script>
@@ -25,7 +26,7 @@
 					itemId="id"
 					multiple={true}
 					hideEmptyState={true}
-					bind:value={character.attributes.specialties.data}
+					bind:value={$selectedCharacter.attributes.specialties.data}
 				>
 					<div slot="selection" let:selection>
 						<span>{selection.name ?? selection.attributes?.name ?? 'Unknown'}</span>
@@ -39,8 +40,8 @@
 			<div class="label">Ideal:</div>
 			<div class="value aug-select">
 				<Select
-					value={character.attributes.ideal}
-					bind:justValue={character.attributes.ideal}
+					value={$selectedCharacter.attributes.ideal}
+					bind:justValue={$selectedCharacter.attributes.ideal}
 					items={ideals}
 				/>
 			</div>
@@ -53,7 +54,7 @@
 						placeholder="Select a district"
 						label="name"
 						itemId="id"
-						bind:justValue={character.attributes.currentLocation}
+						bind:justValue={$selectedCharacter.attributes.currentLocation}
 					>
 						<div slot="selection" let:selection>
 							<span>{selection.name ?? selection.attributes?.name ?? ''}</span>
@@ -68,8 +69,8 @@
 			<div class="label">Vibe:</div>
 			<div class="value aug-select">
 				<Select
-					value={character.attributes.vibes}
-					bind:justValue={character.attributes.vibes}
+					value={$selectedCharacter.attributes.vibes}
+					bind:justValue={$selectedCharacter.attributes.vibes}
 					items={vibes}
 				/>
 			</div>
@@ -82,7 +83,7 @@
 						placeholder="Select a district"
 						label="name"
 						itemId="id"
-						bind:justValue={character.attributes.originLocation}
+						bind:justValue={$selectedCharacter.attributes.originLocation}
 					>
 						<div slot="selection" let:selection>
 							<span>{selection.name ?? selection.attributes?.name ?? ''}</span>
@@ -97,8 +98,8 @@
 			<div class="label">Flaw:</div>
 			<div class="value aug-select">
 				<Select
-					value={character.attributes.flaw}
-					bind:justValue={character.attributes.flaw}
+					value={$selectedCharacter.attributes.flaw}
+					bind:justValue={$selectedCharacter.attributes.flaw}
 					items={flaws}
 				/>
 			</div>

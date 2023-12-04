@@ -8,8 +8,14 @@
 	import { config } from '$lib/Shared/config';
 	import CharacterEditor from './CharacterEditor.svelte';
 	import MainMenu from '$lib/Shared/Shell/MainMenu.svelte';
+	import { loadAvailableCharacters, loadCharacter, selectedCharacter } from './BuilderStore';
+	import { onMount } from 'svelte';
 
 	let showMainPanel = false;
+
+	onMount(async () => {
+		loadAvailableCharacters();
+	});
 	/**
 	 * @type {any}
 	 */
@@ -28,8 +34,13 @@
 
 	const client = new StrapiClient(config.apiBaseUrl, $jwt);
 
-	function startEditing() {
-		originalCharacter = JSON.stringify(character);
+	async function viewCharacter() {
+		await loadCharacter($selectedCharacter.attributes.tokenId);
+		changeMode('view-character');
+	}
+	async function startEditing() {
+		await loadCharacter($selectedCharacter.attributes.tokenId);
+		originalCharacter = JSON.stringify($selectedCharacter);
 		changeMode('edit-character');
 	}
 
@@ -90,15 +101,14 @@
 
 <Shell title={character?.attributes.name ?? 'Sporo Manager'} titleUrl="/console/builder">
 	{#if mode === 'edit-character'}
-		<CharacterEditor bind:character />
+		<CharacterEditor />
 	{:else if mode === 'view-character'}
-		<Sheet bind:character isEditing={false} on:save />
+		<Sheet bind:character={$selectedCharacter} isEditing={false} on:save />
 	{:else}
 		<CharacterSelector
-			bind:selectedCharacter={character}
 			on:edit={startEditing}
 			on:print={printCharacter}
-			on:view={() => changeMode('view-character')}
+			on:view={viewCharacter}
 		/>
 	{/if}
 	<svelte:fragment slot="left-button">

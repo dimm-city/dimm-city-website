@@ -13,7 +13,7 @@
 	let relativeUrl =
 		mainImage?.data?.attributes?.url ?? mainImage?.data?.attributes?.formats?.large?.url;
 
-	if (relativeUrl == '') relativeUrl = `${baseUrl}/assets/missing-image.png`;
+	if (!relativeUrl) relativeUrl = `${baseUrl}/assets/missing-image.png`;
 	if (!relativeUrl.startsWith('http')) relativeUrl = baseUrl + relativeUrl;
 	const imageUrl = relativeUrl;
 </script>

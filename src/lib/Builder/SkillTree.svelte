@@ -8,6 +8,7 @@
 	import panzoom from 'panzoom';
 	import { marked } from 'marked';
 	import { writable } from 'svelte/store';
+	import { selectedSkillTree, selectedSkill } from './BuilderStore';
 
 	/**
 	 * @type {import("panzoom").PanZoom}
@@ -19,20 +20,16 @@
 	 */
 	let canvas;
 
-	/** @type DC.SkillTree */
-	export let selectedSkillTree;
-	
-
 	/**
 	 * @type {import('svelte/store').Writable<DC.Ability[]>}
 	 */
 	let skills = writable([]);
 
-	/** @type DC.Ability | null */
-	let selectedSkill;
-
 	let advancedMode = false;
-	let showDetails = false;
+	/**
+	 * @type {import('svelte/store').Writable<boolean>}
+	 */
+	let showDetails = writable(false);
 	let maxRows = 5;
 	let maxColumns = 5;
 
@@ -73,25 +70,30 @@
 	});
 
 	function initData() {
-		selectedSkillTree.attributes.abilities?.data?.forEach((ability) => {
+		$selectedSkillTree.attributes.abilities?.data?.forEach((ability) => {
 			if (ability.attributes.level == 1) {
 				ability.unlocked = true;
 			}
 		});
 
-		if (selectedSkillTree.attributes.abilities?.data?.length > 0) {
-			maxRows = selectedSkillTree.attributes.abilities.data
+		if ($selectedSkillTree.attributes.abilities?.data?.length > 0) {
+			maxRows = $selectedSkillTree.attributes.abilities.data
 				.map((a) => a.attributes.level)
 				.reduce((a, b) => Math.max(a, b));
-			maxColumns = selectedSkillTree.attributes.abilities.data
+			maxColumns = $selectedSkillTree.attributes.abilities.data
 				.map((a) => a.attributes.module)
 				.reduce((a, b) => Math.max(a, b));
 		}
-		pageImage = selectedSkillTree.attributes.mainImage?.data?.attributes.url;
-		if (!pageImage)
-			pageImage = selectedSkillTree.attributes.specialty?.data?.attributes.mainImage?.data?.attributes.url;
 
-		skills.set(selectedSkillTree.attributes.abilities?.data);
+		pageImage = $selectedSkillTree.attributes.mainImage?.data?.attributes.url;
+
+		if (!pageImage)
+			pageImage =
+				$selectedSkillTree.attributes.specialty?.data?.attributes.mainImage?.data?.attributes.url;
+
+		if (!pageImage) pageImage = '/assets/missing-image.png';
+
+		skills.set([...$selectedSkillTree.attributes.abilities?.data]);
 	}
 
 	/**
@@ -140,14 +142,14 @@
 	 */
 	function selectSkill(e, skill) {
 		e.preventDefault();
-		if (!skill) {
-			showDetails = false;
+		if (!skill?.id ) {
+		//	$showDetails = false;
 			return;
 		}
 
-		selectedSkill = skill == selectedSkill ? null : skill;
+		$selectedSkill = { ...skill }; // == $selectedSkill ? null : skill;
 		skills.update((values) => {
-			if (selectedSkill == null) {
+			if ($selectedSkill == null) {
 				values.forEach((s) => {
 					s.selected = false;
 				});
@@ -158,7 +160,7 @@
 			return values;
 		});
 
-		showDetails = true;    
+		$showDetails = true;
 		// const skillElement = document.querySelector('[data-skill-index="' + skill.id + '"]');
 		// if (skillElement) {
 		// 	const rect = skillElement.getBoundingClientRect();
@@ -184,24 +186,21 @@
 		});
 	}
 
-	$: if (selectedSkillTree) {
+	$: if ($selectedSkillTree?.id > 0) {
 		initData();
 	}
 </script>
 
-
 <div class="skill-tree-page" style="--skill-tree-bg-image: url({pageImage});">
 	<style id="page-style"></style>
-	<div
-		class="viewer-panel"
-	>
-		<div bind:this={canvas} class="skill-tree-container {selectedSkillTree.attributes.slug}">
+	<div class="viewer-panel">
+		<div bind:this={canvas} class="skill-tree-container {$selectedSkillTree?.attributes?.slug}">
 			<div
 				class="skill-matrix"
 				style="grid-template-columns: repeat({maxColumns}, 1fr); grid-template-columns: repeat({maxRows}, 1fr);"
 			>
 				{#if $skills?.length > 0}
-					{#each $skills as skill, s (skill.id)}
+					{#each $skills as skill (skill.id)}
 						<div
 							class="matrix-cell"
 							style="grid-row: {skill.attributes.level}; grid-column: {skill.attributes.module};"
@@ -218,12 +217,12 @@
 		</div>
 	</div>
 </div>
-<DetailsPanel bind:showDetails>
-	{#if selectedSkill}
-		<h1>{selectedSkill.attributes.name}</h1>
-		<p>{@html marked.parse(selectedSkill?.attributes.description ?? '')}</p>
+<DetailsPanel bind:showDetails={$showDetails}>
+	{#if $selectedSkill}
+		<h1>{$selectedSkill.attributes.name}</h1>
+		<p>{@html marked.parse($selectedSkill?.attributes.description ?? '')}</p>
 		<div class="toolbar">
-			<button on:click={() => toggleSkill(selectedSkill)}> Toggle Skill </button>
+			<button on:click={() => toggleSkill($selectedSkill)}> Toggle Skill </button>
 		</div>
 	{:else}
 		<h1>No Skill Selected</h1>
@@ -235,7 +234,7 @@
 		--skill-tree-bg-image: none;
 		/* url('/assets/imgs/landing-bg.png'); */
 	}
-	.section-container{
+	.section-container {
 		padding-top: 1.5rem;
 		padding-bottom: 3rem;
 		padding-inline: 1.5rem;
@@ -261,7 +260,7 @@
 		position: relative;
 		display: grid;
 		grid-template-rows: 1fr min-content;
-		max-height:87dvh;
+		max-height: 87dvh;
 		row-gap: 0.25rem;
 	}
 	.skill-tree-page > .viewer-panel {
@@ -301,8 +300,6 @@
 		justify-content: center;
 		align-items: center;
 	}
-
-	
 
 	.line {
 		stroke: #0ff;

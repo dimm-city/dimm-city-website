@@ -2,22 +2,18 @@
 	import StatsEditor from './StatsEditor.svelte';
 	import ImageEditor from './ImageEditor.svelte';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
-
-	/**
-	 * @type {DC.Character}
-	 */
-	export let character;
+	
 </script>
 
 <ContentPane scrollable={true}>
 	<div class="appearance-row">
 		<div class="image-cell">
 			<div class="image">
-				<ImageEditor bind:character />
+				<ImageEditor />
 			</div>
 		</div>
 		<div class="stats-container">
-			<StatsEditor bind:character />
+			<StatsEditor />
 		</div>
 	</div>
 </ContentPane>

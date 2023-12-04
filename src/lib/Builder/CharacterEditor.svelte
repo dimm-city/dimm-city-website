@@ -4,8 +4,6 @@
 	import SkillEditor from './SkillEditor.svelte';
 	import TechEditor from './TechEditor.svelte';
 	import AppearanceEditor from './AppearanceEditor.svelte';
-
-	import { selectedCharacter } from './BuilderStore.js';
 	let currentTab = 'profile';
 </script>
 
@@ -54,15 +52,15 @@
 	</div>
 	<div class="tabs-container">
 		{#if currentTab === 'profile'}
-			<ProfileEditor bind:character />
-		{:else if currentTab === 'tech'}
-			<TechEditor bind:character />
-		{:else if currentTab === 'skills'}
-			<SkillEditor bind:character />
-		{:else if currentTab === 'story'}
-			<CharacterStory bind:character />
+			<ProfileEditor  />
 		{:else if currentTab === 'appearance'}
-			<AppearanceEditor bind:character />
+			<AppearanceEditor />
+		{:else if currentTab === 'story'}
+			<CharacterStory   />
+		{:else if currentTab === 'skills'}
+			<SkillEditor />
+		{:else if currentTab === 'tech'}
+			<TechEditor />
 		{/if}
 	</div>
 </div>

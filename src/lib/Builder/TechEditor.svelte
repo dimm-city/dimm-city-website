@@ -15,7 +15,7 @@
 		<section data-augmented-ui="tl-clip tr-clip br-clip bl-clip border">
 			<h3 class="section-title">Items</h3>
 			<List
-				data={character.attributes.items?.data}
+				data={$selectedCharacter.attributes.items?.data}
 				maxItems={-1}
 				noItemsText="no inventory recorded"
 			>
@@ -29,7 +29,7 @@
 		<section data-augmented-ui="tl-clip tr-clip br-clip bl-clip border">
 			<h3 class="section-title">Cybernetics</h3>
 			<List
-				data={character.attributes.cybernetics?.data}
+				data={$selectedCharacter.attributes.cybernetics?.data}
 				maxItems={-1}
 				noItemsText="no cybernetics detected"
 			>
@@ -43,7 +43,7 @@
 		<section data-augmented-ui="tl-clip tr-clip br-clip bl-clip border">
 			<h3 class="section-title">Scripts</h3>
 			<List
-				data={character.attributes.scripts?.data}
+				data={$selectedCharacter.attributes.scripts?.data}
 				maxItems={-1}
 				noItemsText="no scripts detected"
 			>
