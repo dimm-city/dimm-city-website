@@ -4,14 +4,21 @@
 	import Shell from '$lib/Shared/Shell/Shell.svelte';
 	import CharacterEditor from './CharacterEditor.svelte';
 	import MainMenu from '$lib/Shared/Shell/MainMenu.svelte';
-	import { loadAvailableCharacters, loadCharacter, selectedCharacter, updateCharacter } from './BuilderStore';
+	import {
+		loadAvailableCharacters,
+		loadCharacter,
+		selectedCharacter,
+		updateCharacter
+	} from './BuilderStore';
 	import { onMount } from 'svelte';
+	import { getNotificationsContext } from 'svelte-notifications';
+
+	const { addNotification } = getNotificationsContext();
 
 	/**
 	 * @type {any}
 	 */
 	export let data;
-
 	let showMainPanel = false;
 
 	onMount(async () => {
@@ -36,10 +43,20 @@
 		originalCharacter = JSON.stringify($selectedCharacter);
 		changeMode('edit-character');
 	}
-	
+
 	async function saveChanges() {
 		await updateCharacter();
+		console.log('save changes');
 		//TODO: show toast alert notification
+		addNotification({
+			id: `${new Date().getTime()}-${Math.floor(Math.random() * 9999)}`,
+			position: 'top-right',
+			removeAfter: 3000,
+			allowRemove: true,
+			heading: 'character-updated',
+			type: 'info',
+			text: 'changes have been saved'
+		});
 	}
 
 	function cancelChanges(goBack = false) {
@@ -128,7 +145,6 @@
 </Shell>
 
 <style>
-
 	.aug-button {
 		aspect-ratio: 1/1;
 		/* background: var(--pink); */

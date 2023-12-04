@@ -14,7 +14,9 @@
 		removeSkill,
 		selectSkill
 	} from './BuilderStore';
+	import { getNotificationsContext } from 'svelte-notifications';
 
+	const {addNotification} = getNotificationsContext();
 	/**
 	 * @type {import("panzoom").PanZoom}
 	 */
@@ -90,6 +92,16 @@
 		if (!skill) return;
 		if (skill.acquired) await removeSkill(skill);
 		else await acquireSkill(skill);
+
+		addNotification({
+			id: `${new Date().getTime()}-${Math.floor(Math.random() * 9999)}`,
+			position: 'top-right',
+			removeAfter: 3000,
+			allowRemove: true,
+			heading: 'skill-updated',
+			type: 'info',
+			text: 'skills have been saved'
+		});
 	}
 
 

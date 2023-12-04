@@ -1,13 +1,19 @@
 <script>
 	import { fade } from 'svelte/transition';
 
-	export let notification = {};
+	/**
+	 * @type {{ allowRemove?: any; id?: any; text?: any; type?: any; heading?: any; }}
+	 */
+	 export let notification;
 	export let withoutStyles = false;
-	export let onRemove = null;
+	/**
+	 * @type {null}
+	 */
+	 export let onRemove = null;
 
 	const { id, text, type, heading } = notification;
 
-	const getClass = (suffix) => {
+	const getClass = (/** @type {string | undefined} */ suffix) => {
 		const defaultSuffix = suffix ? `-${suffix}` : '';
 		const defaultNotificationClass = ` default-notification-style${defaultSuffix}`;
 		const defaultNotificationType = type && !suffix ? ` default-notification-${type}` : '';
@@ -35,7 +41,7 @@
                 {text}</p>
             </slot>
 		</div>
-		{#if notification.allowRemove}
+		{#if notification.allowRemove == null || notification.allowRemove}
 			<button class={getClass('button')} on:click={onRemove} aria-label="delete notification">
 				&times;
 			</button>
