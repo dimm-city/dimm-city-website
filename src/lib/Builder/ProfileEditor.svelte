@@ -50,7 +50,7 @@
 							placeholder="Select a district"
 							label="name"
 							itemId="id"
-							bind:justValue={$selectedCharacter.attributes.currentLocation}
+							bind:value={$selectedCharacter.attributes.currentLocation.data}
 						>
 							<div slot="selection" let:selection>
 								<span>{selection.name ?? selection.attributes?.name ?? ''}</span>
@@ -79,7 +79,7 @@
 							placeholder="Select a district"
 							label="name"
 							itemId="id"
-							bind:justValue={$selectedCharacter.attributes.originLocation}
+							bind:value={$selectedCharacter.attributes.originLocation.data}
 						>
 							<div slot="selection" let:selection>
 								<span>{selection.name ?? selection.attributes?.name ?? ''}</span>

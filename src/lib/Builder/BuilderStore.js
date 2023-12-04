@@ -197,8 +197,8 @@ export async function updateCharacter() {
 	delete importData.mainVideo;
 	delete importData.mainAudio;
 
-	importData.currentLocation = currentData.attributes.currentLocation;
-	importData.originLocation = currentData.attributes.originLocation;
+	importData.currentLocation = currentData.attributes.currentLocation.data.id;
+	importData.originLocation = currentData.attributes.originLocation.data?.id;
 
 	if (currentData.attributes.specialties.data?.length > 0)
 		importData.specialties = [
