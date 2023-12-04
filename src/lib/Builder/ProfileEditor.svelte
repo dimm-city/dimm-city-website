@@ -2,108 +2,105 @@
 	import Select from 'svelte-select';
 	import { getDistricts } from '$lib/Shared/Stores/getDistricts';
 	import { getSpecialties } from '$lib/Shared/Stores/getSpecialties';
-	import { onMount } from 'svelte';
-	import {  flaws, ideals, vibes } from '$lib/Shared/Enums';
+	import { flaws, ideals, vibes } from '$lib/Shared/Enums';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
-
-
-	onMount(async () => {
-		console.log('character', $selectedCharacter);
-	});
 	import { selectedCharacter } from './BuilderStore.js';
 </script>
 
 <ContentPane scrollable={true} padding={3}>
 	<div class="profile-row">
-		<section class="section-container profile">
-			
-			<div class="label">Specialties:</div>
-			<div class="value aug-select">
-				<Select
-					loadOptions={getSpecialties}
-					placeholder="Select up to two specialties"
-					label="name"
-					itemId="id"
-					multiple={true}
-					hideEmptyState={true}
-					bind:value={$selectedCharacter.attributes.specialties.data}
-				>
-					<div slot="selection" let:selection>
-						<span>{selection.name ?? selection.attributes?.name ?? 'Unknown'}</span>
-					</div>
-					<div slot="item" let:item let:index>
-						<span>{item.name ?? item.attributes?.name ?? 'Unknown'}</span>
-					</div>
-				</Select>
-			</div>
-
-			<div class="label">Ideal:</div>
-			<div class="value aug-select">
-				<Select
-					value={$selectedCharacter.attributes.ideal}
-					bind:justValue={$selectedCharacter.attributes.ideal}
-					items={ideals}
-				/>
-			</div>
-
-			<div class="label">Residency:</div>
-			<div class="value">
-				<div class="current-location aug-select">
+		{#if $selectedCharacter == null}
+			<div>No character selected</div>
+		{:else}
+			<section class="section-container profile">
+				<div class="label">Specialties:</div>
+				<div class="value aug-select">
 					<Select
-						loadOptions={getDistricts}
-						placeholder="Select a district"
+						loadOptions={getSpecialties}
+						placeholder="Select up to two specialties"
 						label="name"
 						itemId="id"
-						bind:justValue={$selectedCharacter.attributes.currentLocation}
+						multiple={true}
+						hideEmptyState={true}
+						bind:value={$selectedCharacter.attributes.specialties.data}
 					>
 						<div slot="selection" let:selection>
-							<span>{selection.name ?? selection.attributes?.name ?? ''}</span>
+							<span>{selection.name ?? selection.attributes?.name ?? 'Unknown'}</span>
 						</div>
 						<div slot="item" let:item let:index>
-							<span>{item.name ?? item.attributes?.name ?? ''}</span>
+							<span>{item.name ?? item.attributes?.name ?? 'Unknown'}</span>
 						</div>
 					</Select>
 				</div>
-			</div>
 
-			<div class="label">Vibe:</div>
-			<div class="value aug-select">
-				<Select
-					value={$selectedCharacter.attributes.vibes}
-					bind:justValue={$selectedCharacter.attributes.vibes}
-					items={vibes}
-				/>
-			</div>
-
-			<div class="label">Origin:</div>
-			<div class="value">
-				<div class="current-location aug-select">
+				<div class="label">Ideal:</div>
+				<div class="value aug-select">
 					<Select
-						loadOptions={getDistricts}
-						placeholder="Select a district"
-						label="name"
-						itemId="id"
-						bind:justValue={$selectedCharacter.attributes.originLocation}
-					>
-						<div slot="selection" let:selection>
-							<span>{selection.name ?? selection.attributes?.name ?? ''}</span>
-						</div>
-						<div slot="item" let:item let:index>
-							<span>{item.name ?? item.attributes?.name ?? ''}</span>
-						</div>
-					</Select>
+						value={$selectedCharacter.attributes.ideal}
+						bind:justValue={$selectedCharacter.attributes.ideal}
+						items={ideals}
+					/>
 				</div>
-			</div>
 
-			<div class="label">Flaw:</div>
-			<div class="value aug-select">
-				<Select
-					value={$selectedCharacter.attributes.flaw}
-					bind:justValue={$selectedCharacter.attributes.flaw}
-					items={flaws}
-				/>
-			</div>
-		</section>
+				<div class="label">Residency:</div>
+				<div class="value">
+					<div class="current-location aug-select">
+						<Select
+							loadOptions={getDistricts}
+							placeholder="Select a district"
+							label="name"
+							itemId="id"
+							bind:justValue={$selectedCharacter.attributes.currentLocation}
+						>
+							<div slot="selection" let:selection>
+								<span>{selection.name ?? selection.attributes?.name ?? ''}</span>
+							</div>
+							<div slot="item" let:item let:index>
+								<span>{item.name ?? item.attributes?.name ?? ''}</span>
+							</div>
+						</Select>
+					</div>
+				</div>
+
+				<div class="label">Vibe:</div>
+				<div class="value aug-select">
+					<Select
+						value={$selectedCharacter.attributes.vibes}
+						bind:justValue={$selectedCharacter.attributes.vibes}
+						items={vibes}
+					/>
+				</div>
+
+				<div class="label">Origin:</div>
+				<div class="value">
+					<div class="current-location aug-select">
+						<Select
+							loadOptions={getDistricts}
+							placeholder="Select a district"
+							label="name"
+							itemId="id"
+							bind:justValue={$selectedCharacter.attributes.originLocation}
+						>
+							<div slot="selection" let:selection>
+								<span>{selection.name ?? selection.attributes?.name ?? ''}</span>
+							</div>
+							<div slot="item" let:item let:index>
+								<span>{item.name ?? item.attributes?.name ?? ''}</span>
+							</div>
+						</Select>
+					</div>
+				</div>
+
+				<div class="label">Flaw:</div>
+				<div class="value aug-select">
+					<Select
+						value={$selectedCharacter.attributes.flaw}
+						bind:justValue={$selectedCharacter.attributes.flaw}
+						items={flaws}
+					/>
+				</div>
+			</section>
+		{/if}
 	</div>
 </ContentPane>
 

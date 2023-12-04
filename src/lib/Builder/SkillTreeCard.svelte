@@ -1,26 +1,19 @@
 <script>
 	import { marked } from 'marked';
 	import './skill-trees.css';
-	import { createEventDispatcher } from 'svelte';
 
 	/** @type DC.Ability */
 	export let data;
-
-	const dispatcher = createEventDispatcher();
-	dispatcher('acquired', data);
-
-	function toggleAcquired() {
-		data.acquired = !data.acquired;
-		dispatcher('acquired', data);
-		
-	}
+	export let selected = false;
+	export let unlocked = false;
+	export let acquired = false;
 </script>
 
 <div
 	class="skin-cell-container {data.attributes.slug}"
-	class:selected={data.selected}
-	class:unlocked={data.unlocked}
-	class:acquired={data.acquired}
+	class:selected
+	class:unlocked
+	class:acquired
 	role="button"
 	tabindex="0"
 	on:click

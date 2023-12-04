@@ -28,11 +28,11 @@
 	let originalCharacter = '';
 
 	async function viewCharacter() {
-		await loadCharacter($selectedCharacter.attributes.tokenId);
+		await loadCharacter($selectedCharacter?.attributes.tokenId);
 		changeMode('view-character');
 	}
 	async function startEditing() {
-		await loadCharacter($selectedCharacter.attributes.tokenId);
+		await loadCharacter($selectedCharacter?.attributes.tokenId);
 		originalCharacter = JSON.stringify($selectedCharacter);
 		changeMode('edit-character');
 	}
@@ -66,7 +66,7 @@
 <Shell title={$selectedCharacter?.attributes.name ?? 'Sporo Manager'} titleUrl="/console/builder">
 	{#if mode === 'edit-character'}
 		<CharacterEditor />
-	{:else if mode === 'view-character'}
+	{:else if mode === 'view-character' && $selectedCharacter}
 		<Sheet bind:character={$selectedCharacter} isEditing={false} on:save />
 	{:else}
 		<CharacterSelector on:edit={startEditing} on:print={printCharacter} on:view={viewCharacter} />

@@ -13,9 +13,9 @@ const client = new StrapiClient(config.apiBaseUrl, get(jwt));
 export let availableCharacters = writable([]);
 
 /**
- * @type {import('svelte/store').Writable<DC.Character | any>}
+ * @type {import('svelte/store').Writable<DC.Character | null>}
  */
-export let selectedCharacter = writable({ id: -1, attributes: {} });
+export let selectedCharacter = writable();
 
 /**
  * @type { import('svelte/store').Writable<DC.SkillTree[]>}
@@ -26,6 +26,9 @@ export let availableSkillTrees = writable([]);
  * @type { import('svelte/store').Writable<DC.SkillTree | any>}
  */
 export let selectedSkillTree = writable({ id: -1, attributes: {} });
+
+/** @type {import('svelte/store').Writable<DC.Ability[]>} */
+export let availableSkills = writable([]);
 
 /** @type {import('svelte/store').Writable<DC.Ability | null>} */
 export let selectedSkill = writable();
@@ -78,6 +81,8 @@ export async function updateCharacter() {
 
 	const currentData = get(selectedCharacter);
 
+	if (!currentData) return;
+
 	const importData = JSON.parse(JSON.stringify(currentData.attributes));
 	importData.playerUpdated = true;
 
@@ -92,7 +97,7 @@ export async function updateCharacter() {
 	if (currentData.attributes.specialties.data?.length > 0)
 		importData.specialties = [
 			...currentData.attributes.specialties.data.map((r) => ({
-				id: Number.parseInt(r.id)
+				id: r.id
 			}))
 		];
 	else importData.specialties = [];
@@ -140,14 +145,46 @@ export async function loadSkillTree(slug) {
 			mainImage: true,
 			abilities: true,
 			specialty: {
-                populate: {
-                    mainImage: true
-                }
-            }
+				populate: {
+					mainImage: true
+				}
+			}
 		}
 	});
 
 	selectedSkillTree.set({
 		...data
+	});
+}
+
+/**
+ * @param {DC.Ability | null} skill
+ */
+export async function acquireSkill(skill) {
+	if (skill == null) return;
+	skill.acquired = true;
+	availableSkills.update((values) => {
+		const value = values.find((s) => s.id === skill.id);
+		if (value) {
+			value.acquired = true;
+			//TODO: update character via API
+		}
+		return values;
+	});
+}
+
+/**
+ * @param {DC.Ability | null} skill
+ */
+export async function removeSkill(skill) {
+	if (skill == null) return;
+    skill.acquired = false;
+	availableSkills.update((values) => {
+		const value = values.find((s) => s.id === skill.id);
+		if (value) {
+			value.acquired = false;
+			//TODO: update character via API
+		}
+		return values;
 	});
 }

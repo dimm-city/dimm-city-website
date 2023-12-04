@@ -1,14 +1,17 @@
 <script>
 	import DetailsPanel from './DetailsPanel.svelte';
-
 	import SkillTreeCard from './SkillTreeCard.svelte';
-
 	import './skill-trees.css';
 	import { onMount, onDestroy } from 'svelte';
 	import panzoom from 'panzoom';
 	import { marked } from 'marked';
 	import { writable } from 'svelte/store';
-	import { selectedSkillTree, selectedSkill } from './BuilderStore';
+	import {
+		selectedSkillTree,	
+		acquireSkill,
+		availableSkills,
+		removeSkill
+	} from './BuilderStore';
 
 	/**
 	 * @type {import("panzoom").PanZoom}
@@ -21,15 +24,16 @@
 	let canvas;
 
 	/**
-	 * @type {import('svelte/store').Writable<DC.Ability[]>}
+	 * @type {DC.Ability | null}
 	 */
-	let skills = writable([]);
+	let _selectedSkill;
 
 	let advancedMode = false;
 	/**
 	 * @type {import('svelte/store').Writable<boolean>}
 	 */
 	let showDetails = writable(false);
+
 	let maxRows = 5;
 	let maxColumns = 5;
 
@@ -93,46 +97,38 @@
 
 		if (!pageImage) pageImage = '/assets/missing-image.png';
 
-		skills.set([...$selectedSkillTree.attributes.abilities?.data]);
+		availableSkills.set([...$selectedSkillTree.attributes.abilities?.data]);
 	}
 
-	/**
-	 * @param {DC.Ability[]} values
-	 * @param {DC.Ability} skill
-	 */
-	function updateMatrix(values, skill) {
+	function updateMatrix() {
 		if (advancedMode) {
-			advancedUpdate(values, skill);
+			advancedUpdate();
 		} else {
-			simpleUpdate(values, skill);
+			simpleUpdate();
 		}
 	}
 
-	/**
-	 * Update the skill matrix
-	 * @param {DC.Ability[]} values
-	 * @param {DC.Ability} skill
-	 */
-	function simpleUpdate(values, skill) {
-		values.forEach((s) => {
-			s.selected = s === skill;
-			s.unlocked = s.attributes.level == 1;
-		});
-
-		// Get the max level of a skill that has been acquired
-		let maxLevel = Math.max(...values.filter((s) => s.acquired).map((s) => s.attributes.level)) + 1;
-
-		values
-			.filter((s) => s.attributes.level <= maxLevel)
-			.forEach((s) => {
-				s.unlocked = true;
+	function simpleUpdate() {
+		availableSkills.update((values) => {
+			values.forEach((s) => {
+				//s.selected = s === skill;
+				s.unlocked = s.attributes.level == 1;
 			});
+
+			// Get the max level of a skill that has been acquired
+			let maxLevel =
+				Math.max(...values.filter((s) => s.acquired).map((s) => s.attributes.level)) + 1;
+
+			values
+				.filter((s) => s.attributes.level <= maxLevel)
+				.forEach((s) => {
+					s.unlocked = true;
+				});
+			return values;
+		});
 	}
-	/**
-	 * @param {DC.Ability[]} values
-	 * @param {DC.Ability} skill
-	 */
-	function advancedUpdate(values, skill) {
+
+	function advancedUpdate() {
 		throw new Error('Function not implemented.');
 	}
 
@@ -142,25 +138,22 @@
 	 */
 	function selectSkill(e, skill) {
 		e.preventDefault();
-		if (!skill?.id ) {
-		//	$showDetails = false;
-			return;
+		if (skill == null) {
+			_selectedSkill = null;
+		} else {
+			skill.selected = true;
+			_selectedSkill = { ...skill };
 		}
-
-		$selectedSkill = { ...skill }; // == $selectedSkill ? null : skill;
-		skills.update((values) => {
-			if ($selectedSkill == null) {
-				values.forEach((s) => {
-					s.selected = false;
-				});
-			} else {
-				updateMatrix(values, skill);
-			}
-
+		availableSkills.update((values) => {
+			values.forEach((s) => {
+				s.selected = s === skill;
+			});
 			return values;
 		});
 
-		$showDetails = true;
+		updateMatrix();
+
+		$showDetails = skill != null;
 		// const skillElement = document.querySelector('[data-skill-index="' + skill.id + '"]');
 		// if (skillElement) {
 		// 	const rect = skillElement.getBoundingClientRect();
@@ -173,17 +166,15 @@
 	/**
 	 * @param {DC.Ability | null} skill
 	 */
-	function toggleSkill(skill) {
-		if (skill == null) return;
+	async function toggleSkill(skill) {
+		console.log('toggleSkill', skill);
+		
+		if (!skill) return;
 
-		skills.update((values) => {
-			const value = values.find((s) => s.id === skill.id);
-			if (value) {
-				value.acquired = !value.acquired;
-				updateMatrix(values, skill);
-			}
-			return values;
-		});
+		if (!skill.acquired) await acquireSkill(skill);
+		else await removeSkill(skill);
+
+		updateMatrix();
 	}
 
 	$: if ($selectedSkillTree?.id > 0) {
@@ -199,16 +190,18 @@
 				class="skill-matrix"
 				style="grid-template-columns: repeat({maxColumns}, 1fr); grid-template-columns: repeat({maxRows}, 1fr);"
 			>
-				{#if $skills?.length > 0}
-					{#each $skills as skill (skill.id)}
+				{#if $availableSkills?.length > 0}
+					{#each $availableSkills as skill (skill.id)}
 						<div
 							class="matrix-cell"
 							style="grid-row: {skill.attributes.level}; grid-column: {skill.attributes.module};"
 						>
 							<SkillTreeCard
+								selected={skill.id == _selectedSkill?.id}
+								acquired={skill.acquired}
+								unlocked={skill.unlocked}
 								data={skill}
 								on:click={(e) => selectSkill(e, skill)}
-								on:acquired={(e) => toggleSkill(e.detail)}
 							/>
 						</div>
 					{/each}
@@ -218,11 +211,11 @@
 	</div>
 </div>
 <DetailsPanel bind:showDetails={$showDetails}>
-	{#if $selectedSkill}
-		<h1>{$selectedSkill.attributes.name}</h1>
-		<p>{@html marked.parse($selectedSkill?.attributes.description ?? '')}</p>
+	{#if _selectedSkill}
+		<h1>{_selectedSkill.attributes.name}</h1>
+		<p>{@html marked.parse(_selectedSkill?.attributes.description ?? '')}</p>
 		<div class="toolbar">
-			<button on:click={() => toggleSkill($selectedSkill)}> Toggle Skill </button>
+			<button on:click={() => toggleSkill(_selectedSkill)}> Toggle Skill </button>
 		</div>
 	{:else}
 		<h1>No Skill Selected</h1>
