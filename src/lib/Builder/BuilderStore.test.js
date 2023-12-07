@@ -16,7 +16,26 @@ describe('BuilderStore', () => {
 
     describe('updateCharacter', () => {
         it('should update the current character', async () => {
-            // TODO: Implement test
+            // Mock the selectedCharacter store
+            const mockCharacter = writable({
+                id: 1,
+                attributes: {
+                    selectedAbilities: {
+                        data: []
+                    }
+                }
+            });
+            selectedCharacter = mockCharacter;
+
+            // Mock the updateEntity function
+            updateEntity = sinon.stub().resolves();
+
+            // Call the function
+            await updateCharacter();
+
+            // Assert that updateEntity was called with the correct arguments
+            expect(updateEntity.calledOnce).to.be.true;
+            expect(updateEntity.calledWith('dimm-city/characters', sinon.match.any)).to.be.true;
         });
     });
 
