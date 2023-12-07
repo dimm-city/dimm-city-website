@@ -21,7 +21,7 @@
 	 * When converting weight, use pounds in imperial and kilograms in metric.
 	 */
 	let isMetric = writable(true);
-	let tempHeight = writable($selectedCharacter.attributes.height);
+	let tempHeight = writable($selectedCharacter?.attributes.height);
 	tempHeight.subscribe((value) => {
 		if ($isMetric) $selectedCharacter.attributes.height = value;
 		else $selectedCharacter.attributes.height = Math.round(value * 2.54);
@@ -49,18 +49,18 @@
 	<div class="grid-container">
 		<div class="label">Race:</div>
 		<div class="value">
-			{#if $selectedCharacter.attributes.race}
+			{#if $selectedCharacter?.attributes.race}
 				<span>{$selectedCharacter.attributes.race.data?.attributes?.name}</span>
 			{/if}
 		</div>
-		<div class="label">Pronouns:</div>
-		<div class="value">
-			<Input bind:value={$selectedCharacter.attributes.pronouns} class="inline" maxlength="50" />
-		</div>
+		<div class="label">Eyes:</div>
+		<div class="value"><span>{$selectedCharacter?.attributes.eyes || ''}</span></div>
+		<div class="label">Skin:</div>
+		<div class="value"><span>{$selectedCharacter?.attributes.skin || ''}</span></div>
 		<div class="label">Age:</div>
 		<div class="value aug-select">
 			<Select
-				value={$selectedCharacter.attributes.age}
+				value={$selectedCharacter?.attributes.age}
 				bind:justValue={$selectedCharacter.attributes.age}
 				items={ages}
 			/>
@@ -68,17 +68,13 @@
 		<div class="label">Height:</div>
 		<div class="value suffix">
 			<Input bind:value={$tempHeight} class="inline" />
-			<button on:click={toggleUnits}>{$isMetric ? 'cm' : 'in'}</button>
+			<button title="toggle units" on:click={toggleUnits}>{$isMetric ? 'cm' : 'in'}</button>
 		</div>
 		<div class="label">Weight:</div>
 		<div class="value suffix">
 			<Input bind:value={$tempWeight} class="inline" />
-			<button on:click={toggleUnits}>{$isMetric ? 'kg' : 'lb'}</button>
+			<button title="toggle units" on:click={toggleUnits}>{$isMetric ? 'kg' : 'lb'}</button>
 		</div>
-		<div class="label">Eyes:</div>
-		<div class="value"><span>{$selectedCharacter.attributes.eyes || ''}</span></div>
-		<div class="label">Skin:</div>
-		<div class="value"><span>{$selectedCharacter.attributes.skin || ''}</span></div>
 	</div>
 	<!-- <ProfileEditor bind:character /> -->
 </div>
@@ -118,7 +114,9 @@
 		align-items: center;
 		gap: 0.25rem;
 	}
-
+	.suffix button {
+		width: 10ch;
+	}
 	:global(input.inline) {
 		display: inline;
 	}

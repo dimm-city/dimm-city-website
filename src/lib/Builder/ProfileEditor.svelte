@@ -5,6 +5,7 @@
 	import { flaws, ideals, vibes } from '$lib/Shared/Enums';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import { selectedCharacter } from './BuilderStore.js';
+	import Input from '$lib/Shared/Components/Input.svelte';
 </script>
 
 <ContentPane scrollable={true} padding={3}>
@@ -13,6 +14,19 @@
 			<div>No character selected</div>
 		{:else}
 			<section class="section-container profile">
+				<div class="label">Name:</div>
+				<div class="value">
+					<Input bind:value={$selectedCharacter.attributes.name} class="inline" maxlength="50" />
+				</div>
+
+				<div class="label">Pronouns:</div>
+				<div class="value">
+					<Input
+						bind:value={$selectedCharacter.attributes.pronouns}
+						class="inline"
+						maxlength="50"
+					/>
+				</div>
 				<div class="label">Specialties:</div>
 				<div class="value aug-select">
 					<Select

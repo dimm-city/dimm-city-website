@@ -32,8 +32,8 @@
 	}
 
 	.image {
-		--dc-image-aspect-ratio: 1/1;
-		--dc-image-height: 320px;
+		--dc-image-aspect-ratio: 3/4;
+		--dc-image-height: 60vh;
 		--dc-image-width: auto;
 	}
 
