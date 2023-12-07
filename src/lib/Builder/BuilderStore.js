@@ -122,12 +122,11 @@ async function updateCharacterAbility(action, ability) {
 						console.log('updated', c.attributes.selectedAbilities.data);
 						return c;
 					});
-					
-                    availableSkills.update((values) => {
+
+					availableSkills.update((values) => {
 						updateSkillMatrix(values);
 						return values;
 					});
-
 				} else {
 					//TODO: display error
 					console.error('failed', errors, data);
@@ -197,8 +196,13 @@ export async function updateCharacter() {
 	delete importData.mainVideo;
 	delete importData.mainAudio;
 
-	importData.currentLocation = currentData.attributes.currentLocation.data.id;
-	importData.originLocation = currentData.attributes.originLocation.data?.id;
+	if (currentData.attributes.currentLocation.data?.id)
+		importData.currentLocation = currentData.attributes.currentLocation.data.id;
+	else delete importData.currentLocation;
+
+	if (currentData.attributes.originLocation.data?.id)
+		importData.originLocation = currentData.attributes.originLocation.data?.id;
+	else delete importData.originLocation;
 
 	if (currentData.attributes.specialties.data?.length > 0)
 		importData.specialties = [
