@@ -170,7 +170,12 @@ export async function loadCharacter(tokenId) {
 				populate: {
 					skillTrees: true
 				}
-			}
+			},
+            inventory:{
+                populate:{
+                    item:true
+                }
+            }
 		}
 	});
 

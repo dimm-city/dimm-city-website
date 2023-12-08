@@ -94,6 +94,7 @@
  * @property {string} attributes.backstory - The backstory of the character
  * @property {string} attributes.beliefs - DEPRECATED The beliefs of the character
  * @property {string} attributes.ideal - The beliefs of the character
+ * @property {DC.InventoryItem[]} attributes.inventory - The list of inventory items
  * @property {string} attributes.flaws - DEPRECATED The flaws of the character
  * @property {string} attributes.flaw - The flaws of the character
  * @property {string} attributes.dreams - The dreams of the character
@@ -237,6 +238,14 @@
  * @property {{data: Strapi.Media}} attributes.mainVideo - The main video of the event.
  * @property {{data: Strapi.Media}} attributes.location - The location of the event.
  * @property {{data: Array.<DC.Character>}} attributes.characters - The characters involved in the event.
+ */
+
+/**
+ * @typedef {Object} DC.InventoryItem
+ * @property {string} text
+ *   @property {Object} item
+ * @property {DC.Item} item.data
+ *
  */
 
 /**
