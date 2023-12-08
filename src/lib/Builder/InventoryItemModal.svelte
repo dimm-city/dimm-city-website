@@ -5,7 +5,7 @@
 	import Input from '$lib/Shared/Components/Input.svelte';
 	import Select from 'svelte-select/Select.svelte';
 	import Modal from './Modal.svelte';
-
+	import { getItems } from '$lib/Shared/Stores/getItems';
 	/**
 	 * @type {DC.InventoryItem}
 	 */
@@ -21,15 +21,18 @@
 		isSaving = true;
 		console.log('data', data);
 		isSaving = false;
+		isEditing = false;
 		show = false;
+		modal.close();
 	}
 
-	async function getItems() {
-		return [];
-	}
+	/**
+	 * @type {Modal}
+	 */
+	let modal;
 </script>
 
-<Modal bind:show>
+<Modal bind:this={modal} bind:show>
 	<div>
 		{#if isSaving}
 			<LoadingIndicator>Updating inventory...</LoadingIndicator>
@@ -37,7 +40,7 @@
 			<div class="modal-header">Edit Inventory Item</div>
 			<hr />
 			<Toggle bind:checked={manual} />
-			{#if manual}
+			{#if manual && !data?.item?.data}
 				<Input bind:value={data.text} />
 			{:else}
 				<Select
@@ -45,8 +48,7 @@
 					placeholder="Select an item"
 					label="name"
 					itemId="id"
-					multiple={true}
-					hideEmptyState={true}
+					multiple={false}
 					bind:value={data.item.data}
 				>
 					<div slot="selection" let:selection>

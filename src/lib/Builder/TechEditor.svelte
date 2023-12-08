@@ -10,20 +10,26 @@
 	 * @param {any} item
 	 */
 	function viewItem(item) {
-		selectedInventoryItem = item;
-		isEditingInventory = true;
+		selectedInventoryItem = { ...item };
+		isEditingInventory = false;
+		showSelectedInventory = true;
 	}
 	/**
 	 * @type {any}
 	 */
 	let selectedInventoryItem;
+	let showSelectedInventory = false;
 	let isEditingInventory = false;
 	function addItem() {
 		viewItem({ id: null, text: '', item: { data: null } });
 	}
 </script>
 
-<InventoryItemModal bind:data={selectedInventoryItem} bind:show={isEditingInventory} isEditing={isEditingInventory} />
+<InventoryItemModal
+	bind:data={selectedInventoryItem}
+	bind:show={showSelectedInventory}
+	isEditing={isEditingInventory}
+/>
 <ContentPane scrollable={true}>
 	{#if $selectedCharacter}
 		<div class="section-container">
