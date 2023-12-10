@@ -25,11 +25,6 @@
 	}
 </script>
 
-<InventoryItemModal
-	bind:data={selectedInventoryItem}
-	bind:show={showSelectedInventory}
-	isEditing={isEditingInventory}
-/>
 <ContentPane scrollable={true}>
 	{#if $selectedCharacter}
 		<div class="section-container">
@@ -86,6 +81,11 @@
 	{/if}
 </ContentPane>
 
+<InventoryItemModal
+	bind:data={selectedInventoryItem}
+	bind:show={showSelectedInventory}
+	isEditing={isEditingInventory}
+/>
 <style>
 	.section-container {
 		position: relative;

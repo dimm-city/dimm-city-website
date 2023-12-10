@@ -14,54 +14,110 @@
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
-<dialog bind:this={dialog} on:close={() => (show = false)} on:click|self={() => dialog.close()}>
+<dialog
+	bind:this={dialog}
+	on:close
+	on:click|self={close}
+	data-augmented-ui
+>
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<div on:click|stopPropagation>
 		<slot name="header" />
-		<hr />
 		<slot />
-		<hr />
 		<!-- svelte-ignore a11y-autofocus -->
-		<button autofocus on:click={() => dialog.close()}>close modal</button>
+		<button class="text-button" autofocus on:click={close}
+			><i class="bi bi-x" /></button
+		>
 	</div>
 </dialog>
 
 <style>
+    :root{
+        --dc-dialog-animation-duration: 0.2s;
+    }
 	dialog {
-		max-width: 32em;
 		border-radius: 0.2em;
 		border: none;
 		padding: 0;
-	}
-	dialog::backdrop {
-		background: rgba(0, 0, 0, 0.3);
+		position: absolute;
 	}
 	dialog > div {
 		padding: 1em;
+		position: relative;
 	}
-	dialog[open] {
-		animation: zoom 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-	}
-	@keyframes zoom {
-		from {
-			transform: scale(0.95);
-		}
-		to {
-			transform: scale(1);
-		}
-	}
-	dialog[open]::backdrop {
-		animation: fade 0.2s ease-out;
-	}
-	@keyframes fade {
-		from {
-			opacity: 0;
-		}
-		to {
-			opacity: 1;
-		}
-	}
+
 	button {
+		color: var(--third-accent);
 		display: block;
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
+
+	dialog {
+		animation: fade-out var(--dc-dialog-animation-duration) ease-out forwards;
+	}
+
+	dialog[open] {
+		animation: fade-in var(--dc-dialog-animation-duration) ease-out;
+	}
+
+	dialog::backdrop {
+		animation: backdrop-fade-out var(--dc-dialog-animation-duration) ease-out forwards;
+	}
+
+	dialog[open]::backdrop {
+		animation: backdrop-fade-in var(--dc-dialog-animation-duration) ease-out forwards;
+	}
+
+	/* Animation keyframes */
+
+	@keyframes fade-in {
+		0% {
+			opacity: 0;
+			transform: scale(0);
+			display: none;
+		}
+
+		100% {
+			opacity: 1;
+			transform: scale(1);
+			display: block;
+            position: absolute;
+		}
+	}
+
+	@keyframes fade-out {
+		0% {
+			opacity: 1;
+			transform: scale(1);
+			display: block;
+            position: absolute;
+		}
+		100% {
+			opacity: 0;
+			transform: scale(0);	
+            position: absolute;
+		}
+	}
+
+	@keyframes backdrop-fade-in {
+		0% {
+			background-color: rgb(0 0 0 / 0);
+		}
+
+		100% {
+			background-color: rgb(0 0 0 / 0.25);
+		}
+	}
+
+	@keyframes backdrop-fade-out {
+		0% {
+			background-color: rgb(0 0 0 / 0.25);
+		}
+
+		100% {
+			background-color: rgb(0 0 0 / 0);
+		}
 	}
 </style>

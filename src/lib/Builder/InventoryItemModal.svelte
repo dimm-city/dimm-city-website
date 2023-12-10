@@ -32,39 +32,45 @@
 	let modal;
 </script>
 
-<Modal bind:this={modal} bind:show>
-	<div>
+<Modal bind:this={modal} bind:show on:close={()=> isEditing = false}>
+	<div class="modal-content">
 		{#if isSaving}
 			<LoadingIndicator>Updating inventory...</LoadingIndicator>
 		{:else if isEditing}
-			<div class="modal-header">Edit Inventory Item</div>
-			<hr />
-			<Toggle bind:checked={manual} />
-			{#if manual && !data?.item?.data}
-				<Input bind:value={data.text} />
-			{:else}
-				<Select
-					loadOptions={getItems}
-					placeholder="Select an item"
-					label="name"
-					itemId="id"
-					multiple={false}
-					bind:value={data.item.data}
+			<div class="modal-header">
+				Edit Inventory Item
+
+				<hr />
+			</div>
+			<div class="modal-body">
 				>
-					<div slot="selection" let:selection>
-						<span>{selection.name ?? selection.attributes?.name ?? 'Unknown'}</span>
-					</div>
-					<div slot="item" let:item let:index>
-						<span>{item.name ?? item.attributes?.name ?? 'Unknown'}</span>
-					</div>
-				</Select>
-			{/if}
-			<button on:click={() => updateInventoryItem()}>Save</button>
+				<Toggle bind:checked={manual} />
+				{#if manual && !data?.item?.data}
+					<Input bind:value={data.text} />
+				{:else}
+					<Select
+						loadOptions={getItems}
+						placeholder="Select an item"
+						label="name"
+						itemId="id"
+						multiple={false}
+						bind:value={data.item.data}
+					>
+						<div slot="selection" let:selection>
+							<span>{selection.name ?? selection.attributes?.name ?? 'Unknown'}</span>
+						</div>
+						<div slot="item" let:item let:index>
+							<span>{item.name ?? item.attributes?.name ?? 'Unknown'}</span>
+						</div>
+					</Select>
+				{/if}
+				<button on:click={() => updateInventoryItem()}>Save</button>
+			</div>
 		{:else if data?.item.data?.attributes}
 			<div class="modal-header">
 				<div>{data.item.data.attributes.name}</div>
+				<hr />
 			</div>
-			<hr />
 			<div>{@html md.render(data.item.data.attributes?.description ?? '')}</div>
 			<button on:click={() => (isEditing = true)}>Edit</button>
 		{:else if data?.text}
