@@ -50,7 +50,7 @@
 		right: 0;
 		bottom: 0;
 		background-color: #ccc;
-		border-radius: var(--toggle-height);
+		border-radius: 2px;
 		cursor: pointer;
 		transition: 0.4s;
 	}
@@ -63,8 +63,8 @@
 		width: var(--toggle-switch-size);
 		left: 2px;
 		bottom: 1px;
-		background-color: white;
-		border-radius: 50%;
+		background-color: var(--fourth-accent);
+		border-radius: 2px;
 		transition: 0.4s;
 	}
 

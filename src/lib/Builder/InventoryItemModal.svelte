@@ -32,37 +32,37 @@
 	let modal;
 </script>
 
-<Modal bind:this={modal} bind:show on:close={()=> isEditing = false}>
+<Modal bind:this={modal} bind:show on:close={() => (isEditing = false)}>
 	<div class="modal-content">
 		{#if isSaving}
 			<LoadingIndicator>Updating inventory...</LoadingIndicator>
 		{:else if isEditing}
 			<div class="modal-header">
 				Edit Inventory Item
-
 				<hr />
 			</div>
 			<div class="modal-body">
-				>
-				<Toggle bind:checked={manual} />
+				<Toggle bind:checked={manual} label="Manual Entry" />
 				{#if manual && !data?.item?.data}
 					<Input bind:value={data.text} />
 				{:else}
-					<Select
-						loadOptions={getItems}
-						placeholder="Select an item"
-						label="name"
-						itemId="id"
-						multiple={false}
-						bind:value={data.item.data}
-					>
-						<div slot="selection" let:selection>
-							<span>{selection.name ?? selection.attributes?.name ?? 'Unknown'}</span>
-						</div>
-						<div slot="item" let:item let:index>
-							<span>{item.name ?? item.attributes?.name ?? 'Unknown'}</span>
-						</div>
-					</Select>
+					<div class="value aug-select">
+						<Select
+							loadOptions={getItems}
+							placeholder="Select an item"
+							label="name"
+							itemId="id"
+							multiple={false}
+							bind:value={data.item.data}
+						>
+							<div slot="selection" let:selection>
+								<span>{selection.name ?? selection.attributes?.name ?? 'Unknown'}</span>
+							</div>
+							<div slot="item" let:item let:index>
+								<span>{item.name ?? item.attributes?.name ?? 'Unknown'}</span>
+							</div>
+						</Select>
+					</div>
 				{/if}
 				<button on:click={() => updateInventoryItem()}>Save</button>
 			</div>
@@ -83,10 +83,16 @@
 </Modal>
 
 <style>
+	.modal-content {
+		aspect-ratio: 1;
+		min-height: 30ch;
+	}
 	.modal-header {
 		margin-top: 0.5rem;
-		display: flex;
-		justify-content: space-between;
 		width: 100%;
+	}
+	.modal-body {
+		display: grid;
+		gap: 1rem;
 	}
 </style>
