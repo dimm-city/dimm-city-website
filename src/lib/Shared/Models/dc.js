@@ -121,8 +121,8 @@
  * @property {DC.Specialty[]} attributes.specialties.data - The specialties of the character
  * @property {Object} attributes.selectedAbilities
  * @property {DC.Ability[]} attributes.selectedAbilities.data - The selected abilities of the character
- * @property {Object} attributes.cybernetics
- * @property {DC.Ability[]} attributes.cybernetics.data - The cybernetics of the character
+ * @property {DC.ListItem<DC.Cybernetic>[]} attributes.cybernetics
+ * @property {DC.Ability[]} attributes.cybernetics.data - OBSOLETE - The cybernetics of the character
  * @property {Object} attributes.items
  * @property {DC.Item[]} attributes.items.data - The items of the character
  * @property {Object} attributes.mainImage -
@@ -154,28 +154,24 @@
  */
 
 /**
- * @typedef {Object} ChainWallets.Contract
- * @property {number} id
- * @property {Object} attributes
- * @property {string} attributes.name
- * @property {string} attributes.slug
- * @property {string} attributes.description
- * @property {?Object} attributes.metadata
- * @property {?Object} attributes.abi
- * @property {number} attributes.totalSupply
- * @property {number} attributes.maxSupply
- * @property {number} attributes.price
- * @property {?string} attributes.imageUrl
- * @property {?string} attributes.videoUrl
- * @property {?string} attributes.thumbnailUrl
- * @property {?string} attributes.tags
- * @property {?string} attributes.metadataBaseUri
- * @property {string} attributes.publishedAt
- * @property {string} attributes.address
- * @property {number} attributes.lastSynced
- * @property {string} attributes.metadataService
- * @property {string} attributes.chain
- * @property {?string} attributes.contractService
+ * @typedef {Object} DC.Cybernetic
+ * @property {number} id - Unique ID of the item
+ * @property {Object} attributes - Detailed properties of the item
+ * @property {string} attributes.name - The name of the item
+ * @property {string} attributes.slug - The slug of the item
+ * @property {string} attributes.type - The type of the item
+ * @property {string} attributes.shortDescription - Short description of the item
+ * @property {string} attributes.description - Description of the item
+ * @property {string} attributes.createdAt - The timestamp of item creation
+ * @property {string} attributes.updatedAt - The timestamp of the last item update
+ * @property {string} attributes.publishedAt - The timestamp when the item was published
+ * @property {Object} attributes.mainImage - The main image of the item
+ * @property {Strapi.Media} attributes.mainImage.data - The data of the main image of the item
+ * @property {Object} attributes.mainVideo - The main video of the item
+ * @property {Strapi.Media} attributes.mainVideo.data - The data of the main video of the item
+ * @property {Object} attributes.mainModel - The main model of the item
+ * @property {Strapi.Media} attributes.mainModel.data - The data of the main model of the item
+ * @property {Object} meta - The metadata of the item
  */
 
 /**
@@ -242,10 +238,31 @@
 
 /**
  * @typedef {Object} DC.InventoryItem
+ * @property {boolean} manual
  * @property {string} text
- *   @property {Object} item
+ * @property {string} description
+ * @property {Object} item
  * @property {DC.Item} item.data
  *
+ */
+
+/**
+ * @typedef {Object} DC.CyberneticItem
+ * @property {boolean} manual
+ * @property {string} text
+ * @property {string} description
+ * @property {Object} item
+ * @property {DC.Cybernetic} item.data
+ */
+
+/**
+ * @template T
+ * @typedef {Object} DC.ListItem<T>
+ * @property {boolean} manual
+ * @property {string} text
+ * @property {string} description
+ * @property {Object} item
+ * @property {T} item.data
  */
 
 /**

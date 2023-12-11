@@ -6,6 +6,9 @@
 	import Select from 'svelte-select/Select.svelte';
 	import Modal from './Modal.svelte';
 	import { getItems } from '$lib/Shared/Stores/getItems';
+	
+	let manual = true;
+	const md = new markdownit();
 	/**
 	 * @type {DC.InventoryItem}
 	 */
@@ -14,8 +17,6 @@
 
 	let isSaving = false;
 	export let isEditing = false;
-	let manual = true;
-	const md = new markdownit();
 
 	async function updateInventoryItem() {
 		isSaving = true;
@@ -33,14 +34,22 @@
 </script>
 
 <Modal bind:this={modal} bind:show on:close={() => (isEditing = false)}>
+	<svelte:fragment slot="header">
+		{#if isEditing}
+			Editing Inventory Item
+		{:else if data?.item.data?.attributes}
+			{data.item.data.attributes.name}
+		{:else if data?.text}
+			{data.text}
+		{:else}
+			404
+		{/if}
+		<hr />
+	</svelte:fragment>
 	<div class="modal-content">
 		{#if isSaving}
 			<LoadingIndicator>Updating inventory...</LoadingIndicator>
 		{:else if isEditing}
-			<div class="modal-header">
-				Edit Inventory Item
-				<hr />
-			</div>
 			<div class="modal-body">
 				<Toggle bind:checked={manual} label="Manual Entry" />
 				{#if manual && !data?.item?.data}
@@ -64,33 +73,31 @@
 						</Select>
 					</div>
 				{/if}
-				<button on:click={() => updateInventoryItem()}>Save</button>
 			</div>
 		{:else if data?.item.data?.attributes}
-			<div class="modal-header">
-				<div>{data.item.data.attributes.name}</div>
-				<hr />
-			</div>
-			<div>{@html md.render(data.item.data.attributes?.description ?? '')}</div>
-			<button on:click={() => (isEditing = true)}>Edit</button>
+			{@html md.render(data.item.data.attributes?.description ?? '')}
 		{:else if data?.text}
-			<span class="modal-header">{data.text}</span>
-			<button on:click={() => (isEditing = true)}>Edit</button>
+			{data.text}
 		{:else}
 			<span>Not found</span>
 		{/if}
 	</div>
+	<svelte:fragment slot="footer">
+		{#if isEditing}
+			<button on:click={() => updateInventoryItem()}>Save</button>
+		{:else}
+			<button on:click={() => (isEditing = true)}>Edit</button>
+		{/if}
+	</svelte:fragment>
 </Modal>
 
 <style>
 	.modal-content {
 		aspect-ratio: 1;
 		min-height: 30ch;
+		padding: 0.5rem;
 	}
-	.modal-header {
-		margin-top: 0.5rem;
-		width: 100%;
-	}
+
 	.modal-body {
 		display: grid;
 		gap: 1rem;

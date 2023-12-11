@@ -51,3 +51,28 @@
  * @property {CW.Token[]} tokens - The tokens of the result
  */
 
+
+/**
+ * @typedef {Object} ChainWallets.Contract
+ * @property {number} id
+ * @property {Object} attributes
+ * @property {string} attributes.name
+ * @property {string} attributes.slug
+ * @property {string} attributes.description
+ * @property {?Object} attributes.metadata
+ * @property {?Object} attributes.abi
+ * @property {number} attributes.totalSupply
+ * @property {number} attributes.maxSupply
+ * @property {number} attributes.price
+ * @property {?string} attributes.imageUrl
+ * @property {?string} attributes.videoUrl
+ * @property {?string} attributes.thumbnailUrl
+ * @property {?string} attributes.tags
+ * @property {?string} attributes.metadataBaseUri
+ * @property {string} attributes.publishedAt
+ * @property {string} attributes.address
+ * @property {number} attributes.lastSynced
+ * @property {string} attributes.metadataService
+ * @property {string} attributes.chain
+ * @property {?string} attributes.contractService
+ */

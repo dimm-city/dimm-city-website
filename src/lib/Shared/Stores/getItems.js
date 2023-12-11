@@ -8,3 +8,10 @@ export async function getItems() {
 	return results?.data;
 }
 
+/**
+ * @param {any} _item
+ */
+export async function updateInventoryItem(_item) {
+	//update the character's inventory/
+	console.log('updateInventoryItem', _item);
+}

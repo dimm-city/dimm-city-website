@@ -171,11 +171,16 @@ export async function loadCharacter(tokenId) {
 					skillTrees: true
 				}
 			},
-            inventory:{
-                populate:{
-                    item:true
-                }
-            }
+			inventory: {
+				populate: {
+					item: true
+				}
+			},
+			cybernetics: {
+				populate: {
+					item: true
+				}
+			}
 		}
 	});
 

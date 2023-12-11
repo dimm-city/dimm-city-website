@@ -1,28 +1,24 @@
 <script>
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
-	import List from '$lib/Shared/Components/List.svelte';
-	import { openModal } from 'svelte-modals';
-
 	import { selectedCharacter } from './BuilderStore.js';
-	import InventoryItemModal from './InventoryItemModal.svelte';
+	import ListEditor from './ListEditor.svelte';
+	import { getItems, updateInventoryItem } from '$lib/Shared/Stores/getItems.js';
+	import { getCybernetics, updateCyberneticsItem } from '$lib/Shared/Stores/cybernetics.js';
+	import { getScripts, updateScriptsItem } from '$lib/Shared/Stores/scripts.js';
 
 	/**
-	 * @param {any} item
+	 * @type {ListEditor}
 	 */
-	function viewItem(item) {
-		selectedInventoryItem = { ...item };
-		isEditingInventory = false;
-		showSelectedInventory = true;
-	}
+	let inventoryEditor;
 	/**
-	 * @type {any}
+	 * @type {ListEditor}
 	 */
-	let selectedInventoryItem;
-	let showSelectedInventory = false;
-	let isEditingInventory = false;
-	function addItem() {
-		viewItem({ id: null, text: '', item: { data: null } });
-	}
+	let cyberneticsEditor;
+	/**
+	 * @type {ListEditor}
+	 */
+	let scriptsEditor;
+
 </script>
 
 <ContentPane scrollable={true}>
@@ -30,62 +26,41 @@
 		<div class="section-container">
 			<section data-augmented-ui="tl-clip tr-clip br-clip bl-clip border">
 				<h3 class="section-title">Items</h3>
-				<button on:click={() => addItem()} class="aug-button">Add Item</button>
-				<List
-					data={$selectedCharacter?.attributes.inventory}
-					maxItems={-1}
-					noItemsText="no inventory recorded"
-				>
-					<div let:item slot="item">
-						{#if item.item?.data?.attributes}
-							<button data-augmented-ui class="aug-button" on:click={() => viewItem(item)}>
-								{item.item?.data.attributes.name ?? 'Unknown'}
-							</button>
-						{:else}
-							<button data-augmented-ui class="aug-button" on:click={() => viewItem(item)}>
-								{item.text}
-							</button>
-						{/if}
-					</div>
-				</List>
+				<button on:click={() => inventoryEditor.addItem()} class="aug-button" data-augmented-ui>Add Item</button>
+				<ListEditor
+					bind:this={inventoryEditor}
+					bind:data={$selectedCharacter.attributes.inventory}
+					{getItems}
+					saveChanges={updateInventoryItem}
+				/>
 			</section>
 			<section data-augmented-ui="tl-clip tr-clip br-clip bl-clip border">
 				<h3 class="section-title">Cybernetics</h3>
-				<List
-					data={$selectedCharacter?.attributes.cybernetics?.data}
-					maxItems={-1}
+				<button on:click={() => cyberneticsEditor.addItem()} class="aug-button" data-augmented-ui>Add Item</button>
+				<ListEditor
+					bind:this={cyberneticsEditor}
+					bind:data={$selectedCharacter.attributes.cybernetics}
+					getItems={getCybernetics}
+					saveChanges={updateCyberneticsItem}
 					noItemsText="no cybernetics detected"
-				>
-					<div let:item slot="item">
-						<button data-augmented-ui class="aug-button" on:click={() => viewItem(item)}
-							>{item.attributes.name}</button
-						>
-					</div>
-				</List>
+				/>
 			</section>
 			<section data-augmented-ui="tl-clip tr-clip br-clip bl-clip border">
 				<h3 class="section-title">Scripts</h3>
-				<List
-					data={$selectedCharacter.attributes.scripts?.data}
-					maxItems={-1}
+				<button on:click={() => scriptsEditor.addItem()} class="aug-button" data-augmented-ui>Add Item</button>
+				<ListEditor
+					bind:this={scriptsEditor}
+					bind:data={$selectedCharacter.attributes.scripts}
+					getItems={getScripts}
+					saveChanges={updateScriptsItem}
 					noItemsText="no scripts detected"
-				>
-					<div let:item slot="item">
-						<button data-augmented-ui class="aug-button" on:click={() => viewItem(item)}
-							>{item.attributes.name}</button
-						>
-					</div>
-				</List>
+				/>
 			</section>
 		</div>
 	{/if}
 </ContentPane>
 
-<InventoryItemModal
-	bind:data={selectedInventoryItem}
-	bind:show={showSelectedInventory}
-	isEditing={isEditingInventory}
-/>
+
 <style>
 	.section-container {
 		position: relative;

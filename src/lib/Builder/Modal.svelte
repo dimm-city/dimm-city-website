@@ -14,27 +14,29 @@
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
-<dialog
-	bind:this={dialog}
-	on:close
-	on:click|self={close}
-	data-augmented-ui
->
+<dialog bind:this={dialog} on:close on:click|self={close} data-augmented-ui>
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<div on:click|stopPropagation>
-		<slot name="header" />
-		<slot />
+		<div class="dialog-grid">
+			<div>
+				<slot name="header" />
+			</div>
+			<div>
+				<slot />
+			</div>
+			<div>
+				<slot name="footer" />
+			</div>
+		</div>
 		<!-- svelte-ignore a11y-autofocus -->
-		<button class="text-button" autofocus on:click={close}
-			><i class="bi bi-x" /></button
-		>
+		<button class="text-button" autofocus on:click={close}><i class="bi bi-x" /></button>
 	</div>
 </dialog>
 
 <style>
-    :root{
-        --dc-dialog-animation-duration: 0.2s;
-    }
+	:root {
+		--dc-dialog-animation-duration: 0.2s;
+	}
 	dialog {
 		border-radius: 0.2em;
 		border: none;
@@ -44,6 +46,11 @@
 	dialog > div {
 		padding: 1em;
 		position: relative;
+	}
+	.dialog-grid{
+		display: grid;
+		grid-template-columns: 1fr;
+		grid-template-rows: min-content auto min-content;
 	}
 
 	button {
@@ -83,7 +90,7 @@
 			opacity: 1;
 			transform: scale(1);
 			display: block;
-            position: absolute;
+			position: absolute;
 		}
 	}
 
@@ -92,12 +99,12 @@
 			opacity: 1;
 			transform: scale(1);
 			display: block;
-            position: absolute;
+			position: absolute;
 		}
 		100% {
 			opacity: 0;
-			transform: scale(0);	
-            position: absolute;
+			transform: scale(0);
+			position: absolute;
 		}
 	}
 
