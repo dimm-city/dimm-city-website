@@ -5,6 +5,7 @@
 	import { getItems, updateInventoryItem } from '$lib/Shared/Stores/getItems.js';
 	import { getCybernetics, updateCyberneticsItem } from '$lib/Shared/Stores/cybernetics.js';
 	import { getScripts, updateScriptsItem } from '$lib/Shared/Stores/scripts.js';
+	import { updateEntity } from '$lib/Shared/SvelteStrapi.js';
 
 	/**
 	 * @type {ListEditor}
@@ -19,47 +20,79 @@
 	 */
 	let scriptsEditor;
 
+	/**
+
+	 * @param {any} data
+	 */
+	export async function updateListItem(data) {
+		//if (ownsToken(data.attributes.tokenId)) {
+
+		if (!$selectedCharacter) return;
+
+		const importData = JSON.parse(JSON.stringify(data));
+		importData.id = $selectedCharacter.id;
+		// importData.attributes = JSON.parse(JSON.stringify(data));
+
+		
+
+		await updateEntity('dimm-city/characters', {
+			...importData
+		})
+			.then(() => {
+				console.log('character saved', importData);
+			})
+			.catch((reason) => {
+				console.error('Error updating citizen file', reason);
+			});
+
+		//}
+	}
 </script>
 
 <ContentPane scrollable={true}>
 	{#if $selectedCharacter}
 		<div class="section-container">
 			<section data-augmented-ui="tl-clip tr-clip br-clip bl-clip border">
-				<h3 class="section-title">Items</h3>
-				<button on:click={() => inventoryEditor.addItem()} class="aug-button" data-augmented-ui>Add Item</button>
+				<h3 class="section-title">Inventory</h3>
+				<button on:click={() => inventoryEditor.addItem()} class="aug-button" data-augmented-ui
+					>Add Item</button
+				>
 				<ListEditor
 					bind:this={inventoryEditor}
 					bind:data={$selectedCharacter.attributes.inventory}
-					{getItems}
-					saveChanges={updateInventoryItem}
+					saveChanges={(d)=> updateListItem({
+						inventory: [...d]
+					})}
+					{getItems}					
 				/>
 			</section>
 			<section data-augmented-ui="tl-clip tr-clip br-clip bl-clip border">
 				<h3 class="section-title">Cybernetics</h3>
-				<button on:click={() => cyberneticsEditor.addItem()} class="aug-button" data-augmented-ui>Add Item</button>
+				<button on:click={() => cyberneticsEditor.addItem()} class="aug-button" data-augmented-ui
+					>Add Item</button
+				>
 				<ListEditor
 					bind:this={cyberneticsEditor}
 					bind:data={$selectedCharacter.attributes.cybernetics}
 					getItems={getCybernetics}
-					saveChanges={updateCyberneticsItem}
 					noItemsText="no cybernetics detected"
 				/>
 			</section>
 			<section data-augmented-ui="tl-clip tr-clip br-clip bl-clip border">
 				<h3 class="section-title">Scripts</h3>
-				<button on:click={() => scriptsEditor.addItem()} class="aug-button" data-augmented-ui>Add Item</button>
+				<button on:click={() => scriptsEditor.addItem()} class="aug-button" data-augmented-ui
+					>Add Item</button
+				>
 				<ListEditor
 					bind:this={scriptsEditor}
 					bind:data={$selectedCharacter.attributes.scripts}
 					getItems={getScripts}
-					saveChanges={updateScriptsItem}
 					noItemsText="no scripts detected"
 				/>
 			</section>
 		</div>
 	{/if}
 </ContentPane>
-
 
 <style>
 	.section-container {

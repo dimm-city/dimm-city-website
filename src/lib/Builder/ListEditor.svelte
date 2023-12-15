@@ -7,6 +7,7 @@
 	import Toggle from '$lib/Shared/Components/Toggle.svelte';
 	import Input from '$lib/Shared/Components/Input.svelte';
 	import Textarea from '$lib/Shared/Components/Textarea.svelte';
+	import { selectedCharacter } from './BuilderStore';
 
 	/**
 	 * @type {Modal}
@@ -20,7 +21,7 @@
 	function viewItem(item) {
 		selectedItem = { ...item };
 		isEditing = false;
-        manual = selectedItem.item?.data == null;
+		manual = selectedItem.item?.data == null;
 		showItemModal = true;
 	}
 	let showItemModal = false;
@@ -30,8 +31,33 @@
 	let manual = true;
 
 	async function updateItem() {
+		if (!$selectedCharacter) return;
 		isUpdating = true;
-		if (saveChanges) await saveChanges(selectedItem);
+
+		if (selectedItem.id < 1) {
+			data.push(selectedItem);
+		}
+
+		data = [...data];
+		//
+		//await updateListItem();
+		let newData = JSON.parse(JSON.stringify(data));
+
+		//**  @parameter  {{ item: { data: any; }; }} */
+		newData = newData.map((item) => {
+			if (item.item.data) {
+				item.item = { ...item.item.data };
+			}
+			return item;
+		});
+
+		// const importData = {
+		// 	id: $selectedCharacter.id,
+		// 	[listName]: [...newData]
+		// };
+
+		if (saveChanges) await saveChanges(newData);
+
 		isEditing = false;
 		isUpdating = false;
 		modal.close();
@@ -42,7 +68,7 @@
 	 */
 	let selectedItem;
 	/**
-	 * @type {any}
+	 * @type {DC.ListItem<any>[]}
 	 */
 	export let data;
 
@@ -108,7 +134,7 @@
 				<Toggle bind:checked={manual} label="Manual Entry" />
 				{#if manual}
 					<Input bind:value={selectedItem.text} />
-                    <Textarea bind:value={selectedItem.description} />
+					<Textarea bind:value={selectedItem.description} />
 				{:else}
 					<div class="value aug-select">
 						<Select

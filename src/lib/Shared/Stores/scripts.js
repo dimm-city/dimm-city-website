@@ -9,8 +9,9 @@ export async function getScripts() {
 }
 
 /**
- * @param {any} _item
+ * @param {DC.Script} _item
  */
 export async function updateScriptsItem(_item) {
+	
 	console.log('updateScriptsItem', _item);
 }

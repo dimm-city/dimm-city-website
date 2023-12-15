@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { ethers } from 'ethers';
 import { derived, get, writable } from 'svelte/store';
 import { config } from '../config';
@@ -118,6 +117,6 @@ export async function attachWallet() {
 
 	if (response.ok) {
 		console.log('attached wallet');
-		await loadWallets(true);
+		await loadWallets();
 	}
 }

@@ -13,6 +13,19 @@
  * @property {?Strapi.APIRequestParams} defaultSummaryQuery - The default summary query parameters
  */
 
+
+/**
+ * @template T
+ * @typedef {Object} DC.ListItem<T>
+ * @property {boolean} manual
+ * @property {string} text
+ * @property {string} description
+ * @property {Object} item
+ * @property {number[]} item.connect
+ * @property {number[]} item.disconnect
+ * @property {T} item.data
+ */
+
 /**
  * @typedef {Object} DC.BaseEntity
  * @property {number} id - Unique ID of the item
@@ -30,6 +43,10 @@
  * @property {Strapi.Media} attributes.mainVideo.data - The data of the main video of the item
  * @property {Object} attributes.mainModel - The main model of the item
  * @property {Strapi.Media} attributes.mainModel.data - The data of the main model of the item
+ */
+
+/**
+ * @typedef {DC.BaseEntity} DC.Script
  */
 
 /**
@@ -94,7 +111,7 @@
  * @property {string} attributes.backstory - The backstory of the character
  * @property {string} attributes.beliefs - DEPRECATED The beliefs of the character
  * @property {string} attributes.ideal - The beliefs of the character
- * @property {DC.InventoryItem[]} attributes.inventory - The list of inventory items
+ * @property {DC.ListItem<DC.Item>[]} attributes.inventory - The list of inventory items
  * @property {string} attributes.flaws - DEPRECATED The flaws of the character
  * @property {string} attributes.flaw - The flaws of the character
  * @property {string} attributes.dreams - The dreams of the character
@@ -122,9 +139,7 @@
  * @property {Object} attributes.selectedAbilities
  * @property {DC.Ability[]} attributes.selectedAbilities.data - The selected abilities of the character
  * @property {DC.ListItem<DC.Cybernetic>[]} attributes.cybernetics
- * @property {DC.Ability[]} attributes.cybernetics.data - OBSOLETE - The cybernetics of the character
- * @property {Object} attributes.items
- * @property {DC.Item[]} attributes.items.data - The items of the character
+ * @property {DC.ListItem<DC.Script>[]} attributes.scripts - The list of inventory items
  * @property {Object} attributes.mainImage -
  * @property {Strapi.Media} attributes.mainImage.data - Main image of the entity
  * @property {Object} attributes.mainVideo
@@ -236,34 +251,8 @@
  * @property {{data: Array.<DC.Character>}} attributes.characters - The characters involved in the event.
  */
 
-/**
- * @typedef {Object} DC.InventoryItem
- * @property {boolean} manual
- * @property {string} text
- * @property {string} description
- * @property {Object} item
- * @property {DC.Item} item.data
- *
- */
 
-/**
- * @typedef {Object} DC.CyberneticItem
- * @property {boolean} manual
- * @property {string} text
- * @property {string} description
- * @property {Object} item
- * @property {DC.Cybernetic} item.data
- */
 
-/**
- * @template T
- * @typedef {Object} DC.ListItem<T>
- * @property {boolean} manual
- * @property {string} text
- * @property {string} description
- * @property {Object} item
- * @property {T} item.data
- */
 
 /**
  * @typedef {Object} DC.Item
