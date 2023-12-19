@@ -78,7 +78,7 @@
 			</div>
 		</div>
 		<div class="container" data-augmented-ui-reset>
-			<StatsRow {character} {isEditing} {isPrinting} />
+			<StatsRow {character} {isEditing}  />
 			<div class="points-row">
 				<div
 					class="scores-container row-frame"

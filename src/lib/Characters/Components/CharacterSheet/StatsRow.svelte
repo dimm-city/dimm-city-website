@@ -1,6 +1,5 @@
 <script>
 	import PhysicalStats from './PhysicalStats.svelte';
-	import Points from './Points.svelte';
 	import { openModal } from 'svelte-modals';
 	import AbilityModal from '$lib/Abilities/AbilityModal.svelte';
 	import ItemsList from './ItemsList.svelte';
@@ -24,6 +23,14 @@
 	</div>
 	<div class="stats-container">
 		<PhysicalStats {character} {isEditing} />
+	</div>
+		<div class="cybernetics-container">
+		<ItemsList
+			header="Cybernetics"
+			noItemsText="no scripts detected"
+			data={character.attributes.cybernetics}
+			viewItem={viewAbility}
+		/>		
 	</div>
 </div>
 

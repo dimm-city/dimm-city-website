@@ -27,7 +27,7 @@
 		<ItemsList
 			header="Items"
 			noItemsText="no inventory recorded"
-			data={character.attributes.items?.data}
+			data={character.attributes.inventory}
 			viewItem={viewAbility}
 		/>
 	</div>
@@ -35,7 +35,7 @@
 		<ItemsList
 			header="Scripts"
 			noItemsText="no scripts detected"
-			data={character.attributes.scripts?.data}
+			data={character.attributes.scripts}
 			viewItem={viewAbility}
 		/>
 	</div>

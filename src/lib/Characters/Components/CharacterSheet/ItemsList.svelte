@@ -8,7 +8,7 @@
 		console.log(item);
 	};
 	/**
-	 * @type {object[]}
+	 * @type {DC.ListItem<any>[] | Object[]}
 	 */
 	export let data = [];
 </script>
@@ -17,7 +17,7 @@
 <List {data} maxItems={-1} {noItemsText}>
 	<div let:item slot="item">
 		<button data-augmented-ui class="aug-button" on:click={() => viewItem(item)}
-			>{item.attributes.name}</button
+			>{item.attributes?.name ?? item.item?.data?.attributes?.name ?? item.text}</button
 		>
 	</div>
 </List>
@@ -25,17 +25,15 @@
 <style>
 	:global(.list) {
 		--list-gap: 0.5rem;
-		padding-inline: .5rem;
+		padding-inline: 0.5rem;
 	}
 	h3 {
 		margin: 0;
 		color: var(--fourth-accent);
 		margin-top: 0.25rem;
 		justify-content: start;
-		padding-inline-start: .5em;
+		padding-inline-start: 0.5em;
 	}
-
-
 
 	button {
 		--aug-border-bg: var(--menu-item-aug-border-bg);
