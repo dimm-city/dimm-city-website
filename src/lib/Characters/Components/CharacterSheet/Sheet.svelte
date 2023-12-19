@@ -8,6 +8,7 @@
 	import { openModal } from 'svelte-modals';
 	import AbilityModal from '$lib/Abilities/AbilityModal.svelte';
 	import StoryRow from './StoryRow.svelte';
+	import { formatListItemName } from '$lib/Shared/FormatFunctions';
 
 	/**@type {DC.Character}*/
 	export let character;
@@ -30,13 +31,12 @@
 	}
 	$: if (isPrinting) {
 		sheetAug = '';
-		character.attributes.cybernetics = createEmptyList(5, character.attributes.cybernetics?.data);
-		character.attributes.selectedAbilities = createEmptyList(
-			24,
-			character.attributes.selectedAbilities?.data
-		);
-		character.attributes.items = createEmptyList(12, character.attributes.items?.data);
-		character.attributes.scripts = createEmptyList(8, character.attributes.scripts?.data);
+		character.attributes.cybernetics = createEmptyList(5, character.attributes.cybernetics);
+		character.attributes.selectedAbilities = {
+			data: createEmptyList(24, character.attributes.selectedAbilities?.data)
+		};
+		character.attributes.inventory = createEmptyList(12, character.attributes.inventory);
+		character.attributes.scripts = createEmptyList(8, character.attributes.scripts);
 	}
 
 	function createEmptyList(length = 22, existingItems = []) {
@@ -44,15 +44,18 @@
 			id: index + 1,
 			attributes: { name: index + 1 + ': ' }
 		}));
-		return {
-			data: [
-				...existingItems.map((i, index) => {
-					i.attributes.name = index + 1 + ': ' + i.attributes.name;
-					return i;
-				}),
-				...emptyItems.slice(existingItems.length)
-			]
-		};
+		const output = [
+			...existingItems.map((i, index) => {
+				if (!i.attributes) i.attributes = {};
+				i.attributes.name =
+					index + 1 + ': ' + formatListItemName(i);
+				console.log('mapping item', i);
+				return i;
+			}),
+			...emptyItems.slice(existingItems.length)
+		];
+
+		return output;
 	}
 </script>
 
@@ -78,7 +81,7 @@
 			</div>
 		</div>
 		<div class="container" data-augmented-ui-reset>
-			<StatsRow {character} {isEditing}  />
+			<StatsRow {character} {isEditing} />
 			<div class="points-row">
 				<div
 					class="scores-container row-frame"

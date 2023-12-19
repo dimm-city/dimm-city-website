@@ -10,7 +10,33 @@ export const load = async (/** @type {{ params: any; }} */ page) => {
 				$eq: tokenId
 			}
 		},
-		populate: '*'
+		populate: {
+			mainImage: true,
+			race: true,
+			originLocation: true,
+			currentLocation: true,
+			selectedAbilities: true,
+			specialties: {
+				populate: {
+					skillTrees: true
+				}
+			},
+			scripts: {
+				populate: {
+					item: true
+				}
+			},
+			inventory: {
+				populate: {
+					item: true
+				}
+			},
+			cybernetics: {
+				populate: {
+					item: true
+				}
+			}
+		}
 	});
 	return data;
 };
