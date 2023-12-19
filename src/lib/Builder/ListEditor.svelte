@@ -36,6 +36,13 @@
 
 		if (selectedItem.id < 1) {
 			data.push(selectedItem);
+		} else if(selectedItem.id > 0) {
+			data = data.map((item) => {
+				if (item.id == selectedItem.id) {
+					item = selectedItem;
+				}
+				return item;
+				});	
 		}
 
 		data = [...data];
@@ -43,18 +50,17 @@
 		//await updateListItem();
 		let newData = JSON.parse(JSON.stringify(data));
 
-		//**  @parameter  {{ item: { data: any; }; }} */
 		newData = newData.map((item) => {
 			if (item.item.data) {
-				item.item = { ...item.item.data };
+				item.item = {
+					...item.item.data,
+				};
+			} else {
+				item.item = { ...item.item };
 			}
+			console.log(item.item);
 			return item;
 		});
-
-		// const importData = {
-		// 	id: $selectedCharacter.id,
-		// 	[listName]: [...newData]
-		// };
 
 		if (saveChanges) await saveChanges(newData);
 

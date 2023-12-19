@@ -31,9 +31,6 @@
 
 		const importData = JSON.parse(JSON.stringify(data));
 		importData.id = $selectedCharacter.id;
-		// importData.attributes = JSON.parse(JSON.stringify(data));
-
-		
 
 		await updateEntity('dimm-city/characters', {
 			...importData
@@ -60,10 +57,11 @@
 				<ListEditor
 					bind:this={inventoryEditor}
 					bind:data={$selectedCharacter.attributes.inventory}
-					saveChanges={(d)=> updateListItem({
-						inventory: [...d]
-					})}
-					{getItems}					
+					saveChanges={(d) =>
+						updateListItem({
+							inventory: [...d]
+						})}
+					{getItems}
 				/>
 			</section>
 			<section data-augmented-ui="tl-clip tr-clip br-clip bl-clip border">
@@ -75,6 +73,10 @@
 					bind:this={cyberneticsEditor}
 					bind:data={$selectedCharacter.attributes.cybernetics}
 					getItems={getCybernetics}
+					saveChanges={(d) =>
+						updateListItem({
+							cybernetics: [...d]
+						})}
 					noItemsText="no cybernetics detected"
 				/>
 			</section>
@@ -87,6 +89,10 @@
 					bind:this={scriptsEditor}
 					bind:data={$selectedCharacter.attributes.scripts}
 					getItems={getScripts}
+					saveChanges={(d) =>
+						updateListItem({
+							scripts: [...d]
+						})}
 					noItemsText="no scripts detected"
 				/>
 			</section>
