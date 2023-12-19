@@ -138,6 +138,26 @@ async function updateCharacterAbility(action, ability) {
 		});
 }
 
+export const toastFunction = writable((v) => {});
+/**
+ * @param {string} messageHeading
+ * @param {string} messageType
+ * @param {string} message
+ */
+export function showAlert(message, messageHeading, messageType) {
+	const fn = get(toastFunction);
+	if (fn && typeof fn === 'function')
+		fn({
+			id: `${new Date().getTime()}-${Math.floor(Math.random() * 9999)}`,
+			position: 'top-right',
+			removeAfter: 3000,
+			allowRemove: true,
+			heading: messageHeading,
+			type: messageType,
+			text: message
+		});
+}
+
 /**
  * Load available characters
  */
@@ -169,6 +189,11 @@ export async function loadCharacter(tokenId) {
 			specialties: {
 				populate: {
 					skillTrees: true
+				}
+			},
+			scripts: {
+				populate: {
+					item: true
 				}
 			},
 			inventory: {
@@ -222,19 +247,60 @@ export async function updateCharacter() {
 		];
 	else importData.specialties = [];
 
+	importData.inventory = currentData.attributes.inventory.map(flattenComponentList);
+	importData.cybernetics = currentData.attributes.cybernetics.map(flattenComponentList);
+	importData.scripts = currentData.attributes.scripts.map(flattenComponentList);
+
+	let message = '';
+	let messageType = 'warning';
+	let messageHeading = '';
+
 	await updateEntity('dimm-city/characters', {
 		id: currentData.id,
 		...importData
 	})
 		.then(() => {
 			console.log('character saved', currentData);
+			message = 'changes have been saved';
+			messageType = 'warning';
+			messageHeading = 'character-updated';
 		})
 		.catch((reason) => {
 			console.error('Error updating citizen file', reason);
+			message = 'failed to save changes';
+			messageType = 'error';
+			messageHeading = 'save-failed';
 		});
+
+	showAlert(message, messageHeading, messageType);
 
 	//}
 }
+
+/**
+ * @param {any} item
+ */
+function flattenComponentList(item) {
+	let output = { id: null, item: {} };
+
+	if (item.item.data) {
+		output.id = item.id ?? null;
+		output.item = {
+			id: item.item.data.id
+			//...item.item.data
+		};
+	} else {
+		output = { ...item };
+		// @ts-ignore
+		delete output.item;
+	}
+
+	// @ts-ignore
+	if (output.id == null) delete output.id;
+
+	return output;
+}
+
 
 /**
  * @param {Number[]} specialtyIds

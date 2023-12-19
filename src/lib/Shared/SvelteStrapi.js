@@ -94,5 +94,5 @@ export async function updateEntity(contentType, entity) {
 	let data = JSON.parse(JSON.stringify(entity));
 
 	const strapi = new StrapiClient(config.apiBaseUrl, getSessionValue('jwt'));
-	strapi.updateEntity(contentType, data);
+	return strapi.updateEntity(contentType, data);
 }

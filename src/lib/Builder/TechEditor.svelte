@@ -2,11 +2,10 @@
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import { selectedCharacter } from './BuilderStore.js';
 	import ListEditor from './ListEditor.svelte';
-	import { getItems, updateInventoryItem } from '$lib/Shared/Stores/getItems.js';
-	import { getCybernetics, updateCyberneticsItem } from '$lib/Shared/Stores/cybernetics.js';
-	import { getScripts, updateScriptsItem } from '$lib/Shared/Stores/scripts.js';
-	import { updateEntity } from '$lib/Shared/SvelteStrapi.js';
-
+	import { getItems } from '$lib/Shared/Stores/getItems.js';
+	import { getCybernetics } from '$lib/Shared/Stores/cybernetics.js';
+	import { getScripts } from '$lib/Shared/Stores/scripts.js';
+	
 	/**
 	 * @type {ListEditor}
 	 */
@@ -20,30 +19,7 @@
 	 */
 	let scriptsEditor;
 
-	/**
 
-	 * @param {any} data
-	 */
-	export async function updateListItem(data) {
-		//if (ownsToken(data.attributes.tokenId)) {
-
-		if (!$selectedCharacter) return;
-
-		const importData = JSON.parse(JSON.stringify(data));
-		importData.id = $selectedCharacter.id;
-
-		await updateEntity('dimm-city/characters', {
-			...importData
-		})
-			.then(() => {
-				console.log('character saved', importData);
-			})
-			.catch((reason) => {
-				console.error('Error updating citizen file', reason);
-			});
-
-		//}
-	}
 </script>
 
 <ContentPane scrollable={true}>
@@ -57,10 +33,6 @@
 				<ListEditor
 					bind:this={inventoryEditor}
 					bind:data={$selectedCharacter.attributes.inventory}
-					saveChanges={(d) =>
-						updateListItem({
-							inventory: [...d]
-						})}
 					{getItems}
 				/>
 			</section>
@@ -73,10 +45,6 @@
 					bind:this={cyberneticsEditor}
 					bind:data={$selectedCharacter.attributes.cybernetics}
 					getItems={getCybernetics}
-					saveChanges={(d) =>
-						updateListItem({
-							cybernetics: [...d]
-						})}
 					noItemsText="no cybernetics detected"
 				/>
 			</section>
@@ -89,10 +57,6 @@
 					bind:this={scriptsEditor}
 					bind:data={$selectedCharacter.attributes.scripts}
 					getItems={getScripts}
-					saveChanges={(d) =>
-						updateListItem({
-							scripts: [...d]
-						})}
 					noItemsText="no scripts detected"
 				/>
 			</section>

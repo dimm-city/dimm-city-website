@@ -9,70 +9,21 @@
 	import Textarea from '$lib/Shared/Components/Textarea.svelte';
 	import { selectedCharacter } from './BuilderStore';
 
+	const md = new markdownit();
 	/**
 	 * @type {Modal}
 	 */
 	let modal;
-	const md = new markdownit();
-
-	/**
-	 * @param {any} item
-	 */
-	function viewItem(item) {
-		selectedItem = { ...item };
-		isEditing = false;
-		manual = selectedItem.item?.data == null;
-		showItemModal = true;
-	}
 	let showItemModal = false;
 	let isEditing = false;
 	let isUpdating = false;
-
-	let manual = true;
-
-	async function updateItem() {
-		if (!$selectedCharacter) return;
-		isUpdating = true;
-
-		if (selectedItem.id < 1) {
-			data.push(selectedItem);
-		} else if(selectedItem.id > 0) {
-			data = data.map((item) => {
-				if (item.id == selectedItem.id) {
-					item = selectedItem;
-				}
-				return item;
-				});	
-		}
-
-		data = [...data];
-		//
-		//await updateListItem();
-		let newData = JSON.parse(JSON.stringify(data));
-
-		newData = newData.map((item) => {
-			if (item.item.data) {
-				item.item = {
-					...item.item.data,
-				};
-			} else {
-				item.item = { ...item.item };
-			}
-			console.log(item.item);
-			return item;
-		});
-
-		if (saveChanges) await saveChanges(newData);
-
-		isEditing = false;
-		isUpdating = false;
-		modal.close();
-	}
+	let manualEditing = true;
 
 	/**
 	 * @type {any}
 	 */
 	let selectedItem;
+
 	/**
 	 * @type {DC.ListItem<any>[]}
 	 */
@@ -85,25 +36,67 @@
 	 */
 	export let getItems = async () => [];
 
-	/** @type { (item: any) => Promise<void>} */
-	export let saveChanges = async ({}) => {
-		return;
-	};
+	/**
+	 * @param {any} item
+	 */
+	function viewItem(item) {
+		selectedItem = { ...item };
+		isEditing = false;
+		manualEditing = selectedItem.item?.data == null;
+		showItemModal = true;
+	}
+
+	function updateItem() {
+		if (!$selectedCharacter || !selectedItem) return;
+
+		isUpdating = true;
+
+		console.log('updateItem', selectedItem, data);
+		if (selectedItem.id == null) {
+			data.push(selectedItem);
+		} else if (selectedItem.id > 0) {
+			data = data.map((item) => {
+				if (item.id == selectedItem.id) {
+					item = { ...selectedItem };
+				}
+				return item;
+			});
+		}
+
+		data = [...data];
+
+		console.log('data', data);
+		isEditing = false;
+		isUpdating = false;
+		modal.close();
+	}
+
 	export function addItem() {
 		selectedItem = {
-			id: null,
 			text: '',
 			item: {
-				data: {
-					attributes: {
-						name: undefined,
-						description: undefined
-					}
-				}
+				data: null
 			}
 		};
+
+		manualEditing = false;
 		isEditing = true;
 		showItemModal = true;
+	}
+
+	/**
+	 * @param {DC.ListItem<any>} item
+	 */
+	export function deleteItem(item) {
+		if (item.id == null) {
+			const filteredItems = data.filter(
+				(i) =>  JSON.stringify(item) !== JSON.stringify(i)
+			);
+			data = [...filteredItems];
+		} else {
+			data = [...data.filter((i) => item.id != null && i.id !== item.id)];
+		}
+		modal.close();
 	}
 </script>
 
@@ -123,7 +116,7 @@
 </List>
 <Modal bind:this={modal} bind:show={showItemModal}>
 	<svelte:fragment slot="header">
-		{#if selectedItem?.item.data?.attributes}
+		{#if selectedItem?.item.data?.attributes?.name}
 			{selectedItem.item.data.attributes.name}
 		{:else if selectedItem?.text}
 			{selectedItem.text}
@@ -137,8 +130,8 @@
 			<LoadingIndicator>Updating inventory...</LoadingIndicator>
 		{:else if isEditing}
 			<div class="modal-body">
-				<Toggle bind:checked={manual} label="Manual Entry" />
-				{#if manual}
+				<Toggle bind:checked={manualEditing} label="Manual Entry" />
+				{#if manualEditing}
 					<Input bind:value={selectedItem.text} />
 					<Textarea bind:value={selectedItem.description} />
 				{:else}
@@ -164,7 +157,7 @@
 		{:else if selectedItem?.item.data?.attributes}
 			{@html md.render(selectedItem.item.data.attributes?.description ?? '')}
 		{:else if selectedItem?.text}
-			{selectedItem.text}
+			{@html md.render(selectedItem.description ?? '')}
 		{:else}
 			<span>Not found</span>
 		{/if}
@@ -174,6 +167,8 @@
 			<button on:click={() => updateItem()}>Save</button>
 		{:else}
 			<button on:click={() => (isEditing = true)}>Edit</button>
+
+			<button on:click={() => deleteItem(selectedItem)}>Delete</button>
 		{/if}
 	</svelte:fragment>
 </Modal>

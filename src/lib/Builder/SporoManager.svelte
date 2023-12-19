@@ -5,6 +5,7 @@
 	import CharacterEditor from './CharacterEditor.svelte';
 	import MainMenu from '$lib/Shared/Shell/MainMenu.svelte';
 	import {
+		toastFunction,
 		loadAvailableCharacters,
 		loadCharacter,
 		selectedCharacter,
@@ -14,6 +15,7 @@
 	import { getNotificationsContext } from 'svelte-notifications';
 
 	const { addNotification } = getNotificationsContext();
+	toastFunction.set(addNotification);
 
 	/**
 	 * @type {any}
@@ -34,6 +36,8 @@
 
 	let originalCharacter = '';
 
+	let isSaving = false;
+
 	async function viewCharacter() {
 		await loadCharacter($selectedCharacter?.attributes.tokenId);
 		changeMode('view-character');
@@ -45,18 +49,12 @@
 	}
 
 	async function saveChanges() {
+		isSaving = true;
 		await updateCharacter();
 		console.log('save changes');
+		originalCharacter = JSON.stringify($selectedCharacter);
 		//TODO: show toast alert notification
-		addNotification({
-			id: `${new Date().getTime()}-${Math.floor(Math.random() * 9999)}`,
-			position: 'top-right',
-			removeAfter: 3000,
-			allowRemove: true,
-			heading: 'character-updated',
-			type: 'warning',
-			text: 'changes have been saved'
-		});
+		isSaving = false;
 	}
 
 	function cancelChanges(goBack = false) {
@@ -113,22 +111,29 @@
 	</svelte:fragment>
 	<svelte:fragment slot="right-button">
 		{#if mode == 'edit-character'}
-			<button
-				class="aug-button"
-				data-augmented-ui="all-hex both"
-				title="undo changes"
-				on:click={() => cancelChanges(false)}
-			>
-				<i class="bi bi-arrow-counterclockwise" /></button
-			>
-			<button
-				class="aug-button"
-				data-augmented-ui="all-hex both"
-				title="save changes"
-				on:click={saveChanges}
-			>
-				<i class="bi bi-check" /></button
-			>
+			{#if isSaving}
+				<button class="aug-button fade-in" disabled data-augmented-ui="all-hex both" title="saving changes">
+					<i class="bi bi-cpu spin" /></button
+				>
+			{:else}
+				<button
+					class="aug-button fade-in"
+					data-augmented-ui="all-hex both"
+					title="undo changes"
+					on:click={() => cancelChanges(false)}
+				>
+					<i class="bi bi-arrow-counterclockwise" /></button
+				>
+				<button
+					class="aug-button fade-in"
+					data-augmented-ui="all-hex both"
+					title="save changes"
+					class:busy={isSaving}
+					on:click={saveChanges}
+				>
+					<i class="bi bi-check" /></button
+				>
+			{/if}
 		{:else if mode == 'view-character'}
 			<button
 				class="aug-button"

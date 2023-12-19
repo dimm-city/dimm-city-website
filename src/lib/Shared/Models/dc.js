@@ -17,6 +17,7 @@
 /**
  * @template T
  * @typedef {Object} DC.ListItem<T>
+ * @property {Number} [id]
  * @property {boolean} manual
  * @property {string} text
  * @property {string} description
