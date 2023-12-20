@@ -1,12 +1,60 @@
 <script>
 	import Dialog from "../Dialog.svelte";
+    import { writable } from 'svelte/store';
 
-// Implement this svelte component to allow a user to select the number and type of dice to be rolled.
-// The user should be able to select the number of dice to be rolled, the type of dice to be rolled, and the number of sides on the dice to be rolled.
-// The options should be selectable from a grid of options.
-// The types of dice available are: d4, d6, d8, d10, d12, d20, d100
-// The max number of dice should be 10.
+    const diceTypes = ['d4', 'd6', 'd8', 'd10', 'd12', 'd20', 'd100'];
+    const maxDice = 10;
+    let selectedDiceType = 'd6';
+    let numberOfDice = 1;
+
+    const selectDice = (type) => {
+        selectedDiceType = type;
+    };
+
+    const selectNumber = (number) => {
+        numberOfDice = number;
+    };
 </script>
-<Dialog>
 
+<Dialog>
+    <div class="dice-picker">
+        <div class="dice-types">
+            {#each diceTypes as type}
+                <button on:click={() => selectDice(type)} class:selected={selectedDiceType === type}>
+                    {type}
+                </button>
+            {/each}
+        </div>
+        <div class="dice-numbers">
+            {#each Array(maxDice).fill(0).map((_, i) => i + 1) as number}
+                <button on:click={() => selectNumber(number)} class:selected={numberOfDice === number}>
+                    {number} {number === 1 ? 'die' : 'dice'}
+                </button>
+            {/each}
+        </div>
+    </div>
 </Dialog>
+
+<style>
+    .dice-picker {
+        display: flex;
+        flex-direction: column;
+    }
+    .dice-types, .dice-numbers {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+    button {
+        padding: 10px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        cursor: pointer;
+    }
+    button.selected {
+        border-color: #007bff;
+        background-color: #007bff;
+        color: white;
+    }
+</style>
