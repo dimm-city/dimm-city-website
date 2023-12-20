@@ -1,12 +1,13 @@
 <script>
 	import Dialog from "../Dialog.svelte";
-    import { writable } from 'svelte/store';
-
+    
+    export let show = false;
     const diceTypes = ['d4', 'd6', 'd8', 'd10', 'd12', 'd20', 'd100'];
     const maxDice = 10;
-    let selectedDiceType = 'd6';
+    let selectedDiceType = 'd20';
     let numberOfDice = 1;
 
+    export let value = `${numberOfDice}${selectedDiceType}`;
     const selectDice = (type) => {
         selectedDiceType = type;
     };
@@ -14,9 +15,12 @@
     const selectNumber = (number) => {
         numberOfDice = number;
     };
+
+    $: value = `${numberOfDice}${selectedDiceType}`;
+
 </script>
 
-<Dialog>
+<Dialog bind:show>
     <div class="dice-picker">
         <div class="dice-types">
             {#each diceTypes as type}

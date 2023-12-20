@@ -74,6 +74,7 @@
 	});
 	export async function roll() {
 		if (rolling) return;
+		dispatcher('rollStarted', diceNotation);
 		rolling = true;
 
 		let result = await diceBox.roll(diceNotation);
@@ -112,6 +113,7 @@
 		height: 100%;
 		width: 100%;
 		justify-content: center;
+		
 	}
 
 	.dc-dice-roller-container button {

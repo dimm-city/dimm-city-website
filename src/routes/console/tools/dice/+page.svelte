@@ -2,7 +2,11 @@
 	import Shell from '$lib/Shared/Shell/Shell.svelte';
 	import ContentPane from '$lib/Shared/Components/ContentPane.svelte';
 	import Dice from '$lib/Shared/Components/Dice/Dice.svelte';
+	import DicePicker from '$lib/Shared/Components/Dice/DicePicker.svelte';
+
+	let selectDice = false;
 	let diceNotation = '1d20';
+	let lastRoll = '';
 	let selectedDice = {
 		customTheme: {
 			name: 'pink',
@@ -22,7 +26,7 @@
 	 */
 	async function rollDice(e) {
 		if (e.key === 'Enter') {
-			await roller.roll();
+			lastRoll = await roller.roll();
 		}
 	}
 
@@ -51,38 +55,51 @@
 	];
 </script>
 
+<DicePicker bind:show={selectDice} bind:value={diceNotation} />
 <Shell title="Dimm City: Dice">
-	<ContentPane padding={2}>
+	<ContentPane padding={0}>
 		<div>
-			<h4>
-				Roll your dice <small class="text-secondary">
-					enter the dice notation and press enter or click below
-				</small>
-			</h4>
-			<input type="text" bind:value={diceNotation} on:keyup={rollDice} />
-			<!-- <select id="diceSelect" bind:value={selectedDice}>
+			<div class="header">
+				<button on:click={() => (selectDice = true)}>{diceNotation}</button>
+				{#if lastRoll?.total > 0}
+					<h5 class="fade-in">last roll: {lastRoll?.total ?? ''}</h5>
+				{/if}
+			</div>
+			<div class="dice-table">
+				<!-- <select id="diceSelect" bind:value={selectedDice}>
 				<option value={null}>Please select a dice theme</option>
 				{#each diceThemes as theme}
 					<option value={theme}>{theme.name}</option>
 				{/each}
 			</select> -->
-			<Dice
-				bind:this={roller}
-				dice={selectedDice}
-				{diceNotation}
-				on:rollCompleted={(result) => console.log('rolled', result?.detail?.total)}
-			>
-				<span />
-			</Dice>
+				<Dice
+					bind:this={roller}
+					dice={selectedDice}
+					{diceNotation}
+					on:rollStarted={() => (lastRoll = null)}
+					on:rollCompleted={(result) => (lastRoll = result?.detail)}
+				>
+					<span />
+				</Dice>
+			</div>
 		</div>
 	</ContentPane>
 </Shell>
 
 <style>
-	h4 {
-		margin: 0;
+	.header {
+		position: absolute;
+		margin-inline: 2rem;
+		top: 0;
+		left: 0;
+		right: 0;
+		color: var(--fourth-accent);
 	}
-	div {
-		margin-bottom: 3rem;
+	.header button {
+		color: var(--fourth-accent);
+	}
+	.dice-table {
+		max-width: 100%;
+		height: 100%;
 	}
 </style>
