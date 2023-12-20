@@ -35,6 +35,12 @@ body {
 	}
 }
 
+.sheet.print .hide-print{
+	display: none !important;
+}
+.sheet.print button{
+	pointer-events: none;
+}
 .lists-row {
 	page-break-before: always;
 }
@@ -102,7 +108,7 @@ body {
 	padding: 0.75rem;
 	white-space: nowrap;
 	display: inline-block;
-	cursor: pointer;
+	cursor: default;
 	color: var(--primary-accent);
 	overflow: hidden;
 	text-overflow: ellipsis;
