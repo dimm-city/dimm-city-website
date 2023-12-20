@@ -8,15 +8,16 @@
 	import { writable } from 'svelte/store';
 	import {
 		selectedSkillTree,
-		availableSkills,	
+		availableSkills,
 		selectedSkill,
 		acquireSkill,
 		removeSkill,
-		selectSkill
+		selectSkill,
+		isSaving
 	} from './BuilderStore';
 	import { getNotificationsContext } from 'svelte-notifications';
 
-	const {addNotification} = getNotificationsContext();
+	const { addNotification } = getNotificationsContext();
 	/**
 	 * @type {import("panzoom").PanZoom}
 	 */
@@ -31,7 +32,6 @@
 	 * @type {import('svelte/store').Writable<boolean>}
 	 */
 	let showDetails = writable(false);
-
 
 	onMount(() => {
 		if (canvas === null) return;
@@ -65,8 +65,6 @@
 		panzoomInstance.dispose();
 	});
 
-
-
 	/**
 	 * @param {DC.Ability | null} skill
 	 * @param {MouseEvent} e
@@ -90,6 +88,7 @@
 	 */
 	async function toggleSkill(skill) {
 		if (!skill) return;
+		$isSaving = true;
 		if (skill.acquired) await removeSkill(skill);
 		else await acquireSkill(skill);
 
@@ -102,9 +101,8 @@
 			type: 'warning',
 			text: 'skills have been saved'
 		});
+		$isSaving = false;
 	}
-
-
 </script>
 
 <div class="skill-tree-page" style="--skill-tree-bg-image: url({$selectedSkillTree.pageImage});">

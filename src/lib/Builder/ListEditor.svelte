@@ -163,13 +163,15 @@
 		{/if}
 	</div>
 	<svelte:fragment slot="footer">
+		<div class="toolbar">
+
 		{#if isEditing}
 			<button on:click={() => updateItem()}>Save</button>
 		{:else}
-			<button on:click={() => (isEditing = true)}>Edit</button>
-
 			<button on:click={() => deleteItem(selectedItem)}>Delete</button>
+			<button on:click={() => (isEditing = true)}>Edit</button>
 		{/if}
+		</div>
 	</svelte:fragment>
 </Modal>
 
@@ -187,6 +189,11 @@
 	.modal-body {
 		display: grid;
 		gap: 1rem;
+	}
+	.toolbar{
+		display: flex;
+		justify-items: stretch;
+		gap: 0.5rem;
 	}
 	button {
 		--aug-border-bg: var(--menu-item-aug-border-bg);

@@ -35,6 +35,8 @@ export let availableSkills = writable([]);
 /** @type {import('svelte/store').Writable<DC.Ability | null>} */
 export let selectedSkill = writable();
 
+export let isSaving = writable(false);
+
 /**
  * @param {DC.SkillTree} _skillTree
  */
@@ -138,25 +140,7 @@ async function updateCharacterAbility(action, ability) {
 		});
 }
 
-export const toastFunction = writable((v) => {});
-/**
- * @param {string} messageHeading
- * @param {string} messageType
- * @param {string} message
- */
-export function showAlert(message, messageHeading, messageType) {
-	const fn = get(toastFunction);
-	if (fn && typeof fn === 'function')
-		fn({
-			id: `${new Date().getTime()}-${Math.floor(Math.random() * 9999)}`,
-			position: 'top-right',
-			removeAfter: 3000,
-			allowRemove: true,
-			heading: messageHeading,
-			type: messageType,
-			text: message
-		});
-}
+
 
 /**
  * Load available characters
@@ -251,9 +235,7 @@ export async function updateCharacter() {
 	importData.cybernetics = currentData.attributes.cybernetics.map(flattenComponentList);
 	importData.scripts = currentData.attributes.scripts.map(flattenComponentList);
 
-	let message = '';
-	let messageType = 'warning';
-	let messageHeading = '';
+
 
 	await updateEntity('dimm-city/characters', {
 		id: currentData.id,
@@ -261,18 +243,13 @@ export async function updateCharacter() {
 	})
 		.then(() => {
 			console.log('character saved', currentData);
-			message = 'changes have been saved';
-			messageType = 'warning';
-			messageHeading = 'character-updated';
+		
 		})
 		.catch((reason) => {
 			console.error('Error updating citizen file', reason);
-			message = 'failed to save changes';
-			messageType = 'error';
-			messageHeading = 'save-failed';
+	
 		});
 
-	showAlert(message, messageHeading, messageType);
 
 	//}
 }

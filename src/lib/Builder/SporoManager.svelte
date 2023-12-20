@@ -5,17 +5,16 @@
 	import CharacterEditor from './CharacterEditor.svelte';
 	import MainMenu from '$lib/Shared/Shell/MainMenu.svelte';
 	import {
-		toastFunction,
 		loadAvailableCharacters,
 		loadCharacter,
 		selectedCharacter,
-		updateCharacter
+		updateCharacter,
+		isSaving
 	} from './BuilderStore';
 	import { onMount } from 'svelte';
 	import { getNotificationsContext } from 'svelte-notifications';
 
 	const { addNotification } = getNotificationsContext();
-	toastFunction.set(addNotification);
 
 	/**
 	 * @type {any}
@@ -36,8 +35,22 @@
 
 	let originalCharacter = '';
 
-	let isSaving = false;
-
+	/**
+	 * @param {string} messageHeading
+	 * @param {string} messageType
+	 * @param {string} message
+	 */
+	function showAlert(message, messageHeading, messageType) {
+		addNotification({
+			id: `${new Date().getTime()}-${Math.floor(Math.random() * 9999)}`,
+			position: 'top-right',
+			removeAfter: 3000,
+			allowRemove: true,
+			heading: messageHeading,
+			type: messageType,
+			text: message
+		});
+	}
 	async function viewCharacter() {
 		await loadCharacter($selectedCharacter?.attributes.tokenId);
 		changeMode('view-character');
@@ -49,12 +62,25 @@
 	}
 
 	async function saveChanges() {
-		isSaving = true;
-		await updateCharacter();
-		console.log('save changes');
-		originalCharacter = JSON.stringify($selectedCharacter);
-		//TODO: show toast alert notification
-		isSaving = false;
+		$isSaving = true;
+		let message = '';
+		let messageType = 'warning';
+		let messageHeading = '';
+		try {
+			await updateCharacter();
+			originalCharacter = JSON.stringify($selectedCharacter);
+			message = 'changes have been saved';
+			messageType = 'warning';
+			messageHeading = 'character-updated';
+		} catch (error) {
+			message = 'failed to save changes';
+			messageType = 'error';
+			messageHeading = 'save-failed';
+		} finally {
+			showAlert(message, messageHeading, messageType);
+
+			$isSaving = false;
+		}
 	}
 
 	function cancelChanges(goBack = false) {
@@ -111,8 +137,13 @@
 	</svelte:fragment>
 	<svelte:fragment slot="right-button">
 		{#if mode == 'edit-character'}
-			{#if isSaving}
-				<button class="aug-button fade-in" disabled data-augmented-ui="all-hex both" title="saving changes">
+			{#if $isSaving}
+				<button
+					class="aug-button fade-in"
+					disabled
+					data-augmented-ui="all-hex both"
+					title="saving changes"
+				>
 					<i class="bi bi-cpu spin" /></button
 				>
 			{:else}
@@ -128,7 +159,7 @@
 					class="aug-button fade-in"
 					data-augmented-ui="all-hex both"
 					title="save changes"
-					class:busy={isSaving}
+					class:busy={$isSaving}
 					on:click={saveChanges}
 				>
 					<i class="bi bi-check" /></button

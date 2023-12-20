@@ -36,9 +36,11 @@
 <style>
 	:root {
 		--dc-dialog-animation-duration: 0.2s;
+		--dc-dialog-backdrop-color: rgb(126, 0, 0);
 	}
 	dialog {
-		border-radius: 0.2em;
+		--dc-dialog-backdrop-color: rgb(126, 0, 0);
+		border-radius: 0;
 		border: none;
 		padding: 0;
 		position: absolute;
@@ -47,7 +49,7 @@
 		padding: 1em;
 		position: relative;
 	}
-	.dialog-grid{
+	.dialog-grid {
 		display: grid;
 		grid-template-columns: 1fr;
 		grid-template-rows: min-content auto min-content;
@@ -70,11 +72,16 @@
 	}
 
 	dialog::backdrop {
-		animation: backdrop-fade-out var(--dc-dialog-animation-duration) ease-out forwards;
+		display: block;
+		/* animation: backdrop-fade-out var(--dc-dialog-animation-duration) ease-out forwards; */
+		background-color: rgba(255, 0, 0, 0);
+		transition: background-color var(--dc-dialog-animation-duration) ease-in;
 	}
 
 	dialog[open]::backdrop {
-		animation: backdrop-fade-in var(--dc-dialog-animation-duration) ease-out forwards;
+		background-color: rgba(46, 2, 116, 0.651);
+		transition: background-color var(--dc-dialog-animation-duration) ease-in;
+		/* animation: backdrop-fade-in var(--dc-dialog-animation-duration) ease-out;  */
 	}
 
 	/* Animation keyframes */
@@ -109,21 +116,23 @@
 	}
 
 	@keyframes backdrop-fade-in {
-		0% {
+		from {
 			background-color: rgb(0 0 0 / 0);
 		}
 
-		100% {
-			background-color: rgb(0 0 0 / 0.25);
+		to {
+			background-color: rgb(170, 9, 9);
 		}
 	}
 
 	@keyframes backdrop-fade-out {
-		0% {
-			background-color: rgb(0 0 0 / 0.25);
+		from {
+			display: block;
+			background-color: black;
 		}
 
-		100% {
+		to {
+			display: block;
 			background-color: rgb(0 0 0 / 0);
 		}
 	}
