@@ -51,6 +51,8 @@
 		outline-style: solid;
 		outline-width: 1px;
 		color: var(--light);
+		min-width: 30ch;
+		min-height: 30ch;
 	}
 	dialog > div {
 		padding: 1em;
