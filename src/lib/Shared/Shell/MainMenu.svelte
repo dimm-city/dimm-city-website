@@ -75,6 +75,13 @@
 		title="Builder"
 		description="Build your Sporos"
 	/>
+
+	<MenuItem
+		url="/console/tools/dice"
+		icon="bi-dice-4"
+		title="Dice"
+		description="DC Dice Roller"
+	/>
 	<!-- <MenuItem url="/spores" icon="bi-hypnotize" title="Spores" description="Dreams of Dimm City" /> -->
 	<MenuItem
 		url="/console/about"
