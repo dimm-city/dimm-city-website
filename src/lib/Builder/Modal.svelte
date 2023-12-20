@@ -36,14 +36,17 @@
 <style>
 	:root {
 		--dc-dialog-animation-duration: 0.2s;
-		--dc-dialog-backdrop-color: rgb(126, 0, 0);
 	}
 	dialog {
-		--dc-dialog-backdrop-color: rgb(126, 0, 0);
 		border-radius: 0;
 		border: none;
 		padding: 0;
 		position: absolute;
+		background-color: var(--dark);
+		outline-color: var(--fourth-accent);
+		outline-style: solid;
+		outline-width: 1px;
+		color: var(--light);
 	}
 	dialog > div {
 		padding: 1em;
@@ -57,6 +60,7 @@
 
 	button {
 		color: var(--third-accent);
+		font-size: 1.5rem;
 		display: block;
 		position: absolute;
 		right: 0;
