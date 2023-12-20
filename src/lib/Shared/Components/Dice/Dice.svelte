@@ -43,7 +43,7 @@
 			strength: 1,
 			onRollComplete: (/** @type {any} */ result) => {
 				dispatcher('rollCompleted', result);
-			},
+			}
 		};
 
 		if (dice?.themeName) {
@@ -51,6 +51,9 @@
 		} else {
 			config.theme_customColorset = dice.customTheme;
 		}
+
+		if (!config.theme_colorset && !config.theme_customColorset)
+			throw new Error('Missing dice theme configuration');
 
 		diceBox = new DiceBox('#dice-roller-container', config);
 		await diceBox.initialize();
@@ -61,8 +64,6 @@
 	export let rolling = false;
 	export let header = '';
 	export let diceNotation = '1d20';
-
-
 
 	/**
 	 * @type {DiceBox}

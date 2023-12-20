@@ -4,14 +4,22 @@
 	import Dice from '$lib/Shared/Components/Dice/Dice.svelte';
 	let diceNotation = '1d20';
 	let selectedDice = {
-		name: 'pink',
-		foreground: 'white',
-		background: '#ef1ebf',
-		texture: 'glass',
-		description: 'Default pink dice'
+		customTheme: {
+			name: 'pink',
+			foreground: 'white',
+			background: '#ef1ebf',
+			texture: 'glass',
+			description: 'Default pink dice'
+		}
 	};
+	/**
+	 * @type {Dice}
+	 */
 	let roller;
 
+	/**
+	 * @param {{ key: string; }} e
+	 */
 	async function rollDice(e) {
 		if (e.key === 'Enter') {
 			await roller.roll();
@@ -47,9 +55,9 @@
 	<ContentPane padding={2}>
 		<div>
 			<h4>
-				Roll your dice <small class="text-secondary"
-					>enter the dice notation and press enter or click below</small
-				>
+				Roll your dice <small class="text-secondary">
+					enter the dice notation and press enter or click below
+				</small>
 			</h4>
 			<input type="text" bind:value={diceNotation} on:keyup={rollDice} />
 			<!-- <select id="diceSelect" bind:value={selectedDice}>
