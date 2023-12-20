@@ -2,6 +2,13 @@
 	import { createEventDispatcher, onMount } from 'svelte';
 	import DiceBox from '@3d-dice/dice-box-threejs';
 
+	/**
+	 * @type {DC.DiceConfig}
+	 */
+	export let dice = {
+		customTheme: null,
+		themeName: null
+	};
 	const defaultConfig = {
 		assetPath: '/dice',
 		framerate: 1 / 60,
@@ -23,24 +30,26 @@
 	};
 
 	async function setupDiceBox() {
+		/** @type {DC.DiceBoxConfig} */
 		let config = {
 			assetPath: '/dice/',
 			sounds: true,
 			volume: 100,
-			
+			theme_colorset: null,
+			theme_customColorset: null,
 			//theme_colorset:  gameConfig.options?.dice?.key ?? 'pinkdreams',
 			//theme_customColorset: gameConfig.options?.dice,
 			baseScale: 140,
 			strength: 1,
-			onRollComplete: (result) => {
+			onRollComplete: (/** @type {any} */ result) => {
 				dispatcher('rollCompleted', result);
-			}
+			},
 		};
 
-		if (dice?.key) {
-			config.theme_colorset = dice?.key ?? 'pinkdreams';
+		if (dice?.themeName) {
+			config.theme_colorset = dice.themeName ?? 'pinkdreams';
 		} else {
-			config.theme_customColorset = dice;
+			config.theme_customColorset = dice.customTheme;
 		}
 
 		diceBox = new DiceBox('#dice-roller-container', config);
@@ -52,18 +61,20 @@
 	export let rolling = false;
 	export let header = '';
 	export let diceNotation = '1d20';
-	export let dice = {};
 
 
+
+	/**
+	 * @type {DiceBox}
+	 */
 	let diceBox;
 	onMount(async () => {
-	
 		await setupDiceBox();
 	});
 	export async function roll() {
 		if (rolling) return;
 		rolling = true;
-		
+
 		let result = await diceBox.roll(diceNotation);
 
 		console.log('return', result);
@@ -73,9 +84,10 @@
 </script>
 
 <div
+	role="button"
+	tabindex="0"
 	id="dice-roller-container"
 	class="dc-dice-roller-container"
-	disabled={rolling}
 	on:click={roll}
 	on:keyup={roll}
 >

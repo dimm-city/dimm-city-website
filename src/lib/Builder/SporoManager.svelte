@@ -1,6 +1,6 @@
 <script>
 	import CharacterSelector from './CharacterSelector.svelte';
-	import Sheet from '$lib/Characters/Components/CharacterSheet/Sheet.svelte';
+	import Sheet from '$lib/Characters/CharacterSheet/Sheet.svelte';
 	import Shell from '$lib/Shared/Shell/Shell.svelte';
 	import CharacterEditor from './CharacterEditor.svelte';
 	import MainMenu from '$lib/Shared/Shell/MainMenu.svelte';
@@ -108,7 +108,7 @@
 	{#if mode === 'edit-character'}
 		<CharacterEditor />
 	{:else if mode === 'view-character' && $selectedCharacter}
-		<Sheet bind:character={$selectedCharacter} isEditing={false} on:save />
+		<Sheet bind:character={$selectedCharacter} />
 	{:else}
 		<CharacterSelector on:edit={startEditing} on:print={printCharacter} on:view={viewCharacter} />
 	{/if}

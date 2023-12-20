@@ -1,7 +1,7 @@
 <script>
 	import PrintShell from '$lib/Shared/Shell/PrintShell.svelte';
-	import Sheet from '$lib/Characters/Components/CharacterSheet/Sheet.svelte';
-	import '$lib/Characters/Components/CharacterSheet/sheet-print.css';
+	import Sheet from '$lib/Characters/CharacterSheet/Sheet.svelte';
+	import '$lib/Characters/CharacterSheet/sheet-print.css';
 	export let data;
 </script>
 

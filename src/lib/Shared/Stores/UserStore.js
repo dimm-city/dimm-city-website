@@ -162,7 +162,7 @@ export const loggedIn = derived(
 );
 
 /**
- * @param {CW.Token } token
+ * @param {CW.Token | string } token
  */
 export function ownsToken(token) {
 	//return true;

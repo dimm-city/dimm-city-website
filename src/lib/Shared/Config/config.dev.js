@@ -3,10 +3,10 @@ export const config = {
 	version: '',
 	env: 'dev',
 	googleKey: '',
-	baseUrl: 'http://localhost:5173',
+	baseUrl: 'http://127.0.0.1:5173',
 	storageBaseUrl: '',
-	graphUrl: 'http://0.0.0.0:1337/graphql',
-	apiBaseUrl: 'http://localhost:1337/api',
+	graphUrl: 'http://127.0.0.1:1337/graphql',
+	apiBaseUrl: 'http://127.0.0.1:1337/api',
 	stripePublicKey:
 		'pk_test_51MmHcALeft6siyywTseJIs5awwWr469e2D9RQMI5a79oz1NGhg8ijvPNH1NbgMrM2aIn4KadqswLuTF2kc4tZVNp00UQj2pA8Z',
 	defaultSummaryQuery: null,

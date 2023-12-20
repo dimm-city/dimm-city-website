@@ -1,19 +1,38 @@
 <script>
 	import Points from './Points.svelte';
 	import Image from '$lib/Shared/Components/Image.svelte';
-	import ItemsList from '$lib/Characters/Components/CharacterSheet/ItemsList.svelte';
+	import ItemsList from '$lib/Shared/Components/ItemsList.svelte';
 
-	import { openModal } from 'svelte-modals';
-	import AbilityModal from '$lib/Abilities/AbilityModal.svelte';
+	import Dialog from '$lib/Shared/Components/Dialog.svelte';
+	import Markdown from '$lib/Shared/Components/Markdown.svelte';
 	/** @type {DC.Race}*/
 	export let race;
 	export let isEditing = false;
 	export let isPrinting = false;
 
+	/**
+	 * @type {DC.Ability | null}
+	 */
+	let selectedSkill;
 	const viewAbility = (/** @type {DC.Ability} */ ability) =>
-		openModal(AbilityModal, { data: ability });
-</script>
+		selectedSkill = ability;
 
+</script>
+<Dialog  show={selectedSkill != null}>
+	<div>
+		{#if selectedSkill?.attributes}
+			<div class="ability-header">
+				<div>{selectedSkill?.attributes.name}</div>
+				<div>AP: {selectedSkill?.attributes.ap}</div>
+			</div>
+
+			<hr />
+			<Markdown text={selectedSkill?.attributes.description} />
+		{:else}
+			<span>Not found</span>
+		{/if}
+	</div>
+</Dialog>
 <div class="scroll-wrapper">
 	<div class="sheet" data-augmented-ui="none">
 		<div class="heading">

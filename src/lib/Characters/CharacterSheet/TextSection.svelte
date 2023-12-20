@@ -3,7 +3,7 @@
 	import markdownit from 'markdown-it';
 
 	import { openModal, closeAllModals } from 'svelte-modals';
-	import ContentModal from '../ContentModal.svelte';
+	import ContentModal from '$lib/Shared/Components/ContentModal.svelte';
 	export let data = '';
 	export let header = '';
 	export let isEditing = false;
@@ -11,10 +11,7 @@
 	const md = new markdownit();
 	export let aug = 'tl-clip tr-clip br-clip bl-clip border';
 
-	/**
-	 * @type {import("svelte-modals/store").SvelteModalComponent<any, any, any> | import("svelte-modals/store").LazySvelteModalComponent<any, any, any> | ContentModal}
-	 */
-	let modal;
+
 	function toggleFullscreen() {
 		openModal(ContentModal, {
 			data,

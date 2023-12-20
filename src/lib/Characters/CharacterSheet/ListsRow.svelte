@@ -3,12 +3,11 @@
 
 	import Dialog from '$lib/Shared/Components/Dialog.svelte';
 
-	import ItemsList from './ItemsList.svelte';
-	import ListItemDialog from './ListItemDialog.svelte';
+	import ItemsList from '$lib/Shared/Components/ItemsList.svelte';
+	import ListItemDialog from '$lib/Shared/Components/ListItemDialog.svelte';
+	import Markdown from '$lib/Shared/Components/Markdown.svelte';
 	import TextSection from './TextSection.svelte';
-	import markdownit from 'markdown-it';
 
-	const md = new markdownit();
 	/**
 	 * @type {DC.Character}}
 	 */
@@ -70,7 +69,7 @@
 		<TextSection data={character.attributes.playerNotes} aug="none" />
 	</div>
 </div>
-<Dialog  show={selectedSkill != null}>
+<Dialog show={selectedSkill != null}>
 	<div>
 		{#if selectedSkill?.attributes}
 			<div class="ability-header">
@@ -79,7 +78,7 @@
 			</div>
 
 			<hr />
-			<div>{@html md.render(selectedSkill?.attributes?.description ?? '')}</div>
+			<Markdown text={selectedSkill?.attributes?.description} />			
 		{:else}
 			<span>Not found</span>
 		{/if}

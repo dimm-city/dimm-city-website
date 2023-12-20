@@ -1,5 +1,5 @@
 <script>
-// @ts-nocheck
+	// @ts-nocheck
 
 	import { getNotificationsContext } from 'svelte-notifications';
 	import StepWizard from 'svelte-step-wizard';
@@ -11,8 +11,9 @@
 	import StripePayment from '$lib/Shared/Components/StripePayment.svelte';
 	import Article from '$lib/Shared/Components/Article.svelte';
 	import { loadWallets, user } from '$lib/Shared/Stores/UserStore';
-	import { createCharacter } from './Queries/CharacterStore';
-	import ProfileImage from './Components/ProfileImage.svelte';
+	import ProfileImage from '../Shared/Components/ProfileImage.svelte';
+	import { config } from '$lib/Shared/config';
+	import { jwt } from '$lib/Shared/Stores/UserStore';
 
 	const { addNotification } = getNotificationsContext();
 	let logs = [''];
@@ -31,7 +32,7 @@
 	/**
 	 * @type {DC.CharacterRelease}
 	 */
-	let selectedRelease; 
+	let selectedRelease;
 
 	let currentStep = 3;
 	let metadata = {
@@ -162,6 +163,37 @@
 		isSaving = false;
 
 		// if (currentStep == 3) previousStep();
+	}
+
+	/**
+	 * @param {string} paymentId
+	 */
+	async function createCharacter(paymentId) {
+		return fetch(`${config.apiBaseUrl}/payments/purchased/${paymentId}`, {
+			method: 'POST',
+			headers: {
+				Authorization: `Bearer ${$jwt}`,
+				'Content-Type': 'application/json'
+			},
+			body: ''
+		})
+			.then(async (res) => {
+				const data = await res.json();
+				if (res.ok) {
+					console.log('createCharacter response', data);
+					console.assert(data != null);
+
+					return data;
+				} else {
+					//TODO: display error
+					console.log('payment failed', data);
+					return null;
+				}
+			})
+			.catch((reason) => {
+				console.log('could not create character', reason);
+				return null;
+			});
 	}
 </script>
 

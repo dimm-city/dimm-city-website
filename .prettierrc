@@ -5,5 +5,10 @@
 	"printWidth": 100,
 	"plugins": ["prettier-plugin-svelte"],
 	"pluginSearchDirs": ["."],
+	"bracketSameLine": true,
+	"svelteBracketNewLine": true,
+	"bracketSpacing": true,
+	"htmlWhitespaceSensitivity": "ignore",
+	
 	"overrides": [{ "files": "*.svelte", "options": { "parser": "svelte" } }]
 }

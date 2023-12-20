@@ -1,8 +1,8 @@
 <script>
 	import PhysicalStats from './PhysicalStats.svelte';
-	import ItemsList from './ItemsList.svelte';
-	import ProfileImage from '../ProfileImage.svelte';
-	import ListItemDialog from './ListItemDialog.svelte';
+	import ItemsList from '$lib/Shared/Components/ItemsList.svelte';
+	import ProfileImage from '$lib/Shared/Components/ProfileImage.svelte';
+	import ListItemDialog from '$lib/Shared/Components/ListItemDialog.svelte';
 
 	/**
 	 * @type {DC.Character}

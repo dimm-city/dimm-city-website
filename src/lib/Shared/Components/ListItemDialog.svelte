@@ -1,8 +1,7 @@
 <script>
 	import Dialog from '$lib/Shared/Components/Dialog.svelte';
-	import markdownit from 'markdown-it';
+	import Markdown from '$lib/Shared/Components/Markdown.svelte';
 
-	const md = new markdownit();
 	/**
 	 * @type {DC.ListItem<DC.BaseEntity> | null}
 	 */
@@ -21,12 +20,8 @@
 		<hr />
 	</svelte:fragment>
 	<div class="modal-content">
-		{#if selectedItem?.item.data?.attributes}
-			{@html md.render(selectedItem.item.data.attributes?.description ?? '')}
-		{:else if selectedItem?.text}
-			{@html md.render(selectedItem.description ?? '')}
-		{:else}
-			<span>Not found</span>
-		{/if}
+		<Markdown
+			text={selectedItem?.item?.data?.attributes?.description ?? selectedItem?.description}
+		/>
 	</div>
 </Dialog>

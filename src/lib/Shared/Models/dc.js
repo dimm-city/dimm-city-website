@@ -15,6 +15,43 @@
 
 
 /**
+ * @typedef {Object} DC.DiceConfig
+ * @property {?string} [themeName] - The name of the item.
+ * @property {?DC.DiceColorSet} customTheme - A custom theme for the dice.
+ */
+
+/**
+ * @typedef {Object} DC.DiceColorSet
+ * @property {string} name - The name of the item.
+ * @property {string} description - The description of the item.
+ * @property {string} [category] - The category of the item.
+ * @property {string} foreground - The color of the item's foreground.
+ * @property {string} background - The color of the item's background.
+ * @property {string} [outline] - The outline of the item.
+ * @property {string} texture - The texture of the item.
+ */
+/**
+ * @typedef {Object} DC.DiceBoxConfig
+ * @property {string} assetPath - The path to the assets.
+ * @property {number} [framerate] - The framerate for the dice animation.
+ * @property {boolean} [sounds] - Whether or not to play sounds.
+ * @property {?number} [volume] - The volume level.
+ * @property {?number} [color_spotlight] - The color of the spotlight.
+ * @property {?boolean} [shadows] - Whether or not to display shadows.
+ * @property {?string} [theme_surface] - The surface theme.
+ * @property {?string} [sound_dieMaterial] - The material of the dice sound.
+ * @property {?DC.DiceColorSet} [theme_customColorset] - The custom color set for the theme.
+ * @property {?string} [theme_colorset] - The color set for the theme.
+ * @property {?string} [theme_texture] - The texture for the theme.
+ * @property {?string} [theme_material] - The material for the theme.
+ * @property {?number} [gravity_multiplier] - The multiplier for gravity.
+ * @property {?number} [light_intensity] - The intensity of the light.
+ * @property {?number} [baseScale] - The base scale.
+ * @property {?number} [strength] - The strength of the toss.
+ * @property {?Function} [onRollComplete] - The function to call when the roll is complete.
+ */
+
+/**
  * @template T
  * @typedef {Object} DC.ListItem<T>
  * @property {Number} [id]
