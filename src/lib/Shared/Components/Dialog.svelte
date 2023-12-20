@@ -1,5 +1,9 @@
 <script>
 	export let show = false; // boolean
+	export const open = () => {
+		dialog.show();
+		show = true;
+	};
 
 	export const close = () => {
 		dialog.close();

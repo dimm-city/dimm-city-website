@@ -3,11 +3,11 @@
 	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
 	import markdownit from 'markdown-it';
 
+	const md = new markdownit();
 	/**
 	 * @type {DC.Ability}
 	 */
 	 export let data;
-	const md = new markdownit();
 
 	function loadAbility(id) {
 		return data;

@@ -5,18 +5,12 @@
 	import ProfileRow from './ProfileRow.svelte';
 	import Points from './Points.svelte';
 
-	import { openModal } from 'svelte-modals';
-	import AbilityModal from '$lib/Abilities/AbilityModal.svelte';
 	import StoryRow from './StoryRow.svelte';
 	import { formatListItemName } from '$lib/Shared/FormatFunctions';
 
 	/**@type {DC.Character}*/
 	export let character;
-	export let isEditing = false;
 	export let isPrinting = false;
-
-	const viewAbility = (/** @type {DC.Ability} */ ability) =>
-		openModal(AbilityModal, { data: ability });
 
 	let sheetAug = 'bl-2-clip-y br-2-clip-y tl-clip tr-clip t-clip none';
 
@@ -25,8 +19,10 @@
 		originalData = JSON.stringify(character);
 	} else {
 		character = {
-			id: '',
-			attributes: {}
+			id: null,
+			// @ts-ignore
+			attributes: {
+			}
 		};
 	}
 	$: if (isPrinting) {
@@ -39,6 +35,7 @@
 		character.attributes.scripts = createEmptyList(8, character.attributes.scripts);
 	}
 
+	// @ts-ignore
 	function createEmptyList(length = 22, existingItems = []) {
 		const emptyItems = Array.from({ length }, (_, index) => ({
 			id: index + 1,
@@ -47,8 +44,7 @@
 		const output = [
 			...existingItems.map((i, index) => {
 				if (!i.attributes) i.attributes = {};
-				i.attributes.name =
-					index + 1 + ': ' + formatListItemName(i);
+				i.attributes.name = index + 1 + ': ' + formatListItemName(i);
 				console.log('mapping item', i);
 				return i;
 			}),
@@ -63,36 +59,32 @@
 	<div class="sheet" data-augmented-ui="none" class:print={isPrinting}>
 		<div class="heading">
 			<div>
-				{#if isEditing}
-					<h1 contenteditable="true" bind:textContent={character.attributes.name} />
-				{:else}
-					<h1>
-						{character.attributes.name ?? ''}
-					</h1>
-				{/if}
+				<h1>
+					{character.attributes.name ?? ''}
+				</h1>
 			</div>
 			<div class="points-heading">
 				<div
 					class="scores-container"
 					data-augmented-ui2="tl-clip-x tr-clip-x br-clip-x bl-clip-x both"
 				>
-					<Points data={character} {isEditing} {isPrinting} />
+					<Points data={character} {isPrinting} />
 				</div>
 			</div>
 		</div>
 		<div class="container" data-augmented-ui-reset>
-			<StatsRow {character} {isEditing} />
+			<StatsRow {character} />
 			<div class="points-row">
 				<div
 					class="scores-container row-frame"
 					data-augmented-ui="tl-clip-x tr-clip-x br-clip-x bl-clip-x both"
 				>
-					<Points data={character} {isEditing} {isPrinting} />
+					<Points data={character} {isPrinting} />
 				</div>
 			</div>
-			<ProfileRow {character} {isEditing} />
-			<StoryRow {character} {isEditing} />
-			<ListsRow {character} {isEditing} {viewAbility} />
+			<ProfileRow {character} />
+			<StoryRow {character} />
+			<ListsRow {character} />
 		</div>
 	</div>
 </div>

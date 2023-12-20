@@ -1,9 +1,8 @@
 <script>
 	import PhysicalStats from './PhysicalStats.svelte';
-	import { openModal } from 'svelte-modals';
-	import AbilityModal from '$lib/Abilities/AbilityModal.svelte';
 	import ItemsList from './ItemsList.svelte';
 	import ProfileImage from '../ProfileImage.svelte';
+	import ListItemDialog from './ListItemDialog.svelte';
 
 	/**
 	 * @type {DC.Character}
@@ -11,8 +10,17 @@
 	export let character;
 	export let isEditing = false;
 
-	const viewAbility = (/** @type {DC.Ability} */ ability) =>
-		openModal(AbilityModal, { data: ability });
+	/**
+	 * @type {DC.ListItem<DC.BaseEntity> | null}
+	 */
+	let selectedItem;
+
+	/**
+	 * @param {DC.ListItem<DC.BaseEntity> | null} item
+	 */
+	function viewAbility(item) {
+		selectedItem = item;
+	}
 </script>
 
 <div class="stats-row row-frame" data-augmented-ui="tl-clip tr-clip br-clip-x bl-clip-x both">
@@ -24,15 +32,16 @@
 	<div class="stats-container">
 		<PhysicalStats {character} {isEditing} />
 	</div>
-		<div class="cybernetics-container">
+	<div class="cybernetics-container">
 		<ItemsList
 			header="Cybernetics"
 			noItemsText="no scripts detected"
 			data={character.attributes.cybernetics}
 			viewItem={viewAbility}
-		/>		
+		/>
 	</div>
 </div>
+<ListItemDialog {selectedItem} />
 
 <style>
 	.stats-row {
@@ -79,7 +88,7 @@
 		padding-bottom: 1rem;
 		border-left: 1px solid var(--fourth-accent);
 	}
-	:global(.cybernetics-container .list .list-item){
+	:global(.cybernetics-container .list .list-item) {
 		text-align: center;
 	}
 	@media screen and (max-width: 900px) {
@@ -121,6 +130,6 @@
 			--aug-tr: 7px;
 			--aug-border-all: 2px;
 			--aug-border-bg: var(--fourth-accent);
-		}		
+		}
 	}
 </style>

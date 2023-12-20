@@ -93,7 +93,7 @@
 
 /**
  * @typedef {Object} DC.Character
- * @property {number} id - Unique ID of the character
+ * @property {number| null} [id] - Unique ID of the character
  * @property {Object} attributes - Detailed properties of the character
  * @property {string} attributes.name - The name of the character
  * @property {string} attributes.tokenId - The token ID of the character

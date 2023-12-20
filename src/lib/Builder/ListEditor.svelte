@@ -2,7 +2,7 @@
 	import List from '$lib/Shared/Components/List.svelte';
 	import LoadingIndicator from '$lib/Shared/Components/LoadingIndicator.svelte';
 	import Select from 'svelte-select';
-	import Modal from './Modal.svelte';
+	import Dialog from '$lib/Shared/Components/Dialog.svelte';
 	import markdownit from 'markdown-it';
 	import Toggle from '$lib/Shared/Components/Toggle.svelte';
 	import Input from '$lib/Shared/Components/Input.svelte';
@@ -11,7 +11,7 @@
 
 	const md = new markdownit();
 	/**
-	 * @type {Modal}
+	 * @type {Dialog}
 	 */
 	let modal;
 	let showItemModal = false;
@@ -114,7 +114,7 @@
 		{/if}
 	</div>
 </List>
-<Modal bind:this={modal} bind:show={showItemModal}>
+<Dialog bind:this={modal} bind:show={showItemModal}>
 	<svelte:fragment slot="header">
 		{#if selectedItem?.item.data?.attributes?.name}
 			{selectedItem.item.data.attributes.name}
@@ -173,7 +173,7 @@
 		{/if}
 		</div>
 	</svelte:fragment>
-</Modal>
+</Dialog>
 
 <style>
 	:global(.list) {

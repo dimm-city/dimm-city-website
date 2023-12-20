@@ -1,16 +1,42 @@
 <script>
 	//import type { ICharacter } from '$lib/Characters/Models/Character';
 
-	import ItemsList from './ItemsList.svelte';
-	import TextSection from './TextSection.svelte';
+	import Dialog from '$lib/Shared/Components/Dialog.svelte';
 
+	import ItemsList from './ItemsList.svelte';
+	import ListItemDialog from './ListItemDialog.svelte';
+	import TextSection from './TextSection.svelte';
+	import markdownit from 'markdown-it';
+
+	const md = new markdownit();
 	/**
 	 * @type {DC.Character}}
 	 */
 	export let character;
 	export const isEditing = false;
-	// @ts-ignore
-	export let viewAbility = (ability) => {};
+
+
+	/**
+	 * @type {DC.Ability}
+	 */
+	let selectedSkill;
+	/**
+	 * @param {DC.Ability} skill
+	 */
+	function viewSkill(skill) {
+		selectedSkill = skill;		
+	}
+
+	/**
+	 * @type {DC.ListItem<DC.BaseEntity> | null}
+	 */
+	let selectedItem;
+	/**
+	 * @param {DC.ListItem<DC.BaseEntity> | null} item
+	 */
+	function viewItem(item) {
+		selectedItem = item;
+	}
 </script>
 
 <div class="lists-row" data-augmented-ui-reset>
@@ -20,7 +46,7 @@
 			header="Skills"
 			noItemsText="no skills registered"
 			data={character.attributes.selectedAbilities?.data}
-			viewItem={viewAbility}
+			viewItem={viewSkill}
 		/>
 	</div>
 	<div class="items-container" data-augmented-ui="tl-clip tr-clip br-clip bl-2-clip-xy border">
@@ -28,7 +54,7 @@
 			header="Items"
 			noItemsText="no inventory recorded"
 			data={character.attributes.inventory}
-			viewItem={viewAbility}
+			viewItem={viewItem}
 		/>
 	</div>
 	<div class="scripts-container" data-augmented-ui="tl-2-clip-xy tr-clip br-clip bl-clip border">
@@ -36,15 +62,31 @@
 			header="Scripts"
 			noItemsText="no scripts detected"
 			data={character.attributes.scripts}
-			viewItem={viewAbility}
+			viewItem={viewItem}
 		/>
 	</div>
 	<div class="notes-container" data-augmented-ui="tl-clip tr-2-clip-xy br-clip bl-clip border">
 		<h3 class="section-title">Notes</h3>
-			<TextSection data={character.attributes.playerNotes} aug="none" />
-		
+		<TextSection data={character.attributes.playerNotes} aug="none" />
 	</div>
 </div>
+<Dialog  show={selectedSkill != null}>
+	<div>
+		{#if selectedSkill?.attributes}
+			<div class="ability-header">
+				<div>{selectedSkill?.attributes.name}</div>
+				<div>AP: {selectedSkill?.attributes.ap}</div>
+			</div>
+
+			<hr />
+			<div>{@html md.render(selectedSkill?.attributes?.description ?? '')}</div>
+		{:else}
+			<span>Not found</span>
+		{/if}
+	</div>
+</Dialog>
+<ListItemDialog {selectedItem} />
+
 
 <style>
 	.lists-row {
@@ -101,9 +143,9 @@
 		--aug-tr: var(--default-aug);
 		grid-area: notes;
 	}
-	.notes-container .section-title{
+	.notes-container .section-title {
 		justify-content: start;
-		padding-inline-start: .5em;
+		padding-inline-start: 0.5em;
 	}
 	/* .notes-container .text-content {
 		display: flex;
@@ -115,11 +157,11 @@
 			grid-template-columns: 1fr;
 			grid-template-rows: repeat(3, max-content);
 			grid-template-areas:
-			'skills'
-			'items'
-			'scripts';
+				'skills'
+				'items'
+				'scripts';
 		}
-		.notes-container{
+		.notes-container {
 			display: none;
 		}
 		.lists-row > div {
