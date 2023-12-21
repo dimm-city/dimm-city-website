@@ -6,7 +6,12 @@
 
 	let selectDice = false;
 	let diceNotation = '1d20';
-	let lastRoll = '';
+
+	/**
+	 * @type {{ total: number; } | null}
+	 */
+	let lastRoll = null;
+
 	let selectedDice = {
 		customTheme: {
 			name: 'pink',
@@ -22,7 +27,7 @@
 	let roller;
 
 	/**
-	 * @param {{ key: string; }} e
+	 * @param {{ key: string }} e; }} e
 	 */
 	async function rollDice(e) {
 		if (e.key === 'Enter') {
@@ -61,7 +66,7 @@
 		<div>
 			<div class="header">
 				<button on:click={() => (selectDice = true)}>{diceNotation}</button>
-				{#if lastRoll?.total > 0}
+				{#if lastRoll?.total != null}
 					<h5 class="fade-in">last roll: {lastRoll?.total ?? ''}</h5>
 				{/if}
 			</div>

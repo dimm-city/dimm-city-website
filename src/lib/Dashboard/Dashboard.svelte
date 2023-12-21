@@ -1,12 +1,7 @@
 <script >
 	import List from '$lib/Shared/Components/List.svelte';
 	import ListItemLink from '$lib/Shared/Components/ListItemLink.svelte';
-	import Hero from './Hero.svelte';
 
-	/**
-	 * @type {DC.BaseEntity[]}
-	 */
-	export let latestNews = [];
 	/**
 	 * @type {DC.BaseEntity[]}
 	 */
@@ -22,15 +17,14 @@
 </script>
 
 <div class="container">
-	<!-- <div class="hero">
+	<div class="hero">
 		<div class="hero-title">
-			<h4><a href="/console/journal-entries">Founder's Notes</a></h4>
-			<hr />
+			
 		</div>
 		<div class="hero-body">
-			<Hero data={latestNews} />
+			
 		</div>
-	</div> -->
+	</div>
 	<div  class="reference-header">
 		<h4>Dimm City Reference</h4>
 		<hr />
@@ -74,8 +68,8 @@
 		display: grid;
 		padding-inline: 1.5rem;
 		grid-template-columns: 1fr;
-		grid-template-rows: 0.6fr * 0.3fr;
-		gap: 1em 1em;
+		grid-template-rows: min-content auto min-content;
+		gap: 1em;
 		grid-auto-flow: row;
 		grid-template-areas:
 			'hero'
@@ -152,9 +146,7 @@
 		color: var(--light);
 	}
 
-	.hero-body {
-		margin-top: 1.25rem;
-	}
+	
 	/* .footer a {
 		height: min-content;
 	}

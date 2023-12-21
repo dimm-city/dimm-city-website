@@ -158,18 +158,7 @@
 		margin: 0;
 	}
 
-	h1[contenteditable],
-	h1[contenteditable]:focus-visible {
-		border: 1px var(--fourth-accent) solid;
-		outline-color: var(--fourth-accent);
-		outline-width: 1px;
-	}
-	h2 {
-		margin: 0;
-		display: inline;
-		font-size: 0.8rem;
-		padding-left: 0.5rem;
-	}
+
 	.container {
 		height: max-content;
 		width: 100%;

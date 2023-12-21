@@ -6,7 +6,7 @@
 </script>
 
 <Shell title="Dimm City: Cyberwar">
-	<ContentPane>		
+	<ContentPane scrollable={true}>		
         <Game />
 	</ContentPane>
 </Shell>
